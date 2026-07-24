@@ -37,9 +37,9 @@ const Navbar = () => {
       >
         <div className="w-full max-w-[1280px] mx-auto flex items-center justify-between">
           
-          {/* Logo: Circular Border + Cormorant Garamond Typography */}
+          {/* Logo: Circular Emblem Image + Cormorant Garamond Typography */}
           <Link to="/" className="flex items-center gap-3 group shrink-0">
-            <div className="w-10 h-10 sm:w-11 sm:h-11 shrink-0 rounded-full border-2 border-[#D6AE4D] p-0.5 overflow-hidden flex items-center justify-center bg-transparent">
+            <div className="w-10 h-10 sm:w-11 sm:h-11 shrink-0 rounded-full overflow-hidden flex items-center justify-center bg-transparent">
               <img
                 src={logoEmblem}
                 alt="Akole Café Emblem Logo"
