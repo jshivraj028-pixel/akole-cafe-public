@@ -1,0 +1,105 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    color: #2A2A2A;
+  }
+
+  body {
+    background-color: #F7F2E8;
+    overflow-x: hidden;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #123524;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #C8A96A;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #E5C989;
+}
+
+/* Gold Text Gradient */
+.text-gold-gradient {
+  background: linear-gradient(135deg, #C8A96A 0%, #F3E5AB 50%, #A68748 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.bg-gold-gradient {
+  background: linear-gradient(135deg, #C8A96A 0%, #E5C989 50%, #A68748 100%);
+}
+
+/* Glassmorphism Styles */
+.glass-panel {
+  background: rgba(18, 53, 36, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(200, 169, 106, 0.2);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(200, 169, 106, 0.2);
+}
+
+.glass-card-dark {
+  background: rgba(18, 53, 36, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(200, 169, 106, 0.25);
+}
+
+/* Swiper Styling Overrides */
+.swiper-pagination-bullet {
+  background: #C8A96A !important;
+  opacity: 0.5;
+}
+
+.swiper-pagination-bullet-active {
+  opacity: 1;
+  width: 24px !important;
+  border-radius: 6px !important;
+  background: #C8A96A !important;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: #C8A96A !important;
+  background: rgba(18, 53, 36, 0.8);
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: 50%;
+  border: 1px solid rgba(200, 169, 106, 0.3);
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after {
+  font-size: 18px !important;
+  font-weight: bold;
+}
+
+/* Botanical Overlay Glow */
+.botanical-glow {
+  position: absolute;
+  width: 350px;
+  height: 350px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(200, 169, 106, 0.15) 0%, rgba(18, 53, 36, 0) 70%);
+  pointer-events: none;
+}
