@@ -3,12 +3,38 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    try {
+      const saved = localStorage.getItem('akole_is_authenticated');
+      return saved ? JSON.parse(saved) : false;
+    } catch (e) {
+      return false;
+    }
+  });
+
+  const [userEmail, setUserEmail] = useState(() => {
+    try {
+      return localStorage.getItem('akole_user_email') || '';
+    } catch (e) {
+      return '';
+    }
+  });
+
   const [wishlistItems, setWishlistItems] = useState(() => {
     try {
       const saved = localStorage.getItem('akole_wishlist');
       return saved ? JSON.parse(saved) : [];
     } catch (e) {
       return [];
+    }
+  });
+
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    try {
+      const saved = localStorage.getItem('akole_dark_mode');
+      return saved ? JSON.parse(saved) : false;
+    } catch (e) {
+      return false;
     }
   });
 
@@ -24,24 +50,60 @@ export const ThemeProvider = ({ children }) => {
     }
   }, [wishlistItems]);
 
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [isDarkMode]);
+
+  const loginUser = (email) => {
+    setIsAuthenticated(true);
+    setUserEmail(email);
+    try {
+      localStorage.setItem('akole_is_authenticated', JSON.stringify(true));
+      localStorage.setItem('akole_user_email', email);
+    } catch (e) {}
+  };
+
+  const logoutUser = () => {
+    setIsAuthenticated(false);
+    setUserEmail('');
+    try {
+      localStorage.removeItem('akole_is_authenticated');
+      localStorage.removeItem('akole_user_email');
+    } catch (e) {}
+  };
+
+  const toggleDarkMode = () => {
+    setIsDarkMode((prev) => {
+      const next = !prev;
+      try {
+        localStorage.setItem('akole_dark_mode', JSON.stringify(next));
+      } catch (e) {}
+      return next;
+    });
+  };
+
   const showToast = (message, type = 'success') => {
     const id = Date.now();
-    setToasts(prev => [...prev, { id, message, type }]);
+    setToasts((prev) => [...prev, { id, message, type }]);
     setTimeout(() => {
-      setToasts(prev => prev.filter(t => t.id !== id));
+      setToasts((prev) => prev.filter((t) => t.id !== id));
     }, 3500);
   };
 
   const removeToast = (id) => {
-    setToasts(prev => prev.filter(t => t.id !== id));
+    setToasts((prev) => prev.filter((t) => t.id !== id));
   };
 
   const toggleWishlist = (product) => {
-    setWishlistItems(prev => {
-      const exists = prev.some(item => item.id === product.id);
+    setWishlistItems((prev) => {
+      const exists = prev.some((item) => item.id === product.id);
       if (exists) {
         showToast(`Removed "${product.name}" from Wishlist`, 'info');
-        return prev.filter(item => item.id !== product.id);
+        return prev.filter((item) => item.id !== product.id);
       } else {
         showToast(`Added "${product.name}" to Wishlist!`, 'success');
         return [...prev, product];
@@ -50,22 +112,30 @@ export const ThemeProvider = ({ children }) => {
   };
 
   const isInWishlist = (productId) => {
-    return wishlistItems.some(item => item.id === productId);
+    return wishlistItems.some((item) => item.id === productId);
   };
 
   return (
-    <ThemeContext.Provider value={{
-      wishlistItems,
-      toggleWishlist,
-      isInWishlist,
-      toasts,
-      showToast,
-      removeToast,
-      isSearchOpen,
-      setIsSearchOpen,
-      isCartOpen,
-      setIsCartOpen
-    }}>
+    <ThemeContext.Provider
+      value={{
+        isAuthenticated,
+        userEmail,
+        loginUser,
+        logoutUser,
+        wishlistItems,
+        toggleWishlist,
+        isInWishlist,
+        isDarkMode,
+        toggleDarkMode,
+        toasts,
+        showToast,
+        removeToast,
+        isSearchOpen,
+        setIsSearchOpen,
+        isCartOpen,
+        setIsCartOpen,
+      }}
+    >
       {children}
     </ThemeContext.Provider>
   );

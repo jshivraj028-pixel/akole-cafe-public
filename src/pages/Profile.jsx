@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FiHeart, FiAward, FiShoppingBag, FiUser, FiMapPin, FiClock, FiStar, FiCheck, FiTrash2 } from 'react-icons/fi';
+import { FiHeart, FiAward, FiShoppingBag, FiUser, FiMapPin, FiClock, FiStar, FiCheck, FiTrash2, FiCoffee, FiTag } from 'react-icons/fi';
+import { Crown } from 'lucide-react';
 import PageBanner from '../components/common/PageBanner';
 import Container from '../components/common/Container';
 import SectionTitle from '../components/common/SectionTitle';
@@ -26,9 +27,14 @@ const mockOrders = [
 ];
 
 const Profile = () => {
-  const { wishlistItems, toggleWishlist, showToast } = useTheme();
+  const { wishlistItems, toggleWishlist, showToast, logoutUser, userEmail } = useTheme();
   const { addToCart } = useCart();
   const [activeTab, setActiveTab] = useState('wishlist');
+
+  const handleLogout = () => {
+    logoutUser();
+    showToast('Logged out successfully', 'info');
+  };
 
   const handleMoveToCart = (item) => {
     addToCart(item);
@@ -52,22 +58,30 @@ const Profile = () => {
             <div className="flex flex-col sm:flex-row items-center justify-between gap-6 relative z-10">
               <div className="flex items-center gap-5 text-center sm:text-left">
                 <div className="w-20 h-20 rounded-full bg-gold-gradient text-primary flex items-center justify-center font-bold text-2xl shadow-gold shrink-0 border-2 border-secondary">
-                  👑
+                  <Crown className="w-10 h-10 text-[#351E13]" />
                 </div>
                 <div>
                   <div className="inline-block px-3 py-0.5 rounded-full bg-accent-gold/20 text-accent-gold text-[10px] uppercase font-bold tracking-widest border border-accent-gold/30 mb-1">
                     Gold Tier Member
                   </div>
                   <h2 className="font-serif text-3xl font-extrabold text-secondary">Vikramaditya Shinde</h2>
-                  <p className="text-xs text-secondary/70 font-light mt-0.5">vikram@example.com • Akole, Maharashtra</p>
+                  <p className="text-xs text-secondary/70 font-light mt-0.5">{userEmail || 'vikram@example.com'} • Akole, Maharashtra</p>
                 </div>
               </div>
 
-              {/* Points Card */}
-              <div className="p-4 rounded-2xl bg-primary-dark/80 border border-accent-gold/40 text-center sm:text-right shrink-0">
-                <span className="text-[10px] uppercase tracking-widest text-secondary/70 block font-semibold">Available Loyalty Points</span>
-                <span className="font-serif text-3xl font-extrabold text-accent-gold block my-1">500 Gold Points</span>
-                <span className="text-[10px] text-accent-gold/80 block">Worth ₹ 250 on next order</span>
+              {/* Points & Logout Card */}
+              <div className="flex flex-col items-center sm:items-end gap-3 shrink-0">
+                <div className="p-4 rounded-2xl bg-primary-dark/80 border border-accent-gold/40 text-center sm:text-right">
+                  <span className="text-[10px] uppercase tracking-widest text-secondary/70 block font-semibold">Available Loyalty Points</span>
+                  <span className="font-serif text-3xl font-extrabold text-accent-gold block my-1">500 Gold Points</span>
+                  <span className="text-[10px] text-accent-gold/80 block">Worth ₹ 250 on next order</span>
+                </div>
+                <button
+                  onClick={handleLogout}
+                  className="px-5 py-1.5 rounded-full bg-red-600/20 hover:bg-red-600 text-red-300 hover:text-white font-montserrat font-bold text-[11px] uppercase tracking-wider border border-red-500/40 transition-all"
+                >
+                  Sign Out / Logout
+                </button>
               </div>
             </div>
           </div>
@@ -174,20 +188,20 @@ const Profile = () => {
 
           {activeTab === 'rewards' && (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-              <div className="glass-card p-6 rounded-2xl border border-accent-gold/20 text-center">
-                <span className="text-3xl mb-2 block">☕</span>
+              <div className="glass-card p-6 rounded-2xl border border-accent-gold/20 text-center flex flex-col items-center">
+                <FiCoffee className="w-10 h-10 text-[#D6AE4D] mb-3" />
                 <h4 className="font-serif text-lg font-bold text-primary">Free Birthday Brew</h4>
                 <p className="text-xs text-dark/70 font-light mt-1">Claim your complimentary gold latte on your birthday month.</p>
               </div>
 
-              <div className="glass-card p-6 rounded-2xl border border-accent-gold/20 text-center">
-                <span className="text-3xl mb-2 block">🎟️</span>
+              <div className="glass-card p-6 rounded-2xl border border-accent-gold/20 text-center flex flex-col items-center">
+                <FiTag className="w-10 h-10 text-[#D6AE4D] mb-3" />
                 <h4 className="font-serif text-lg font-bold text-primary">15% Off VIP Discount</h4>
                 <p className="text-xs text-dark/70 font-light mt-1">Use coupon code <strong className="text-accent-goldDark">AKOLE20</strong> at checkout.</p>
               </div>
 
-              <div className="glass-card p-6 rounded-2xl border border-accent-gold/20 text-center">
-                <span className="text-3xl mb-2 block">🌟</span>
+              <div className="glass-card p-6 rounded-2xl border border-accent-gold/20 text-center flex flex-col items-center">
+                <FiStar className="w-10 h-10 text-[#D6AE4D] mb-3" />
                 <h4 className="font-serif text-lg font-bold text-primary">Priority Table Access</h4>
                 <p className="text-xs text-dark/70 font-light mt-1">Skip waiting line on weekend live music evenings.</p>
               </div>

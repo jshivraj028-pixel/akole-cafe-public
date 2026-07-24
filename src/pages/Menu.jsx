@@ -43,14 +43,14 @@ const Menu = () => {
   }, [activeCategory, searchQuery, sortBy]);
 
   return (
-    <>
+    <div className="bg-[#F5F2EA] min-h-screen">
+      {/* Dark Coffee Header Banner */}
       <PageBanner
-        title="Artisanal Culinary & Brews"
-        subtitle="Handcrafted Arabica Roasts • Sourdough Pizzas • Decadent Desserts"
-        bgImage="https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=1920&q=80"
+        title="Our Menu"
+        bgImage="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=1920&q=80"
       />
 
-      <section className="py-16 bg-secondary relative">
+      <section className="py-12 bg-[#F5F2EA] relative">
         <Container>
           <MenuFilter
             activeCategory={activeCategory}
@@ -64,7 +64,7 @@ const Menu = () => {
           <MenuGrid items={filteredAndSortedItems} />
         </Container>
       </section>
-    </>
+    </div>
   );
 };
 

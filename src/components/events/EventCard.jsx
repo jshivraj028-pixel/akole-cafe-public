@@ -1,13 +1,22 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiCalendar, FiClock, FiMapPin, FiCheckCircle, FiX, FiCheck } from 'react-icons/fi';
-import Button from '../common/Button';
+import { FiCalendar, FiClock, FiUsers, FiMusic, FiMic, FiCoffee, FiCheckCircle, FiX } from 'react-icons/fi';
 import { useTheme } from '../../context/ThemeContext';
+
+const getCategoryIcon = (category) => {
+  switch (category?.toLowerCase()) {
+    case 'open mic':
+      return <FiMic className="w-7 h-7 stroke-[1.5]" />;
+    case 'workshop':
+      return <FiCoffee className="w-7 h-7 stroke-[1.5]" />;
+    default:
+      return <FiMusic className="w-7 h-7 stroke-[1.5]" />;
+  }
+};
 
 const EventCard = ({ event }) => {
   const { showToast } = useTheme();
   const [isRsvpOpen, setIsRsvpOpen] = useState(false);
-  const [guestCount, setGuestCount] = useState(2);
   const [guestName, setGuestName] = useState('');
   const [booked, setBooked] = useState(false);
 
@@ -20,72 +29,58 @@ const EventCard = ({ event }) => {
   return (
     <>
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
+        initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        whileHover={{ y: -6 }}
-        transition={{ duration: 0.4 }}
-        className="glass-card rounded-3xl overflow-hidden border border-accent-gold/25 shadow-luxury flex flex-col lg:flex-row gap-0 group transition-all duration-300"
+        className="bg-[#FAF6EE] rounded-3xl p-6 sm:p-8 border border-[#E5DDD0] shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-6 hover:shadow-md transition-shadow"
       >
-        {/* Image Side */}
-        <div className="relative lg:w-5/12 h-64 lg:h-auto overflow-hidden bg-primary-dark shrink-0">
-          <img
-            src={event.image}
-            alt={event.title}
-            className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/30 to-transparent lg:hidden" />
-          <div className="absolute top-4 left-4">
-            <span className="px-3.5 py-1 bg-gold-gradient text-primary text-xs font-extrabold uppercase tracking-wider rounded-full shadow-gold">
-              {event.category}
-            </span>
+        {/* Left Side: Icon + Details */}
+        <div className="flex items-start gap-5">
+          {/* Icon Box */}
+          <div className="w-14 h-14 rounded-2xl bg-[#EFE8D8] flex items-center justify-center text-[#C8A96A] shrink-0 mt-1">
+            {getCategoryIcon(event.category)}
           </div>
-        </div>
 
-        {/* Content Side */}
-        <div className="p-6 sm:p-8 lg:w-7/12 flex flex-col justify-between bg-white/90">
-          <div>
-            <div className="flex flex-wrap items-center justify-between gap-2 mb-2 text-xs font-semibold text-accent-goldDark">
-              <div className="flex items-center gap-3">
-                <span className="flex items-center gap-1.5"><FiCalendar className="w-4 h-4" /> {event.date}</span>
-                <span className="flex items-center gap-1.5"><FiClock className="w-4 h-4" /> {event.time}</span>
-              </div>
-              <span className="px-3 py-1 bg-primary/10 rounded-full text-primary font-bold">{event.price}</span>
-            </div>
+          {/* Event Information */}
+          <div className="space-y-1.5">
+            <span className="text-[11px] uppercase tracking-[0.2em] font-semibold text-[#C8A96A] block">
+              {event.category || 'LIVE MUSIC'}
+            </span>
 
-            <h3 className="font-serif text-2xl font-bold text-primary mb-2 group-hover:text-coffee transition-colors">
+            <h3 className="font-serif text-xl sm:text-2xl font-normal text-[#1F3A2B]">
               {event.title}
             </h3>
 
-            <p className="text-xs sm:text-sm text-dark/70 font-light leading-relaxed mb-4">
+            <p className="text-xs sm:text-sm text-[#6B7C70] font-light leading-relaxed max-w-xl">
               {event.description}
             </p>
 
-            {/* Highlights */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-6">
-              {event.features.map((feat, idx) => (
-                <div key={idx} className="flex items-center gap-2 text-xs text-dark/80">
-                  <FiCheck className="text-accent-goldDark w-4 h-4 shrink-0" />
-                  <span>{feat}</span>
-                </div>
-              ))}
+            {/* Metadata Row */}
+            <div className="flex flex-wrap items-center gap-4 text-xs text-[#8B9B90] font-medium pt-2">
+              <span className="flex items-center gap-1.5">
+                <FiCalendar className="text-[#C8A96A]" /> {event.date}
+              </span>
+              <span className="flex items-center gap-1.5">
+                <FiClock className="text-[#C8A96A]" /> {event.time}
+              </span>
+              <span className="flex items-center gap-1.5">
+                <FiUsers className="text-[#C8A96A]" /> {event.spots || '40 spots'}
+              </span>
             </div>
           </div>
+        </div>
 
-          <div className="pt-4 border-t border-accent-gold/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div className="flex items-center gap-1.5 text-xs text-dark/60">
-              <FiMapPin className="text-accent-goldDark" />
-              <span>{event.location}</span>
-            </div>
-            <Button
-              onClick={() => setIsRsvpOpen(true)}
-              variant="gold"
-              size="md"
-              className="w-full sm:w-auto"
-            >
-              Reserve VIP Pass
-            </Button>
-          </div>
+        {/* Right Side: Price & Register Button */}
+        <div className="flex md:flex-col items-center md:items-end justify-between w-full md:w-auto shrink-0 pt-4 md:pt-0 border-t md:border-t-0 border-[#E5DDD0]">
+          <span className="font-serif text-lg font-bold text-[#1F3A2B] mb-2">
+            {event.price}
+          </span>
+          <button
+            onClick={() => setIsRsvpOpen(true)}
+            className="px-7 py-2.5 rounded-full bg-[#351E13] hover:bg-[#4A2C1D] text-white font-bold text-xs uppercase tracking-wider shadow-sm transition-all"
+          >
+            REGISTER
+          </button>
         </div>
       </motion.div>
 
@@ -98,73 +93,65 @@ const EventCard = ({ event }) => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsRsvpOpen(false)}
-              className="fixed inset-0 bg-black/85 backdrop-blur-md"
+              className="fixed inset-0 bg-black/70 backdrop-blur-sm"
             />
 
             <motion.div
-              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="relative z-10 w-full max-w-md bg-primary border border-accent-gold/40 rounded-3xl p-6 sm:p-8 text-secondary shadow-2xl"
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="relative z-10 w-full max-w-md bg-[#FAF6EE] border border-[#E5DDD0] rounded-3xl p-6 sm:p-8 text-[#1F3A2B] shadow-2xl"
             >
               <button
                 onClick={() => setIsRsvpOpen(false)}
-                className="absolute top-4 right-4 text-secondary/60 hover:text-accent-gold"
+                className="absolute top-4 right-4 text-[#8B9B90] hover:text-[#351E13]"
               >
                 <FiX className="w-6 h-6" />
               </button>
 
               {booked ? (
                 <div className="text-center py-6 space-y-4">
-                  <div className="w-16 h-16 rounded-full bg-gold-gradient text-primary flex items-center justify-center mx-auto shadow-gold">
+                  <div className="w-16 h-16 rounded-full bg-[#D4B055] text-[#2B4236] flex items-center justify-center mx-auto shadow-md">
                     <FiCheckCircle className="w-10 h-10" />
                   </div>
-                  <h3 className="font-serif text-2xl font-bold text-accent-gold">Pass Reserved!</h3>
-                  <p className="text-xs text-secondary/80 font-light">
-                    We've saved {guestCount} seats for <span className="font-semibold text-secondary">{guestName}</span> at <br />
-                    <span className="text-accent-gold font-medium">{event.title}</span>.
+                  <h3 className="font-serif text-2xl font-bold text-[#1F3A2B]">RSVP Confirmed!</h3>
+                  <p className="text-xs text-[#6B7C70] font-light">
+                    We've saved a spot for <span className="font-semibold text-[#1F3A2B]">{guestName}</span> at <br />
+                    <span className="text-[#C8A96A] font-medium">{event.title}</span>.
                   </p>
-                  <Button onClick={() => setIsRsvpOpen(false)} variant="gold" size="md" className="w-full mt-4">
+                  <button
+                    onClick={() => setIsRsvpOpen(false)}
+                    className="w-full py-3 rounded-full bg-[#351E13] text-white font-bold text-xs uppercase tracking-wider"
+                  >
                     Done
-                  </Button>
+                  </button>
                 </div>
               ) : (
                 <form onSubmit={handleRSVP} className="space-y-4">
                   <div className="text-center mb-4">
-                    <span className="text-xs uppercase tracking-widest text-accent-gold block font-semibold mb-1">Event RSVP</span>
-                    <h3 className="font-serif text-xl font-bold text-secondary">{event.title}</h3>
-                    <p className="text-xs text-secondary/60 mt-1">{event.date} • {event.time}</p>
+                    <span className="text-xs uppercase tracking-widest text-[#C8A96A] block font-semibold mb-1">Event RSVP</span>
+                    <h3 className="font-serif text-xl font-bold text-[#1F3A2B]">{event.title}</h3>
+                    <p className="text-xs text-[#6B7C70] mt-1">{event.date} • {event.time}</p>
                   </div>
 
                   <div>
-                    <label className="block text-xs uppercase tracking-wider text-accent-gold mb-1">Your Name</label>
+                    <label className="block text-xs uppercase tracking-wider text-[#C8A96A] mb-1 font-semibold">Your Name</label>
                     <input
                       type="text"
                       required
                       placeholder="e.g. Pooja Kadam"
                       value={guestName}
                       onChange={(e) => setGuestName(e.target.value)}
-                      className="w-full bg-primary-dark/80 border border-accent-gold/30 rounded-xl py-2.5 px-4 text-sm text-secondary placeholder-secondary/40 focus:outline-none focus:border-accent-gold"
+                      className="w-full bg-[#F5EFE3] border border-[#E5DDD0] rounded-xl py-2.5 px-4 text-xs text-[#1F3A2B] placeholder-[#A0ACA2] focus:outline-none focus:border-[#C8A96A]"
                     />
                   </div>
 
-                  <div>
-                    <label className="block text-xs uppercase tracking-wider text-accent-gold mb-1">Number of Pass Seats</label>
-                    <select
-                      value={guestCount}
-                      onChange={(e) => setGuestCount(Number(e.target.value))}
-                      className="w-full bg-primary-dark/90 border border-accent-gold/30 rounded-xl py-2.5 px-4 text-sm text-secondary focus:outline-none focus:border-accent-gold"
-                    >
-                      <option value="1">1 VIP Pass</option>
-                      <option value="2">2 VIP Passes</option>
-                      <option value="4">4 VIP Passes</option>
-                      <option value="6">6 VIP Passes</option>
-                    </select>
-                  </div>
-
-                  <Button type="submit" variant="gold" size="lg" className="w-full mt-2">
-                    Confirm Seat Reservation
-                  </Button>
+                  <button
+                    type="submit"
+                    className="w-full py-3 rounded-full bg-[#351E13] hover:bg-[#4A2C1D] text-white font-bold text-xs uppercase tracking-wider shadow-md transition-all mt-2"
+                  >
+                    Confirm RSVP
+                  </button>
                 </form>
               )}
             </motion.div>

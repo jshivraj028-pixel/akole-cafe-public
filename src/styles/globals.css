@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -6,100 +8,138 @@
   html {
     scroll-behavior: smooth;
     color: #2A2A2A;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-text-size-adjust: 100%;
   }
 
   body {
-    background-color: #F7F2E8;
+    background-color: #F5EFE3;
     overflow-x: hidden;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 700;
+  }
+
+  nav, nav a {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  button {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
   }
 }
 
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
+
+
+/* Hide scrollbar for category pills on touch devices */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
-::-webkit-scrollbar-track {
-  background: #123524;
+/* Safe Area Insets for iOS Notch & Mobile Devices */
+.pt-safe {
+  padding-top: env(safe-area-inset-top, 1.25rem);
 }
-
-::-webkit-scrollbar-thumb {
-  background: #C8A96A;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #E5C989;
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 1.25rem);
 }
 
 /* Gold Text Gradient */
 .text-gold-gradient {
-  background: linear-gradient(135deg, #C8A96A 0%, #F3E5AB 50%, #A68748 100%);
+  background: linear-gradient(135deg, #D6AE4D 0%, #F3E5AB 50%, #B89035 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .bg-gold-gradient {
-  background: linear-gradient(135deg, #C8A96A 0%, #E5C989 50%, #A68748 100%);
+  background: linear-gradient(135deg, #D6AE4D 0%, #E5C989 50%, #B89035 100%);
 }
 
 /* Glassmorphism Styles */
 .glass-panel {
-  background: rgba(18, 53, 36, 0.75);
+  background: rgba(68, 86, 72, 0.85);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(200, 169, 106, 0.2);
+  border: 1px solid rgba(214, 174, 77, 0.25);
 }
 
 .glass-card {
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(200, 169, 106, 0.2);
+  border: 1px solid rgba(214, 174, 77, 0.25);
 }
 
-.glass-card-dark {
-  background: rgba(18, 53, 36, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(200, 169, 106, 0.25);
+/* Global Dark Mode Luxury Overrides */
+html.dark body {
+  background-color: #121A15 !important;
+  color: #E8E2D5 !important;
 }
 
-/* Swiper Styling Overrides */
-.swiper-pagination-bullet {
-  background: #C8A96A !important;
-  opacity: 0.5;
+html.dark header {
+  background-color: #18261E !important;
+  border-color: #26382C !important;
 }
 
-.swiper-pagination-bullet-active {
-  opacity: 1;
-  width: 24px !important;
-  border-radius: 6px !important;
-  background: #C8A96A !important;
+html.dark section,
+html.dark div.bg-\[\#F5EFE3\],
+html.dark div.bg-\[\#FAF6EE\] {
+  background-color: #141F18 !important;
 }
 
-.swiper-button-next,
-.swiper-button-prev {
-  color: #C8A96A !important;
-  background: rgba(18, 53, 36, 0.8);
-  width: 44px !important;
-  height: 44px !important;
-  border-radius: 50%;
-  border: 1px solid rgba(200, 169, 106, 0.3);
+html.dark .text-\[\#1F3A2B\] {
+  color: #EAE3D2 !important;
 }
 
-.swiper-button-next:after,
-.swiper-button-prev:after {
-  font-size: 18px !important;
-  font-weight: bold;
+html.dark .text-\[\#4A5D50\],
+html.dark .text-\[\#6B7C70\] {
+  color: #B2C4B7 !important;
 }
 
-/* Botanical Overlay Glow */
-.botanical-glow {
-  position: absolute;
-  width: 350px;
-  height: 350px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(200, 169, 106, 0.15) 0%, rgba(18, 53, 36, 0) 70%);
-  pointer-events: none;
+html.dark .bg-white,
+html.dark .bg-white\/80,
+html.dark .bg-\[\#FAF6EE\],
+html.dark .bg-\[\#EFE8D8\] {
+  background-color: #1D2C22 !important;
+  border-color: rgba(214, 174, 77, 0.3) !important;
+  color: #EAE3D2 !important;
+}
+
+html.dark input,
+html.dark select,
+html.dark textarea {
+  background-color: #16231B !important;
+  color: #EAE3D2 !important;
+  border-color: rgba(214, 174, 77, 0.35) !important;
+}
+
+html.dark ::placeholder {
+  color: #7A8E81 !important;
 }
