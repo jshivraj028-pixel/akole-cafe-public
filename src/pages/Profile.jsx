@@ -1,45 +1,113 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { FiHeart, FiAward, FiShoppingBag, FiUser, FiMapPin, FiClock, FiStar, FiCheck, FiTrash2 } from 'react-icons/fi';
+import { 
+  FiHeart, 
+  FiAward, 
+  FiShoppingBag, 
+  FiUser, 
+  FiMapPin, 
+  FiClock, 
+  FiStar, 
+  FiCheck, 
+  FiTrash2, 
+  FiLogOut, 
+  FiPhone, 
+  FiMail,
+  FiArrowRight
+} from 'react-icons/fi';
 import PageBanner from '../components/common/PageBanner';
 import Container from '../components/common/Container';
-import SectionTitle from '../components/common/SectionTitle';
 import Button from '../components/common/Button';
 import { useTheme } from '../context/ThemeContext';
 import { useCart } from '../context/CartContext';
-
-const mockOrders = [
-  {
-    id: 'ORD-9842',
-    date: 'July 20, 2026',
-    items: ['Akole Signature Gold Latte (2)', 'Truffle Burrata Pizza (1)'],
-    total: 1260,
-    status: 'Completed'
-  },
-  {
-    id: 'ORD-8912',
-    date: 'July 14, 2026',
-    items: ['Venetian Tiramisu (1)', 'Sahyadri Cold Brew (2)'],
-    total: 900,
-    status: 'Completed'
-  }
-];
+import { fetchOrdersAPI } from '../services/api';
 
 const Profile = () => {
+  const navigate = useNavigate();
   const { wishlistItems, toggleWishlist, showToast } = useTheme();
   const { addToCart } = useCart();
   const [activeTab, setActiveTab] = useState('wishlist');
+  const [userOrders, setUserOrders] = useState([]);
+  const [loadingOrders, setLoadingOrders] = useState(false);
+
+  // Load Logged-in user from localStorage
+  const [currentUser, setCurrentUser] = useState(() => {
+    const saved = localStorage.getItem('akole_user');
+    return saved ? JSON.parse(saved) : null;
+  });
+
+  // Handle Logout
+  const handleLogout = () => {
+    localStorage.removeItem('akole_token');
+    localStorage.removeItem('akole_user');
+    localStorage.removeItem('akole_admin_token');
+    setCurrentUser(null);
+    showToast('Logged out successfully', 'success');
+    navigate('/login');
+  };
+
+  // Fetch orders for current user
+  useEffect(() => {
+    if (currentUser && currentUser.email) {
+      let isMounted = true;
+      setLoadingOrders(true);
+      fetchOrdersAPI()
+        .then((orders) => {
+          if (isMounted && Array.isArray(orders)) {
+            const filtered = orders.filter(
+              (o) => o.customerEmail?.toLowerCase() === currentUser.email?.toLowerCase()
+            );
+            setUserOrders(filtered.length > 0 ? filtered : orders);
+          }
+        })
+        .catch((err) => console.error('Error fetching user orders:', err))
+        .finally(() => {
+          if (isMounted) setLoadingOrders(false);
+        });
+      return () => { isMounted = false; };
+    }
+  }, [currentUser]);
 
   const handleMoveToCart = (item) => {
     addToCart(item);
     showToast(`Added ${item.name} to Cart!`, 'success');
   };
 
+  if (!currentUser) {
+    return (
+      <>
+        <PageBanner
+          title="Guest Member Profile"
+          subtitle="Sign in to view your orders, loyalty points, and saved favorites"
+          bgImage="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1920&q=80"
+        />
+
+        <section className="py-20 bg-secondary text-center">
+          <Container>
+            <div className="max-w-md mx-auto p-8 rounded-3xl bg-primary text-secondary border border-accent-gold/30 shadow-2xl">
+              <div className="w-16 h-16 rounded-full bg-gold-gradient text-primary flex items-center justify-center text-3xl mx-auto mb-4 shadow-gold">
+                <FiUser />
+              </div>
+              <h2 className="font-serif text-2xl font-bold mb-2">No Member Account Found</h2>
+              <p className="text-xs text-secondary/70 mb-6 font-light">
+                Please sign in to access your profile, order history, and saved wishlist items.
+              </p>
+              <Button to="/login" variant="gold" size="lg" icon={FiArrowRight}>
+                Sign In / Create Account
+              </Button>
+            </div>
+          </Container>
+        </section>
+      </>
+    );
+  }
+
   return (
     <>
       <PageBanner
-        title="Guest Profile & Loyalty"
-        subtitle="Manage Your VIP Rewards, Saved Favorites, & Past Orders"
+        title="Member Profile & Loyalty"
+        subtitle="Manage Your VIP Rewards, Saved Favorites, & Order History"
         bgImage="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1920&q=80"
       />
 
@@ -51,23 +119,42 @@ const Profile = () => {
 
             <div className="flex flex-col sm:flex-row items-center justify-between gap-6 relative z-10">
               <div className="flex items-center gap-5 text-center sm:text-left">
-                <div className="w-20 h-20 rounded-full bg-gold-gradient text-primary flex items-center justify-center font-bold text-2xl shadow-gold shrink-0 border-2 border-secondary">
-                  👑
-                </div>
+                <img
+                  src={currentUser.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80'}
+                  alt={currentUser.name}
+                  className="w-20 h-20 rounded-full object-cover border-2 border-accent-gold shadow-gold shrink-0"
+                />
                 <div>
                   <div className="inline-block px-3 py-0.5 rounded-full bg-accent-gold/20 text-accent-gold text-[10px] uppercase font-bold tracking-widest border border-accent-gold/30 mb-1">
-                    Gold Tier Member
+                    {currentUser.role === 'admin' ? 'Cafe Administrator' : 'Gold Tier Member'}
                   </div>
-                  <h2 className="font-serif text-3xl font-extrabold text-secondary">Vikramaditya Shinde</h2>
-                  <p className="text-xs text-secondary/70 font-light mt-0.5">vikram@example.com • Akole, Maharashtra</p>
+                  <h2 className="font-serif text-3xl font-extrabold text-secondary">{currentUser.name}</h2>
+                  <p className="text-xs text-secondary/70 font-light mt-0.5 flex flex-wrap items-center justify-center sm:justify-start gap-2">
+                    <span className="flex items-center gap-1"><FiMail /> {currentUser.email}</span>
+                    {currentUser.phone && <span className="flex items-center gap-1">• <FiPhone /> {currentUser.phone}</span>}
+                  </p>
                 </div>
               </div>
 
-              {/* Points Card */}
-              <div className="p-4 rounded-2xl bg-primary-dark/80 border border-accent-gold/40 text-center sm:text-right shrink-0">
-                <span className="text-[10px] uppercase tracking-widest text-secondary/70 block font-semibold">Available Loyalty Points</span>
-                <span className="font-serif text-3xl font-extrabold text-accent-gold block my-1">500 Gold Points</span>
-                <span className="text-[10px] text-accent-gold/80 block">Worth ₹ 250 on next order</span>
+              {/* Points & Logout Actions */}
+              <div className="flex items-center gap-4">
+                <div className="p-4 rounded-2xl bg-primary-dark/80 border border-accent-gold/40 text-center sm:text-right shrink-0">
+                  <span className="text-[10px] uppercase tracking-widest text-secondary/70 block font-semibold">
+                    Available Loyalty Points
+                  </span>
+                  <span className="font-serif text-3xl font-extrabold text-accent-gold block my-1">
+                    500 Gold Points
+                  </span>
+                  <span className="text-[10px] text-accent-gold/80 block">Worth ₹ 250 on next order</span>
+                </div>
+
+                <button
+                  onClick={handleLogout}
+                  className="p-3.5 rounded-2xl bg-red-500/20 hover:bg-red-500/40 text-red-300 border border-red-500/40 transition-colors flex items-center gap-2 text-xs font-bold shrink-0"
+                  title="Sign Out"
+                >
+                  <FiLogOut className="text-base" /> Logout
+                </button>
               </div>
             </div>
           </div>
@@ -92,7 +179,7 @@ const Profile = () => {
                   : 'bg-primary/40 text-secondary hover:text-accent-gold'
               }`}
             >
-              <FiClock /> Order History
+              <FiClock /> Order History ({userOrders.length})
             </button>
             <button
               onClick={() => setActiveTab('rewards')}
@@ -106,14 +193,16 @@ const Profile = () => {
             </button>
           </div>
 
-          {/* Tab Content */}
+          {/* Tab Content 1: Wishlist */}
           {activeTab === 'wishlist' && (
             <div>
               {wishlistItems.length === 0 ? (
                 <div className="text-center py-16 glass-card rounded-3xl border border-accent-gold/20">
                   <FiHeart className="w-12 h-12 text-accent-goldDark mx-auto mb-3 opacity-60" />
                   <h3 className="font-serif text-xl font-bold text-primary mb-1">Your Wishlist is Empty</h3>
-                  <p className="text-xs text-dark/70 font-light mb-4">Save your favorite coffee brews and gourmet pizzas to quickly re-order anytime.</p>
+                  <p className="text-xs text-dark/70 font-light mb-4">
+                    Save your favorite coffee brews and gourmet pizzas to quickly re-order anytime.
+                  </p>
                   <Button to="/menu" variant="gold" size="md">
                     Explore Menu
                   </Button>
@@ -152,26 +241,55 @@ const Profile = () => {
             </div>
           )}
 
+          {/* Tab Content 2: Orders */}
           {activeTab === 'orders' && (
             <div className="space-y-4 max-w-3xl mx-auto">
-              {mockOrders.map((ord) => (
-                <div key={ord.id} className="glass-card p-6 rounded-2xl border border-accent-gold/20 flex items-center justify-between">
-                  <div>
-                    <div className="flex items-center gap-3 mb-1">
-                      <span className="font-mono text-sm font-bold text-primary">{ord.id}</span>
-                      <span className="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-semibold text-[10px]">
-                        {ord.status}
+              {loadingOrders ? (
+                <div className="text-center py-10 font-serif text-sm text-primary/60 animate-pulse">
+                  Loading order history...
+                </div>
+              ) : userOrders.length === 0 ? (
+                <div className="text-center py-16 glass-card rounded-3xl border border-accent-gold/20">
+                  <FiShoppingBag className="w-12 h-12 text-accent-goldDark mx-auto mb-3 opacity-60" />
+                  <h3 className="font-serif text-xl font-bold text-primary mb-1">No Orders Placed Yet</h3>
+                  <p className="text-xs text-dark/70 font-light mb-4">
+                    Your past culinary & brew orders will appear here once placed.
+                  </p>
+                  <Button to="/menu" variant="gold" size="md">
+                    Order Food Now
+                  </Button>
+                </div>
+              ) : (
+                userOrders.map((ord) => (
+                  <div key={ord._id || ord.orderId} className="glass-card p-6 rounded-2xl border border-accent-gold/20 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                      <div className="flex items-center gap-3 mb-1">
+                        <span className="font-mono text-sm font-bold text-primary">{ord.orderId}</span>
+                        <span className={`px-2.5 py-0.5 rounded-full font-semibold text-[10px] ${
+                          ord.status === 'Pending' ? 'bg-amber-100 text-amber-800' :
+                          ord.status === 'Confirmed' ? 'bg-blue-100 text-blue-800' :
+                          ord.status === 'Out for Delivery' ? 'bg-purple-100 text-purple-800' :
+                          ord.status === 'Delivered' ? 'bg-emerald-100 text-emerald-800' :
+                          'bg-red-100 text-red-800'
+                        }`}>
+                          {ord.status || 'Confirmed'}
+                        </span>
+                      </div>
+                      <p className="text-xs text-dark/70">
+                        {ord.items && ord.items.map((i) => `${i.name} (${i.quantity})`).join(', ')}
+                      </p>
+                      <span className="text-[11px] text-dark/50 block mt-1">
+                        {ord.createdAt ? new Date(ord.createdAt).toLocaleDateString() : 'Recent'}
                       </span>
                     </div>
-                    <p className="text-xs text-dark/70">{ord.items.join(', ')}</p>
-                    <span className="text-[11px] text-dark/50 block mt-1">{ord.date}</span>
+                    <span className="font-serif text-xl font-bold text-accent-goldDark">₹{ord.totalAmount}</span>
                   </div>
-                  <span className="font-serif text-lg font-bold text-accent-goldDark">₹{ord.total}</span>
-                </div>
-              ))}
+                ))
+              )}
             </div>
           )}
 
+          {/* Tab Content 3: VIP Perks */}
           {activeTab === 'rewards' && (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
               <div className="glass-card p-6 rounded-2xl border border-accent-gold/20 text-center">

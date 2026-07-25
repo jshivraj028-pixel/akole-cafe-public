@@ -1,34 +1,40 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import PageBanner from '../components/common/PageBanner';
 import Container from '../components/common/Container';
 import MenuFilter from '../components/menu/MenuFilter';
 import MenuGrid from '../components/menu/MenuGrid';
-import { menuItems } from '../data/menu';
+import { fetchMenuItems } from '../services/api';
+import { menuItems as staticFallbackItems } from '../data/menu';
 
 const Menu = () => {
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('featured');
+  const [items, setItems] = useState(staticFallbackItems);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    let isMounted = true;
+    const loadProducts = async () => {
+      setLoading(true);
+      try {
+        const data = await fetchMenuItems(activeCategory, searchQuery);
+        if (isMounted) {
+          setItems(data && data.length > 0 ? data : staticFallbackItems);
+        }
+      } catch (err) {
+        console.error('Failed to load menu products:', err);
+      } finally {
+        if (isMounted) setLoading(false);
+      }
+    };
+
+    loadProducts();
+    return () => { isMounted = false; };
+  }, [activeCategory, searchQuery]);
 
   const filteredAndSortedItems = useMemo(() => {
-    let result = [...menuItems];
-
-    // Filter by Category
-    if (activeCategory !== 'all') {
-      result = result.filter(item => item.category === activeCategory);
-    }
-
-    // Filter by Search
-    if (searchQuery.trim()) {
-      const q = searchQuery.toLowerCase();
-      result = result.filter(
-        item =>
-          item.name.toLowerCase().includes(q) ||
-          item.description.toLowerCase().includes(q) ||
-          item.category.toLowerCase().includes(q) ||
-          (item.tags && item.tags.some(t => t.toLowerCase().includes(q)))
-      );
-    }
+    let result = [...items];
 
     // Sort
     if (sortBy === 'rating') {
@@ -40,7 +46,7 @@ const Menu = () => {
     }
 
     return result;
-  }, [activeCategory, searchQuery, sortBy]);
+  }, [items, sortBy]);
 
   return (
     <>
@@ -61,7 +67,13 @@ const Menu = () => {
             setSortBy={setSortBy}
           />
 
-          <MenuGrid items={filteredAndSortedItems} />
+          {loading ? (
+            <div className="py-20 text-center text-primary/60 font-serif text-lg animate-pulse">
+              Fetching fresh artisanal menu items from MongoDB...
+            </div>
+          ) : (
+            <MenuGrid items={filteredAndSortedItems} />
+          )}
         </Container>
       </section>
     </>

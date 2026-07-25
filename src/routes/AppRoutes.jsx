@@ -14,6 +14,8 @@ import Franchise from '../pages/Franchise';
 import Contact from '../pages/Contact';
 import Profile from '../pages/Profile';
 import Cart from '../pages/Cart';
+import Login from '../pages/Login';
+import Admin from '../pages/Admin';
 import NotFound from '../pages/NotFound';
 
 const ScrollToTopOnRoute = () => {
@@ -32,7 +34,9 @@ const AppRoutes = () => {
       <ScrollToTopOnRoute />
       <MainLayout>
         <Routes>
-          <Route path="/" element={<Home />} />
+          {/* Default entry route opens Login page first */}
+          <Route path="/" element={<Login />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/menu" element={<Menu />} />
           <Route path="/about" element={<About />} />
           <Route path="/reserve" element={<Reserve />} />
@@ -43,6 +47,8 @@ const AppRoutes = () => {
           <Route path="/contact" element={<Contact />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/admin" element={<Admin />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </MainLayout>
