@@ -79,11 +79,11 @@ const Navbar = () => {
             : 'bg-[#EFE8D8] border-b border-[#D8CEB8]'
         }`}
       >
-        <div className="w-full max-w-[1280px] mx-auto flex items-center justify-between">
+        <div className="w-full max-w-[1400px] mx-auto flex items-center justify-between gap-4">
           
           {/* Logo: Circular Emblem Image + Cormorant Garamond Typography */}
-          <Link to="/" className="flex items-center gap-3 group shrink-0">
-            <div className="w-10 h-10 sm:w-11 sm:h-11 shrink-0 rounded-full overflow-hidden flex items-center justify-center bg-transparent">
+          <Link to="/" className="flex items-center gap-2.5 group shrink-0 mr-4 xl:mr-8">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 shrink-0 rounded-full overflow-hidden flex items-center justify-center bg-transparent">
               <img
                 src={logoEmblem}
                 alt="Akole Café Emblem Logo"
@@ -100,45 +100,43 @@ const Navbar = () => {
               >
                 Akole
               </span>
-              <span className="italic font-medium text-[#D6AE4D] ml-1">
+              <span className="italic font-medium text-[#D6AE4D] ml-1.5">
                 Café
               </span>
             </div>
           </Link>
 
-          {/* Navigation Links + Action Icons Grouped with Balanced Spacing */}
-          <div className="flex items-center gap-6 xl:gap-10">
-            {/* Desktop Navigation Links */}
-            <nav className="hidden lg:flex items-center gap-5 xl:gap-7">
-              {navLinks.map((link) => {
-                const isActive = pathname === link.path;
-                return (
-                  <Link
-                    key={link.name}
-                    to={link.path}
-                    className={`relative font-montserrat text-[11px] xl:text-xs font-semibold tracking-widest uppercase transition-colors duration-200 py-1 ${
-                      isActive
-                        ? 'text-[#D6AE4D]'
-                        : isHome
-                        ? 'text-[#D6E0DA] hover:text-[#D6AE4D]'
-                        : 'text-[#4A5D50] hover:text-[#D6AE4D]'
-                    }`}
-                  >
-                    {link.name}
-                    {isActive && (
-                      <motion.div
-                        layoutId="activeNavUnderline"
-                        className="absolute -bottom-1 left-0 right-0 h-[2.5px] bg-[#D6AE4D]"
-                        transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-                      />
-                    )}
-                  </Link>
-                );
-              })}
-            </nav>
+          {/* Desktop Navigation Links */}
+          <nav className="hidden lg:flex items-center gap-4 xl:gap-6 shrink-0">
+            {navLinks.map((link) => {
+              const isActive = pathname === link.path;
+              return (
+                <Link
+                  key={link.name}
+                  to={link.path}
+                  className={`relative font-montserrat text-[11px] xl:text-xs font-semibold tracking-wider uppercase transition-colors duration-200 py-1 ${
+                    isActive
+                      ? 'text-[#D6AE4D]'
+                      : isHome
+                      ? 'text-[#D6E0DA] hover:text-[#D6AE4D]'
+                      : 'text-[#4A5D50] hover:text-[#D6AE4D]'
+                  }`}
+                >
+                  {link.name}
+                  {isActive && (
+                    <motion.div
+                      layoutId="activeNavUnderline"
+                      className="absolute -bottom-1 left-0 right-0 h-[2.5px] bg-[#D6AE4D]"
+                      transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                    />
+                  )}
+                </Link>
+              );
+            })}
+          </nav>
 
-            {/* Right Action Icons & Gold Rounded ORDER NOW Button */}
-            <div className="flex items-center gap-3.5 sm:gap-4 shrink-0">
+          {/* Right Action Icons & Gold Rounded ORDER NOW Button */}
+          <div className="flex items-center gap-3.5 sm:gap-4 shrink-0">
               {/* 1. Search Icon */}
               <button
                 onClick={() => setIsSearchOpen(true)}
@@ -270,7 +268,7 @@ const Navbar = () => {
                 )}
               </button>
 
-              {/* 5. User Profile / Logout Icon Link */}
+              {/* 5. User Profile / Login & Register Link */}
               {isAuthenticated || loggedUser ? (
                 <Link
                   to="/profile"
@@ -284,16 +282,28 @@ const Navbar = () => {
                   <span className="w-2 h-2 rounded-full bg-emerald-400" />
                 </Link>
               ) : (
-                <Link
-                  to="/login"
-                  className={`p-1.5 transition-colors relative ${
-                    isHome ? 'text-white hover:text-[#D6AE4D]' : 'text-[#354F42] hover:text-[#D6AE4D]'
-                  }`}
-                  title="Sign In / Login"
-                  aria-label="Sign In / Login"
-                >
-                  <User className="w-5 h-5 stroke-[2]" />
-                </Link>
+                <div className="flex items-center gap-2">
+                  <Link
+                    to="/login"
+                    className={`px-3 py-1 text-xs font-montserrat font-semibold tracking-wider uppercase rounded-full border transition-all ${
+                      isHome
+                        ? 'border-[#D6AE4D] text-[#D6AE4D] hover:bg-[#D6AE4D] hover:text-[#2A3B2F]'
+                        : 'border-[#354F42] text-[#354F42] hover:bg-[#354F42] hover:text-white'
+                    }`}
+                  >
+                    LOGIN
+                  </Link>
+                  <Link
+                    to="/register"
+                    className={`hidden xl:inline-flex px-3 py-1 text-xs font-montserrat font-semibold tracking-wider uppercase rounded-full transition-all ${
+                      isHome
+                        ? 'bg-[#D6AE4D]/20 text-[#D6AE4D] hover:bg-[#D6AE4D] hover:text-[#2A3B2F]'
+                        : 'bg-[#354F42]/10 text-[#354F42] hover:bg-[#354F42] hover:text-white'
+                    }`}
+                  >
+                    SIGN UP
+                  </Link>
+                </div>
               )}
 
               {/* 6. Gold Rounded ORDER NOW Button */}
@@ -316,8 +326,7 @@ const Navbar = () => {
               </button>
             </div>
           </div>
-        </div>
-      </header>
+        </header>
 
       {/* Mobile Menu */}
       <MobileMenu

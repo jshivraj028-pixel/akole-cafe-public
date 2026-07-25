@@ -9,7 +9,7 @@ import Lenis from 'lenis';
 const MainLayout = ({ children }) => {
   const { pathname } = useLocation();
 
-  const isStandalonePage = pathname === '/' || pathname === '/login' || pathname === '/admin';
+  const isStandalonePage = pathname === '/login' || pathname === '/register' || pathname === '/signup' || pathname === '/forgot-password' || pathname === '/admin';
 
   useEffect(() => {
     // Initialize Lenis Smooth Scroll for main website

@@ -81,6 +81,23 @@ const MobileMenu = ({ isOpen, onClose, links }) => {
 
             {/* Bottom Actions */}
             <div className="pt-5 border-t border-[#456455] space-y-4">
+              <div className="flex items-center gap-2">
+                <Link
+                  to="/login"
+                  onClick={onClose}
+                  className="flex-1 py-2.5 rounded-full border border-[#D4B055] text-[#D4B055] font-serif font-bold text-xs uppercase tracking-wider text-center block"
+                >
+                  LOG IN
+                </Link>
+                <Link
+                  to="/register"
+                  onClick={onClose}
+                  className="flex-1 py-2.5 rounded-full bg-white/10 text-white font-serif font-bold text-xs uppercase tracking-wider text-center block"
+                >
+                  SIGN UP
+                </Link>
+              </div>
+
               <Link
                 to="/menu"
                 onClick={onClose}
