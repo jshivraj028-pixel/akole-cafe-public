@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { User, Mail, Phone, Lock, Eye, EyeOff, CheckCircle2, AlertCircle, Check } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
 import SocialLogin from './SocialLogin';
@@ -306,24 +307,41 @@ const RegisterForm = () => {
         )}
       </div>
 
-      {/* Terms Checkbox */}
+      {/* Terms Custom Checkbox */}
       <div className="pt-1">
-        <div className="flex items-center gap-2">
-          <input
-            type="checkbox"
-            id="agreeTerms"
-            name="agreeTerms"
-            checked={formData.agreeTerms}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            className="w-4 h-4 rounded accent-[#D6AE4D] cursor-pointer"
-          />
-          <label htmlFor="agreeTerms" className="text-[11px] text-[#6B7C70] dark:text-[#A0B0A5] cursor-pointer select-none">
+        <label
+          onClick={() => {
+            const newVal = !formData.agreeTerms;
+            handleChange({ target: { name: 'agreeTerms', value: newVal, type: 'checkbox', checked: newVal } });
+            handleBlur({ target: { name: 'agreeTerms', value: newVal, type: 'checkbox', checked: newVal } });
+          }}
+          className="flex items-center gap-2.5 cursor-pointer select-none text-[#6B7C70] dark:text-[#A0B0A5] hover:text-[#123524] dark:hover:text-white transition-colors group"
+        >
+          <div
+            className={`w-4.5 h-4.5 rounded-md border transition-all flex items-center justify-center shrink-0 ${
+              formData.agreeTerms
+                ? 'bg-[#123524] border-[#D6AE4D] text-[#D6AE4D] shadow-sm'
+                : touched.agreeTerms && errors.agreeTerms
+                ? 'border-red-500 bg-red-50/20'
+                : 'bg-white/80 dark:bg-[#16231B] border-[#D6AE4D]/40 group-hover:border-[#D6AE4D]'
+            }`}
+          >
+            {formData.agreeTerms && (
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ type: 'spring', stiffness: 500, damping: 25 }}
+              >
+                <Check className="w-3.5 h-3.5 stroke-[3] text-[#D6AE4D]" />
+              </motion.div>
+            )}
+          </div>
+          <span className="text-[11px]">
             I agree to the <span className="text-[#D6AE4D] font-semibold underline">Terms of Service</span> & <span className="text-[#D6AE4D] font-semibold underline">Privacy Policy</span>
-          </label>
-        </div>
+          </span>
+        </label>
         {touched.agreeTerms && errors.agreeTerms && (
-          <p className="text-[10px] text-red-500 font-medium mt-1">{errors.agreeTerms}</p>
+          <p className="text-[10px] text-red-500 font-medium mt-1 pl-7">{errors.agreeTerms}</p>
         )}
       </div>
 
