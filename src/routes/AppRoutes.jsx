@@ -16,6 +16,7 @@ import Contact from '../pages/Contact';
 import Profile from '../pages/Profile';
 import Cart from '../pages/Cart';
 import Login from '../pages/Login';
+import Register from '../pages/Register';
 import NotFound from '../pages/NotFound';
 
 const ScrollToTopOnRoute = () => {
@@ -55,6 +56,25 @@ const AppRoutes = () => {
           element={
             <PublicLoginRoute>
               <Login />
+            </PublicLoginRoute>
+          }
+        />
+
+        {/* Full-screen Sign Up / Register Page */}
+        <Route
+          path="/register"
+          element={
+            <PublicLoginRoute>
+              <Register />
+            </PublicLoginRoute>
+          }
+        />
+
+        <Route
+          path="/signup"
+          element={
+            <PublicLoginRoute>
+              <Register />
             </PublicLoginRoute>
           }
         />
