@@ -318,30 +318,30 @@ const RegisterForm = () => {
           className="flex items-center gap-2.5 cursor-pointer select-none text-[#6B7C70] dark:text-[#A0B0A5] hover:text-[#123524] dark:hover:text-white transition-colors group"
         >
           <div
-            className={`w-4.5 h-4.5 rounded-md border transition-all flex items-center justify-center shrink-0 ${
+            className={`w-5 h-5 rounded-md border-2 transition-all duration-200 flex items-center justify-center shrink-0 transform group-hover:scale-105 ${
               formData.agreeTerms
-                ? 'bg-[#123524] border-[#D6AE4D] text-[#D6AE4D] shadow-sm'
+                ? 'bg-gradient-to-br from-[#D6AE4D] to-[#B89035] border-[#D6AE4D] shadow-md shadow-[#D6AE4D]/25 ring-2 ring-[#D6AE4D]/20'
                 : touched.agreeTerms && errors.agreeTerms
                 ? 'border-red-500 bg-red-50/20'
-                : 'bg-white/80 dark:bg-[#16231B] border-[#D6AE4D]/40 group-hover:border-[#D6AE4D]'
+                : 'bg-white/90 dark:bg-[#16231B] border-[#D6AE4D]/50 group-hover:border-[#D6AE4D]'
             }`}
           >
             {formData.agreeTerms && (
               <motion.div
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ type: 'spring', stiffness: 500, damping: 25 }}
+                initial={{ scale: 0, rotate: -20 }}
+                animate={{ scale: 1, rotate: 0 }}
+                transition={{ type: 'spring', stiffness: 600, damping: 22 }}
               >
-                <Check className="w-3.5 h-3.5 stroke-[3] text-[#D6AE4D]" />
+                <Check className="w-3.5 h-3.5 stroke-[3.5] text-[#123524]" />
               </motion.div>
             )}
           </div>
-          <span className="text-[11px]">
+          <span className="text-[11px] text-[#123524] dark:text-[#EAE3D2]">
             I agree to the <span className="text-[#D6AE4D] font-semibold underline">Terms of Service</span> & <span className="text-[#D6AE4D] font-semibold underline">Privacy Policy</span>
           </span>
         </label>
         {touched.agreeTerms && errors.agreeTerms && (
-          <p className="text-[10px] text-red-500 font-medium mt-1 pl-7">{errors.agreeTerms}</p>
+          <p className="text-[10px] text-red-500 font-medium mt-1 pl-7.5">{errors.agreeTerms}</p>
         )}
       </div>
 

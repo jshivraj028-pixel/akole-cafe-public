@@ -11,23 +11,23 @@ const RememberMe = ({ rememberMe, setRememberMe }) => {
         className="flex items-center gap-2.5 cursor-pointer select-none text-[#6B7C70] dark:text-[#A0B0A5] hover:text-[#123524] dark:hover:text-white transition-colors group"
       >
         <div
-          className={`w-4.5 h-4.5 rounded-md border transition-all flex items-center justify-center ${
+          className={`w-5 h-5 rounded-md border-2 transition-all duration-200 flex items-center justify-center shrink-0 transform group-hover:scale-105 ${
             rememberMe
-              ? 'bg-[#123524] border-[#D6AE4D] text-[#D6AE4D] shadow-sm'
-              : 'bg-white/80 dark:bg-[#16231B] border-[#D6AE4D]/40 group-hover:border-[#D6AE4D]'
+              ? 'bg-gradient-to-br from-[#D6AE4D] to-[#B89035] border-[#D6AE4D] shadow-md shadow-[#D6AE4D]/25 ring-2 ring-[#D6AE4D]/20'
+              : 'bg-white/90 dark:bg-[#16231B] border-[#D6AE4D]/50 group-hover:border-[#D6AE4D]'
           }`}
         >
           {rememberMe && (
             <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ type: 'spring', stiffness: 500, damping: 25 }}
+              initial={{ scale: 0, rotate: -20 }}
+              animate={{ scale: 1, rotate: 0 }}
+              transition={{ type: 'spring', stiffness: 600, damping: 22 }}
             >
-              <Check className="w-3.5 h-3.5 stroke-[3] text-[#D6AE4D]" />
+              <Check className="w-3.5 h-3.5 stroke-[3.5] text-[#123524]" />
             </motion.div>
           )}
         </div>
-        <span className="font-medium text-xs">Remember Me</span>
+        <span className="font-medium text-xs text-[#123524] dark:text-[#EAE3D2]">Remember Me</span>
       </label>
 
       <Link
