@@ -1,6 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-const RememberMe = ({ rememberMe, setRememberMe, onForgotPassword }) => {
+const RememberMe = ({ rememberMe, setRememberMe }) => {
   return (
     <div className="flex items-center justify-between text-xs font-montserrat pt-1">
       <label className="flex items-center gap-2 cursor-pointer select-none text-[#6B7C70] dark:text-[#A0B0A5] hover:text-[#1F3A2B] transition-colors">
@@ -13,13 +14,12 @@ const RememberMe = ({ rememberMe, setRememberMe, onForgotPassword }) => {
         <span>Remember Me</span>
       </label>
 
-      <button
-        type="button"
-        onClick={onForgotPassword}
-        className="font-medium text-[#C8A96A] hover:text-[#A68748] transition-colors hover:underline"
+      <Link
+        to="/forgot-password"
+        className="font-medium text-[#D6AE4D] hover:text-[#c59d3c] transition-colors hover:underline text-[11px] uppercase tracking-wider font-semibold"
       >
-        Forgot Password?
-      </button>
+        FORGOT PASSWORD?
+      </Link>
     </div>
   );
 };

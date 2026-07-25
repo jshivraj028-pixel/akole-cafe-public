@@ -17,18 +17,20 @@ import Profile from '../pages/Profile';
 import Cart from '../pages/Cart';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
+import ForgotPassword from '../pages/ForgotPassword';
 import NotFound from '../pages/NotFound';
 
 const ScrollToTopOnRoute = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   }, [pathname]);
 
   return null;
 };
 
+// Route wrapper for authenticated users
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated } = useTheme();
   if (!isAuthenticated) {
@@ -37,7 +39,8 @@ const ProtectedRoute = ({ children }) => {
   return children;
 };
 
-const PublicLoginRoute = ({ children }) => {
+// Route wrapper for unauthenticated users (login, signup, forgot password)
+const PublicAuthRoute = ({ children }) => {
   const { isAuthenticated } = useTheme();
   if (isAuthenticated) {
     return <Navigate to="/" replace />;
@@ -50,36 +53,44 @@ const AppRoutes = () => {
     <>
       <ScrollToTopOnRoute />
       <Routes>
-        {/* Full-screen Login Page */}
+        {/* Auth Full-Screen Routes */}
         <Route
           path="/login"
           element={
-            <PublicLoginRoute>
+            <PublicAuthRoute>
               <Login />
-            </PublicLoginRoute>
+            </PublicAuthRoute>
           }
         />
 
-        {/* Full-screen Sign Up / Register Page */}
         <Route
           path="/register"
           element={
-            <PublicLoginRoute>
+            <PublicAuthRoute>
               <Register />
-            </PublicLoginRoute>
+            </PublicAuthRoute>
           }
         />
 
         <Route
           path="/signup"
           element={
-            <PublicLoginRoute>
+            <PublicAuthRoute>
               <Register />
-            </PublicLoginRoute>
+            </PublicAuthRoute>
           }
         />
 
-        {/* Protected Main Layout Pages */}
+        <Route
+          path="/forgot-password"
+          element={
+            <PublicAuthRoute>
+              <ForgotPassword />
+            </PublicAuthRoute>
+          }
+        />
+
+        {/* Protected Main Application Layout Routes */}
         <Route
           path="*"
           element={

@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Loader2 } from 'lucide-react';
-import AuthInput from './AuthInput';
-import PasswordInput from './PasswordInput';
+import { Loader2, Mail, Lock, Eye, EyeOff, AlertCircle, Check } from 'lucide-react';
 import RememberMe from './RememberMe';
 import Divider from './Divider';
 import SocialLogin from './SocialLogin';
@@ -16,31 +14,66 @@ const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
 
+  const [touched, setTouched] = useState({});
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
-  const validate = () => {
-    const errs = {};
-    if (!email) {
-      errs.email = 'Email Address is required.';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      errs.email = 'Please enter a valid email format (e.g. vikram@example.com).';
+  const validateField = (field, val) => {
+    let err = '';
+    if (field === 'email') {
+      if (!val.trim()) {
+        err = 'Email address is required';
+      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
+        err = 'Please enter a valid email address (e.g. vikram@example.com)';
+      }
     }
-
-    if (!password) {
-      errs.password = 'Password is required.';
-    } else if (password.length < 8) {
-      errs.password = 'Password must be at least 8 characters long.';
+    if (field === 'password') {
+      if (!val) {
+        err = 'Password is required';
+      } else if (val.length < 6) {
+        err = 'Password must be at least 6 characters long';
+      }
     }
+    return err;
+  };
 
-    setErrors(errs);
-    return Object.keys(errs).length === 0;
+  const handleEmailChange = (e) => {
+    const val = e.target.value;
+    setEmail(val);
+    if (touched.email) {
+      setErrors((prev) => ({ ...prev, email: validateField('email', val) }));
+    }
+  };
+
+  const handlePasswordChange = (e) => {
+    const val = e.target.value;
+    setPassword(val);
+    if (touched.password) {
+      setErrors((prev) => ({ ...prev, password: validateField('password', val) }));
+    }
+  };
+
+  const handleBlur = (field, val) => {
+    setTouched((prev) => ({ ...prev, [field]: true }));
+    setErrors((prev) => ({ ...prev, [field]: validateField(field, val) }));
+  };
+
+  const validateAll = () => {
+    const emailErr = validateField('email', email);
+    const passwordErr = validateField('password', password);
+    setErrors({ email: emailErr, password: passwordErr });
+    setTouched({ email: true, password: true });
+    return !emailErr && !passwordErr;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!validate()) return;
+    if (!validateAll()) {
+      showToast('Please fix the errors before signing in.', 'error');
+      return;
+    }
 
     setIsLoading(true);
 
@@ -61,27 +94,68 @@ const LoginForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5" noValidate>
+    <form onSubmit={handleSubmit} className="space-y-4 text-left w-full" noValidate>
+      
       {/* Email Input */}
-      <AuthInput
-        label="Email Address"
-        id="login-email"
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="vikram@example.com"
-        error={errors.email}
-      />
+      <div>
+        <label className="block text-[11px] uppercase tracking-widest font-semibold text-[#123524] dark:text-[#EAE3D2] mb-1">
+          Email Address <span className="text-red-500">*</span>
+        </label>
+        <div className="relative">
+          <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#D6AE4D]" />
+          <input
+            type="email"
+            id="login-email"
+            value={email}
+            onChange={handleEmailChange}
+            onBlur={() => handleBlur('email', email)}
+            placeholder="vikram@example.com"
+            className={`w-full pl-10 pr-10 py-2.5 rounded-xl bg-white/80 dark:bg-[#16231B] border text-xs text-[#123524] dark:text-[#EAE3D2] placeholder-[#8B9B90] focus:outline-none focus:ring-2 focus:ring-[#D6AE4D]/50 transition-all ${
+              touched.email && errors.email ? 'border-red-500 bg-red-50/20' : touched.email && !errors.email ? 'border-emerald-500' : 'border-[#D6AE4D]/30'
+            }`}
+          />
+          {touched.email && !errors.email && (
+            <Check className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-emerald-500" />
+          )}
+          {touched.email && errors.email && (
+            <AlertCircle className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-red-500" />
+          )}
+        </div>
+        {touched.email && errors.email && (
+          <p className="text-[10px] text-red-500 font-medium mt-1">{errors.email}</p>
+        )}
+      </div>
 
       {/* Password Input */}
-      <PasswordInput
-        label="Password"
-        id="login-password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="••••••••"
-        error={errors.password}
-      />
+      <div>
+        <label className="block text-[11px] uppercase tracking-widest font-semibold text-[#123524] dark:text-[#EAE3D2] mb-1">
+          Password <span className="text-red-500">*</span>
+        </label>
+        <div className="relative">
+          <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#D6AE4D]" />
+          <input
+            type={showPassword ? 'text' : 'password'}
+            id="login-password"
+            value={password}
+            onChange={handlePasswordChange}
+            onBlur={() => handleBlur('password', password)}
+            placeholder="••••••••"
+            className={`w-full pl-10 pr-10 py-2.5 rounded-xl bg-white/80 dark:bg-[#16231B] border text-xs text-[#123524] dark:text-[#EAE3D2] placeholder-[#8B9B90] focus:outline-none focus:ring-2 focus:ring-[#D6AE4D]/50 transition-all ${
+              touched.password && errors.password ? 'border-red-500 bg-red-50/20' : touched.password && !errors.password ? 'border-emerald-500' : 'border-[#D6AE4D]/30'
+            }`}
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#8B9B90] hover:text-[#D6AE4D]"
+          >
+            {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+          </button>
+        </div>
+        {touched.password && errors.password && (
+          <p className="text-[10px] text-red-500 font-medium mt-1">{errors.password}</p>
+        )}
+      </div>
 
       {/* Remember Me & Forgot Password */}
       <RememberMe
@@ -96,7 +170,7 @@ const LoginForm = () => {
         whileTap={{ scale: 0.98 }}
         type="submit"
         disabled={isLoading}
-        className="w-full py-3.5 px-6 rounded-full bg-[#123524] hover:bg-[#C8A96A] text-white hover:text-[#123524] font-montserrat font-bold text-xs uppercase tracking-[2px] shadow-md transition-all duration-300 flex items-center justify-center gap-2"
+        className="w-full py-3.5 px-6 rounded-full bg-[#123524] hover:bg-[#D6AE4D] text-white hover:text-[#123524] font-montserrat font-bold text-xs uppercase tracking-[2px] shadow-md transition-all duration-300 flex items-center justify-center gap-2"
       >
         {isLoading ? (
           <>
@@ -120,7 +194,7 @@ const LoginForm = () => {
       {/* Create Account Link */}
       <div className="text-center pt-2 text-xs font-montserrat text-[#6B7C70] dark:text-[#A0B0A5]">
         <span>Don't have an account? </span>
-        <Link to="/register" className="font-bold text-[#C8A96A] hover:underline ml-1">
+        <Link to="/register" className="font-bold text-[#D6AE4D] hover:underline ml-1">
           Create Account
         </Link>
       </div>
