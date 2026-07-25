@@ -1,103 +1,84 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FiInstagram, FiHeart, FiMessageCircle } from 'react-icons/fi';
 import Container from '../common/Container';
-import SectionTitle from '../common/SectionTitle';
+import { FiInstagram } from 'react-icons/fi';
 
-const instaPosts = [
+const instagramPosts = [
   {
     id: 1,
-    image: 'https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=600&q=80',
-    likes: '1.2k',
-    comments: '84',
-    handle: '@akolecafe'
+    image: "https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=600&q=80",
+    alt: "Artisanal Latte Art",
   },
   {
     id: 2,
-    image: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=600&q=80',
-    likes: '2.4k',
-    comments: '132',
-    handle: '@akolecafe'
+    image: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=600&q=80",
+    alt: "Croissant and Fresh Coffee",
   },
   {
     id: 3,
-    image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=600&q=80',
-    likes: '980',
-    comments: '56',
-    handle: '@akolecafe'
+    image: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=600&q=80",
+    alt: "Iced Speciality Brew",
   },
   {
     id: 4,
-    image: 'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?auto=format&fit=crop&w=600&q=80',
-    likes: '3.1k',
-    comments: '210',
-    handle: '@akolecafe'
+    image: "https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=600&q=80",
+    alt: "Freshly Roasted Coffee Beans",
   },
   {
     id: 5,
-    image: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=600&q=80',
-    likes: '1.8k',
-    comments: '92',
-    handle: '@akolecafe'
+    image: "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?auto=format&fit=crop&w=600&q=80",
+    alt: "Cozy Cafe Seating",
   },
   {
     id: 6,
-    image: 'https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=600&q=80',
-    likes: '1.5k',
-    comments: '77',
-    handle: '@akolecafe'
-  }
+    image: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=600&q=80",
+    alt: "Decadent Chocolate Cake",
+  },
 ];
 
 const InstagramSection = () => {
   return (
-    <section className="py-20 bg-primary text-secondary relative overflow-hidden">
+    <section className="py-20 sm:py-24 bg-[#F5F2EA] relative overflow-hidden">
       <Container>
-        <SectionTitle
-          subtitle="FOLLOW OUR JOURNEY"
-          title="#AkoleCafeMoments"
-          description="Tag @akolecafe in your stories and posts to get featured on our official luxury wall."
-          centered
-        />
+        {/* Section Header */}
+        <div className="text-center space-y-2 mb-10">
+          <span className="text-xs uppercase tracking-[0.25em] font-semibold text-[#C8A96A] font-sans block">
+            FOLLOW US
+          </span>
+          <a
+            href="https://instagram.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 font-serif text-3xl sm:text-4xl font-normal italic text-[#C8A96A] hover:text-[#2F4436] transition-colors"
+          >
+            <span>akolecafe</span>
+          </a>
+        </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 my-12">
-          {instaPosts.map((post, idx) => (
+        {/* 6 Square Photos Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
+          {instagramPosts.map((post, idx) => (
             <motion.a
               key={post.id}
               href="https://instagram.com"
               target="_blank"
-              rel="noreferrer"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              rel="noopener noreferrer"
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: idx * 0.08 }}
-              className="relative h-48 sm:h-56 rounded-xl overflow-hidden group shadow-luxury border border-accent-gold/20"
+              transition={{ duration: 0.5, delay: idx * 0.08 }}
+              className="group relative h-40 sm:h-44 rounded-xl overflow-hidden shadow-sm"
             >
               <img
                 src={post.image}
-                alt="Instagram Moment"
-                className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
+                alt={post.alt}
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
               />
-              <div className="absolute inset-0 bg-primary/70 backdrop-blur-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-2 text-accent-gold">
-                <FiInstagram className="w-8 h-8 transform group-hover:scale-110 transition-transform" />
-                <div className="flex items-center gap-4 text-xs font-semibold text-secondary">
-                  <span className="flex items-center gap-1"><FiHeart className="text-accent-gold fill-accent-gold" /> {post.likes}</span>
-                  <span className="flex items-center gap-1"><FiMessageCircle className="text-accent-gold" /> {post.comments}</span>
-                </div>
+              <div className="absolute inset-0 bg-[#1B3828]/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center text-white">
+                <FiInstagram className="w-7 h-7 text-[#C8A96A]" />
               </div>
             </motion.a>
           ))}
-        </div>
-
-        <div className="text-center">
-          <a
-            href="https://instagram.com"
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-gold-gradient text-primary font-semibold text-sm hover:scale-105 transition-transform shadow-gold"
-          >
-            <FiInstagram className="w-5 h-5" /> Follow @akolecafe on Instagram
-          </a>
         </div>
       </Container>
     </section>

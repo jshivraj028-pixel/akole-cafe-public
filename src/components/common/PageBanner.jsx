@@ -1,43 +1,36 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import Container from './Container';
 
-const PageBanner = ({ title, subtitle, bgImage = 'https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=1920&q=80' }) => {
+const PageBanner = ({
+  title = "Our",
+  highlight = "Story",
+  subtitle = "ABOUT US",
+  bgImage = "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1920&q=80"
+}) => {
   return (
-    <div className="relative h-[45vh] min-h-[350px] flex items-center justify-center bg-primary overflow-hidden">
-      {/* Background Image with Dark Overlay */}
+    <div className="relative h-64 sm:h-80 md:h-96 flex items-center justify-center bg-[#1B110B] overflow-hidden pt-16">
+      {/* Dark Cozy Cafe Background Image */}
       <div 
-        className="absolute inset-0 bg-cover bg-center opacity-30 transform scale-105 transition-transform duration-1000"
+        className="absolute inset-0 bg-cover bg-center opacity-60 mix-blend-luminosity"
         style={{ backgroundImage: `url(${bgImage})` }}
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/70 to-primary/40" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#1B110B] via-transparent to-[#1B110B]/70" />
 
-      {/* Ambient Glow */}
-      <div className="botanical-glow top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
-
-      <Container className="relative z-10 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-        >
-          {subtitle && (
-            <div className="flex items-center justify-center gap-2 mb-3">
-              <span className="h-[1px] w-8 bg-accent-gold"></span>
-              <span className="text-xs uppercase tracking-[0.3em] font-semibold text-accent-gold">
-                {subtitle}
-              </span>
-              <span className="h-[1px] w-8 bg-accent-gold"></span>
-            </div>
-          )}
-
-          <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-secondary tracking-wide">
-            {title}
-          </h1>
-
-          <div className="w-16 h-1 bg-gold-gradient mx-auto mt-6 rounded-full" />
-        </motion.div>
-      </Container>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7 }}
+        className="relative z-10 text-center space-y-1.5"
+      >
+        {subtitle && (
+          <span className="text-[11px] uppercase tracking-[0.25em] font-semibold text-[#D4B055] block">
+            {subtitle}
+          </span>
+        )}
+        <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-normal text-white tracking-wide">
+          {title} <span className="italic font-serif font-normal text-[#D4B055] ml-1">{highlight}</span>
+        </h1>
+      </motion.div>
     </div>
   );
 };

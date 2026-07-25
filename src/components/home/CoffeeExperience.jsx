@@ -1,67 +1,50 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FiAward, FiSun, FiHeart, FiFeather } from 'react-icons/fi';
+import { FiCoffee } from 'react-icons/fi';
 import Container from '../common/Container';
-import SectionTitle from '../common/SectionTitle';
-
-const experiences = [
-  {
-    icon: FiAward,
-    title: "100% Shade-Grown Beans",
-    description: "Sourced directly from high-altitude plantations in Chikmagalur, roasted in small batches for pristine flavor balance."
-  },
-  {
-    icon: FiSun,
-    title: "Artisanal Woodfired Cuisine",
-    description: "Sourdough pizzas and craft burgers prepared fresh daily using 48-hour fermented dough and organic local ingredients."
-  },
-  {
-    icon: FiHeart,
-    title: "Warm Heritage Hospitality",
-    description: "A welcoming atmosphere designed for families, couples, and friends to create long-lasting memories in Akole."
-  },
-  {
-    icon: FiFeather,
-    title: "Botanical Luxury Interiors",
-    description: "Elegantly curated spaces with natural emerald tones, warm brass accents, and serene indoor flora."
-  }
-];
+import botanicalPattern from '../../assets/botanical-banner.png';
 
 const CoffeeExperience = () => {
   return (
-    <section className="py-24 bg-secondary relative overflow-hidden">
-      <Container>
-        <SectionTitle
-          subtitle="The Akole Standard"
-          title="Crafted for Coffee Connoisseurs & Gourmets"
-          description="Every visit to Akole Cafe is a sensory journey where tradition meets contemporary culinary mastery."
-          align="center"
+    <div className="w-full bg-[#F5EFE3]">
+      {/* 1. Ultra-HD Vintage Botanical Coffee Cherry Banner Strip (Proper Height & Seamless Framing) */}
+      <div className="w-full h-52 sm:h-64 md:h-72 lg:h-80 relative overflow-hidden bg-[#F5EFE3] border-t border-b border-[#E5DDD0]">
+        <div
+          className="w-full h-full bg-repeat-x bg-cover bg-center transition-all duration-300"
+          style={{ backgroundImage: `url(${botanicalPattern})` }}
         />
+        {/* Subtle Bottom Blend */}
+        <div className="absolute inset-x-0 bottom-0 h-6 bg-gradient-to-t from-[#351E13]/20 to-transparent pointer-events-none" />
+      </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {experiences.map((item, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: idx * 0.1 }}
-              className="p-8 rounded-2xl bg-white border border-accent-gold/20 shadow-luxury hover:-translate-y-2 transition-all duration-300 group"
-            >
-              <div className="w-14 h-14 rounded-2xl bg-primary text-accent-gold flex items-center justify-center mb-6 group-hover:bg-gold-gradient group-hover:text-primary transition-all duration-300 shadow-gold">
-                <item.icon className="w-7 h-7" />
-              </div>
-              <h3 className="font-serif text-xl font-bold text-primary mb-3 group-hover:text-accent-gold transition-colors">
-                {item.title}
-              </h3>
-              <p className="text-xs text-dark-lighter leading-relaxed font-light">
-                {item.description}
-              </p>
-            </motion.div>
-          ))}
-        </div>
-      </Container>
-    </section>
+      {/* 2. Dark Espresso Brown Section (Matching Reference Crop) */}
+      <section className="py-16 sm:py-24 bg-[#351E13] text-white text-center relative overflow-hidden">
+        <Container className="relative z-10 max-w-4xl">
+          <motion.div
+            initial={{ opacity: 0, y: 25 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="space-y-4 flex flex-col items-center"
+          >
+            {/* Minimalist Coffee Icon */}
+            <div className="text-[#C8A96A] text-3xl mb-1 flex items-center justify-center">
+              <FiCoffee className="w-8 h-8 stroke-[1.5]" />
+            </div>
+
+            {/* Main Title: Brewing Connections, Serving Memories. */}
+            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-normal text-white tracking-tight leading-tight">
+              Brewing Connections, Serving Memories.
+            </h2>
+
+            {/* Subtext: A premium café experience crafted for those who appreciate the art of coffee. */}
+            <p className="font-serif italic text-base sm:text-lg md:text-xl text-[#D4B055] font-light max-w-2xl leading-relaxed pt-1">
+              A premium café experience crafted for those who appreciate the art of coffee.
+            </p>
+          </motion.div>
+        </Container>
+      </section>
+    </div>
   );
 };
 

@@ -18,7 +18,8 @@ import {
   FiPhone, 
   FiMail, 
   FiCreditCard, 
-  FiGrid 
+  FiGrid,
+  FiCoffee
 } from 'react-icons/fi';
 import PageBanner from '../components/common/PageBanner';
 import Container from '../components/common/Container';
@@ -224,8 +225,8 @@ const Cart = () => {
       <section className="py-16 bg-secondary">
         <Container>
           {cartItems.length === 0 ? (
-            <div className="text-center py-20 glass-card rounded-3xl border border-accent-gold/20 max-w-xl mx-auto shadow-luxury">
-              <span className="text-6xl mb-4 block">☕</span>
+            <div className="text-center py-20 glass-card rounded-3xl border border-accent-gold/20 max-w-xl mx-auto shadow-luxury flex flex-col items-center">
+              <FiCoffee className="w-16 h-16 text-[#D6AE4D] mb-4 stroke-[1.5]" />
               <h3 className="font-serif text-3xl font-bold text-primary mb-2">Your Cart is Empty</h3>
               <p className="text-sm text-dark/70 font-light max-w-md mx-auto mb-6">
                 Explore our selection of handcrafted 24k gold lattes, sourdough pizzas, and Venetian desserts to place your order.

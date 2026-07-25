@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: 'class',
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -8,23 +9,23 @@ export default {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#123524',
-          light: '#1b4d35',
-          dark: '#0a2016',
+          DEFAULT: '#445648',
+          light: '#536958',
+          dark: '#354F42',
         },
         secondary: {
-          DEFAULT: '#F7F2E8',
+          DEFAULT: '#F5EFE3',
           dark: '#EAE3D2',
         },
         accent: {
-          gold: '#C8A96A',
+          gold: '#D6AE4D',
           goldLight: '#E5C989',
-          goldDark: '#A68748',
+          goldDark: '#B89035',
         },
         coffee: {
-          DEFAULT: '#5A3825',
-          light: '#7A4E34',
-          dark: '#3D2518',
+          DEFAULT: '#351E13',
+          light: '#523120',
+          dark: '#25140C',
         },
         dark: {
           DEFAULT: '#2A2A2A',
@@ -32,19 +33,20 @@ export default {
         }
       },
       fontFamily: {
-        serif: ['"Playfair Display"', 'serif'],
+        sans: ['"Montserrat"', 'sans-serif'],
+        montserrat: ['"Montserrat"', 'sans-serif'],
         cormorant: ['"Cormorant Garamond"', 'serif'],
-        sans: ['"Poppins"', 'sans-serif'],
+        serif: ['"Cormorant Garamond"', 'serif'],
       },
       boxShadow: {
-        'gold': '0 10px 30px -10px rgba(200, 169, 106, 0.3)',
-        'luxury': '0 20px 40px -15px rgba(18, 53, 36, 0.15)',
-        'glass': '0 8px 32px 0 rgba(18, 53, 36, 0.12)',
+        'gold': '0 10px 30px -10px rgba(214, 174, 77, 0.4)',
+        'luxury': '0 20px 40px -15px rgba(68, 86, 72, 0.18)',
+        'glass': '0 8px 32px 0 rgba(68, 86, 72, 0.14)',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gold-gradient': 'linear-gradient(135deg, #C8A96A 0%, #E5C989 50%, #A68748 100%)',
-        'dark-gradient': 'linear-gradient(180deg, #123524 0%, #0a2016 100%)',
+        'gold-gradient': 'linear-gradient(135deg, #D6AE4D 0%, #E5C989 50%, #B89035 100%)',
+        'dark-gradient': 'linear-gradient(180deg, #445648 0%, #354F42 100%)',
       },
       animation: {
         'float': 'float 6s ease-in-out infinite',

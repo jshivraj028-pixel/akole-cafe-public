@@ -1,56 +1,46 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  FiSearch, 
-  FiHeart, 
-  FiShoppingBag, 
-  FiUser, 
-  FiMenu, 
-  FiX, 
-  FiBell, 
-  FiCheck, 
-  FiInfo, 
-  FiTruck, 
-  FiPackage 
-} from 'react-icons/fi';
+import { Search, Bell, Heart, Sun, Moon, Menu, X, User } from 'lucide-react';
+import { FiPackage, FiInfo, FiBell } from 'react-icons/fi';
 import { useCart } from '../../context/CartContext';
 import { useTheme } from '../../context/ThemeContext';
-import Container from '../common/Container';
-import Button from '../common/Button';
 import MobileMenu from './MobileMenu';
-import SearchModal from './SearchModal';
+import logoEmblem from '../../assets/logo-emblem.png';
 import { fetchNotificationsAPI, markNotificationReadAPI } from '../../services/api';
 
 const navLinks = [
-  { name: 'Home', path: '/home' },
-  { name: 'Menu', path: '/menu' },
-  { name: 'About', path: '/about' },
-  { name: 'Reserve', path: '/reserve' },
-  { name: 'Events', path: '/events' },
-  { name: 'Gallery', path: '/gallery' },
-  { name: 'Blog', path: '/blog' },
-  { name: 'Franchise', path: '/franchise' },
-  { name: 'Contact', path: '/contact' },
+  { name: 'HOME', path: '/' },
+  { name: 'MENU', path: '/menu' },
+  { name: 'ABOUT', path: '/about' },
+  { name: 'RESERVE', path: '/reserve' },
+  { name: 'EVENTS', path: '/events' },
+  { name: 'GALLERY', path: '/gallery' },
+  { name: 'BLOG', path: '/blog' },
+  { name: 'FRANCHISE', path: '/franchise' },
+  { name: 'CONTACT', path: '/contact' },
 ];
 
 const Navbar = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [notifications, setNotifications] = useState([]);
 
   const { pathname } = useLocation();
   const { totalItemsCount } = useCart();
-  const { wishlistItems, setIsSearchOpen, isSearchOpen } = useTheme();
+  const { setIsSearchOpen, isDarkMode, toggleDarkMode, wishlistItems, isAuthenticated, userEmail } = useTheme();
 
   const loggedUser = (() => {
-    const saved = localStorage.getItem('akole_user');
-    return saved ? JSON.parse(saved) : null;
+    try {
+      const saved = localStorage.getItem('akole_user');
+      return saved ? JSON.parse(saved) : null;
+    } catch (e) {
+      return null;
+    }
   })();
 
   const loadNotifications = async () => {
-    const email = loggedUser?.email || '';
+    const email = loggedUser?.email || userEmail || '';
     try {
       const data = await fetchNotificationsAPI(email);
       if (Array.isArray(data)) {
@@ -61,24 +51,12 @@ const Navbar = () => {
     }
   };
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 40) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   // Poll notifications every 8 seconds for live updates
   useEffect(() => {
     loadNotifications();
     const interval = setInterval(loadNotifications, 8000);
     return () => clearInterval(interval);
-  }, [loggedUser?.email]);
+  }, [loggedUser?.email, userEmail]);
 
   const handleMarkAsRead = async (id) => {
     try {
@@ -90,51 +68,68 @@ const Navbar = () => {
   };
 
   const unreadCount = notifications.filter(n => !n.isRead).length;
+  const isHome = pathname === '/' || pathname === '/home';
 
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${
-          isScrolled
-            ? 'py-3 bg-primary/90 backdrop-blur-xl border-b border-accent-gold/20 shadow-luxury'
-            : 'py-5 bg-gradient-to-b from-primary/80 to-transparent'
+        className={`fixed top-0 left-0 right-0 z-50 h-[82px] px-4 sm:px-8 transition-colors duration-300 shadow-md flex items-center ${
+          isHome
+            ? 'bg-[#445648] border-b border-[#536958]'
+            : 'bg-[#EFE8D8] border-b border-[#D8CEB8]'
         }`}
       >
-        <Container>
-          <div className="flex items-center justify-between">
-            {/* Logo */}
-            <Link to="/home" className="flex items-center gap-3 group">
-              <div className="w-10 h-10 rounded-full bg-gold-gradient flex items-center justify-center text-primary shadow-gold group-hover:scale-105 transition-transform duration-300">
-                <span className="text-xl">☕</span>
-              </div>
-              <div className="flex flex-col">
-                <span className="font-serif text-2xl font-bold tracking-widest text-secondary group-hover:text-accent-gold transition-colors">
-                  AKOLE <span className="text-accent-gold font-light">CAFE</span>
-                </span>
-                <span className="text-[9px] uppercase tracking-[0.25em] text-accent-gold/80 font-sans -mt-1">
-                  Akole • Maharashtra
-                </span>
-              </div>
-            </Link>
+        <div className="w-full max-w-[1280px] mx-auto flex items-center justify-between">
+          
+          {/* Logo: Circular Emblem Image + Cormorant Garamond Typography */}
+          <Link to="/" className="flex items-center gap-3 group shrink-0">
+            <div className="w-10 h-10 sm:w-11 sm:h-11 shrink-0 rounded-full overflow-hidden flex items-center justify-center bg-transparent">
+              <img
+                src={logoEmblem}
+                alt="Akole Café Emblem Logo"
+                className="w-full h-full object-cover transform group-hover:scale-105 transition-transform rounded-full"
+              />
+            </div>
 
+            {/* Brand Name Text: Akole (700 White) Café (500 Italic Gold #D6AE4D) */}
+            <div className="flex items-baseline font-cormorant text-2xl sm:text-3xl tracking-[-0.5px]">
+              <span
+                className={`font-bold transition-colors ${
+                  isHome ? 'text-white' : 'text-[#354F42]'
+                }`}
+              >
+                Akole
+              </span>
+              <span className="italic font-medium text-[#D6AE4D] ml-1">
+                Café
+              </span>
+            </div>
+          </Link>
+
+          {/* Navigation Links + Action Icons Grouped with Balanced Spacing */}
+          <div className="flex items-center gap-6 xl:gap-10">
             {/* Desktop Navigation Links */}
-            <nav className="hidden lg:flex items-center gap-6 xl:gap-8">
+            <nav className="hidden lg:flex items-center gap-5 xl:gap-7">
               {navLinks.map((link) => {
                 const isActive = pathname === link.path;
                 return (
                   <Link
                     key={link.name}
                     to={link.path}
-                    className={`relative text-xs uppercase tracking-widest font-medium transition-all duration-300 py-1 ${
-                      isActive ? 'text-accent-gold font-semibold' : 'text-secondary/80 hover:text-accent-gold'
+                    className={`relative font-montserrat text-[11px] xl:text-xs font-semibold tracking-widest uppercase transition-colors duration-200 py-1 ${
+                      isActive
+                        ? 'text-[#D6AE4D]'
+                        : isHome
+                        ? 'text-[#D6E0DA] hover:text-[#D6AE4D]'
+                        : 'text-[#4A5D50] hover:text-[#D6AE4D]'
                     }`}
                   >
                     {link.name}
                     {isActive && (
                       <motion.div
-                        layoutId="activeNavIndicator"
-                        className="absolute bottom-0 left-0 right-0 h-[2px] bg-gold-gradient rounded-full"
-                        transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                        layoutId="activeNavUnderline"
+                        className="absolute -bottom-1 left-0 right-0 h-[2.5px] bg-[#D6AE4D]"
+                        transition={{ type: 'spring', stiffness: 400, damping: 30 }}
                       />
                     )}
                   </Link>
@@ -142,31 +137,37 @@ const Navbar = () => {
               })}
             </nav>
 
-            {/* Right Action Icons & Buttons */}
-            <div className="flex items-center gap-3 sm:gap-4">
-              {/* Search Toggle */}
+            {/* Right Action Icons & Gold Rounded ORDER NOW Button */}
+            <div className="flex items-center gap-3.5 sm:gap-4 shrink-0">
+              {/* 1. Search Icon */}
               <button
                 onClick={() => setIsSearchOpen(true)}
-                className="p-2 text-secondary/80 hover:text-accent-gold transition-colors relative"
-                title="Search Menu"
+                className={`p-1.5 transition-colors ${
+                  isHome ? 'text-white hover:text-[#D6AE4D]' : 'text-[#354F42] hover:text-[#D6AE4D]'
+                }`}
+                title="Search"
                 aria-label="Search"
               >
-                <FiSearch className="w-5 h-5" />
+                <Search className="w-5 h-5 stroke-[2]" />
               </button>
 
-              {/* LIVE NOTIFICATIONS BELL ICON */}
+              {/* 2. LIVE Notification Bell Icon & Drawer */}
               <div className="relative">
                 <button
                   onClick={() => setIsNotificationsOpen(!isNotificationsOpen)}
-                  className="p-2 text-secondary/80 hover:text-accent-gold transition-colors relative"
+                  className={`p-1.5 transition-colors relative ${
+                    isHome ? 'text-white hover:text-[#D6AE4D]' : 'text-[#354F42] hover:text-[#D6AE4D]'
+                  }`}
                   title="Notifications & Order Updates"
                   aria-label="Notifications"
                 >
-                  <FiBell className="w-5 h-5" />
-                  {unreadCount > 0 && (
-                    <span className="absolute top-0 right-0 w-4.5 h-4.5 bg-amber-500 text-primary font-extrabold text-[10px] rounded-full flex items-center justify-center shadow-gold animate-pulse border border-primary">
+                  <Bell className="w-5 h-5 stroke-[2]" />
+                  {unreadCount > 0 ? (
+                    <span className="absolute top-0 right-0 w-4 h-4 bg-amber-500 text-white font-extrabold text-[9px] rounded-full flex items-center justify-center animate-pulse">
                       {unreadCount}
                     </span>
+                  ) : (
+                    <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-[#D6AE4D]" />
                   )}
                 </button>
 
@@ -177,15 +178,15 @@ const Navbar = () => {
                       initial={{ opacity: 0, y: 10, scale: 0.95 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                      className="absolute right-0 top-12 w-80 sm:w-96 bg-primary border border-accent-gold/30 rounded-2xl shadow-2xl p-4 text-secondary z-50 backdrop-blur-xl"
+                      className="absolute right-0 top-12 w-80 sm:w-96 bg-[#123524] border border-[#D6AE4D]/30 rounded-2xl shadow-2xl p-4 text-white z-50 backdrop-blur-xl"
                     >
-                      <div className="flex items-center justify-between pb-3 border-b border-accent-gold/20 mb-3">
+                      <div className="flex items-center justify-between pb-3 border-b border-[#D6AE4D]/20 mb-3">
                         <div className="flex items-center gap-2">
-                          <FiBell className="text-accent-gold text-base" />
-                          <h4 className="font-serif font-bold text-sm text-secondary">Live Notifications</h4>
+                          <FiBell className="text-[#D6AE4D] text-base" />
+                          <h4 className="font-serif font-bold text-sm text-white">Live Notifications</h4>
                         </div>
                         {unreadCount > 0 && (
-                          <span className="px-2 py-0.5 rounded-full bg-accent-gold/20 text-accent-gold text-[10px] font-bold">
+                          <span className="px-2 py-0.5 rounded-full bg-[#D6AE4D]/20 text-[#D6AE4D] text-[10px] font-bold">
                             {unreadCount} Unread
                           </span>
                         )}
@@ -193,7 +194,7 @@ const Navbar = () => {
 
                       <div className="space-y-2.5 max-h-80 overflow-y-auto pr-1">
                         {notifications.length === 0 ? (
-                          <div className="text-center py-8 text-secondary/50 text-xs">
+                          <div className="text-center py-8 text-white/50 text-xs">
                             No notifications yet.
                           </div>
                         ) : (
@@ -202,28 +203,28 @@ const Navbar = () => {
                               key={notif._id || notif.id}
                               className={`p-3 rounded-xl border text-xs transition-colors flex items-start gap-3 ${
                                 notif.isRead 
-                                  ? 'bg-secondary/5 border-accent-gold/10 text-secondary/70' 
-                                  : 'bg-accent-gold/10 border-accent-gold/30 text-secondary'
+                                  ? 'bg-white/5 border-white/10 text-white/70' 
+                                  : 'bg-[#D6AE4D]/15 border-[#D6AE4D]/40 text-white'
                               }`}
                             >
-                              <div className="mt-0.5 text-accent-gold shrink-0">
+                              <div className="mt-0.5 text-[#D6AE4D] shrink-0">
                                 {notif.type === 'order_update' ? <FiPackage className="text-base" /> : <FiInfo className="text-base" />}
                               </div>
                               <div className="flex-1 min-w-0">
-                                <div className="font-serif font-bold text-xs text-secondary flex items-center justify-between">
+                                <div className="font-serif font-bold text-xs text-white flex items-center justify-between">
                                   <span>{notif.title}</span>
                                   {!notif.isRead && (
                                     <button
                                       onClick={() => handleMarkAsRead(notif._id || notif.id)}
-                                      className="text-[10px] text-accent-gold hover:underline font-normal"
+                                      className="text-[10px] text-[#D6AE4D] hover:underline font-normal"
                                       title="Mark as read"
                                     >
                                       Mark Read
                                     </button>
                                   )}
                                 </div>
-                                <p className="text-[11px] text-secondary/80 mt-1 leading-snug">{notif.message}</p>
-                                <span className="text-[9px] text-secondary/40 block mt-1">
+                                <p className="text-[11px] text-white/80 mt-1 leading-snug">{notif.message}</p>
+                                <span className="text-[9px] text-white/40 block mt-1">
                                   {notif.createdAt ? new Date(notif.createdAt).toLocaleTimeString() : 'Just now'}
                                 </span>
                               </div>
@@ -236,72 +237,94 @@ const Navbar = () => {
                 </AnimatePresence>
               </div>
 
-              {/* Wishlist Link */}
+              {/* 3. Wishlist Heart Icon */}
               <Link
                 to="/profile"
-                className="p-2 text-secondary/80 hover:text-accent-gold transition-colors relative hidden sm:block"
-                title="Saved Wishlist"
+                className={`p-1.5 transition-colors relative ${
+                  isHome ? 'text-white hover:text-[#D6AE4D]' : 'text-[#354F42] hover:text-[#D6AE4D]'
+                }`}
+                title="Wishlist"
+                aria-label="Wishlist"
               >
-                <FiHeart className="w-5 h-5" />
-                {wishlistItems.length > 0 && (
-                  <span className="absolute top-0 right-0 w-4 h-4 bg-accent-gold text-primary font-bold text-[10px] rounded-full flex items-center justify-center">
+                <Heart className="w-5 h-5 stroke-[2]" />
+                {wishlistItems && wishlistItems.length > 0 && (
+                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-[#D6AE4D] text-[#2A3B2F] font-bold text-[10px] rounded-full flex items-center justify-center shadow-sm">
                     {wishlistItems.length}
                   </span>
                 )}
               </Link>
 
-              {/* Cart Drawer Link */}
-              <Link
-                to="/cart"
-                className="p-2 text-secondary/80 hover:text-accent-gold transition-colors relative"
-                title="Shopping Cart"
+              {/* 4. Theme Mode Toggle Button (Light/Dark Toggle) */}
+              <button
+                onClick={toggleDarkMode}
+                className={`p-1.5 transition-colors relative ${
+                  isHome ? 'text-white hover:text-[#D6AE4D]' : 'text-[#354F42] hover:text-[#D6AE4D]'
+                }`}
+                title={isDarkMode ? 'Switch to Light Mode ☀️' : 'Switch to Dark Mode 🌙'}
+                aria-label="Toggle Light Dark Theme"
               >
-                <FiShoppingBag className="w-5 h-5" />
-                {totalItemsCount > 0 && (
-                  <span className="absolute top-0 right-0 w-4.5 h-4.5 bg-accent-gold text-primary font-bold text-[10px] rounded-full flex items-center justify-center shadow-gold">
-                    {totalItemsCount}
-                  </span>
+                {isDarkMode ? (
+                  <Sun className="w-5 h-5 stroke-[2] text-[#D6AE4D]" />
+                ) : (
+                  <Moon className="w-5 h-5 stroke-[2]" />
                 )}
-              </Link>
+              </button>
 
-              {/* Profile Icon */}
+              {/* 5. User Profile / Logout Icon Link */}
+              {isAuthenticated || loggedUser ? (
+                <Link
+                  to="/profile"
+                  className={`p-1.5 transition-colors relative flex items-center gap-1 ${
+                    isHome ? 'text-white hover:text-[#D6AE4D]' : 'text-[#354F42] hover:text-[#D6AE4D]'
+                  }`}
+                  title={`Profile (${loggedUser?.name || userEmail})`}
+                  aria-label="Profile"
+                >
+                  <User className="w-5 h-5 stroke-[2] text-[#D6AE4D]" />
+                  <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                </Link>
+              ) : (
+                <Link
+                  to="/login"
+                  className={`p-1.5 transition-colors relative ${
+                    isHome ? 'text-white hover:text-[#D6AE4D]' : 'text-[#354F42] hover:text-[#D6AE4D]'
+                  }`}
+                  title="Sign In / Login"
+                  aria-label="Sign In / Login"
+                >
+                  <User className="w-5 h-5 stroke-[2]" />
+                </Link>
+              )}
+
+              {/* 6. Gold Rounded ORDER NOW Button */}
               <Link
-                to="/profile"
-                className="p-2 text-secondary/80 hover:text-accent-gold transition-colors hidden md:block"
-                title="Account Profile"
+                to="/menu"
+                className="hidden sm:inline-flex items-center justify-center px-4.5 py-1.5 rounded-full bg-[#D6AE4D] hover:bg-[#c59d3c] text-[#2A3B2F] font-montserrat font-bold text-[11px] xl:text-xs uppercase tracking-widest shadow-sm transition-all transform hover:scale-105 active:scale-95 ml-1"
               >
-                <FiUser className="w-5 h-5" />
+                ORDER NOW
               </Link>
 
-              {/* Order Now CTA */}
-              <div className="hidden sm:block">
-                <Button to="/menu" variant="gold" size="sm">
-                  Order Now
-                </Button>
-              </div>
-
-              {/* Mobile Menu Toggle */}
+              {/* Mobile Toggle Button */}
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="p-2 text-secondary hover:text-accent-gold lg:hidden"
-                aria-label="Toggle Navigation Menu"
+                className={`p-1.5 lg:hidden ${
+                  isHome ? 'text-white hover:text-[#D6AE4D]' : 'text-[#354F42] hover:text-[#D6AE4D]'
+                }`}
+                aria-label="Toggle Menu"
               >
-                {isMobileMenuOpen ? <FiX className="w-6 h-6" /> : <FiMenu className="w-6 h-6" />}
+                {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
               </button>
             </div>
           </div>
-        </Container>
+        </div>
       </header>
 
-      {/* Mobile Drawer Menu */}
+      {/* Mobile Menu */}
       <MobileMenu
         isOpen={isMobileMenuOpen}
         onClose={() => setIsMobileMenuOpen(false)}
         links={navLinks}
       />
-
-      {/* Global Search Overlay Modal */}
-      <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
     </>
   );
 };

@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { FiCoffee } from 'react-icons/fi';
 
 const Loader = ({ fullScreen = false }) => {
   const content = (
@@ -9,7 +10,7 @@ const Loader = ({ fullScreen = false }) => {
         transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
         className="w-20 h-20 border-2 border-dashed border-accent-gold rounded-full flex items-center justify-center mb-4 relative"
       >
-        <span className="text-3xl">☕</span>
+        <FiCoffee className="w-8 h-8 text-[#D6AE4D] stroke-[1.5]" />
       </motion.div>
       <h3 className="font-serif text-xl font-semibold text-accent-gold tracking-widest uppercase">
         Akole Cafe

@@ -1,68 +1,143 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Container from '../common/Container';
-import SectionTitle from '../common/SectionTitle';
 import ProductCard from './ProductCard';
 import Button from '../common/Button';
 import { fetchMenuItems } from '../../services/api';
 import { menuItems as staticFallbackItems } from '../../data/menu';
 import { FiArrowRight } from 'react-icons/fi';
 
+const categories = [
+  { id: 'all', name: 'All Selections' },
+  { id: 'coffee', name: 'Speciality Coffee' },
+  { id: 'teas', name: 'Artisanal Teas' },
+  { id: 'bakery', name: 'Gourmet Bakery' },
+  { id: 'bites', name: 'Quick Bites' },
+];
+
+const staticBestsellers = [
+  {
+    id: 'bs-1',
+    name: 'Iced Caramel Macchiato',
+    category: 'coffee',
+    description: 'Rich espresso layered with vanilla, cold milk & caramel drizzle.',
+    price: 180,
+    rating: 4.9,
+    image: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=800&q=80',
+    tag: 'BESTSELLER',
+    isBestseller: true
+  },
+  {
+    id: 'bs-2',
+    name: 'Signature Cappuccino',
+    category: 'coffee',
+    description: 'Single-origin espresso topped with thick velvety microfoam & chocolate dust.',
+    price: 160,
+    rating: 4.8,
+    image: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?auto=format&fit=crop&w=800&q=80',
+    tag: 'BESTSELLER',
+    isBestseller: true
+  },
+  {
+    id: 'bs-3',
+    name: 'Classic Hot Chocolate',
+    category: 'teas',
+    description: 'Rich cocoa melted with steamed milk & dark chocolate shavings.',
+    price: 170,
+    rating: 4.9,
+    image: 'https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=800&q=80',
+    tag: 'BESTSELLER',
+    isBestseller: true
+  },
+  {
+    id: 'bs-4',
+    name: 'Caramel Cold Brew',
+    category: 'coffee',
+    description: 'Slow-steeped cold brew infused with salted caramel & cream.',
+    price: 190,
+    rating: 4.7,
+    image: 'https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=800&q=80',
+    tag: 'BESTSELLER',
+    isBestseller: true
+  }
+];
+
 const BestSeller = ({ onQuickView }) => {
-  const [bestsellers, setBestsellers] = useState(() => 
-    staticFallbackItems.filter(item => item.isBestseller).slice(0, 6)
-  );
+  const [activeCategory, setActiveCategory] = useState('all');
+  const [allProducts, setAllProducts] = useState(staticBestsellers);
 
   useEffect(() => {
     let isMounted = true;
-    const loadBestsellers = async () => {
+    const loadItems = async () => {
       try {
         const items = await fetchMenuItems('all');
-        if (isMounted && items && items.length > 0) {
-          const filtered = items.filter(item => item.isBestseller).slice(0, 6);
-          if (filtered.length > 0) setBestsellers(filtered);
+        if (isMounted && Array.isArray(items) && items.length > 0) {
+          setAllProducts(items);
         }
       } catch (err) {
-        console.error('Failed to load bestsellers:', err);
+        console.error('Failed to load menu items for bestsellers:', err);
       }
     };
-    loadBestsellers();
+    loadItems();
     return () => { isMounted = false; };
   }, []);
 
+  const displayedItems = (() => {
+    let list = allProducts.filter(item => item.isBestseller || item.tag === 'BESTSELLER');
+    if (list.length === 0) list = allProducts;
+    if (activeCategory !== 'all') {
+      const catFiltered = list.filter(item => item.category === activeCategory);
+      return catFiltered.length > 0 ? catFiltered : list.slice(0, 4);
+    }
+    return list.slice(0, 4);
+  })();
+
   return (
-    <section className="py-24 bg-primary text-secondary relative overflow-hidden">
-      {/* Glow Effects */}
-      <div className="botanical-glow top-0 left-1/4 opacity-30" />
-      <div className="botanical-glow bottom-0 right-1/4 opacity-30" />
-
+    <section className="py-20 sm:py-24 bg-[#F5F2EA] text-primary relative overflow-hidden">
       <Container>
-        <SectionTitle
-          subtitle="Guest Favorites"
-          title="Signature Bestsellers"
-          description="Hand-picked culinary highlights praised by our patrons across Maharashtra."
-          align="center"
-          light={true}
-        />
+        {/* Section Header */}
+        <div className="text-center space-y-3 mb-10">
+          <span className="text-xs uppercase tracking-[0.25em] font-semibold text-[#C8A96A] font-sans block">
+            OUR SELECTIONS
+          </span>
+          <h2 className="font-serif text-4xl sm:text-5xl font-semibold text-[#2F4436]">
+            Bestsellers
+          </h2>
+          <p className="text-xs sm:text-sm text-[#4A5D50] font-light max-w-lg mx-auto">
+            Handcrafted coffee, artisanal teas, and gourmet treats made with love.
+          </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {bestsellers.map((item, idx) => (
+          {/* Category Tabs */}
+          <div className="flex flex-wrap items-center justify-center gap-3 pt-6">
+            {categories.map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => setActiveCategory(cat.id)}
+                className={`px-5 py-2 rounded-full text-xs font-medium transition-all ${
+                  activeCategory === cat.id
+                    ? 'bg-[#2F4436] text-white shadow-md'
+                    : 'bg-white/80 text-[#4A5D50] hover:bg-white hover:text-primary border border-[#C8A96A]/20'
+                }`}
+              >
+                {cat.name}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Cards Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {displayedItems.map((item, idx) => (
             <motion.div
               key={item._id || item.id}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 25 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: idx * 0.1 }}
+              transition={{ duration: 0.5, delay: idx * 0.1 }}
             >
               <ProductCard product={item} onQuickView={onQuickView} />
             </motion.div>
           ))}
-        </div>
-
-        <div className="text-center mt-12">
-          <Button to="/menu" variant="gold" size="lg" icon={FiArrowRight}>
-            View Full Artisanal Menu
-          </Button>
         </div>
       </Container>
     </section>

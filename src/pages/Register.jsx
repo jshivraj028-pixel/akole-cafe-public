@@ -1,23 +1,23 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Coffee, MapPin, Sparkles, Award } from 'lucide-react';
+import { Coffee, MapPin, Sparkles, Gift } from 'lucide-react';
 import AuthCard from '../components/Auth/AuthCard';
-import LoginForm from '../components/Auth/LoginForm';
+import RegisterForm from '../components/Auth/RegisterForm';
 import logoEmblem from '../assets/logo-emblem.png';
 
-const Login = () => {
+const Register = () => {
   return (
     <div className="min-h-screen w-full flex flex-col lg:flex-row font-montserrat bg-[#F9F6F0] dark:bg-[#121A15] overflow-x-hidden">
       
-      {/* LEFT SIDE (50%): FIXED 100vh Height Non-Scrolling Brand Panel */}
+      {/* LEFT SIDE (50%): FIXED 100vh Height Non-Scrolling VIP Club Brand Panel */}
       <div className="hidden lg:flex lg:w-1/2 h-screen lg:sticky top-0 overflow-hidden bg-[#0D2818] flex-col justify-between p-10 xl:p-14 text-white shrink-0">
         
         {/* Full Height Background Image */}
         <div
           className="absolute inset-0 bg-cover bg-center opacity-35 mix-blend-overlay transform scale-105 transition-transform duration-1000 pointer-events-none"
           style={{
-            backgroundImage: `url('https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=1400&q=80')`
+            backgroundImage: `url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1400&q=80')`
           }}
         />
 
@@ -26,7 +26,7 @@ const Login = () => {
 
         {/* Floating Coffee Cup Graphic Animation */}
         <motion.div
-          animate={{ y: [0, -14, 0], rotate: [0, 6, 0] }}
+          animate={{ y: [0, -14, 0], rotate: [0, -6, 0] }}
           transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
           className="absolute bottom-16 right-10 opacity-15 pointer-events-none z-0"
         >
@@ -50,7 +50,7 @@ const Login = () => {
           </Link>
         </div>
 
-        {/* 2. Center: Luxury Hero Typography */}
+        {/* 2. Center: Luxury VIP Rewards Typography */}
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
@@ -59,27 +59,22 @@ const Login = () => {
         >
           <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#D6AE4D]/15 border border-[#D6AE4D]/35 text-[#D6AE4D] text-[11px] uppercase font-bold tracking-[3px]">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>ARTISANAL COFFEE & DINING</span>
+            <span>JOIN THE VIP AKOLE CLUB</span>
           </div>
 
           <h1 className="font-cormorant text-5xl xl:text-6xl font-normal leading-[1.08] text-white">
-            Brewing Connections, <br />
-            <span className="italic font-light text-[#D6AE4D]">Serving Memories.</span>
+            Start Your Journey, <br />
+            <span className="italic font-light text-[#D6AE4D]">Unlock Exclusive VIP Rewards.</span>
           </h1>
 
           <p className="text-xs xl:text-sm font-montserrat text-white/80 font-light leading-relaxed max-w-md">
-            Sign in to manage your VIP table reservations, earn gold loyalty points, and pre-order your favorite specialty brews.
+            Create an account to earn 500 Welcome Gold Loyalty Points, reserve priority tables, and enjoy exclusive artisanal coffee member perks.
           </p>
 
-          <div className="flex items-center gap-4 text-xs text-[#D6AE4D] pt-2">
-            <div className="flex items-center gap-1.5 font-semibold">
-              <Award className="w-4 h-4 text-[#D6AE4D]" />
+          <div className="flex items-center gap-3 text-xs text-[#D6AE4D] pt-1">
+            <div className="flex items-center gap-1.5 font-semibold bg-[#D6AE4D]/10 px-3 py-1.5 rounded-full border border-[#D6AE4D]/20">
+              <Gift className="w-4 h-4" />
               <span>500 Welcome Points</span>
-            </div>
-            <span>•</span>
-            <div className="flex items-center gap-1.5 font-semibold">
-              <Coffee className="w-4 h-4 text-[#D6AE4D]" />
-              <span>Priority Table Access</span>
             </div>
           </div>
         </motion.div>
@@ -92,7 +87,7 @@ const Login = () => {
 
       </div>
 
-      {/* RIGHT SIDE (50%): Independent Scrollable Login Form Container */}
+      {/* RIGHT SIDE (50%): Independent Scrollable Sign Up Form Container */}
       <div className="w-full lg:w-1/2 min-h-screen lg:h-screen overflow-y-auto flex flex-col justify-between p-6 sm:p-10 relative bg-[#F9F6F0] dark:bg-[#121A15] text-[#123524] dark:text-[#EAE3D2]">
         
         {/* Top Mobile Header (Logo Only on Mobile) */}
@@ -111,10 +106,10 @@ const Login = () => {
         {/* Center: Auth Card */}
         <div className="my-auto flex justify-center py-4">
           <AuthCard
-            title="Welcome Back"
-            subtitle="Sign in to continue your Akole Cafe experience."
+            title="Create Account"
+            subtitle="Join the Akole Cafe VIP Club and earn welcome rewards."
           >
-            <LoginForm />
+            <RegisterForm />
           </AuthCard>
         </div>
 
@@ -128,4 +123,5 @@ const Login = () => {
     </div>
   );
 };
-export default Login;
+
+export default Register;
