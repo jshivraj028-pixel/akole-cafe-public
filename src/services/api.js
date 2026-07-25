@@ -2,7 +2,19 @@ import { menuItems as fallbackMenuItems } from '../data/menu';
 import { eventsData } from '../data/events';
 import { blogPosts } from '../data/blogs';
 
-const API_BASE_URL = 'http://localhost:5000/api';
+export const getApiBaseUrl = () => {
+  if (import.meta.env && import.meta.env.VITE_API_BASE_URL) {
+    return import.meta.env.VITE_API_BASE_URL;
+  }
+  if (typeof window !== 'undefined' && window.location && window.location.hostname) {
+    const host = window.location.hostname;
+    const protocol = window.location.protocol === 'https:' ? 'https:' : 'http:';
+    return `${protocol}//${host}:5000/api`;
+  }
+  return 'http://localhost:5000/api';
+};
+
+const API_BASE_URL = getApiBaseUrl();
 
 // Helper for fetch with fallback
 const fetchWithFallback = async (endpoint, fallbackData) => {

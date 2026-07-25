@@ -86,8 +86,8 @@ const Admin = () => {
     setTimeout(() => setToast(null), 3500);
   };
 
-  const loadData = async () => {
-    setLoading(true);
+  const loadData = async (isSilent = false) => {
+    if (!isSilent) setLoading(true);
     try {
       const [productData, userData, orderData] = await Promise.all([
         fetchMenuItems('all'),
@@ -98,15 +98,19 @@ const Admin = () => {
       setUsers(userData || []);
       setOrders(orderData || []);
     } catch (err) {
-      showToast('Error loading database items: ' + err.message, 'error');
+      if (!isSilent) showToast('Error loading database items: ' + err.message, 'error');
     } finally {
-      setLoading(false);
+      if (!isSilent) setLoading(false);
     }
   };
 
   useEffect(() => {
     if (isLoggedIn) {
       loadData();
+      const interval = setInterval(() => {
+        loadData(true);
+      }, 4000);
+      return () => clearInterval(interval);
     }
   }, [isLoggedIn]);
 

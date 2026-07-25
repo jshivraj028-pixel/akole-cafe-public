@@ -15,22 +15,29 @@ const Menu = () => {
 
   useEffect(() => {
     let isMounted = true;
-    const loadProducts = async () => {
-      setLoading(true);
+    const loadProducts = async (isSilent = false) => {
+      if (!isSilent) setLoading(true);
       try {
         const data = await fetchMenuItems(activeCategory, searchQuery);
-        if (isMounted) {
-          setItems(data && data.length > 0 ? data : staticFallbackItems);
+        if (isMounted && Array.isArray(data) && data.length > 0) {
+          setItems(data);
         }
       } catch (err) {
         console.error('Failed to load menu products:', err);
       } finally {
-        if (isMounted) setLoading(false);
+        if (isMounted && !isSilent) setLoading(false);
       }
     };
 
-    loadProducts();
-    return () => { isMounted = false; };
+    loadProducts(false);
+    const interval = setInterval(() => {
+      loadProducts(true);
+    }, 6000);
+
+    return () => {
+      isMounted = false;
+      clearInterval(interval);
+    };
   }, [activeCategory, searchQuery]);
 
   const filteredAndSortedItems = useMemo(() => {
