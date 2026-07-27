@@ -139,10 +139,10 @@ const CartDrawer = ({ isOpen, onClose }) => {
                           </h4>
                           <button
                             onClick={() => removeFromCart(item.id)}
-                            className="text-white/40 hover:text-rose-400 p-0.5 transition-colors"
-                            title="Remove item"
+                            className="p-1 rounded-lg text-rose-400/80 hover:text-rose-400 hover:bg-rose-500/15 border border-transparent hover:border-rose-500/30 transition-all group/del shrink-0"
+                            title="Remove item from cart"
                           >
-                            <Trash2 className="w-3 h-3" />
+                            <Trash2 className="w-4 h-4 stroke-[2.2] group-hover/del:scale-110 transition-transform" />
                           </button>
                         </div>
 
