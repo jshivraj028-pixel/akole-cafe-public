@@ -45,7 +45,9 @@ import {
   FiChevronRight,
   FiAward,
   FiZap,
-  FiGlobe
+  FiGlobe,
+  FiGift,
+  FiTag
 } from 'react-icons/fi';
 
 const Admin = () => {
@@ -1022,24 +1024,32 @@ const Admin = () => {
                             {/* Send Discount Coupon Button */}
                             <button
                               onClick={() => openDiscountModal(u)}
-                              className="px-2.5 py-1 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-amber-500 hover:text-primary transition-all text-[11px] font-bold flex items-center gap-1"
+                              className="px-2.5 py-1 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-amber-500 hover:text-primary transition-all text-[11px] font-bold flex items-center gap-1.5 shadow-sm"
                               title="Send direct discount coupon to this user"
                             >
-                              🎁 Discount
+                              <FiGift className="w-3.5 h-3.5" /> Discount
                             </button>
 
                             {/* Ban / Unban Toggle Button */}
                             {u.email !== 'akolecafe@gmail.com' && (
                               <button
                                 onClick={() => handleToggleUserBan(u)}
-                                className={`px-2.5 py-1 rounded-xl text-[11px] font-bold border transition-all flex items-center gap-1 ${
+                                className={`px-2.5 py-1 rounded-xl text-[11px] font-bold border transition-all flex items-center gap-1.5 ${
                                   u.isBanned
                                     ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40 hover:bg-emerald-500 hover:text-white'
                                     : 'bg-red-500/20 text-red-300 border-red-500/40 hover:bg-red-500 hover:text-white'
                                 }`}
                                 title={u.isBanned ? 'Unban user' : 'Ban user from logging in'}
                               >
-                                {u.isBanned ? 'Unban ✅' : 'Ban 🚫'}
+                                {u.isBanned ? (
+                                  <>
+                                    <FiCheckCircle className="w-3.5 h-3.5" /> Unban
+                                  </>
+                                ) : (
+                                  <>
+                                    <FiSlash className="w-3.5 h-3.5" /> Ban
+                                  </>
+                                )}
                               </button>
                             )}
 
@@ -1128,8 +1138,8 @@ const Admin = () => {
                     />
                   </div>
 
-                  <Button type="submit" variant="gold" size="lg" className="w-full mt-3">
-                    Send Discount Notification 🎁
+                  <Button type="submit" variant="gold" size="lg" icon={FiGift} className="w-full mt-3">
+                    Send Discount Notification
                   </Button>
                 </form>
               </motion.div>
