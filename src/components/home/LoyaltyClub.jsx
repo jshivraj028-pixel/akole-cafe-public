@@ -38,10 +38,14 @@ const LoyaltyClub = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="rounded-3xl bg-[#123524] border border-[#D6AE4D]/35 p-8 sm:p-12 text-center shadow-2xl space-y-10 relative overflow-hidden"
+          className="rounded-[36px] bg-gradient-to-br from-[#0F291B] via-[#123524] to-[#0A1A12] border border-[#D6AE4D]/35 p-8 sm:p-12 text-center shadow-2xl space-y-10 relative overflow-hidden"
         >
           {/* Background overlay details */}
           <div className="absolute top-0 right-0 w-48 h-48 bg-gradient-to-bl from-[#D6AE4D]/10 to-transparent rounded-bl-full pointer-events-none" />
+          
+          {/* Glowing Ambient Background Spotlights */}
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#D6AE4D]/10 rounded-full blur-[100px] pointer-events-none" />
+          <div className="absolute -bottom-20 right-1/4 w-96 h-96 bg-[#D6AE4D]/5 rounded-full blur-[120px] pointer-events-none" />
 
           {/* Header */}
           <div className="space-y-2 relative z-10">
@@ -61,15 +65,15 @@ const LoyaltyClub = () => {
             {clubFeatures.map((item, idx) => (
               <motion.div
                 key={idx}
-                whileHover={{ y: -6, scale: 1.03 }}
-                className="flex flex-col items-center text-center space-y-4 p-6 rounded-2xl bg-white/10 backdrop-blur-md border border-white/10 hover:border-[#D6AE4D]/45 transition-all duration-300 shadow-xl"
+                whileHover={{ y: -8, scale: 1.02 }}
+                className="flex flex-col items-center text-center space-y-5 p-7 rounded-[24px] bg-[#162A1D]/60 backdrop-blur-xl border border-[#D6AE4D]/15 hover:border-[#D6AE4D]/50 hover:bg-[#1A3122]/70 transition-all duration-300 shadow-2xl group cursor-pointer"
               >
-                <div className="w-13 h-13 rounded-xl bg-gradient-to-br from-[#1D4732] to-[#123524] text-[#D6AE4D] flex items-center justify-center shadow-lg border border-[#D6AE4D]/40">
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#2A1D17] to-[#1A110D] text-[#D6AE4D] flex items-center justify-center shadow-lg border border-[#D6AE4D]/45 group-hover:scale-110 transition-transform duration-300">
                   <item.icon className="w-6 h-6 text-[#D6AE4D]" />
                 </div>
                 <div>
-                  <h4 className="font-serif text-sm font-bold text-white mb-1 uppercase tracking-wide">{item.title}</h4>
-                  <p className="text-[11px] text-white/75 font-light leading-snug">
+                  <h4 className="font-serif text-sm font-extrabold text-white mb-2 uppercase tracking-wider">{item.title}</h4>
+                  <p className="text-[11px] text-white/70 font-light leading-relaxed max-w-[180px] mx-auto">
                     {item.desc}
                   </p>
                 </div>

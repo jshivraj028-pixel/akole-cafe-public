@@ -137,5 +137,19 @@ export const galleryItems = [
     category: 'events',
     image: 'https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=1000&q=80',
     description: 'Weekend barista masterclasses showcasing single-origin bean roasts.'
+  },
+  {
+    id: 17,
+    title: 'VIP Birthday & Anniversary Private Deck Dinners',
+    category: 'events',
+    image: 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=1000&q=80',
+    description: 'Personalized luxury table setups, floral decor, and custom celebration menus.'
+  },
+  {
+    id: 18,
+    title: 'Community Board Game & Poetry Sunday Meetups',
+    category: 'events',
+    image: 'https://images.unsplash.com/photo-1610890716171-6b1bb98ffd09?auto=format&fit=crop&w=1000&q=80',
+    description: 'Weekend community board game meetups, poetry readings, and open mic evenings.'
   }
 ];

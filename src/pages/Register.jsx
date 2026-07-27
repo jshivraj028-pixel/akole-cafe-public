@@ -36,11 +36,11 @@ const Register = () => {
         {/* 1. Top Left: Brand Logo & Title */}
         <div className="relative z-10">
           <Link to="/" className="inline-flex items-center gap-3 group">
-            <div className="w-11 h-11 flex items-center justify-center">
+            <div className="w-14 h-14 rounded-full bg-[#2A1D17] border border-[#D6AE4D]/40 flex items-center justify-center p-1.5 shadow-md overflow-hidden shrink-0">
               <img
                 src={logoEmblem}
                 alt="Akole Café Emblem Logo"
-                className="w-full h-full object-contain drop-shadow-md transform group-hover:scale-105 transition-transform"
+                className="w-full h-full object-contain filter drop-shadow-sm transform scale-[1.05] transition-transform group-hover:scale-[1.1]"
               />
             </div>
             <div className="flex items-baseline font-cormorant text-3xl tracking-[-0.5px]">

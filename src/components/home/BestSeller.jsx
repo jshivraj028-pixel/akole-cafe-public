@@ -162,17 +162,17 @@ const BestSeller = ({ onQuickView }) => {
   })();
 
   return (
-    <section className="py-20 sm:py-24 bg-[#F5F2EA] text-primary relative overflow-hidden">
+    <section className="py-20 sm:py-24 bg-[#F5F2EA] dark:bg-[#0F1712] text-primary dark:text-[#EAE3D2] relative overflow-hidden transition-colors duration-300">
       <Container>
         {/* Section Header */}
         <div className="text-center space-y-3 mb-10">
-          <span className="text-xs uppercase tracking-[0.25em] font-semibold text-[#C8A96A] font-sans block">
+          <span className="text-xs uppercase tracking-[0.25em] font-semibold text-[#C8A96A] dark:text-[#D6AE4D] font-sans block">
             OUR SELECTIONS
           </span>
-          <h2 className="font-serif text-4xl sm:text-5xl font-semibold text-[#2F4436]">
+          <h2 className="font-serif text-4xl sm:text-5xl font-semibold text-[#2F4436] dark:text-white">
             Bestsellers
           </h2>
-          <p className="text-xs sm:text-sm text-[#4A5D50] font-light max-w-lg mx-auto">
+          <p className="text-xs sm:text-sm text-[#4A5D50] dark:text-[#A0B0A5] font-light max-w-lg mx-auto">
             Handcrafted coffee, artisanal teas, and gourmet treats made with love.
           </p>
 
@@ -182,10 +182,10 @@ const BestSeller = ({ onQuickView }) => {
               <button
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.id)}
-                className={`px-5 py-2 rounded-full text-xs font-medium transition-all ${
+                className={`px-5 py-2 rounded-xl text-xs font-semibold tracking-wider transition-all cursor-pointer ${
                   activeCategory === cat.id
-                    ? 'bg-[#2F4436] text-white shadow-md'
-                    : 'bg-white/80 text-[#4A5D50] hover:bg-white hover:text-primary border border-[#C8A96A]/20'
+                    ? 'bg-[#2F4436] dark:bg-[#D6AE4D] text-white dark:text-[#123524] shadow-md border border-transparent'
+                    : 'bg-white/80 dark:bg-[#16231B]/80 text-[#4A5D50] dark:text-[#A0B0A5] hover:bg-white dark:hover:bg-[#16231B] hover:text-primary dark:hover:text-white border border-[#C8A96A]/20 dark:border-[#D6AE4D]/15'
                 }`}
               >
                 {cat.name}

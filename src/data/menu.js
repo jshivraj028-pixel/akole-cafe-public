@@ -1573,5 +1573,23 @@ export const menuItems = [
     "tags": [
       "Royal Falooda"
     ]
+  },
+  {
+    "id": "drk-water-bottle",
+    "name": "Akole Premium Mineral Water (500ml)",
+    "category": "drinks",
+    "description": "Pure premium natural mineral water sourced from pristine natural springs, packaged in our custom eco-friendly Akole Café designer glass bottle.",
+    "price": 40,
+    "rating": 5,
+    "isVeg": true,
+    "isBestseller": true,
+    "spicyLevel": 0,
+    "prepTime": "1 min",
+    "image": "/assets/akole-premium-water.png",
+    "tags": [
+      "Mineral Water",
+      "Premium Bottle",
+      "Akole Branded"
+    ]
   }
 ];

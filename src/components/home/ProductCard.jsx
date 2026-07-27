@@ -87,11 +87,11 @@ const ProductCard = ({ product, onQuickView }) => {
         </div>
 
         {/* Bottom row: Price, Rating & Shopping Cart Button */}
-        <div className="flex items-center justify-between pt-2 border-t border-gray-100">
+        <div className="flex items-center justify-between pt-2 border-t border-gray-100 dark:border-[#D6AE4D]/15">
           <div className="flex items-center gap-2">
-            <span className="font-serif text-base font-bold text-[#2F4436]">₹{product.price}</span>
+            <span className="font-serif text-base font-bold text-[#2F4436] dark:text-[#D6AE4D]">₹{product.price}</span>
             {product.rating && (
-              <div className="flex items-center gap-0.5 text-[11px] text-gray-500 font-medium">
+              <div className="flex items-center gap-0.5 text-[11px] text-gray-500 dark:text-gray-400 font-medium">
                 <FiStar className="w-3 h-3 text-[#D4B055] fill-current" />
                 <span>{product.rating}</span>
               </div>
