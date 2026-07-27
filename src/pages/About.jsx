@@ -25,6 +25,16 @@ const milestones = [
 
 const teamMembers = [
   {
+    initials: 'MG',
+    name: 'Mayur Gambhire',
+    role: 'Co-Founder & Managing Director'
+  },
+  {
+    initials: 'YJ',
+    name: 'Yuvraj Jadhav',
+    role: 'Co-Founder & Chief Operations Officer'
+  },
+  {
     initials: 'RK',
     name: 'Rohan Kulkarni',
     role: 'Founder & Head Barista Roaster'
@@ -150,7 +160,12 @@ const About = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: idx * 0.15 }}
-                className="p-8 rounded-3xl bg-white dark:bg-[#16231B] border border-gray-200/80 dark:border-[#D6AE4D]/30 shadow-xl flex flex-col items-center text-center space-y-3 relative"
+                whileHover={{ 
+                  y: -8, 
+                  scale: 1.02, 
+                  boxShadow: "0 20px 25px -5px rgba(214, 174, 77, 0.15)" 
+                }}
+                className="p-8 rounded-[32px] bg-white/70 dark:bg-[#16231B]/75 backdrop-blur-md border border-[#D6AE4D]/25 shadow-xl flex flex-col items-center text-center space-y-3 relative group transition-all duration-300"
               >
                 <span className="font-serif text-3xl font-extrabold text-[#D6AE4D]">
                   {item.year}
@@ -177,7 +192,7 @@ const About = () => {
             Meet the Artisans Behind Your Cup
           </h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-2xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
             {teamMembers.map((member, idx) => (
               <motion.div
                 key={idx}
@@ -185,7 +200,12 @@ const About = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: idx * 0.15 }}
-                className="bg-[#F8F5EE] dark:bg-[#16231B] rounded-3xl p-8 shadow-xl border border-gray-200/80 dark:border-[#D6AE4D]/30 flex flex-col items-center text-center space-y-4"
+                whileHover={{ 
+                  y: -8, 
+                  scale: 1.02, 
+                  boxShadow: "0 20px 25px -5px rgba(214, 174, 77, 0.15)" 
+                }}
+                className="bg-white/75 dark:bg-[#16231B]/75 backdrop-blur-md rounded-[32px] p-8 shadow-xl border border-[#D6AE4D]/25 flex flex-col items-center text-center space-y-4 group transition-all duration-300"
               >
                 <div className="w-20 h-20 rounded-2xl bg-[#123524] text-[#D6AE4D] font-serif font-extrabold text-2xl flex items-center justify-center shadow-lg border border-[#D6AE4D]/40">
                   {member.initials}
@@ -222,7 +242,12 @@ const About = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: idx * 0.15 }}
-                className="bg-white dark:bg-[#16231B] rounded-3xl p-6 border border-gray-200/80 dark:border-[#D6AE4D]/30 flex flex-col items-center text-center space-y-2 shadow-lg"
+                whileHover={{ 
+                  y: -8, 
+                  scale: 1.02, 
+                  boxShadow: "0 20px 25px -5px rgba(214, 174, 77, 0.15)" 
+                }}
+                className="bg-white/75 dark:bg-[#16231B]/75 backdrop-blur-md rounded-[32px] p-8 border border-[#D6AE4D]/25 flex flex-col items-center text-center space-y-3 shadow-xl group transition-all duration-300"
               >
                 <div className="text-[#D6AE4D] text-3xl mb-1">
                   <FiAward />

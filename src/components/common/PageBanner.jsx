@@ -2,9 +2,9 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 const PageBanner = ({
-  title = "Our",
-  highlight = "Story",
-  subtitle = "ABOUT US",
+  title = "",
+  highlight = "",
+  subtitle = "",
   bgImage = "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1920&q=80"
 }) => {
   return (
@@ -28,7 +28,10 @@ const PageBanner = ({
           </span>
         )}
         <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-normal text-white tracking-wide">
-          {title} <span className="italic font-serif font-normal text-[#D4B055] ml-1">{highlight}</span>
+          {title}
+          {highlight && (
+            <span className="italic font-serif font-normal text-[#D4B055] ml-1">{highlight}</span>
+          )}
         </h1>
       </motion.div>
     </div>
