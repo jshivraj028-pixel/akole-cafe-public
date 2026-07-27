@@ -40,7 +40,12 @@ import {
   FiCheck,
   FiSlash,
   FiToggleLeft,
-  FiToggleRight
+  FiToggleRight,
+  FiChevronLeft,
+  FiChevronRight,
+  FiAward,
+  FiZap,
+  FiGlobe
 } from 'react-icons/fi';
 
 const Admin = () => {
@@ -58,6 +63,8 @@ const Admin = () => {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 12;
 
   // Modal states
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -404,6 +411,16 @@ const Admin = () => {
     return matchesCategory && matchesSearch;
   });
 
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchQuery, selectedCategory]);
+
+  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage) || 1;
+  const paginatedProducts = filteredProducts.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
   // Filter users (Instant search for teammate & user accounts)
   const filteredUsers = users.filter(u => {
     if (!searchQuery || !searchQuery.trim()) return true;
@@ -539,7 +556,7 @@ const Admin = () => {
                 className="px-4 py-2 rounded-lg bg-accent-gold/20 border border-accent-gold/40 text-accent-gold hover:bg-accent-gold/30 text-xs flex items-center gap-2 transition-colors"
                 title="View Main Website"
               >
-                🌐 View Main Website
+                <FiGlobe className="w-4 h-4" /> View Main Website
               </button>
               <button
                 onClick={handleLogout}
@@ -689,31 +706,38 @@ const Admin = () => {
                   <tbody className="divide-y divide-accent-gold/10">
                     {filteredProducts.length === 0 ? (
                       <tr>
-                        <td colSpan="6" className="p-8 text-center text-secondary/60">
-                          No products found. Click "Add New Product" to create one.
+                        <td colSpan="6" className="p-8 text-center text-secondary/60 font-medium">
+                          No products matching filters. Click "Add New Product" to create one.
                         </td>
                       </tr>
                     ) : (
-                      filteredProducts.map((p) => (
+                      paginatedProducts.map((p) => (
                         <tr key={p._id || p.id} className="hover:bg-secondary/10 transition-colors">
                           <td className="p-4">
                             <div className="flex items-center gap-3">
                               <img
                                 src={p.image}
                                 alt={p.name}
-                                className="w-12 h-12 object-cover rounded-lg border border-accent-gold/20"
+                                className="w-12 h-12 object-cover rounded-lg border border-accent-gold/20 shadow-sm"
                                 onError={(e) => {
                                   e.target.src = 'https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=800&q=80';
                                 }}
                               />
                               <div>
-                                <div className="font-serif font-bold text-sm text-secondary">{p.name}</div>
+                                <div className="font-serif font-bold text-sm text-secondary flex items-center gap-2">
+                                  {p.name}
+                                  {p.isVeg === false ? (
+                                    <span className="w-2.5 h-2.5 rounded-full bg-red-500 border border-white shrink-0" title="Non-Veg" />
+                                  ) : (
+                                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 border border-white shrink-0" title="Pure Veg" />
+                                  )}
+                                </div>
                                 <div className="text-secondary/60 text-[11px] line-clamp-1 max-w-xs">{p.description}</div>
                               </div>
                             </div>
                           </td>
-                          <td className="p-4 capitalize text-accent-gold/90 font-medium">{p.category}</td>
-                          <td className="p-4 font-bold text-sm">₹{p.price}</td>
+                          <td className="p-4 uppercase text-accent-gold/90 font-bold tracking-wider text-[10px]">{p.category}</td>
+                          <td className="p-4 font-bold text-sm text-secondary">₹{p.price}</td>
                           <td className="p-4">
                             <button
                               onClick={() => handleToggleActive(p)}
@@ -724,17 +748,18 @@ const Admin = () => {
                               }`}
                               title="Click to toggle Active / Non-active status"
                             >
-                              {p.isActive !== false ? <FiCheck /> : <FiSlash />}
-                              {p.isActive !== false ? 'Active' : 'Non-Active'}
+                              {p.isActive !== false ? <FiCheck className="w-3 h-3 text-emerald-400" /> : <FiSlash className="w-3 h-3 text-red-400" />}
+                              {p.isActive !== false ? 'Active' : 'Hidden'}
                             </button>
                           </td>
                           <td className="p-4">
                             {p.isBestseller ? (
-                              <span className="px-2 py-1 rounded bg-amber-500/20 text-amber-300 font-semibold border border-amber-500/30">
-                                Yes 🔥
+                              <span className="px-2.5 py-1 rounded-md bg-amber-500/20 text-amber-300 font-semibold border border-amber-500/30 flex items-center gap-1.5 text-[10px] uppercase tracking-wider w-max">
+                                <FiAward className="w-3 h-3 text-amber-400" />
+                                Bestseller
                               </span>
                             ) : (
-                              <span className="text-secondary/40">No</span>
+                              <span className="text-secondary/40 text-[11px]">Standard</span>
                             )}
                           </td>
                           <td className="p-4 text-right">
@@ -761,6 +786,59 @@ const Admin = () => {
                   </tbody>
                 </table>
               </div>
+
+              {/* High-Level Pagination Controls Bar */}
+              {filteredProducts.length > 0 && (
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-6 p-4 rounded-2xl border border-accent-gold/20 bg-secondary/10 backdrop-blur-md">
+                  <div className="text-xs text-secondary/70 font-medium">
+                    Showing <span className="font-bold text-accent-gold">{((currentPage - 1) * itemsPerPage) + 1}</span> to{' '}
+                    <span className="font-bold text-accent-gold">{Math.min(currentPage * itemsPerPage, filteredProducts.length)}</span> of{' '}
+                    <span className="font-bold text-accent-gold">{filteredProducts.length}</span> items
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                      disabled={currentPage === 1}
+                      className="px-3 py-1.5 rounded-lg bg-secondary/20 border border-accent-gold/30 text-xs font-bold text-secondary hover:bg-accent-gold hover:text-primary transition-all disabled:opacity-30 disabled:pointer-events-none flex items-center gap-1"
+                    >
+                      <FiChevronLeft className="w-4 h-4" /> Prev
+                    </button>
+
+                    {/* Page Numbers */}
+                    <div className="flex items-center gap-1 px-2">
+                      {Array.from({ length: Math.min(totalPages, 7) }, (_, idx) => {
+                        let pageNum = idx + 1;
+                        if (totalPages > 7 && currentPage > 4) {
+                          pageNum = currentPage - 3 + idx;
+                          if (pageNum > totalPages) pageNum = totalPages - (6 - idx);
+                        }
+                        return (
+                          <button
+                            key={pageNum}
+                            onClick={() => setCurrentPage(pageNum)}
+                            className={`w-7 h-7 rounded-lg text-xs font-bold transition-all ${
+                              currentPage === pageNum
+                                ? 'bg-accent-gold text-primary shadow-md scale-105'
+                                : 'bg-secondary/10 text-secondary/70 hover:bg-secondary/20'
+                            }`}
+                          >
+                            {pageNum}
+                          </button>
+                        );
+                      })}
+                    </div>
+
+                    <button
+                      onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                      disabled={currentPage === totalPages}
+                      className="px-3 py-1.5 rounded-lg bg-secondary/20 border border-accent-gold/30 text-xs font-bold text-secondary hover:bg-accent-gold hover:text-primary transition-all disabled:opacity-30 disabled:pointer-events-none flex items-center gap-1"
+                    >
+                      Next <FiChevronRight className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           )}
 
@@ -889,12 +967,13 @@ const Admin = () => {
                           </span>
                         </td>
                         <td className="p-4">
-                          <span className={`px-2.5 py-1 rounded-full text-[10px] uppercase font-bold tracking-wider border ${
+                          <span className={`px-2.5 py-1 rounded-full text-[10px] uppercase font-bold tracking-wider border flex items-center gap-1 w-max ${
                             u.isBanned
                               ? 'bg-red-500/20 text-red-300 border-red-500/40'
                               : 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
                           }`}>
-                            {u.isBanned ? 'Banned 🚫' : 'Active ✅'}
+                            {u.isBanned ? <FiLock className="w-3 h-3 text-red-400" /> : <FiCheckCircle className="w-3 h-3 text-emerald-400" />}
+                            {u.isBanned ? 'Banned' : 'Active'}
                           </span>
                         </td>
                         <td className="p-4 text-right">
@@ -905,7 +984,7 @@ const Admin = () => {
                               className="px-2.5 py-1 rounded-xl bg-blue-500/20 text-blue-300 border border-blue-500/40 hover:bg-blue-500 hover:text-white transition-all text-[11px] font-bold flex items-center gap-1"
                               title="Send direct message notification to this user"
                             >
-                              📩 Notify
+                              <FiCheck className="w-3 h-3" /> Notify
                             </button>
 
                             {/* Send Discount Coupon Button */}
