@@ -91,6 +91,72 @@ const Admin = () => {
   // Notification Toast
   const [toast, setToast] = useState(null);
 
+  // Audit Activity History State
+  const [historySearchQuery, setHistorySearchQuery] = useState('');
+  const [historyFilterType, setHistoryFilterType] = useState('ALL');
+  const [activityLogs, setActivityLogs] = useState(() => {
+    try {
+      const saved = localStorage.getItem('akole_admin_activity_logs');
+      if (saved) return JSON.parse(saved);
+    } catch (e) {}
+    return [
+      {
+        id: 'LOG-INIT-1',
+        timestamp: new Date().toISOString(),
+        formattedDate: new Date().toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' }),
+        actionType: 'SYSTEM',
+        actionLabel: 'System Live',
+        targetItem: 'Akole Cafe Database',
+        details: 'Admin console connected live to MongoDB Cloud Database',
+        badgeColor: 'bg-[#D6AE4D]/20 text-[#D6AE4D] border-[#D6AE4D]/40',
+        adminEmail: 'akolecafe@gmail.com'
+      }
+    ];
+  });
+
+  const logActivity = (actionType, actionLabel, targetItem, details, badgeColor = 'bg-[#D6AE4D]/20 text-[#D6AE4D] border-[#D6AE4D]/40') => {
+    const newEntry = {
+      id: 'LOG-' + Date.now() + '-' + Math.floor(Math.random() * 1000),
+      timestamp: new Date().toISOString(),
+      formattedDate: new Date().toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' }),
+      actionType,
+      actionLabel,
+      targetItem,
+      details,
+      badgeColor,
+      adminEmail: localStorage.getItem('akole_admin_email') || 'akolecafe@gmail.com'
+    };
+
+    setActivityLogs(prev => {
+      const updated = [newEntry, ...prev].slice(0, 150);
+      try {
+        localStorage.setItem('akole_admin_activity_logs', JSON.stringify(updated));
+      } catch (e) {}
+      return updated;
+    });
+  };
+
+  const clearActivityLogs = () => {
+    if (!window.confirm('Are you sure you want to clear all activity history logs?')) return;
+    setActivityLogs([]);
+    try {
+      localStorage.removeItem('akole_admin_activity_logs');
+    } catch (e) {}
+    showToast('Activity logs cleared successfully');
+  };
+
+  const filteredActivityLogs = activityLogs.filter(log => {
+    const query = historySearchQuery.toLowerCase();
+    const matchesSearch = 
+      (log.targetItem || '').toLowerCase().includes(query) ||
+      (log.details || '').toLowerCase().includes(query) ||
+      (log.actionLabel || '').toLowerCase().includes(query) ||
+      (log.adminEmail || '').toLowerCase().includes(query);
+    
+    if (historyFilterType === 'ALL') return matchesSearch;
+    return matchesSearch && log.actionType === historyFilterType;
+  });
+
   const showToast = (message, type = 'success') => {
     setToast({ message, type });
     setTimeout(() => setToast(null), 3500);
@@ -207,6 +273,7 @@ const Admin = () => {
       const newStatus = !product.isActive;
       await updateProductAPI(product._id || product.id, { isActive: newStatus });
       showToast(`Product "${product.name}" is now ${newStatus ? 'Active' : 'Non-Active'}`);
+      logActivity('TOGGLE', 'Status Toggled', product.name, `Product status changed to ${newStatus ? 'Active 🟢' : 'Hidden 🔴'}`, 'bg-blue-500/20 text-blue-300 border-blue-500/40');
       loadData();
     } catch (err) {
       showToast('Failed to toggle status: ' + err.message, 'error');
@@ -242,6 +309,7 @@ const Admin = () => {
         }
 
         showToast(`Product "${updated.name}" updated & price alert sent!`);
+        logActivity('UPDATE', 'Product Updated', updated.name, `Updated product details & set price to ₹${updated.price}`, 'bg-amber-500/20 text-amber-300 border-amber-500/40');
       } else {
         const created = await createProductAPI(payload);
 
@@ -253,6 +321,7 @@ const Admin = () => {
         });
 
         showToast(`Product "${created.name}" created & announcement sent!`);
+        logActivity('CREATE', 'Product Created', created.name, `Created new product in category "${created.category}" for ₹${created.price}`, 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40');
       }
       setIsModalOpen(false);
       loadData();
@@ -267,6 +336,7 @@ const Admin = () => {
     try {
       await deleteProductAPI(id);
       showToast(`Product "${name}" deleted from database.`);
+      logActivity('DELETE', 'Product Deleted', name, `Permanently deleted product (ID: ${id})`, 'bg-red-500/20 text-red-300 border-red-500/40');
       loadData();
     } catch (err) {
       showToast(err.message || 'Delete failed', 'error');
@@ -290,6 +360,7 @@ const Admin = () => {
       }
 
       showToast(`Order status updated to "${newStatus}" & notification sent!`);
+      logActivity('ORDER_UPDATE', 'Order Status', `Order #${String(orderId).slice(-6)}`, `Status updated to "${newStatus}"`, 'bg-purple-500/20 text-purple-300 border-purple-500/40');
       loadData();
     } catch (err) {
       showToast('Failed to update status: ' + err.message, 'error');
@@ -302,6 +373,7 @@ const Admin = () => {
     try {
       await deleteOrderAPI(orderId);
       showToast(`Order #${orderId} deleted successfully.`);
+      logActivity('ORDER_DELETE', 'Order Deleted', `Order #${String(orderId).slice(-6)}`, 'Permanently deleted customer order', 'bg-red-500/20 text-red-300 border-red-500/40');
       loadData();
     } catch (err) {
       showToast(err.message || 'Failed to delete order', 'error');
@@ -324,6 +396,7 @@ const Admin = () => {
       setUsers(prev => prev.map(u => (u._id === user._id || u.email === user.email) ? { ...u, isBanned: newBanState } : u));
       await toggleBanUserAPI(user._id || user.id, newBanState);
       showToast(`User "${user.name}" is now ${newBanState ? 'Banned' : 'Active'}`);
+      logActivity('USER_ACTION', newBanState ? 'User Banned' : 'User Unbanned', user.name, `Account status changed to ${newBanState ? 'Banned 🚫' : 'Active 🟢'}`, 'bg-indigo-500/20 text-indigo-300 border-indigo-500/40');
       loadData(true);
     } catch (err) {
       showToast('Failed to update ban status: ' + err.message, 'error');
@@ -340,6 +413,7 @@ const Admin = () => {
       setUsers(prev => prev.filter(u => u._id !== id && u.id !== id && u.email !== email));
       await deleteUserAPI(id);
       showToast(`User account "${name}" deleted successfully.`);
+      logActivity('USER_ACTION', 'User Account Deleted', name, `Permanently deleted customer account (${email})`, 'bg-red-500/20 text-red-300 border-red-500/40');
       loadData(true);
     } catch (err) {
       showToast('Delete user failed: ' + err.message, 'error');
@@ -364,6 +438,7 @@ const Admin = () => {
         type: 'custom_admin'
       });
       showToast(`Discount coupon sent directly to ${discountUser.name}!`);
+      logActivity('DISCOUNT', 'Discount Sent', discountUser.name, `Sent coupon "${discountCode}" to ${discountUser.email}`, 'bg-amber-500/20 text-amber-300 border-amber-500/40');
       setIsDiscountModalOpen(false);
     } catch (err) {
       showToast('Failed to send discount: ' + err.message, 'error');
@@ -530,31 +605,43 @@ const Admin = () => {
               >
                 Akole Cafe Management Console
               </h1>
-              <p className="font-sans text-xs text-[#D6AE4D] tracking-widest uppercase flex items-center gap-2 font-medium">
-                <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping shrink-0" />
-                Live Connected to MongoDB Cloud Database
-              </p>
+              
+              {/* Executive Glass Capsule Badge */}
+              <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#16231B] border border-[#D6AE4D]/40 shadow-lg backdrop-blur-md mt-1">
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
+                </span>
+                <span className="text-[11px] font-bold text-[#EAE3D2] tracking-wider uppercase font-sans">
+                  Live Connected to <span className="text-[#D6AE4D]">MongoDB Cloud DB</span>
+                </span>
+              </div>
             </div>
+
+            {/* Executive Action Buttons */}
             <div className="flex items-center gap-3 flex-wrap">
               <button
                 onClick={loadData}
-                className="px-4 py-2.5 rounded-xl bg-[#142018] border border-[#D6AE4D]/30 text-white hover:text-[#D6AE4D] text-xs font-bold flex items-center gap-2 transition-all shadow-md"
+                className="px-4 py-2.5 rounded-xl bg-[#16231B] border border-[#D6AE4D]/30 text-[#EAE3D2] hover:bg-[#D6AE4D] hover:text-[#123524] hover:border-[#D6AE4D] hover:scale-105 active:scale-95 text-xs font-bold flex items-center gap-2 transition-all duration-200 shadow-lg group"
                 title="Refresh Live Data"
               >
-                <FiRefreshCw className={loading ? 'animate-spin' : ''} /> Refresh Data
+                <FiRefreshCw className={`w-4 h-4 text-[#D6AE4D] group-hover:text-[#123524] ${loading ? 'animate-spin' : ''}`} /> Refresh Data
               </button>
+              
               <button
                 onClick={() => window.location.href = '/home'}
-                className="px-4 py-2.5 rounded-xl bg-[#D6AE4D]/20 border border-[#D6AE4D]/40 text-[#D6AE4D] hover:bg-[#D6AE4D]/30 text-xs font-bold flex items-center gap-2 transition-all shadow-md"
+                className="px-4 py-2.5 rounded-xl bg-[#D6AE4D]/15 border border-[#D6AE4D]/40 text-[#D6AE4D] hover:bg-[#D6AE4D] hover:text-[#123524] hover:scale-105 active:scale-95 text-xs font-bold flex items-center gap-2 transition-all duration-200 shadow-lg"
                 title="View Main Website"
               >
                 <FiGlobe className="w-4 h-4" /> View Main Website
               </button>
+              
               <button
                 onClick={handleLogout}
-                className="px-4 py-2.5 rounded-xl bg-red-500/20 border border-red-500/30 text-red-300 hover:bg-red-500/30 text-xs font-bold flex items-center gap-2 transition-all shadow-md"
+                className="px-4 py-2.5 rounded-xl bg-red-500/10 border border-red-500/30 text-red-300 hover:bg-red-600 hover:text-white hover:border-red-600 hover:scale-105 active:scale-95 text-xs font-bold flex items-center gap-2 transition-all duration-200 shadow-lg"
+                title="Exit Session"
               >
-                <FiLogOut /> Exit Session
+                <FiLogOut className="w-4 h-4" /> Exit Session
               </button>
             </div>
           </div>
@@ -683,6 +770,16 @@ const Admin = () => {
               }`}
             >
               <FiUsers className="w-4 h-4" /> Registered Customers ({users.length})
+            </button>
+            <button
+              onClick={() => setActiveTab('history')}
+              className={`px-5 py-3 font-sans font-bold text-xs tracking-wider flex items-center gap-2 border-b-2 shrink-0 transition-all rounded-t-xl ${
+                activeTab === 'history'
+                  ? 'border-[#D6AE4D] text-[#D6AE4D] bg-[#16231B]'
+                  : 'border-transparent text-[#A0B0A5] hover:text-[#EAE3D2] hover:bg-[#16231B]/40'
+              }`}
+            >
+              <FiClock className="w-4 h-4" /> Activity History ({activityLogs.length})
             </button>
           </div>
 
@@ -1070,6 +1167,93 @@ const Admin = () => {
                   )}
                 </tbody>
               </table>
+            </div>
+          )}
+
+          {/* TAB 4: AUDIT ACTIVITY HISTORY */}
+          {activeTab === 'history' && (
+            <div className="space-y-6">
+              {/* Actions & Filters Bar */}
+              <div className="flex flex-col md:flex-row items-center justify-between gap-4 p-4 rounded-2xl border border-[#D6AE4D]/30 bg-[#16231B] shadow-xl">
+                <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">
+                  <div className="relative w-full sm:w-64">
+                    <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-[#D6AE4D]" />
+                    <input
+                      type="text"
+                      placeholder="Search activity logs..."
+                      value={historySearchQuery}
+                      onChange={(e) => setHistorySearchQuery(e.target.value)}
+                      className="w-full pl-9 pr-4 py-2.5 rounded-xl bg-[#0F1712] border border-[#D6AE4D]/30 text-xs text-[#EAE3D2] placeholder-gray-400 focus:outline-none focus:border-[#D6AE4D]"
+                    />
+                  </div>
+
+                  <select
+                    value={historyFilterType}
+                    onChange={(e) => setHistoryFilterType(e.target.value)}
+                    className="px-3.5 py-2.5 rounded-xl bg-[#0F1712] border border-[#D6AE4D]/30 text-xs font-semibold text-[#EAE3D2] focus:outline-none focus:border-[#D6AE4D] cursor-pointer"
+                  >
+                    <option value="ALL" className="bg-[#121A15]">All Actions ({activityLogs.length})</option>
+                    <option value="CREATE" className="bg-[#121A15]">Product Created</option>
+                    <option value="UPDATE" className="bg-[#121A15]">Product Updated</option>
+                    <option value="TOGGLE" className="bg-[#121A15]">Status Toggled</option>
+                    <option value="DELETE" className="bg-[#121A15]">Items Deleted</option>
+                    <option value="ORDER_UPDATE" className="bg-[#121A15]">Orders Activity</option>
+                    <option value="USER_ACTION" className="bg-[#121A15]">Users Activity</option>
+                    <option value="DISCOUNT" className="bg-[#121A15]">Discounts Sent</option>
+                  </select>
+                </div>
+
+                <button
+                  onClick={clearActivityLogs}
+                  className="px-4 py-2.5 rounded-xl bg-red-500/20 text-red-300 border border-red-500/30 hover:bg-red-500 hover:text-white transition-all text-xs font-bold flex items-center gap-2"
+                  title="Clear all activity history logs"
+                >
+                  <FiTrash2 className="w-4 h-4" /> Clear Logs
+                </button>
+              </div>
+
+              {/* Activity Table */}
+              <div className="overflow-x-auto rounded-2xl border border-[#D6AE4D]/20 bg-[#16231B] shadow-2xl">
+                <table className="w-full text-left border-collapse text-xs">
+                  <thead>
+                    <tr className="border-b border-[#D6AE4D]/20 bg-[#0F1712] uppercase tracking-widest text-[#D6AE4D] font-bold">
+                      <th className="p-4">Timestamp & Admin</th>
+                      <th className="p-4">Action Type</th>
+                      <th className="p-4">Target Item</th>
+                      <th className="p-4">Details & Notes</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-[#D6AE4D]/10 text-[#EAE3D2]">
+                    {filteredActivityLogs.length === 0 ? (
+                      <tr>
+                        <td colSpan="4" className="p-8 text-center text-gray-400 font-medium">
+                          No activity history entries found matching your search.
+                        </td>
+                      </tr>
+                    ) : (
+                      filteredActivityLogs.map((log) => (
+                        <tr key={log.id} className="hover:bg-[#1C2C22] transition-colors">
+                          <td className="p-4 font-mono">
+                            <div className="font-bold text-[#EAE3D2]">{log.formattedDate}</div>
+                            <div className="text-[10px] text-[#A0B0A5]">{log.adminEmail || 'akolecafe@gmail.com'}</div>
+                          </td>
+                          <td className="p-4 whitespace-nowrap">
+                            <span className={`px-2.5 py-1 rounded-full border text-[10px] font-bold uppercase tracking-wider ${log.badgeColor || 'bg-[#D6AE4D]/20 text-[#D6AE4D] border-[#D6AE4D]/40'}`}>
+                              {log.actionLabel || log.actionType}
+                            </span>
+                          </td>
+                          <td className="p-4 font-bold text-white">
+                            {log.targetItem}
+                          </td>
+                          <td className="p-4 text-xs text-[#A0B0A5] font-medium max-w-xs sm:max-w-md">
+                            {log.details}
+                          </td>
+                        </tr>
+                      ))
+                    )}
+                  </tbody>
+                </table>
+              </div>
             </div>
           )}
         </Container>
