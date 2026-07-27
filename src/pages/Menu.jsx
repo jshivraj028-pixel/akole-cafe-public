@@ -29,25 +29,15 @@ const Menu = () => {
   useEffect(() => {
     let isMounted = true;
     const loadProducts = async (isSilent = false) => {
-      if (!isSilent) setLoading(true);
+      if (!isSilent && items.length === 0) setLoading(true);
       try {
-        const data = await fetchMenuItems(activeCategory, searchQuery);
+        const data = await fetchMenuItems('all', '');
         if (isMounted && Array.isArray(data) && data.length > 0) {
           setItems(data);
         }
       } catch (err) {
-        console.error('Failed to load menu products:', err);
-        if (isMounted) {
-          let filtered = [...staticFallbackItems];
-          if (activeCategory !== 'all') {
-            filtered = filtered.filter(i => i.category === activeCategory);
-          }
-          if (searchQuery) {
-            const q = searchQuery.toLowerCase();
-            filtered = filtered.filter(i => i.name.toLowerCase().includes(q) || i.description.toLowerCase().includes(q));
-          }
-          setItems(filtered);
-        }
+        console.warn('Using static fallback menu dataset:', err);
+        if (isMounted) setItems(staticFallbackItems);
       } finally {
         if (isMounted && !isSilent) setLoading(false);
       }
@@ -56,36 +46,45 @@ const Menu = () => {
     loadProducts(false);
     const interval = setInterval(() => {
       loadProducts(true);
-    }, 6000);
+    }, 8000);
 
     return () => {
       isMounted = false;
       clearInterval(interval);
     };
-  }, [activeCategory]);
+  }, []);
 
   const filteredAndSortedItems = useMemo(() => {
     let result = [...items];
 
-    // Real-time Instant LIKE partial search filter
-    if (searchQuery && searchQuery.trim()) {
-      const terms = searchQuery.trim().toLowerCase().split(/\s+/).filter(Boolean);
+    // 1. Category Filter
+    if (activeCategory && activeCategory !== 'all') {
+      result = result.filter(item => item.category === activeCategory);
+    }
+
+    // 2. Instant Search Filter (name, description, category, tags, price)
+    if (searchQuery && searchQuery.trim() !== '') {
+      const q = searchQuery.toLowerCase().trim();
       result = result.filter(item => {
-        const text = `${item.name || ''} ${item.description || ''} ${item.category || ''} ${Array.isArray(item.tags) ? item.tags.join(' ') : (item.tags || '')}`.toLowerCase();
-        return terms.every(term => text.includes(term));
+        const nameMatch = item.name && item.name.toLowerCase().includes(q);
+        const descMatch = item.description && item.description.toLowerCase().includes(q);
+        const catMatch = item.category && item.category.toLowerCase().includes(q);
+        const tagMatch = Array.isArray(item.tags) && item.tags.some(t => t.toLowerCase().includes(q));
+        const priceMatch = String(item.price).includes(q);
+        return nameMatch || descMatch || catMatch || tagMatch || priceMatch;
       });
     }
 
-    // Filter by Veg / Non-Veg
+    // 3. Pure Veg / Non-Veg Filter
     if (vegFilter === 'veg') {
       result = result.filter(item => item.isVeg === true || item.isVeg === undefined);
     } else if (vegFilter === 'nonveg') {
       result = result.filter(item => item.isVeg === false);
     }
 
-    // Sort
+    // 4. Sorting
     if (sortBy === 'rating') {
-      result.sort((a, b) => b.rating - a.rating);
+      result.sort((a, b) => (b.rating || 0) - (a.rating || 0));
     } else if (sortBy === 'price-low') {
       result.sort((a, b) => a.price - b.price);
     } else if (sortBy === 'price-high') {
@@ -93,7 +92,7 @@ const Menu = () => {
     }
 
     return result;
-  }, [items, searchQuery, sortBy, vegFilter]);
+  }, [items, activeCategory, searchQuery, vegFilter, sortBy]);
 
   return (
     <div className="bg-[#F5F2EA] dark:bg-[#121A15] min-h-screen">
