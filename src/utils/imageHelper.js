@@ -27,7 +27,7 @@ export const getProductImage = (item) => {
   if (name.includes('white butter') || name.includes('loni')) return villageWhiteButterImg;
   if (name.includes('sitaphal') || name.includes('custard apple')) return freshSitaphalImg;
   if (name.includes('tender coconut') || name.includes('shahale')) return tenderCoconutScoopImg;
-  if (name.includes('belgian') || name.includes('dark chocolate')) return belgianDarkChocolateImg;
+  if (name.includes('dutch chocolate') || name.includes('belgian') || name.includes('dark chocolate')) return belgianDarkChocolateImg;
   if (name.includes('ferrero') || name.includes('rocher')) return ferreroRocherCrunchImg;
   if (name.includes('sizzling') || name.includes('brownie')) return sizzlingBrownieFudgeImg;
   if (name.includes('roasted almond') || name.includes('almond fudge')) return roastedAlmondFudgeImg;
@@ -35,6 +35,7 @@ export const getProductImage = (item) => {
   if (name.includes('shahi dry fruit') || name.includes('dry fruit sundae')) return kesariAmrakhandIceCreamImg;
   if (name.includes('sundae') || name.includes('overload')) return ultimateChocolateSundaeImg;
   if (name.includes('amrakhand') || name.includes('kesari amrakhand')) return kesariAmrakhandIceCreamImg;
+  if (name.includes('strawberry')) return rainbowUnicornIceCreamImg;
   if (name.includes('rainbow') || name.includes('unicorn')) return rainbowUnicornIceCreamImg;
   if (name.includes('butterscotch') || name.includes('golden butterscotch')) return goldenButterscotchCrunchImg;
   if (name.includes('vanilla bean') || name.includes('classic vanilla')) return classicVanillaBeanImg;

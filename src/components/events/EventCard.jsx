@@ -12,19 +12,20 @@ import {
   FiMapPin, 
   FiDownload, 
   FiShare2, 
-  FiGrid 
+  FiTag
 } from 'react-icons/fi';
-import Button from '../common/Button';
+import { Sparkles } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
 
 const getCategoryIcon = (category) => {
   switch (category?.toLowerCase()) {
     case 'open mic':
-      return <FiMic className="w-7 h-7 stroke-[1.5]" />;
+      return <FiMic className="w-6 h-6 text-[#D6AE4D]" />;
+    case 'coffee workshops':
     case 'workshop':
-      return <FiCoffee className="w-7 h-7 stroke-[1.5]" />;
+      return <FiCoffee className="w-6 h-6 text-[#D6AE4D]" />;
     default:
-      return <FiMusic className="w-7 h-7 stroke-[1.5]" />;
+      return <FiMusic className="w-6 h-6 text-[#D6AE4D]" />;
   }
 };
 
@@ -37,12 +38,9 @@ const EventCard = ({ event }) => {
   const [guestEmail, setGuestEmail] = useState('');
   const [guestPhone, setGuestPhone] = useState('');
   const [guestCount, setGuestCount] = useState(2);
-  const [paymentMethod, setPaymentMethod] = useState('UPI / Google Pay / PhonePe');
 
   const [booked, setBooked] = useState(false);
   const [passId, setPassId] = useState('');
-
-  const receiptRef = useRef();
 
   const handleRSVP = (e) => {
     e.preventDefault();
@@ -56,12 +54,6 @@ const EventCard = ({ event }) => {
     showToast(`VIP Pass Generated for ${event.title}!`, 'success');
   };
 
-  // Download Receipt via Print
-  const handleDownloadReceipt = () => {
-    window.print();
-  };
-
-  // Share Pass via WhatsApp / Web Share
   const handleSharePass = () => {
     const text = `🎟️ *AKOLE CAFE VIP EVENT PASS*\n\n` +
       `📌 *Event:* ${event.title}\n` +
@@ -87,267 +79,214 @@ const EventCard = ({ event }) => {
   return (
     <>
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 25 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="bg-[#FAF6EE] dark:bg-[#1D2C22] rounded-3xl p-6 sm:p-8 border border-[#E5DDD0] dark:border-[#D6AE4D]/20 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-6 hover:shadow-md transition-shadow"
+        transition={{ duration: 0.5 }}
+        className="bg-white dark:bg-[#16231B] rounded-3xl overflow-hidden border border-gray-200/80 dark:border-[#D6AE4D]/30 shadow-xl hover:shadow-2xl transition-all duration-300 grid grid-cols-1 lg:grid-cols-12 items-stretch group"
       >
-        {/* Left Side: Icon + Details */}
-        <div className="flex items-start gap-5">
-          {/* Icon Box */}
-          <div className="w-14 h-14 rounded-2xl bg-[#EFE8D8] dark:bg-[#16231B] flex items-center justify-center text-[#C8A96A] shrink-0 mt-1">
-            {getCategoryIcon(event.category)}
+        {/* Left 4 Columns: Event Cover Image Banner */}
+        <div className="lg:col-span-4 relative h-64 lg:h-auto min-h-[220px] overflow-hidden bg-[#123524]">
+          <img
+            src={event.image || 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80'}
+            alt={event.title}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#121A15] via-transparent to-transparent opacity-80" />
+          
+          <div className="absolute top-4 left-4 z-10 flex flex-col gap-1 items-start">
+            <span className="text-[9px] font-extrabold tracking-widest px-3 py-1 rounded-full bg-[#D6AE4D] text-[#123524] uppercase shadow-md flex items-center gap-1">
+              <Sparkles className="w-3 h-3 text-[#123524]" /> {event.category || 'SPECIAL EVENT'}
+            </span>
           </div>
 
-          {/* Event Information */}
-          <div className="space-y-1.5">
-            <span className="text-[11px] uppercase tracking-[0.2em] font-semibold text-[#C8A96A] block">
-              {event.category || 'LIVE MUSIC'}
+          <div className="absolute bottom-4 left-4 right-4 z-10 text-white">
+            <span className="text-xs font-bold text-[#D6AE4D] font-serif block">
+              {event.location || 'Akole Cafe Main Lounge'}
             </span>
+          </div>
+        </div>
 
-            <h3 className="font-serif text-xl sm:text-2xl font-normal text-[#1F3A2B] dark:text-white">
+        {/* Right 8 Columns: Details & Action Row */}
+        <div className="lg:col-span-8 p-6 sm:p-8 flex flex-col justify-between space-y-6">
+          <div className="space-y-3">
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center gap-2">
+                <div className="w-9 h-9 rounded-xl bg-[#123524]/10 dark:bg-[#D6AE4D]/15 flex items-center justify-center">
+                  {getCategoryIcon(event.category)}
+                </div>
+                <span className="text-xs font-extrabold text-[#D6AE4D] uppercase tracking-widest">
+                  {event.category}
+                </span>
+              </div>
+
+              <span className="text-sm sm:text-base font-serif font-extrabold text-[#123524] dark:text-[#D6AE4D] bg-[#F5F2EA] dark:bg-[#121A15] px-3.5 py-1.5 rounded-full border border-[#D6AE4D]/30 shadow-sm">
+                {event.price || 'Free Entry'}
+              </span>
+            </div>
+
+            <h3 className="font-serif text-2xl sm:text-3xl font-extrabold text-[#123524] dark:text-white group-hover:text-[#D6AE4D] transition-colors leading-snug">
               {event.title}
             </h3>
 
-            <p className="text-xs sm:text-sm text-[#6B7C70] dark:text-[#A0B0A5] font-light leading-relaxed max-w-xl">
+            <p className="text-xs sm:text-sm text-[#6B7C70] dark:text-[#A0B0A5] font-light leading-relaxed">
               {event.description}
             </p>
 
-            {/* Metadata Row */}
-            <div className="flex flex-wrap items-center gap-4 text-xs text-[#8B9B90] font-medium pt-2">
-              <span className="flex items-center gap-1.5">
-                <FiCalendar className="text-[#C8A96A]" /> {event.date}
+            {/* Metadata Tags */}
+            <div className="flex flex-wrap items-center gap-4 text-xs font-medium text-[#123524] dark:text-[#EAE3D2] pt-2 border-t border-gray-100 dark:border-[#D6AE4D]/15">
+              <span className="flex items-center gap-1.5 bg-[#F8F5EE] dark:bg-[#121A15] px-3 py-1 rounded-lg border border-gray-200/80 dark:border-[#D6AE4D]/20">
+                <FiCalendar className="text-[#D6AE4D]" /> {event.date}
               </span>
-              <span className="flex items-center gap-1.5">
-                <FiClock className="text-[#C8A96A]" /> {event.time}
+              <span className="flex items-center gap-1.5 bg-[#F8F5EE] dark:bg-[#121A15] px-3 py-1 rounded-lg border border-gray-200/80 dark:border-[#D6AE4D]/20">
+                <FiClock className="text-[#D6AE4D]" /> {event.time}
               </span>
-              <span className="flex items-center gap-1.5">
-                <FiUsers className="text-[#C8A96A]" /> {event.spots || '40 spots'}
+              <span className="flex items-center gap-1.5 bg-[#F8F5EE] dark:bg-[#121A15] px-3 py-1 rounded-lg border border-gray-200/80 dark:border-[#D6AE4D]/20">
+                <FiUsers className="text-[#D6AE4D]" /> {event.spots || 'Limited Seats'}
               </span>
-              {event.location && (
-                <span className="flex items-center gap-1.5">
-                  <FiMapPin className="text-[#C8A96A]" /> {event.location}
-                </span>
-              )}
             </div>
           </div>
-        </div>
 
-        {/* Right Side: Price & Register Button */}
-        <div className="flex md:flex-col items-center md:items-end justify-between w-full md:w-auto shrink-0 pt-4 md:pt-0 border-t md:border-t-0 border-[#E5DDD0] dark:border-[#D6AE4D]/20">
-          <span className="font-serif text-lg font-bold text-[#1F3A2B] dark:text-[#D6AE4D] mb-2">
-            {event.price || 'Free Admission'}
-          </span>
-          <button
-            onClick={() => {
-              setBooked(false);
-              setIsRsvpOpen(true);
-            }}
-            className="px-7 py-2.5 rounded-full bg-[#351E13] dark:bg-[#D6AE4D] hover:bg-[#4A2C1D] dark:hover:bg-[#c59d3c] text-white dark:text-[#123524] font-bold text-xs uppercase tracking-wider shadow-sm transition-all"
-          >
-            REGISTER PASS
-          </button>
+          {/* Action Row */}
+          <div className="flex items-center justify-between pt-2">
+            <button
+              onClick={() => setIsRsvpOpen(true)}
+              className="py-3 px-6 rounded-full bg-gradient-to-r from-[#D6AE4D] via-[#F0D588] to-[#B89035] text-[#123524] font-montserrat font-extrabold text-xs uppercase tracking-widest shadow-md shadow-[#D6AE4D]/20 hover:brightness-110 transition-all cursor-pointer flex items-center gap-2"
+            >
+              <Sparkles className="w-4 h-4 text-[#123524]" /> RESERVE PASS
+            </button>
+          </div>
         </div>
       </motion.div>
 
-      {/* RSVP & RECEIPT MODAL */}
+      {/* RSVP Modal */}
       <AnimatePresence>
         {isRsvpOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsRsvpOpen(false)}
-              className="fixed inset-0 bg-black/70 backdrop-blur-sm"
+              className="fixed inset-0 bg-black/85 backdrop-blur-md"
             />
 
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative z-10 w-full max-w-md bg-[#FAF6EE] dark:bg-[#121A15] border border-[#E5DDD0] dark:border-[#D6AE4D]/30 rounded-3xl p-6 sm:p-8 text-[#1F3A2B] dark:text-[#EAE3D2] shadow-2xl overflow-y-auto max-h-[90vh]"
+              className="relative z-10 max-w-lg w-full bg-white dark:bg-[#16231B] border border-[#D6AE4D]/40 rounded-3xl overflow-hidden shadow-2xl p-6 sm:p-8"
             >
               <button
                 onClick={() => setIsRsvpOpen(false)}
-                className="absolute top-4 right-4 text-[#8B9B90] hover:text-[#351E13] dark:hover:text-[#D6AE4D]"
+                className="absolute top-4 right-4 w-9 h-9 rounded-full bg-gray-100 dark:bg-[#121A15] text-gray-500 dark:text-[#A0B0A5] hover:text-[#D6AE4D] flex items-center justify-center transition-colors cursor-pointer"
               >
-                <FiX className="w-6 h-6" />
+                <FiX className="w-5 h-5" />
               </button>
 
-              {/* COLORFUL RECEIPT TICKET PASS */}
-              {booked ? (
-                <div ref={receiptRef} className="space-y-6">
-                  {/* Vibrant Pass Header */}
-                  <div className="p-6 rounded-2xl bg-gradient-to-r from-amber-600 via-emerald-600 to-amber-700 text-white shadow-2xl relative overflow-hidden border border-white/30">
-                    <div className="absolute top-2 right-2 opacity-20 text-7xl font-bold">AKOLE</div>
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="px-3 py-0.5 rounded-full bg-white/20 text-[10px] font-bold uppercase tracking-widest border border-white/40">
-                        OFFICIAL EVENT PASS
-                      </span>
-                      <span className="font-mono text-xs font-bold text-amber-200">{passId}</span>
-                    </div>
-
-                    <h3 className="font-serif text-2xl font-extrabold text-white mb-1">{event.title}</h3>
-                    <p className="text-xs text-emerald-100 font-medium">{event.date} • {event.time}</p>
-                  </div>
-
-                  {/* Receipt Details Box */}
-                  <div className="p-6 rounded-2xl bg-[#123524] text-white border border-[#D6AE4D]/30 text-xs space-y-3">
-                    <div className="flex items-center justify-between border-b border-white/15 pb-2">
-                      <span className="text-white/60 uppercase tracking-wider">Guest Name</span>
-                      <span className="font-bold text-white text-sm">{guestName}</span>
-                    </div>
-
-                    <div className="flex items-center justify-between border-b border-white/15 pb-2">
-                      <span className="text-white/60 uppercase tracking-wider">Contact Email</span>
-                      <span className="font-medium text-[#D6AE4D]">{guestEmail}</span>
-                    </div>
-
-                    <div className="flex items-center justify-between border-b border-white/15 pb-2">
-                      <span className="text-white/60 uppercase tracking-wider">Phone Number</span>
-                      <span className="font-medium text-white">{guestPhone}</span>
-                    </div>
-
-                    <div className="flex items-center justify-between border-b border-white/15 pb-2">
-                      <span className="text-white/60 uppercase tracking-wider">Reserved Passes</span>
-                      <span className="font-extrabold text-amber-400 text-sm">{guestCount} Reserved Seats</span>
-                    </div>
-
-                    <div className="flex items-center justify-between border-b border-white/15 pb-2">
-                      <span className="text-white/60 uppercase tracking-wider">Payment Method</span>
-                      <span className="font-medium text-emerald-400">{paymentMethod}</span>
-                    </div>
-
-                    <div className="flex items-center justify-between pt-1">
-                      <span className="text-white/60 uppercase tracking-wider font-bold">Booking Status</span>
-                      <span className="px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 font-extrabold text-[10px] uppercase border border-emerald-500/40 flex items-center gap-1">
-                        <FiCheckCircle /> PAID & CONFIRMED
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* QR Code Placeholder */}
-                  <div className="flex items-center justify-center gap-3 p-4 rounded-xl bg-white/10 dark:bg-black/20 border border-[#D6AE4D]/20 text-center">
-                    <FiGrid className="w-10 h-10 text-[#D6AE4D]" />
-                    <div className="text-left">
-                      <div className="text-xs font-bold font-mono tracking-widest text-[#1F3A2B] dark:text-white">VERIFIED ENTRY PASS</div>
-                      <div className="text-[10px] text-[#6B7C70] dark:text-[#A0B0A5]">Akole Cafe Entrance • Single Scan Verified</div>
-                    </div>
-                  </div>
-
-                  {/* Actions: Download & Share Buttons */}
-                  <div className="grid grid-cols-2 gap-3 pt-2">
-                    <button
-                      onClick={handleDownloadReceipt}
-                      className="py-3 px-4 rounded-xl bg-[#D6AE4D] text-[#123524] font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-md hover:opacity-90 transition-opacity"
-                    >
-                      <FiDownload className="text-base" /> Download Pass
-                    </button>
-
-                    <button
-                      onClick={handleSharePass}
-                      className="py-3 px-4 rounded-xl bg-emerald-600 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg hover:bg-emerald-500 transition-colors"
-                    >
-                      <FiShare2 className="text-base" /> Share Pass
-                    </button>
-                  </div>
-                </div>
-              ) : (
-                /* RSVP REGISTRATION & PAYMENT FORM */
-                <form onSubmit={handleRSVP} className="space-y-4 text-xs">
-                  <div className="text-center mb-4">
-                    <span className="text-xs uppercase tracking-widest text-[#C8A96A] block font-semibold mb-1">
-                      EVENT RESERVATION
-                    </span>
-                    <h3 className="font-serif text-xl font-bold text-[#1F3A2B] dark:text-white">{event.title}</h3>
-                    <p className="text-xs text-[#6B7C70] dark:text-[#A0B0A5] mt-1">{event.date} • {event.time}</p>
-                  </div>
-
+              {!booked ? (
+                <div className="space-y-5">
                   <div>
-                    <label className="block text-xs uppercase tracking-wider text-[#C8A96A] mb-1 font-semibold">
-                      Your Full Name *
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      placeholder="e.g. Pooja Kadam"
-                      value={guestName}
-                      onChange={(e) => setGuestName(e.target.value)}
-                      className="w-full bg-[#F5EFE3] dark:bg-[#16231B] border border-[#E5DDD0] dark:border-[#D6AE4D]/30 rounded-xl py-2.5 px-4 text-xs text-[#1F3A2B] dark:text-[#EAE3D2] focus:outline-none focus:border-[#C8A96A]"
-                    />
+                    <span className="text-[10px] uppercase font-bold tracking-widest text-[#D6AE4D] block">
+                      VIP PASS REGISTRATION
+                    </span>
+                    <h3 className="font-serif text-2xl font-extrabold text-[#123524] dark:text-white mt-1">
+                      {event.title}
+                    </h3>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <form onSubmit={handleRSVP} className="space-y-4 text-xs">
                     <div>
-                      <label className="block text-xs uppercase tracking-wider text-[#C8A96A] mb-1 font-semibold">
-                        Email Address *
+                      <label className="block text-[10px] font-bold text-[#123524] dark:text-[#D6AE4D] uppercase mb-1">
+                        Full Name *
                       </label>
                       <input
-                        type="email"
+                        type="text"
                         required
-                        placeholder="pooja@example.com"
-                        value={guestEmail}
-                        onChange={(e) => setGuestEmail(e.target.value)}
-                        className="w-full bg-[#F5EFE3] dark:bg-[#16231B] border border-[#E5DDD0] dark:border-[#D6AE4D]/30 rounded-xl py-2.5 px-4 text-xs text-[#1F3A2B] dark:text-[#EAE3D2] focus:outline-none focus:border-[#C8A96A]"
+                        placeholder="e.g. Mayur Gambhire"
+                        value={guestName}
+                        onChange={(e) => setGuestName(e.target.value)}
+                        className="w-full bg-[#F8F5EE] dark:bg-[#121A15] border border-gray-200 dark:border-[#D6AE4D]/30 rounded-xl py-3 px-4 text-xs text-[#123524] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#D6AE4D]/50"
                       />
                     </div>
 
-                    <div>
-                      <label className="block text-xs uppercase tracking-wider text-[#C8A96A] mb-1 font-semibold">
-                        Phone Number *
-                      </label>
-                      <input
-                        type="tel"
-                        required
-                        placeholder="+91 84323 87670"
-                        value={guestPhone}
-                        onChange={(e) => setGuestPhone(e.target.value)}
-                        className="w-full bg-[#F5EFE3] dark:bg-[#16231B] border border-[#E5DDD0] dark:border-[#D6AE4D]/30 rounded-xl py-2.5 px-4 text-xs text-[#1F3A2B] dark:text-[#EAE3D2] focus:outline-none focus:border-[#C8A96A]"
-                      />
-                    </div>
-                  </div>
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-[10px] font-bold text-[#123524] dark:text-[#D6AE4D] uppercase mb-1">
+                          Email *
+                        </label>
+                        <input
+                          type="email"
+                          required
+                          placeholder="e.g. user@example.com"
+                          value={guestEmail}
+                          onChange={(e) => setGuestEmail(e.target.value)}
+                          className="w-full bg-[#F8F5EE] dark:bg-[#121A15] border border-gray-200 dark:border-[#D6AE4D]/30 rounded-xl py-3 px-4 text-xs text-[#123524] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#D6AE4D]/50"
+                        />
+                      </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-[10px] font-bold text-[#123524] dark:text-[#D6AE4D] uppercase mb-1">
+                          Phone *
+                        </label>
+                        <input
+                          type="tel"
+                          required
+                          placeholder="+91 84323 87670"
+                          value={guestPhone}
+                          onChange={(e) => setGuestPhone(e.target.value)}
+                          className="w-full bg-[#F8F5EE] dark:bg-[#121A15] border border-gray-200 dark:border-[#D6AE4D]/30 rounded-xl py-3 px-4 text-xs text-[#123524] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#D6AE4D]/50"
+                        />
+                      </div>
+                    </div>
+
                     <div>
-                      <label className="block text-xs uppercase tracking-wider text-[#C8A96A] mb-1 font-semibold">
-                        Number of Passes
+                      <label className="block text-[10px] font-bold text-[#123524] dark:text-[#D6AE4D] uppercase mb-1">
+                        Number of Attendees
                       </label>
                       <select
                         value={guestCount}
                         onChange={(e) => setGuestCount(Number(e.target.value))}
-                        className="w-full bg-[#F5EFE3] dark:bg-[#16231B] border border-[#E5DDD0] dark:border-[#D6AE4D]/30 rounded-xl py-2.5 px-4 text-xs text-[#1F3A2B] dark:text-[#EAE3D2] focus:outline-none focus:border-[#C8A96A]"
+                        className="w-full bg-[#F8F5EE] dark:bg-[#121A15] border border-gray-200 dark:border-[#D6AE4D]/30 rounded-xl py-3 px-4 text-xs text-[#123524] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#D6AE4D]/50"
                       >
-                        <option value="1">1 Pass</option>
-                        <option value="2">2 Passes</option>
-                        <option value="4">4 Passes</option>
-                        <option value="6">6 Passes</option>
+                        {[1, 2, 3, 4, 5, 6].map((num) => (
+                          <option key={num} value={num}>{num} Guest{num > 1 ? 's' : ''}</option>
+                        ))}
                       </select>
                     </div>
 
-                    <div>
-                      <label className="block text-xs uppercase tracking-wider text-[#C8A96A] mb-1 font-semibold">
-                        Payment Option
-                      </label>
-                      <select
-                        value={paymentMethod}
-                        onChange={(e) => setPaymentMethod(e.target.value)}
-                        className="w-full bg-[#F5EFE3] dark:bg-[#16231B] border border-[#E5DDD0] dark:border-[#D6AE4D]/30 rounded-xl py-2.5 px-4 text-xs text-[#1F3A2B] dark:text-[#EAE3D2] focus:outline-none focus:border-[#C8A96A]"
-                      >
-                        <option value="UPI / Google Pay / PhonePe">UPI / GPay / PhonePe</option>
-                        <option value="Credit / Debit Card">Credit / Debit Card</option>
-                        <option value="Pay at Venue">Pay at Venue</option>
-                      </select>
-                    </div>
+                    <button
+                      type="submit"
+                      className="w-full py-3.5 rounded-full bg-gradient-to-r from-[#D6AE4D] via-[#F0D588] to-[#B89035] text-[#123524] font-montserrat font-extrabold text-xs uppercase tracking-widest shadow-xl hover:brightness-110 transition-all cursor-pointer"
+                    >
+                      CONFIRM PASS RESERVATION
+                    </button>
+                  </form>
+                </div>
+              ) : (
+                <div className="space-y-6 text-center py-4">
+                  <div className="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-500 flex items-center justify-center text-3xl mx-auto border border-emerald-500/40">
+                    <FiCheckCircle />
+                  </div>
+                  <div>
+                    <span className="text-[10px] uppercase font-bold tracking-widest text-[#D6AE4D]">
+                      RESERVATION CONFIRMED
+                    </span>
+                    <h3 className="font-serif text-2xl font-extrabold text-[#123524] dark:text-white mt-1">
+                      {event.title}
+                    </h3>
+                    <p className="text-xs text-[#6B7C70] dark:text-[#A0B0A5] font-light mt-1">
+                      Pass ID: <span className="font-mono font-bold text-[#D6AE4D]">{passId}</span>
+                    </p>
                   </div>
 
                   <button
-                    type="submit"
-                    className="w-full py-3 rounded-full bg-[#351E13] dark:bg-[#D6AE4D] hover:bg-[#4A2C1D] dark:hover:bg-[#c59d3c] text-white dark:text-[#123524] font-bold text-xs uppercase tracking-wider shadow-md transition-all mt-3"
+                    onClick={handleSharePass}
+                    className="w-full py-3 rounded-full bg-emerald-600 text-white font-montserrat font-extrabold text-xs uppercase tracking-wider shadow-md hover:bg-emerald-500 transition-colors flex items-center justify-center gap-2 cursor-pointer"
                   >
-                    Confirm & Generate Event Pass
+                    <FiShare2 className="w-4 h-4" /> SHARE PASS ON WHATSAPP
                   </button>
-                </form>
+                </div>
               )}
             </motion.div>
           </div>

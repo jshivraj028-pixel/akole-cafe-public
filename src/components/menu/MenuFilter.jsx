@@ -38,38 +38,40 @@ const MenuFilter = ({
           )}
         </div>
 
-        {/* 2. Veg / Non-Veg Filter Toggle */}
-        <div className="flex items-center gap-1 bg-white dark:bg-[#16231B] p-1 rounded-full border border-gray-200 dark:border-[#D6AE4D]/30 shadow-sm shrink-0">
+        {/* 2. Ultra-Luxury Veg / Non-Veg Toggle Pills */}
+        <div className="flex items-center gap-1.5 bg-[#F5F2EA] dark:bg-[#121A15] p-1.5 rounded-full border border-gray-200 dark:border-[#D6AE4D]/30 shadow-inner shrink-0">
           <button
             onClick={() => setVegFilter && setVegFilter('all')}
-            className={`py-1.5 px-3 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all ${
+            className={`py-1.5 px-3.5 rounded-full text-[11px] font-extrabold uppercase tracking-wider transition-all duration-300 ${
               vegFilter === 'all' || !vegFilter
-                ? 'bg-[#123524] dark:bg-[#D6AE4D] text-[#D6AE4D] dark:text-[#123524] shadow-sm'
-                : 'text-gray-600 dark:text-[#A0B0A5] hover:text-[#123524]'
+                ? 'bg-gradient-to-r from-[#123524] to-[#1D4732] dark:from-[#D6AE4D] dark:to-[#F0D588] text-[#D6AE4D] dark:text-[#123524] shadow-md scale-[1.03]'
+                : 'text-gray-600 dark:text-[#A0B0A5] hover:text-[#123524] dark:hover:text-white'
             }`}
           >
             All
           </button>
+
           <button
             onClick={() => setVegFilter && setVegFilter('veg')}
-            className={`flex items-center gap-1.5 py-1.5 px-3 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all ${
+            className={`flex items-center gap-1.5 py-1.5 px-3.5 rounded-full text-[11px] font-extrabold uppercase tracking-wider transition-all duration-300 ${
               vegFilter === 'veg'
-                ? 'bg-emerald-600 text-white shadow-sm'
-                : 'text-emerald-700 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/30'
+                ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/30 scale-[1.03]'
+                : 'text-emerald-700 dark:text-emerald-400 hover:bg-emerald-100/50 dark:hover:bg-emerald-950/40'
             }`}
           >
-            <span className="w-2 h-2 rounded-full bg-emerald-500 border border-white" />
+            <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 border border-white shadow-sm ring-2 ring-emerald-500/40 animate-pulse" />
             Pure Veg
           </button>
+
           <button
             onClick={() => setVegFilter && setVegFilter('nonveg')}
-            className={`flex items-center gap-1.5 py-1.5 px-3 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all ${
+            className={`flex items-center gap-1.5 py-1.5 px-3.5 rounded-full text-[11px] font-extrabold uppercase tracking-wider transition-all duration-300 ${
               vegFilter === 'nonveg'
-                ? 'bg-red-600 text-white shadow-sm'
-                : 'text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30'
+                ? 'bg-red-600 text-white shadow-md shadow-red-600/30 scale-[1.03]'
+                : 'text-red-600 dark:text-red-400 hover:bg-red-100/50 dark:hover:bg-red-950/40'
             }`}
           >
-            <span className="w-2 h-2 rounded-full bg-red-600 border border-white" />
+            <span className="w-2.5 h-2.5 rounded-full bg-red-400 border border-white shadow-sm ring-2 ring-red-500/40 animate-pulse" />
             Non-Veg
           </button>
         </div>

@@ -3834,5 +3834,34 @@ export const menuItems = [
     prepTime: '5 mins',
     image: kesariAmrakhandIceCreamImg,
     tags: ['Royal Sundae', 'Shahi Dry Fruit']
+  },
+  {
+    id: 'prem-ic-3',
+    name: 'Dutch Chocolate Ice Cream',
+    category: 'ice-creams',
+    description: 'Rich, smooth and intense cocoa gelato scoop made with authentic Dutch processed dark chocolate.',
+    price: 140,
+    rating: 5.0,
+    isVeg: true,
+    isBestseller: true,
+    isChefSpecial: true,
+    spicyLevel: 0,
+    prepTime: '3 mins',
+    image: belgianDarkChocolateImg,
+    tags: ['Dutch Cocoa', 'Dark Chocolate']
+  },
+  {
+    id: 'prem-ic-4',
+    name: 'Fresh Strawberry Fruit Scoop',
+    category: 'ice-creams',
+    description: 'Refreshing pink gelato scoop made with fresh Mahabaleshwar strawberries & real berry chunks.',
+    price: 130,
+    rating: 4.9,
+    isVeg: true,
+    isBestseller: true,
+    spicyLevel: 0,
+    prepTime: '3 mins',
+    image: rainbowUnicornIceCreamImg,
+    tags: ['Fresh Strawberry', 'Real Berry']
   }
 ];

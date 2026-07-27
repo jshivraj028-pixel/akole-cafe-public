@@ -76,11 +76,6 @@ const ProductCard = ({ product, onQuickView }) => {
             <h3 className="font-serif text-base font-bold text-[#123524] dark:text-white group-hover:text-[#D6AE4D] transition-colors line-clamp-1">
               {product.name}
             </h3>
-            {product.spicyLevel > 0 && (
-              <span className="text-xs shrink-0" title={`Spicy Level: ${product.spicyLevel}/3`}>
-                {'🌶️'.repeat(product.spicyLevel)}
-              </span>
-            )}
           </div>
           <p className="text-[11px] text-[#6B7C70] dark:text-[#A0B0A5] line-clamp-2 mt-1 font-light leading-relaxed">
             {product.description}
