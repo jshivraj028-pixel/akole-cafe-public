@@ -6,6 +6,7 @@ import { FiPackage, FiInfo, FiBell } from 'react-icons/fi';
 import { useCart } from '../../context/CartContext';
 import { useTheme } from '../../context/ThemeContext';
 import MobileMenu from './MobileMenu';
+import LocationModal from './LocationModal';
 import logoEmblem from '../../assets/logo-emblem.png';
 import { fetchNotificationsAPI, markNotificationReadAPI } from '../../services/api';
 
@@ -23,6 +24,7 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -217,17 +219,17 @@ const Navbar = () => {
                 </AnimatePresence>
               </div>
 
-              {/* 3. Location Pin Icon */}
-              <Link
-                to="/contact"
+              {/* 3. Location Pin Icon & Satellite Map Modal Trigger */}
+              <button
+                onClick={() => setIsLocationModalOpen(true)}
                 className={`p-1.5 transition-colors ${
                   isHome ? 'text-white hover:text-[#D6AE4D]' : 'text-[#354F42] hover:text-[#D6AE4D]'
                 }`}
-                title="Our Location & Contact"
-                aria-label="Location"
+                title="Our Location & Satellite Earth Map"
+                aria-label="Location Map"
               >
                 <MapPin className="w-5 h-5 stroke-[2]" />
-              </Link>
+              </button>
 
               {/* 4. Shopping Cart Icon */}
               <Link
@@ -474,6 +476,12 @@ const Navbar = () => {
         isOpen={isMobileMenuOpen}
         onClose={() => setIsMobileMenuOpen(false)}
         links={navLinks}
+      />
+
+      {/* Interactive Satellite & Location Map Modal */}
+      <LocationModal
+        isOpen={isLocationModalOpen}
+        onClose={() => setIsLocationModalOpen(false)}
       />
     </>
   );
