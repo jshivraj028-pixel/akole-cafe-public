@@ -25,10 +25,10 @@ const MenuCard = ({ item, onQuickView }) => {
 
   return (
     <motion.div
-      whileHover={{ y: -5 }}
+      whileHover={{ y: -6 }}
       transition={{ duration: 0.25 }}
       onClick={handleCardClick}
-      className="group relative rounded-2xl bg-white border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden flex flex-col justify-between cursor-pointer"
+      className="group relative rounded-2xl bg-white dark:bg-[#16231B] border border-gray-200 dark:border-[#D6AE4D]/20 shadow-sm hover:shadow-2xl hover:shadow-[#D6AE4D]/10 hover:border-[#D6AE4D] dark:hover:border-[#D6AE4D] transition-all duration-300 overflow-hidden flex flex-col justify-between cursor-pointer"
     >
       {/* Product Image */}
       <div className="relative h-48 w-full overflow-hidden bg-[#F5F2EA]">

@@ -233,7 +233,7 @@ const Admin = () => {
         if (editingProduct.price !== Number(formData.price)) {
           await createNotificationAPI({
             userEmail: 'ALL',
-            title: `🔥 Price Alert: ${updated.name}`,
+            title: `Price Alert: ${updated.name}`,
             message: `Price for "${updated.name}" has been updated to ₹${updated.price}!`,
             type: 'price_change'
           });
@@ -245,7 +245,7 @@ const Admin = () => {
 
         await createNotificationAPI({
           userEmail: 'ALL',
-          title: `✨ New Arrival: ${created.name}`,
+          title: `New Arrival: ${created.name}`,
           message: `Check out our new artisanal menu item "${created.name}" for ₹${created.price}!`,
           type: 'price_change'
         });
@@ -278,10 +278,9 @@ const Admin = () => {
       
       const targetOrder = orders.find(o => (o._id === orderId || o.id === orderId || o.orderId === orderId));
       if (targetOrder && targetOrder.customerEmail) {
-        let statusEmoji = newStatus === 'Confirmed' ? '👍' : newStatus === 'Out for Delivery' ? '🛵' : newStatus === 'Delivered' ? '✅' : '❌';
         await createNotificationAPI({
           userEmail: targetOrder.customerEmail,
-          title: `Order Status: ${newStatus} ${statusEmoji}`,
+          title: `Order Status: ${newStatus}`,
           message: `Your Order #${targetOrder.orderId || orderId} status has been updated to "${newStatus}".`,
           type: 'order_update',
           orderId: targetOrder.orderId || orderId
@@ -322,7 +321,7 @@ const Admin = () => {
       const newBanState = !user.isBanned;
       setUsers(prev => prev.map(u => (u._id === user._id || u.email === user.email) ? { ...u, isBanned: newBanState } : u));
       await toggleBanUserAPI(user._id || user.id, newBanState);
-      showToast(`User "${user.name}" is now ${newBanState ? 'Banned 🚫' : 'Active ✅'}`);
+      showToast(`User "${user.name}" is now ${newBanState ? 'Banned' : 'Active'}`);
       loadData(true);
     } catch (err) {
       showToast('Failed to update ban status: ' + err.message, 'error');
@@ -358,7 +357,7 @@ const Admin = () => {
     try {
       await createNotificationAPI({
         userEmail: discountUser.email,
-        title: `🎁 Special Member Discount: ${discountCode}`,
+        title: `Special Member Discount: ${discountCode}`,
         message: discountMsg,
         type: 'custom_admin'
       });
@@ -431,88 +430,74 @@ const Admin = () => {
 
   if (!isLoggedIn) {
     return (
-      <>
-        <PageBanner 
-          title="Admin Control Center" 
-          subtitle="Management Portal for Akole Cafe Products & Orders"
-          bgImage="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1920&q=80"
-        />
+      <div className="py-20 bg-[#0D1510] text-[#EAE3D2] flex items-center justify-center min-h-screen">
+        <Container>
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="max-w-md mx-auto p-8 rounded-2xl bg-[#142018] border border-[#D6AE4D]/40 backdrop-blur-xl shadow-2xl"
+          >
+            <div className="flex flex-col items-center text-center mb-6">
+              <div className="w-16 h-16 rounded-full bg-[#D6AE4D]/20 text-[#D6AE4D] flex items-center justify-center text-2xl mb-3 border border-[#D6AE4D]/40 shadow-inner">
+                <FiLock />
+              </div>
+              <h2 className="font-sans text-2xl font-bold text-white">Admin Authorization</h2>
+              <p className="text-xs text-[#A0B0A5] mt-1">Please enter administrator credentials to proceed</p>
+            </div>
 
-        <section className="py-20 bg-primary text-secondary flex items-center justify-center min-h-[60vh]">
-          <Container>
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="max-w-md mx-auto p-8 rounded-2xl bg-secondary/10 border border-accent-gold/30 backdrop-blur-xl shadow-2xl"
-            >
-              <div className="flex flex-col items-center text-center mb-6">
-                <div className="w-16 h-16 rounded-full bg-gold-gradient text-primary flex items-center justify-center text-2xl mb-3 shadow-gold">
-                  <FiLock />
-                </div>
-                <h2 className="font-serif text-2xl font-bold text-secondary">Admin Authorization</h2>
-                <p className="text-sm text-secondary/70 mt-1">Please enter administrator credentials to proceed</p>
+            {loginError && (
+              <div className="mb-4 p-3 rounded-lg bg-red-500/20 border border-red-500/40 text-red-300 text-xs flex items-center gap-2">
+                <FiAlertCircle />
+                {loginError}
+              </div>
+            )}
+
+            <form onSubmit={handleLogin} className="space-y-4">
+              <div>
+                <label className="block text-xs uppercase tracking-wider font-bold text-[#D6AE4D] mb-1">
+                  Admin Email *
+                </label>
+                <input
+                  type="email"
+                  required
+                  value={adminEmail}
+                  onChange={(e) => setAdminEmail(e.target.value)}
+                  className="w-full px-4 py-2.5 rounded-lg bg-[#0A100C] border border-[#D6AE4D]/30 text-white focus:outline-none focus:border-[#D6AE4D] text-xs"
+                  placeholder="akolecafe@gmail.com"
+                />
               </div>
 
-              {loginError && (
-                <div className="mb-4 p-3 rounded-lg bg-red-500/20 border border-red-500/40 text-red-300 text-xs flex items-center gap-2">
-                  <FiAlertCircle />
-                  {loginError}
-                </div>
-              )}
+              <div>
+                <label className="block text-xs uppercase tracking-wider font-bold text-[#D6AE4D] mb-1">
+                  Password *
+                </label>
+                <input
+                  type="password"
+                  required
+                  value={adminPassword}
+                  onChange={(e) => setAdminPassword(e.target.value)}
+                  className="w-full px-4 py-2.5 rounded-lg bg-[#0A100C] border border-[#D6AE4D]/30 text-white focus:outline-none focus:border-[#D6AE4D] text-xs"
+                  placeholder="••••••••"
+                />
+              </div>
 
-              <form onSubmit={handleLogin} className="space-y-4">
-                <div>
-                  <label className="block text-xs uppercase tracking-wider font-medium text-accent-gold mb-1">
-                    Admin Email *
-                  </label>
-                  <input
-                    type="email"
-                    required
-                    value={adminEmail}
-                    onChange={(e) => setAdminEmail(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-lg bg-primary/80 border border-accent-gold/20 text-secondary focus:outline-none focus:border-accent-gold text-xs"
-                    placeholder="akolecafe@gmail.com"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs uppercase tracking-wider font-medium text-accent-gold mb-1">
-                    Password *
-                  </label>
-                  <input
-                    type="password"
-                    required
-                    value={adminPassword}
-                    onChange={(e) => setAdminPassword(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-lg bg-primary/80 border border-accent-gold/20 text-secondary focus:outline-none focus:border-accent-gold text-xs"
-                    placeholder="••••••••"
-                  />
-                </div>
-
-                <div className="pt-2">
-                  <button
-                    type="submit"
-                    className="w-full py-3 rounded-lg bg-gold-gradient text-primary font-bold uppercase tracking-wider text-xs shadow-gold hover:opacity-90 transition-opacity"
-                  >
-                    Authenticate Access
-                  </button>
-                </div>
-              </form>
-            </motion.div>
-          </Container>
-        </section>
-      </>
+              <div className="pt-2">
+                <button
+                  type="submit"
+                  className="w-full py-3 rounded-lg bg-[#D6AE4D] text-[#0D1510] font-bold uppercase tracking-wider text-xs shadow-lg hover:bg-[#c49d3c] transition-all"
+                >
+                  Authenticate Access
+                </button>
+              </div>
+            </form>
+          </motion.div>
+        </Container>
+      </div>
     );
   }
 
   return (
-    <>
-      <PageBanner 
-        title="Admin Control Center" 
-        subtitle="Manage MongoDB Cloud Database • Active Products • Live Orders • Users"
-        bgImage="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1920&q=80"
-      />
-
+    <div className="min-h-screen bg-[#0D1510] text-[#EAE3D2]">
       {/* Toast Notification */}
       <AnimatePresence>
         {toast && (
@@ -520,10 +505,10 @@ const Admin = () => {
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -50 }}
-            className={`fixed top-24 right-6 z-50 px-5 py-3 rounded-xl border flex items-center gap-3 shadow-2xl backdrop-blur-xl ${
+            className={`fixed top-20 right-6 z-50 px-5 py-3 rounded-xl border flex items-center gap-3 shadow-2xl backdrop-blur-xl ${
               toast.type === 'error' 
-                ? 'bg-red-900/90 border-red-500 text-white' 
-                : 'bg-emerald-900/90 border-emerald-500 text-white'
+                ? 'bg-red-950/90 border-red-500 text-white' 
+                : 'bg-emerald-950/90 border-emerald-500 text-white'
             }`}
           >
             {toast.type === 'error' ? <FiAlertCircle className="text-xl" /> : <FiCheckCircle className="text-xl" />}
@@ -532,35 +517,40 @@ const Admin = () => {
         )}
       </AnimatePresence>
 
-      <section className="py-12 bg-primary text-secondary min-h-screen">
+      <section className="py-8 bg-[#0D1510]">
         <Container>
-          {/* Header Bar */}
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 pb-6 border-b border-accent-gold/20">
-            <div>
-              <h1 className="font-serif text-3xl font-bold text-secondary">Akole Cafe Management Console</h1>
-              <p className="text-xs text-accent-gold tracking-widest uppercase mt-1 flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-                Live Connected to MongoDB Atlas Cloud Database
+          {/* Top Header Bar */}
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-8 pb-6 border-b border-[#D6AE4D]/20">
+            <div className="py-2">
+              <h1 
+                className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-wide block"
+                style={{ lineHeight: '1.25', margin: '0 0 8px 0' }}
+              >
+                Akole Cafe Management Console
+              </h1>
+              <p className="font-sans text-xs text-[#D6AE4D] tracking-widest uppercase flex items-center gap-2 font-medium">
+                <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping shrink-0" />
+                Live Connected to MongoDB Cloud Database
               </p>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 flex-wrap">
               <button
                 onClick={loadData}
-                className="px-4 py-2 rounded-lg bg-secondary/10 border border-accent-gold/20 text-secondary hover:text-accent-gold text-xs flex items-center gap-2 transition-colors"
+                className="px-4 py-2.5 rounded-xl bg-[#142018] border border-[#D6AE4D]/30 text-white hover:text-[#D6AE4D] text-xs font-bold flex items-center gap-2 transition-all shadow-md"
                 title="Refresh Live Data"
               >
                 <FiRefreshCw className={loading ? 'animate-spin' : ''} /> Refresh Data
               </button>
               <button
                 onClick={() => window.location.href = '/home'}
-                className="px-4 py-2 rounded-lg bg-accent-gold/20 border border-accent-gold/40 text-accent-gold hover:bg-accent-gold/30 text-xs flex items-center gap-2 transition-colors"
+                className="px-4 py-2.5 rounded-xl bg-[#D6AE4D]/20 border border-[#D6AE4D]/40 text-[#D6AE4D] hover:bg-[#D6AE4D]/30 text-xs font-bold flex items-center gap-2 transition-all shadow-md"
                 title="View Main Website"
               >
                 <FiGlobe className="w-4 h-4" /> View Main Website
               </button>
               <button
                 onClick={handleLogout}
-                className="px-4 py-2 rounded-lg bg-red-500/20 border border-red-500/30 text-red-300 hover:bg-red-500/30 text-xs flex items-center gap-2 transition-colors"
+                className="px-4 py-2.5 rounded-xl bg-red-500/20 border border-red-500/30 text-red-300 hover:bg-red-500/30 text-xs font-bold flex items-center gap-2 transition-all shadow-md"
               >
                 <FiLogOut /> Exit Session
               </button>
@@ -569,86 +559,128 @@ const Admin = () => {
 
           {/* Metric Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-            <div className="p-6 rounded-2xl bg-secondary/10 border border-accent-gold/20 backdrop-blur-md flex items-center gap-4 shadow-luxury">
-              <div className="w-14 h-14 rounded-xl bg-gold-gradient/20 text-accent-gold flex items-center justify-center text-2xl border border-accent-gold/30">
+            {/* Card 1: Total Products */}
+            <div 
+              onClick={() => {
+                setActiveTab('products');
+                setSelectedCategory('all');
+                setSearchQuery('');
+                showToast('Viewing All Products');
+              }}
+              className="p-6 rounded-2xl bg-[#16231B] border border-[#D6AE4D]/30 backdrop-blur-md flex items-center gap-4 shadow-lg hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-[#D6AE4D]/10 hover:border-[#D6AE4D] transition-all duration-300 cursor-pointer group"
+              title="Click to view All Products"
+            >
+              <div className="w-14 h-14 rounded-xl bg-[#D6AE4D]/20 text-[#D6AE4D] flex items-center justify-center text-2xl border border-[#D6AE4D]/40 shrink-0 group-hover:bg-[#D6AE4D] group-hover:text-[#123524] transition-all">
                 <FiPackage />
               </div>
               <div>
-                <p className="text-xs uppercase tracking-wider text-secondary/60">Total Products</p>
-                <h3 className="font-serif text-3xl font-bold text-secondary">{products.length}</h3>
-                <span className="text-[10px] text-emerald-400 font-semibold">
-                  {products.filter(p => p.isActive !== false).length} Active
+                <p className="text-xs uppercase tracking-wider text-[#A0B0A5] font-semibold">Total Products</p>
+                <h3 className="font-sans text-3xl font-extrabold text-[#EAE3D2] mt-0.5">{products.length}</h3>
+                <span className="text-[10px] text-emerald-400 font-bold">
+                  {products.filter(p => p.isActive !== false).length} Active • Click to Open
                 </span>
               </div>
             </div>
 
-            <div className="p-6 rounded-2xl bg-secondary/10 border border-accent-gold/20 backdrop-blur-md flex items-center gap-4 shadow-luxury">
-              <div className="w-14 h-14 rounded-xl bg-gold-gradient/20 text-accent-gold flex items-center justify-center text-2xl border border-accent-gold/30">
+            {/* Card 2: Total Orders */}
+            <div 
+              onClick={() => {
+                setActiveTab('orders');
+                showToast('Viewing Live Customer Orders');
+              }}
+              className="p-6 rounded-2xl bg-[#16231B] border border-[#D6AE4D]/30 backdrop-blur-md flex items-center gap-4 shadow-lg hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-[#D6AE4D]/10 hover:border-[#D6AE4D] transition-all duration-300 cursor-pointer group"
+              title="Click to view Live Orders"
+            >
+              <div className="w-14 h-14 rounded-xl bg-[#D6AE4D]/20 text-[#D6AE4D] flex items-center justify-center text-2xl border border-[#D6AE4D]/40 shrink-0 group-hover:bg-[#D6AE4D] group-hover:text-[#123524] transition-all">
                 <FiShoppingBag />
               </div>
               <div>
-                <p className="text-xs uppercase tracking-wider text-secondary/60">Total Orders</p>
-                <h3 className="font-serif text-3xl font-bold text-secondary">{orders.length}</h3>
-                <span className="text-[10px] text-amber-400 font-semibold">
-                  {orders.filter(o => o.status === 'Pending').length} Pending
+                <p className="text-xs uppercase tracking-wider text-[#A0B0A5] font-semibold">Total Orders</p>
+                <h3 className="font-sans text-3xl font-extrabold text-[#EAE3D2] mt-0.5">{orders.length}</h3>
+                <span className="text-[10px] text-amber-400 font-bold">
+                  {orders.filter(o => o.status === 'Pending').length} Pending • Click to Open
                 </span>
               </div>
             </div>
 
-            <div className="p-6 rounded-2xl bg-secondary/10 border border-accent-gold/20 backdrop-blur-md flex items-center gap-4 shadow-luxury">
-              <div className="w-14 h-14 rounded-xl bg-gold-gradient/20 text-accent-gold flex items-center justify-center text-2xl border border-accent-gold/30">
+            {/* Card 3: Registered Users */}
+            <div 
+              onClick={() => {
+                setActiveTab('users');
+                showToast('Viewing Registered Customers');
+              }}
+              className="p-6 rounded-2xl bg-[#16231B] border border-[#D6AE4D]/30 backdrop-blur-md flex items-center gap-4 shadow-lg hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-[#D6AE4D]/10 hover:border-[#D6AE4D] transition-all duration-300 cursor-pointer group"
+              title="Click to view Registered Users"
+            >
+              <div className="w-14 h-14 rounded-xl bg-[#D6AE4D]/20 text-[#D6AE4D] flex items-center justify-center text-2xl border border-[#D6AE4D]/40 shrink-0 group-hover:bg-[#D6AE4D] group-hover:text-[#123524] transition-all">
                 <FiUsers />
               </div>
               <div>
-                <p className="text-xs uppercase tracking-wider text-secondary/60">Registered Users</p>
-                <h3 className="font-serif text-3xl font-bold text-secondary">{users.length}</h3>
+                <p className="text-xs uppercase tracking-wider text-[#A0B0A5] font-semibold">Registered Users</p>
+                <h3 className="font-sans text-3xl font-extrabold text-[#EAE3D2] mt-0.5">{users.length}</h3>
+                <span className="text-[10px] text-[#D6AE4D] font-bold">
+                  Click to View Users
+                </span>
               </div>
             </div>
 
-            <div className="p-6 rounded-2xl bg-secondary/10 border border-accent-gold/20 backdrop-blur-md flex items-center gap-4 shadow-luxury">
-              <div className="w-14 h-14 rounded-xl bg-gold-gradient/20 text-accent-gold flex items-center justify-center text-2xl border border-accent-gold/30">
+            {/* Card 4: Bestseller Items */}
+            <div 
+              onClick={() => {
+                setActiveTab('products');
+                setSelectedCategory('all');
+                setSearchQuery('bestseller');
+                showToast('Filtering Bestseller Products');
+              }}
+              className="p-6 rounded-2xl bg-[#16231B] border border-[#D6AE4D]/30 backdrop-blur-md flex items-center gap-4 shadow-lg hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-[#D6AE4D]/10 hover:border-[#D6AE4D] transition-all duration-300 cursor-pointer group"
+              title="Click to filter Bestseller Products"
+            >
+              <div className="w-14 h-14 rounded-xl bg-[#D6AE4D]/20 text-[#D6AE4D] flex items-center justify-center text-2xl border border-[#D6AE4D]/40 shrink-0 group-hover:bg-[#D6AE4D] group-hover:text-[#123524] transition-all">
                 <FiStar />
               </div>
               <div>
-                <p className="text-xs uppercase tracking-wider text-secondary/60">Bestseller Items</p>
-                <h3 className="font-serif text-3xl font-bold text-secondary">
+                <p className="text-xs uppercase tracking-wider text-[#A0B0A5] font-semibold">Bestseller Items</p>
+                <h3 className="font-sans text-3xl font-extrabold text-[#EAE3D2] mt-0.5">
                   {products.filter(p => p.isBestseller).length}
                 </h3>
+                <span className="text-[10px] text-amber-400 font-bold">
+                  Click to Filter Bestsellers
+                </span>
               </div>
             </div>
           </div>
 
           {/* Tabs Navigation */}
-          <div className="flex border-b border-accent-gold/20 mb-8 overflow-x-auto">
+          <div className="flex border-b border-[#D6AE4D]/20 mb-8 overflow-x-auto gap-2">
             <button
               onClick={() => setActiveTab('products')}
-              className={`px-6 py-3 font-serif font-bold text-sm tracking-wider flex items-center gap-2 border-b-2 shrink-0 transition-all ${
+              className={`px-5 py-3 font-sans font-bold text-xs tracking-wider flex items-center gap-2 border-b-2 shrink-0 transition-all rounded-t-xl ${
                 activeTab === 'products'
-                  ? 'border-accent-gold text-accent-gold'
-                  : 'border-transparent text-secondary/60 hover:text-secondary'
+                  ? 'border-[#D6AE4D] text-[#D6AE4D] bg-[#16231B]'
+                  : 'border-transparent text-[#A0B0A5] hover:text-[#EAE3D2] hover:bg-[#16231B]/40'
               }`}
             >
-              <FiPackage /> Products ({products.length})
+              <FiPackage className="w-4 h-4" /> Products ({products.length})
             </button>
             <button
               onClick={() => setActiveTab('orders')}
-              className={`px-6 py-3 font-serif font-bold text-sm tracking-wider flex items-center gap-2 border-b-2 shrink-0 transition-all ${
+              className={`px-5 py-3 font-sans font-bold text-xs tracking-wider flex items-center gap-2 border-b-2 shrink-0 transition-all rounded-t-xl ${
                 activeTab === 'orders'
-                  ? 'border-accent-gold text-accent-gold'
-                  : 'border-transparent text-secondary/60 hover:text-secondary'
+                  ? 'border-[#D6AE4D] text-[#D6AE4D] bg-[#16231B]'
+                  : 'border-transparent text-[#A0B0A5] hover:text-[#EAE3D2] hover:bg-[#16231B]/40'
               }`}
             >
-              <FiShoppingBag /> Live Orders ({orders.length})
+              <FiShoppingBag className="w-4 h-4" /> Live Orders ({orders.length})
             </button>
             <button
               onClick={() => setActiveTab('users')}
-              className={`px-6 py-3 font-serif font-bold text-sm tracking-wider flex items-center gap-2 border-b-2 shrink-0 transition-all ${
+              className={`px-5 py-3 font-sans font-bold text-xs tracking-wider flex items-center gap-2 border-b-2 shrink-0 transition-all rounded-t-xl ${
                 activeTab === 'users'
-                  ? 'border-accent-gold text-accent-gold'
-                  : 'border-transparent text-secondary/60 hover:text-secondary'
+                  ? 'border-[#D6AE4D] text-[#D6AE4D] bg-[#16231B]'
+                  : 'border-transparent text-[#A0B0A5] hover:text-[#EAE3D2] hover:bg-[#16231B]/40'
               }`}
             >
-              <FiUsers /> Registered Customers ({users.length})
+              <FiUsers className="w-4 h-4" /> Registered Customers ({users.length})
             </button>
           </div>
 
@@ -660,13 +692,13 @@ const Admin = () => {
                 <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">
                   {/* Search Input */}
                   <div className="relative w-full sm:w-64">
-                    <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-secondary/50" />
+                    <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-[#D6AE4D]" />
                     <input
                       type="text"
                       placeholder="Search items..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-full pl-9 pr-4 py-2 rounded-xl bg-secondary/10 border border-accent-gold/20 text-xs text-secondary focus:outline-none focus:border-accent-gold"
+                      className="w-full pl-9 pr-4 py-2.5 rounded-xl bg-[#16231B] border border-[#D6AE4D]/30 text-xs text-[#EAE3D2] placeholder-gray-400 focus:outline-none focus:border-[#D6AE4D] shadow-sm"
                     />
                   </div>
 
@@ -674,11 +706,11 @@ const Admin = () => {
                   <select
                     value={selectedCategory}
                     onChange={(e) => setSelectedCategory(e.target.value)}
-                    className="px-3 py-2 rounded-xl bg-secondary/10 border border-accent-gold/20 text-xs text-secondary focus:outline-none focus:border-accent-gold"
+                    className="px-3.5 py-2.5 rounded-xl bg-[#16231B] border border-[#D6AE4D]/30 text-xs font-semibold text-[#EAE3D2] focus:outline-none focus:border-[#D6AE4D] cursor-pointer shadow-sm"
                   >
-                    <option value="all" className="bg-primary text-secondary">All Categories</option>
+                    <option value="all" className="bg-[#121A15] text-[#EAE3D2]">All Categories</option>
                     {menuCategories.filter(c => c.id !== 'all').map(cat => (
-                      <option key={cat.id} value={cat.id} className="bg-primary text-secondary">
+                      <option key={cat.id} value={cat.id} className="bg-[#121A15] text-[#EAE3D2]">
                         {cat.name}
                       </option>
                     ))}
@@ -691,10 +723,10 @@ const Admin = () => {
               </div>
 
               {/* Products Table */}
-              <div className="overflow-x-auto rounded-2xl border border-accent-gold/20 bg-secondary/5 backdrop-blur-md shadow-luxury">
+              <div className="overflow-x-auto rounded-2xl border border-[#D6AE4D]/30 bg-[#16231B] backdrop-blur-md shadow-xl">
                 <table className="w-full text-left border-collapse text-xs">
                   <thead>
-                    <tr className="border-b border-accent-gold/20 bg-secondary/10 uppercase tracking-widest text-accent-gold">
+                    <tr className="border-b border-[#D6AE4D]/30 bg-[#0F1712] uppercase tracking-widest text-[#D6AE4D] font-bold">
                       <th className="p-4">Item</th>
                       <th className="p-4">Category</th>
                       <th className="p-4">Price</th>
@@ -787,40 +819,40 @@ const Admin = () => {
                 </table>
               </div>
 
-              {/* High-Level Pagination Controls Bar */}
+              {/* High-Level Responsive Pagination Controls Bar */}
               {filteredProducts.length > 0 && (
-                <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-6 p-4 rounded-2xl border border-accent-gold/20 bg-secondary/10 backdrop-blur-md">
-                  <div className="text-xs text-secondary/70 font-medium">
-                    Showing <span className="font-bold text-accent-gold">{((currentPage - 1) * itemsPerPage) + 1}</span> to{' '}
-                    <span className="font-bold text-accent-gold">{Math.min(currentPage * itemsPerPage, filteredProducts.length)}</span> of{' '}
-                    <span className="font-bold text-accent-gold">{filteredProducts.length}</span> items
+                <div className="w-full mt-6 p-4 rounded-2xl border border-[#D6AE4D]/30 bg-[#16231B] shadow-xl flex flex-col md:flex-row items-center justify-between gap-4">
+                  <div className="text-xs text-[#A0B0A5] font-medium text-center md:text-left">
+                    Showing <span className="font-bold text-[#D6AE4D]">{((currentPage - 1) * itemsPerPage) + 1}</span> to{' '}
+                    <span className="font-bold text-[#D6AE4D]">{Math.min(currentPage * itemsPerPage, filteredProducts.length)}</span> of{' '}
+                    <span className="font-bold text-[#D6AE4D]">{filteredProducts.length}</span> items
                   </div>
 
-                  <div className="flex items-center gap-2">
+                  <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 max-w-full">
                     <button
                       onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                       disabled={currentPage === 1}
-                      className="px-3 py-1.5 rounded-lg bg-secondary/20 border border-accent-gold/30 text-xs font-bold text-secondary hover:bg-accent-gold hover:text-primary transition-all disabled:opacity-30 disabled:pointer-events-none flex items-center gap-1"
+                      className="px-3 py-1.5 rounded-xl bg-[#0F1712] border border-[#D6AE4D]/30 text-xs font-bold text-[#EAE3D2] hover:bg-[#D6AE4D] hover:text-[#123524] transition-all disabled:opacity-30 disabled:pointer-events-none flex items-center gap-1 shrink-0"
                     >
                       <FiChevronLeft className="w-4 h-4" /> Prev
                     </button>
 
-                    {/* Page Numbers */}
-                    <div className="flex items-center gap-1 px-2">
-                      {Array.from({ length: Math.min(totalPages, 7) }, (_, idx) => {
+                    {/* Responsive Page Numbers Pills */}
+                    <div className="flex items-center gap-1 overflow-x-auto max-w-[200px] sm:max-w-none py-1 no-scrollbar">
+                      {Array.from({ length: Math.min(totalPages, 5) }, (_, idx) => {
                         let pageNum = idx + 1;
-                        if (totalPages > 7 && currentPage > 4) {
-                          pageNum = currentPage - 3 + idx;
-                          if (pageNum > totalPages) pageNum = totalPages - (6 - idx);
+                        if (totalPages > 5 && currentPage > 3) {
+                          pageNum = currentPage - 2 + idx;
+                          if (pageNum > totalPages) pageNum = totalPages - (4 - idx);
                         }
                         return (
                           <button
                             key={pageNum}
                             onClick={() => setCurrentPage(pageNum)}
-                            className={`w-7 h-7 rounded-lg text-xs font-bold transition-all ${
+                            className={`w-8 h-8 rounded-xl text-xs font-bold transition-all shrink-0 ${
                               currentPage === pageNum
-                                ? 'bg-accent-gold text-primary shadow-md scale-105'
-                                : 'bg-secondary/10 text-secondary/70 hover:bg-secondary/20'
+                                ? 'bg-[#D6AE4D] text-[#123524] shadow-md scale-105 border border-[#D6AE4D]'
+                                : 'bg-[#0F1712] text-[#A0B0A5] hover:bg-[#1C2C22] hover:text-[#EAE3D2] border border-transparent'
                             }`}
                           >
                             {pageNum}
@@ -832,7 +864,7 @@ const Admin = () => {
                     <button
                       onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                       disabled={currentPage === totalPages}
-                      className="px-3 py-1.5 rounded-lg bg-secondary/20 border border-accent-gold/30 text-xs font-bold text-secondary hover:bg-accent-gold hover:text-primary transition-all disabled:opacity-30 disabled:pointer-events-none flex items-center gap-1"
+                      className="px-3 py-1.5 rounded-xl bg-[#0F1712] border border-[#D6AE4D]/30 text-xs font-bold text-[#EAE3D2] hover:bg-[#D6AE4D] hover:text-[#123524] transition-all disabled:opacity-30 disabled:pointer-events-none flex items-center gap-1 shrink-0"
                     >
                       Next <FiChevronRight className="w-4 h-4" />
                     </button>
@@ -1359,7 +1391,7 @@ const Admin = () => {
           </div>
         )}
       </AnimatePresence>
-    </>
+    </div>
   );
 };
 
