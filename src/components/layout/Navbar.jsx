@@ -267,6 +267,115 @@ const Navbar = () => {
                 )}
               </button>
 
+              {/* 5.5 Notification Bell Icon & Popover Card */}
+              <div className="relative">
+                <button
+                  onClick={() => setIsNotificationsOpen(!isNotificationsOpen)}
+                  className={`p-1 sm:p-1.5 transition-colors relative ${
+                    isHome ? 'text-white hover:text-[#D6AE4D]' : 'text-[#354F42] hover:text-[#D6AE4D]'
+                  }`}
+                  title="Notifications & Updates"
+                  aria-label="Notifications"
+                >
+                  <Bell className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2]" />
+                  {(unreadCount > 0 || notifications.length === 0) && (
+                    <span className="absolute -top-1 -right-1 w-4 h-4 bg-[#D6AE4D] text-[#123524] font-extrabold text-[9px] rounded-full flex items-center justify-center shadow-md animate-bounce">
+                      {unreadCount > 0 ? unreadCount : '!'}
+                    </span>
+                  )}
+                </button>
+
+                {/* Notifications Popover Dropdown Card */}
+                <AnimatePresence>
+                  {isNotificationsOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 8, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: 8, scale: 0.95 }}
+                      transition={{ duration: 0.18 }}
+                      className="absolute right-0 top-11 w-72 sm:w-80 bg-[#10291C]/95 border border-[#D6AE4D]/35 rounded-2xl shadow-2xl p-3 text-white z-50 backdrop-blur-2xl ring-1 ring-[#D6AE4D]/20 max-h-[85vh] flex flex-col"
+                    >
+                      {/* Header */}
+                      <div className="flex items-center justify-between pb-2 border-b border-[#D6AE4D]/25 mb-2 px-1">
+                        <div className="flex items-center gap-1.5">
+                          <Bell className="w-3.5 h-3.5 text-[#D6AE4D]" />
+                          <span className="font-serif font-bold text-xs text-white">Notifications & Alerts</span>
+                        </div>
+                        <button
+                          onClick={() => {
+                            setNotifications(prev => prev.map(n => ({ ...n, isRead: true })));
+                            if (showToast) showToast('All notifications marked as read', 'info');
+                          }}
+                          className="text-[9px] uppercase font-bold text-[#D6AE4D] hover:underline"
+                        >
+                          Mark All Read
+                        </button>
+                      </div>
+
+                      {/* Notifications List */}
+                      <div className="space-y-2 overflow-y-auto max-h-64 pr-1 text-xs">
+                        {/* Default Exciting Items if empty */}
+                        <div className="p-2.5 rounded-xl bg-[#1B3E2D]/80 border border-[#D6AE4D]/20 hover:border-[#D6AE4D]/50 transition-colors">
+                          <div className="flex items-center justify-between mb-1">
+                            <span className="font-bold text-[#D6AE4D] text-[11px] flex items-center gap-1">
+                              🚩 New Maharashtrian Menu!
+                            </span>
+                            <span className="text-[9px] text-white/50">Just now</span>
+                          </div>
+                          <p className="text-[10px] text-white/80 leading-relaxed">
+                            Try our 15 authentic dishes including Zunka Bhakri, Ukadiche Modak, Puran Poli & Sol Kadhi!
+                          </p>
+                        </div>
+
+                        <div className="p-2.5 rounded-xl bg-[#1B3E2D]/80 border border-[#D6AE4D]/20 hover:border-[#D6AE4D]/50 transition-colors">
+                          <div className="flex items-center justify-between mb-1">
+                            <span className="font-bold text-[#D6AE4D] text-[11px] flex items-center gap-1">
+                              ☕ Welcome Offer 15% OFF
+                            </span>
+                            <span className="text-[9px] text-white/50">Today</span>
+                          </div>
+                          <p className="text-[10px] text-white/80 leading-relaxed">
+                            Use member coupon code <strong className="text-[#D6AE4D]">AKOLE20</strong> to get 15% discount on online orders.
+                          </p>
+                        </div>
+
+                        {notifications.map((n) => (
+                          <div
+                            key={n._id || n.id || Math.random()}
+                            onClick={() => handleMarkAsRead(n._id || n.id)}
+                            className={`p-2.5 rounded-xl border transition-colors cursor-pointer ${
+                              n.isRead
+                                ? 'bg-black/20 border-white/10 opacity-70'
+                                : 'bg-[#1B3E2D]/80 border-[#D6AE4D]/30'
+                            }`}
+                          >
+                            <div className="flex items-center justify-between mb-1">
+                              <span className="font-bold text-[#D6AE4D] text-[11px]">{n.title}</span>
+                              <span className="text-[9px] text-white/50">
+                                {n.createdAt ? new Date(n.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : ''}
+                              </span>
+                            </div>
+                            <p className="text-[10px] text-white/80 leading-relaxed">{n.message}</p>
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Footer Link */}
+                      <div className="pt-2 border-t border-[#D6AE4D]/20 mt-2 text-center">
+                        <Link
+                          to="/orders"
+                          onClick={() => setIsNotificationsOpen(false)}
+                          className="text-[10px] font-bold text-[#D6AE4D] hover:underline uppercase tracking-wider inline-flex items-center gap-1"
+                        >
+                          <span>View My Orders & Status</span>
+                          <ChevronRight className="w-3 h-3" />
+                        </Link>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
               {/* 6. User Profile Avatar Circle + Direct Profile Link + Interactive Hover Dropdown */}
               <div
                 className="relative"
