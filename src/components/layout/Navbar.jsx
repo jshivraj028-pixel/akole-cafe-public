@@ -279,8 +279,12 @@ const Navbar = () => {
                   title={loggedUser?.name || userEmail || 'Profile / Account Settings'}
                   aria-label="User Profile"
                 >
-                  <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full border border-[#D6AE4D]/80 bg-[#D6AE4D]/10 flex items-center justify-center font-bold text-[10px] sm:text-xs text-[#D6AE4D] shadow-inner group-hover:bg-[#D6AE4D]/20 transition-all">
-                    {userInitial}
+                  <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full border border-[#D6AE4D]/80 bg-[#D6AE4D]/10 flex items-center justify-center font-bold text-[10px] sm:text-xs text-[#D6AE4D] shadow-inner group-hover:bg-[#D6AE4D]/20 transition-all overflow-hidden shrink-0">
+                    {loggedUser?.avatar ? (
+                      <img src={loggedUser.avatar} alt={loggedUser?.name || 'User'} className="w-full h-full object-cover" />
+                    ) : (
+                      userInitial
+                    )}
                   </div>
                   <ChevronDown className={`w-3 h-3 sm:w-3.5 sm:h-3.5 transition-transform duration-200 ${
                     isUserMenuOpen ? 'rotate-180 text-[#D6AE4D]' : isHome ? 'text-white/80' : 'text-[#354F42]'
@@ -303,8 +307,12 @@ const Navbar = () => {
                       {/* Compact User Header Card */}
                       <div className="p-2 bg-gradient-to-br from-[#1B3E2D] to-[#0A1A12] border border-[#D6AE4D]/25 rounded-xl mb-1.5 flex items-center gap-2 relative shadow-inner">
                         <div className="relative shrink-0">
-                          <div className="w-7 h-7 rounded-full border border-[#D6AE4D] bg-gradient-to-tr from-[#D6AE4D] to-[#F3E5AB] flex items-center justify-center font-bold font-serif text-xs text-[#123524]">
-                            {userInitial}
+                          <div className="w-8 h-8 rounded-full border border-[#D6AE4D] bg-gradient-to-tr from-[#D6AE4D] to-[#F3E5AB] flex items-center justify-center font-bold font-serif text-xs text-[#123524] overflow-hidden">
+                            {loggedUser?.avatar ? (
+                              <img src={loggedUser.avatar} alt={loggedUser?.name || 'User'} className="w-full h-full object-cover" />
+                            ) : (
+                              userInitial
+                            )}
                           </div>
                           <span className="absolute bottom-0 right-0 w-2 h-2 bg-emerald-400 border border-[#10291C] rounded-full" />
                         </div>
