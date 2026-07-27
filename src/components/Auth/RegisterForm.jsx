@@ -167,8 +167,8 @@ const RegisterForm = () => {
             onChange={handleChange}
             onBlur={handleBlur}
             placeholder="e.g. Vikramaditya Shinde"
-            className={`w-full pl-10 pr-10 py-2.5 rounded-xl bg-white/80 dark:bg-[#16231B] border text-xs text-[#123524] dark:text-[#EAE3D2] placeholder-[#8B9B90] focus:outline-none focus:ring-2 focus:ring-[#D6AE4D]/50 transition-all ${
-              touched.fullName && errors.fullName ? 'border-red-500 bg-red-50/20' : touched.fullName && !errors.fullName ? 'border-emerald-500' : 'border-[#D6AE4D]/30'
+            className={`w-full pl-10 pr-10 py-2.5 rounded-xl bg-white/40 dark:bg-[#0F1712]/40 backdrop-blur-xs border text-xs text-[#123524] dark:text-[#EAE3D2] placeholder-[#8B9B90] focus:outline-none focus:bg-white/95 dark:focus:bg-[#16231B]/95 focus:ring-4 focus:ring-[#D6AE4D]/15 transition-all duration-300 ${
+              touched.fullName && errors.fullName ? 'border-red-500 bg-red-50/20' : touched.fullName && !errors.fullName ? 'border-emerald-500' : 'border-[#D6AE4D]/35 dark:border-[#D6AE4D]/25 hover:border-[#D6AE4D]/60'
             }`}
           />
           {touched.fullName && !errors.fullName && (
@@ -199,8 +199,8 @@ const RegisterForm = () => {
             onChange={handleChange}
             onBlur={handleBlur}
             placeholder="vikram@example.com"
-            className={`w-full pl-10 pr-10 py-2.5 rounded-xl bg-white/80 dark:bg-[#16231B] border text-xs text-[#123524] dark:text-[#EAE3D2] placeholder-[#8B9B90] focus:outline-none focus:ring-2 focus:ring-[#D6AE4D]/50 transition-all ${
-              touched.email && errors.email ? 'border-red-500 bg-red-50/20' : touched.email && !errors.email ? 'border-emerald-500' : 'border-[#D6AE4D]/30'
+            className={`w-full pl-10 pr-10 py-2.5 rounded-xl bg-white/40 dark:bg-[#0F1712]/40 backdrop-blur-xs border text-xs text-[#123524] dark:text-[#EAE3D2] placeholder-[#8B9B90] focus:outline-none focus:bg-white/95 dark:focus:bg-[#16231B]/95 focus:ring-4 focus:ring-[#D6AE4D]/15 transition-all duration-300 ${
+              touched.email && errors.email ? 'border-red-500 bg-red-50/20' : touched.email && !errors.email ? 'border-emerald-500' : 'border-[#D6AE4D]/35 dark:border-[#D6AE4D]/25 hover:border-[#D6AE4D]/60'
             }`}
           />
           {touched.email && !errors.email && (
@@ -229,8 +229,8 @@ const RegisterForm = () => {
             onChange={handleChange}
             onBlur={handleBlur}
             placeholder="+91 98765 43210"
-            className={`w-full pl-10 pr-10 py-2.5 rounded-xl bg-white/80 dark:bg-[#16231B] border text-xs text-[#123524] dark:text-[#EAE3D2] placeholder-[#8B9B90] focus:outline-none focus:ring-2 focus:ring-[#D6AE4D]/50 transition-all ${
-              touched.phone && errors.phone ? 'border-red-500 bg-red-50/20' : touched.phone && !errors.phone ? 'border-emerald-500' : 'border-[#D6AE4D]/30'
+            className={`w-full pl-10 pr-10 py-2.5 rounded-xl bg-white/40 dark:bg-[#0F1712]/40 backdrop-blur-xs border text-xs text-[#123524] dark:text-[#EAE3D2] placeholder-[#8B9B90] focus:outline-none focus:bg-white/95 dark:focus:bg-[#16231B]/95 focus:ring-4 focus:ring-[#D6AE4D]/15 transition-all duration-300 ${
+              touched.phone && errors.phone ? 'border-red-500 bg-red-50/20' : touched.phone && !errors.phone ? 'border-emerald-500' : 'border-[#D6AE4D]/35 dark:border-[#D6AE4D]/25 hover:border-[#D6AE4D]/60'
             }`}
           />
           {touched.phone && !errors.phone && (
@@ -259,8 +259,8 @@ const RegisterForm = () => {
             onChange={handleChange}
             onBlur={handleBlur}
             placeholder="••••••••"
-            className={`w-full pl-10 pr-10 py-2.5 rounded-xl bg-white/80 dark:bg-[#16231B] border text-xs text-[#123524] dark:text-[#EAE3D2] placeholder-[#8B9B90] focus:outline-none focus:ring-2 focus:ring-[#D6AE4D]/50 transition-all ${
-              touched.password && errors.password ? 'border-red-500 bg-red-50/20' : touched.password && !errors.password ? 'border-emerald-500' : 'border-[#D6AE4D]/30'
+            className={`w-full pl-10 pr-10 py-2.5 rounded-xl bg-white/40 dark:bg-[#0F1712]/40 backdrop-blur-xs border text-xs text-[#123524] dark:text-[#EAE3D2] placeholder-[#8B9B90] focus:outline-none focus:bg-white/95 dark:focus:bg-[#16231B]/95 focus:ring-4 focus:ring-[#D6AE4D]/15 transition-all duration-300 ${
+              touched.password && errors.password ? 'border-red-500 bg-red-50/20' : touched.password && !errors.password ? 'border-emerald-500' : 'border-[#D6AE4D]/35 dark:border-[#D6AE4D]/25 hover:border-[#D6AE4D]/60'
             }`}
           />
           <button
@@ -306,8 +306,8 @@ const RegisterForm = () => {
             onChange={handleChange}
             onBlur={handleBlur}
             placeholder="••••••••"
-            className={`w-full pl-10 pr-10 py-2.5 rounded-xl bg-white/80 dark:bg-[#16231B] border text-xs text-[#123524] dark:text-[#EAE3D2] placeholder-[#8B9B90] focus:outline-none focus:ring-2 focus:ring-[#D6AE4D]/50 transition-all ${
-              touched.confirmPassword && errors.confirmPassword ? 'border-red-500 bg-red-50/20' : touched.confirmPassword && !errors.confirmPassword && formData.confirmPassword ? 'border-emerald-500' : 'border-[#D6AE4D]/30'
+            className={`w-full pl-10 pr-10 py-2.5 rounded-xl bg-white/40 dark:bg-[#0F1712]/40 backdrop-blur-xs border text-xs text-[#123524] dark:text-[#EAE3D2] placeholder-[#8B9B90] focus:outline-none focus:bg-white/95 dark:focus:bg-[#16231B]/95 focus:ring-4 focus:ring-[#D6AE4D]/15 transition-all duration-300 ${
+              touched.confirmPassword && errors.confirmPassword ? 'border-red-500 bg-red-50/20' : touched.confirmPassword && !errors.confirmPassword && formData.confirmPassword ? 'border-emerald-500' : 'border-[#D6AE4D]/35 dark:border-[#D6AE4D]/25 hover:border-[#D6AE4D]/60'
             }`}
           />
           <button
@@ -358,8 +358,25 @@ const RegisterForm = () => {
               </motion.div>
             )}
           </div>
-          <span className="text-[11px] text-[#123524] dark:text-[#EAE3D2]">
-            I agree to the <span className="text-[#D6AE4D] font-semibold underline">Terms of Service</span> & <span className="text-[#D6AE4D] font-semibold underline">Privacy Policy</span>
+          <span className="text-[11px] text-[#123524] dark:text-[#EAE3D2] select-none">
+            I agree to the{' '}
+            <a
+              href="https://www.google.com/policies/terms/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#D6AE4D] font-semibold underline hover:text-[#B89035] transition-colors"
+            >
+              Terms of Service
+            </a>{' '}
+            &{' '}
+            <a
+              href="https://www.google.com/policies/privacy/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#D6AE4D] font-semibold underline hover:text-[#B89035] transition-colors"
+            >
+              Privacy Policy
+            </a>
           </span>
         </label>
         {touched.agreeTerms && errors.agreeTerms && (
@@ -371,7 +388,7 @@ const RegisterForm = () => {
       <button
         type="submit"
         disabled={isLoading}
-        className="w-full py-3 rounded-xl bg-[#123524] hover:bg-[#D6AE4D] hover:text-[#123524] text-white font-montserrat font-bold text-xs uppercase tracking-[2px] transition-all shadow-md transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 mt-2"
+        className="w-full py-3 rounded-xl bg-gradient-to-r from-[#D6AE4D] via-[#F0D588] to-[#B89035] hover:from-[#E5BC58] hover:via-[#FFF3C4] hover:to-[#C99D3B] text-[#0A1A12] font-montserrat font-extrabold text-xs uppercase tracking-[2px] shadow-lg shadow-[#D6AE4D]/25 border border-[#FFF5D6]/35 transition-all duration-300 flex items-center justify-center gap-2 mt-2 cursor-pointer"
       >
         {isLoading ? (
           <span className="inline-block w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />

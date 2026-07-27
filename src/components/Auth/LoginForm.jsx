@@ -120,8 +120,8 @@ const LoginForm = () => {
             onChange={handleEmailChange}
             onBlur={() => handleBlur('email', email)}
             placeholder="vikram@example.com"
-            className={`w-full pl-10 pr-10 py-2.5 rounded-xl bg-white/80 dark:bg-[#16231B] border text-xs text-[#123524] dark:text-[#EAE3D2] placeholder-[#8B9B90] focus:outline-none focus:ring-2 focus:ring-[#D6AE4D]/50 transition-all ${
-              touched.email && errors.email ? 'border-red-500 bg-red-50/20' : touched.email && !errors.email ? 'border-emerald-500' : 'border-[#D6AE4D]/30'
+            className={`w-full pl-10 pr-10 py-2.5 rounded-xl bg-white/40 dark:bg-[#0F1712]/40 backdrop-blur-xs border text-xs text-[#123524] dark:text-[#EAE3D2] placeholder-[#8B9B90] focus:outline-none focus:bg-white/95 dark:focus:bg-[#16231B]/95 focus:ring-4 focus:ring-[#D6AE4D]/15 transition-all duration-300 ${
+              touched.email && errors.email ? 'border-red-500 bg-red-50/20' : touched.email && !errors.email ? 'border-emerald-500' : 'border-[#D6AE4D]/35 dark:border-[#D6AE4D]/25 hover:border-[#D6AE4D]/60'
             }`}
           />
           {touched.email && !errors.email && (
@@ -150,8 +150,8 @@ const LoginForm = () => {
             onChange={handlePasswordChange}
             onBlur={() => handleBlur('password', password)}
             placeholder="••••••••"
-            className={`w-full pl-10 pr-10 py-2.5 rounded-xl bg-white/80 dark:bg-[#16231B] border text-xs text-[#123524] dark:text-[#EAE3D2] placeholder-[#8B9B90] focus:outline-none focus:ring-2 focus:ring-[#D6AE4D]/50 transition-all ${
-              touched.password && errors.password ? 'border-red-500 bg-red-50/20' : touched.password && !errors.password ? 'border-emerald-500' : 'border-[#D6AE4D]/30'
+            className={`w-full pl-10 pr-10 py-2.5 rounded-xl bg-white/40 dark:bg-[#0F1712]/40 backdrop-blur-xs border text-xs text-[#123524] dark:text-[#EAE3D2] placeholder-[#8B9B90] focus:outline-none focus:bg-white/95 dark:focus:bg-[#16231B]/95 focus:ring-4 focus:ring-[#D6AE4D]/15 transition-all duration-300 ${
+              touched.password && errors.password ? 'border-red-500 bg-red-50/20' : touched.password && !errors.password ? 'border-emerald-500' : 'border-[#D6AE4D]/35 dark:border-[#D6AE4D]/25 hover:border-[#D6AE4D]/60'
             }`}
           />
           <button
@@ -180,7 +180,7 @@ const LoginForm = () => {
         whileTap={{ scale: 0.98 }}
         type="submit"
         disabled={isLoading}
-        className="w-full py-3.5 px-6 rounded-xl bg-[#123524] hover:bg-[#D6AE4D] text-white hover:text-[#123524] font-montserrat font-bold text-xs uppercase tracking-[2px] shadow-md transition-all duration-300 flex items-center justify-center gap-2"
+        className="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-[#D6AE4D] via-[#F0D588] to-[#B89035] hover:from-[#E5BC58] hover:via-[#FFF3C4] hover:to-[#C99D3B] text-[#0A1A12] font-montserrat font-extrabold text-xs uppercase tracking-[2px] shadow-lg shadow-[#D6AE4D]/25 border border-[#FFF5D6]/35 transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
       >
         {isLoading ? (
           <>

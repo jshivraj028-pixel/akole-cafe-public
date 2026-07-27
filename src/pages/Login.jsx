@@ -90,6 +90,10 @@ const Login = () => {
       {/* RIGHT SIDE (50%): Independent Scrollable Login Form Container */}
       <div className="w-full lg:w-1/2 min-h-screen lg:h-screen overflow-y-auto flex flex-col justify-between p-6 sm:p-10 relative bg-[#F9F6F0] dark:bg-[#121A15] text-[#123524] dark:text-[#EAE3D2]">
         
+        {/* Subtle Luxury Glowing Background Accents */}
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#D6AE4D]/10 dark:bg-[#D6AE4D]/5 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#123524]/10 dark:bg-[#D6AE4D]/5 rounded-full blur-3xl pointer-events-none" />
+        
         {/* Top Mobile Header (Logo Only on Mobile) */}
         <div className="flex lg:hidden items-center mb-4 z-10">
           <Link to="/" className="flex items-center gap-2.5">
