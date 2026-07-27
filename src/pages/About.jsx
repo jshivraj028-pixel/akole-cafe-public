@@ -27,22 +27,26 @@ const teamMembers = [
   {
     initials: 'MG',
     name: 'Mayur Gambhire',
-    role: 'Co-Founder & Managing Director'
+    role: 'Co-Founder & Managing Director',
+    socialLink: 'https://instagram.com/mayurgambhire4565'
   },
   {
     initials: 'YJ',
     name: 'Yuvraj Jadhav',
-    role: 'Co-Founder & Chief Operations Officer'
+    role: 'Co-Founder & Chief Operations Officer',
+    socialLink: 'https://instagram.com/yuvraj_jadhav'
   },
   {
     initials: 'RK',
     name: 'Rohan Kulkarni',
-    role: 'Founder & Head Barista Roaster'
+    role: 'Founder & Head Barista Roaster',
+    socialLink: 'https://instagram.com'
   },
   {
     initials: 'MD',
     name: 'Meera Deshmukh',
-    role: 'Executive Pastry Chef & Creative Director'
+    role: 'Executive Pastry Chef & Creative Director',
+    socialLink: 'https://instagram.com'
   }
 ];
 
@@ -194,8 +198,11 @@ const About = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
             {teamMembers.map((member, idx) => (
-              <motion.div
+              <motion.a
                 key={idx}
+                href={member.socialLink}
+                target="_blank"
+                rel="noopener noreferrer"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -205,7 +212,7 @@ const About = () => {
                   scale: 1.02, 
                   boxShadow: "0 20px 25px -5px rgba(214, 174, 77, 0.15)" 
                 }}
-                className="bg-white/75 dark:bg-[#16231B]/75 backdrop-blur-md rounded-[32px] p-8 shadow-xl border border-[#D6AE4D]/25 flex flex-col items-center text-center space-y-4 group transition-all duration-300"
+                className="bg-white/75 dark:bg-[#16231B]/75 backdrop-blur-md rounded-[32px] p-8 shadow-xl border border-[#D6AE4D]/25 flex flex-col items-center text-center space-y-4 group transition-all duration-300 cursor-pointer block"
               >
                 <div className="w-20 h-20 rounded-2xl bg-[#123524] text-[#D6AE4D] font-serif font-extrabold text-2xl flex items-center justify-center shadow-lg border border-[#D6AE4D]/40">
                   {member.initials}
@@ -218,7 +225,7 @@ const About = () => {
                     {member.role}
                   </p>
                 </div>
-              </motion.div>
+              </motion.a>
             ))}
           </div>
         </Container>
