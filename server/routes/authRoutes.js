@@ -22,19 +22,21 @@ router.post('/register', async (req, res) => {
       return res.status(400).json({ message: 'Password and Confirm Password do not match.' });
     }
 
-    const existingUser = await User.findOne({ email });
+    const cleanEmail = email.toLowerCase().trim();
+
+    const existingUser = await User.findOne({ $or: [{ email: cleanEmail }, { name: name.trim() }] });
     if (existingUser) {
-      return res.status(400).json({ message: 'User with this email already exists.' });
+      return res.status(400).json({ message: 'User with this email/username already exists.' });
     }
 
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    const isExplicitAdmin = email.toLowerCase() === ADMIN_EMAIL.toLowerCase();
+    const isExplicitAdmin = cleanEmail === ADMIN_EMAIL.toLowerCase();
 
     const newUser = new User({
       name,
-      email,
+      email: cleanEmail,
       password: hashedPassword,
       phone: phone || '',
       role: isExplicitAdmin ? 'admin' : 'user'
@@ -68,11 +70,13 @@ router.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      return res.status(400).json({ message: 'Email and password are required.' });
+      return res.status(400).json({ message: 'Email/Username and password are required.' });
     }
 
+    const cleanInput = email.toLowerCase().trim();
+
     // Special Admin Login check for akolecafe@gmail.com / Akolecafe2007
-    if (email.toLowerCase() === ADMIN_EMAIL.toLowerCase() && password === ADMIN_PASS) {
+    if ((cleanInput === ADMIN_EMAIL.toLowerCase() || cleanInput === 'akolecafe') && password === ADMIN_PASS) {
       let adminUser = await User.findOne({ email: ADMIN_EMAIL });
       if (!adminUser) {
         const salt = await bcrypt.genSalt(10);
@@ -81,7 +85,8 @@ router.post('/login', async (req, res) => {
           name: 'Akole Cafe Admin',
           email: ADMIN_EMAIL,
           password: hashedPassword,
-          role: 'admin'
+          role: 'admin',
+          phone: '+91 98765 43210'
         });
         await adminUser.save();
       }
@@ -100,9 +105,17 @@ router.post('/login', async (req, res) => {
       });
     }
 
-    const user = await User.findOne({ email: email.toLowerCase() });
+    // Search user by email, name, or handle
+    const user = await User.findOne({ 
+      $or: [
+        { email: cleanInput }, 
+        { name: cleanInput }, 
+        { email: `${cleanInput}@gmail.com` }
+      ] 
+    });
+
     if (!user) {
-      return res.status(400).json({ message: 'User not found. Please register an account first.' });
+      return res.status(400).json({ message: 'User not found. Please check your credentials or register.' });
     }
 
     if (user.isBanned) {

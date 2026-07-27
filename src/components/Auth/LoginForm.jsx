@@ -25,16 +25,12 @@ const LoginForm = () => {
     let err = '';
     if (field === 'email') {
       if (!val.trim()) {
-        err = 'Email address is required';
-      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
-        err = 'Please enter a valid email address (e.g. vikram@example.com)';
+        err = 'Email address or username is required';
       }
     }
     if (field === 'password') {
       if (!val) {
         err = 'Password is required';
-      } else if (val.length < 6) {
-        err = 'Password must be at least 6 characters long';
       }
     }
     return err;

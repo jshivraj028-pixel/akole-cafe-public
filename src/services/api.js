@@ -266,30 +266,27 @@ export const toggleBanUserAPI = async (id, isBanned) => {
 
 // User / Admin Login
 export const userLoginAPI = async (email, password) => {
+  const cleanEmail = (email || '').toLowerCase().trim();
   let loginResult = null;
   try {
     const res = await fetch(`${API_BASE_URL}/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password })
+      body: JSON.stringify({ email: cleanEmail, password })
     });
     
     if (res.ok) {
       loginResult = await res.json();
     } else {
       const err = await res.json();
-      if (err.message && (err.message.includes('User not found') || err.message.includes('Incorrect password') || err.message.includes('suspended'))) {
-        throw new Error(err.message);
-      }
+      throw new Error(err.message || 'Login failed');
     }
   } catch (err) {
-    if (err.message && (err.message.includes('User not found') || err.message.includes('Incorrect password') || err.message.includes('suspended'))) {
+    if (err.message && (err.message.includes('User not found') || err.message.includes('Incorrect password') || err.message.includes('suspended') || err.message.includes('credentials') || err.message.includes('failed'))) {
       throw err;
     }
     console.warn('[API Warning] Auth backend unreachable. Using standalone login mode:', err.message);
   }
-
-  const cleanEmail = (email || '').toLowerCase().trim();
 
   if (!loginResult) {
     if (cleanEmail === 'akolecafe@gmail.com' && password === 'Akolecafe2007') {
