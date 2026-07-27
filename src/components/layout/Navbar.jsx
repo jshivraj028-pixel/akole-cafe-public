@@ -98,17 +98,17 @@ const Navbar = () => {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 h-[82px] px-4 sm:px-8 transition-colors duration-300 shadow-md flex items-center ${
+        className={`fixed top-0 left-0 right-0 z-50 h-[74px] sm:h-[82px] px-2.5 sm:px-8 transition-colors duration-300 shadow-md flex items-center ${
           isHome
             ? 'bg-[#445648] border-b border-[#536958]'
             : 'bg-[#EFE8D8] border-b border-[#D8CEB8]'
         }`}
       >
-        <div className="w-full max-w-[1400px] mx-auto flex items-center justify-between gap-4">
+        <div className="w-full max-w-[1400px] mx-auto flex items-center justify-between gap-1">
           
           {/* Logo: Circular Emblem Image + Cormorant Garamond Typography */}
-          <Link to="/" className="flex items-center gap-3 group shrink-0">
-            <div className="w-11 h-11 sm:w-12 sm:h-12 shrink-0 flex items-center justify-center bg-transparent">
+          <Link to="/" className="flex items-center gap-1.5 sm:gap-3 group shrink-0">
+            <div className="w-9 h-9 sm:w-12 sm:h-12 shrink-0 flex items-center justify-center bg-transparent">
               <img
                 src={logoEmblem}
                 alt="Akole Café Emblem Logo"
@@ -117,7 +117,7 @@ const Navbar = () => {
             </div>
 
             {/* Brand Name Text: Akole (700 White) Café (500 Italic Gold #D6AE4D) */}
-            <div className="flex items-baseline font-cormorant text-2xl sm:text-3xl tracking-[-0.5px]">
+            <div className="flex items-baseline font-cormorant text-xl sm:text-3xl tracking-[-0.5px]">
               <span
                 className={`font-bold transition-colors ${
                   isHome ? 'text-white' : 'text-[#354F42]'
@@ -125,14 +125,14 @@ const Navbar = () => {
               >
                 Akole
               </span>
-              <span className="italic font-medium text-[#D6AE4D] ml-1.5">
+              <span className="italic font-medium text-[#D6AE4D] ml-1">
                 Café
               </span>
             </div>
           </Link>
 
           {/* Navigation Links + Action Icons Grouped with Compact Balanced Spacing */}
-          <div className="flex items-center gap-4 xl:gap-6 ml-auto justify-end">
+          <div className="flex items-center gap-2 xl:gap-6 ml-auto justify-end">
             {/* Desktop Navigation Links */}
             <nav className="hidden lg:flex items-center gap-4 xl:gap-6 ml-auto">
               {navLinks.map((link) => {
@@ -163,11 +163,11 @@ const Navbar = () => {
             </nav>
 
             {/* Right Action Icons & Gold Rounded ORDER NOW Button */}
-            <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
+            <div className="flex items-center gap-1 sm:gap-2.5 shrink-0">
               {/* 1. Gold Rounded ORDER NOW Button with Shopping Bag Icon */}
               <Link
                 to="/menu"
-                className="hidden sm:inline-flex items-center justify-center px-5 py-2 rounded-full bg-gradient-to-r from-[#D6AE4D] via-[#F3E5AB] to-[#B89035] hover:from-[#E5BC58] hover:via-[#FFF3C4] hover:to-[#C99D3B] text-[#123524] font-montserrat font-extrabold text-[11px] xl:text-xs uppercase tracking-[2px] shadow-lg shadow-[#D6AE4D]/30 border border-[#FFF5D6]/60 transition-all duration-300 transform hover:scale-105 active:scale-95 group"
+                className="hidden sm:inline-flex items-center justify-center px-4 sm:px-5 py-2 rounded-full bg-gradient-to-r from-[#D6AE4D] via-[#F3E5AB] to-[#B89035] hover:from-[#E5BC58] hover:via-[#FFF3C4] hover:to-[#C99D3B] text-[#123524] font-montserrat font-extrabold text-[11px] xl:text-xs uppercase tracking-[2px] shadow-lg shadow-[#D6AE4D]/30 border border-[#FFF5D6]/60 transition-all duration-300 transform hover:scale-105 active:scale-95 group"
               >
                 <ShoppingBag className="w-3.5 h-3.5 mr-1.5 stroke-[2.5] text-[#123524] group-hover:scale-110 transition-transform" />
                 <span>ORDER NOW</span>
@@ -177,13 +177,13 @@ const Navbar = () => {
               <div className="relative">
                 <button
                   onClick={() => setIsSearchOpen(!isSearchOpen)}
-                  className={`p-1.5 transition-colors ${
+                  className={`p-1 sm:p-1.5 transition-colors ${
                     isHome ? 'text-white hover:text-[#D6AE4D]' : 'text-[#354F42] hover:text-[#D6AE4D]'
                   }`}
                   title="Search Menu Items"
                   aria-label="Search"
                 >
-                  <Search className="w-5 h-5 stroke-[2]" />
+                  <Search className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2]" />
                 </button>
 
                 {/* Popover Card */}
@@ -225,25 +225,25 @@ const Navbar = () => {
               {/* 3. Location Pin Icon & Satellite Map Modal Trigger */}
               <button
                 onClick={() => setIsLocationModalOpen(true)}
-                className={`p-1.5 transition-colors ${
+                className={`p-1 sm:p-1.5 transition-colors ${
                   isHome ? 'text-white hover:text-[#D6AE4D]' : 'text-[#354F42] hover:text-[#D6AE4D]'
                 }`}
                 title="Our Location & Satellite Earth Map"
                 aria-label="Location Map"
               >
-                <MapPin className="w-5 h-5 stroke-[2]" />
+                <MapPin className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2]" />
               </button>
 
               {/* 4. Shopping Cart Icon & Slide-Over Cart Drawer Trigger */}
               <button
                 onClick={() => setIsCartDrawerOpen(true)}
-                className={`p-1.5 transition-colors relative ${
+                className={`p-1 sm:p-1.5 transition-colors relative ${
                   isHome ? 'text-white hover:text-[#D6AE4D]' : 'text-[#354F42] hover:text-[#D6AE4D]'
                 }`}
                 title="Shopping Cart & Quick Order"
                 aria-label="Shopping Cart"
               >
-                <ShoppingCart className="w-5 h-5 stroke-[2]" />
+                <ShoppingCart className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2]" />
                 {totalItemsCount > 0 && (
                   <span className="absolute -top-1 -right-1 w-4 h-4 bg-[#D6AE4D] text-[#123524] font-extrabold text-[9px] rounded-full flex items-center justify-center shadow-md animate-pulse">
                     {totalItemsCount}
@@ -254,16 +254,16 @@ const Navbar = () => {
               {/* 5. Theme Mode Toggle (Sun/Moon) */}
               <button
                 onClick={toggleDarkMode}
-                className={`p-1.5 transition-colors relative ${
+                className={`p-1 sm:p-1.5 transition-colors relative ${
                   isHome ? 'text-white hover:text-[#D6AE4D]' : 'text-[#354F42] hover:text-[#D6AE4D]'
                 }`}
                 title={isDarkMode ? 'Switch to Light Mode ☀️' : 'Switch to Dark Mode 🌙'}
                 aria-label="Toggle Light Dark Theme"
               >
                 {isDarkMode ? (
-                  <Sun className="w-5 h-5 stroke-[2] text-[#D6AE4D]" />
+                  <Sun className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2] text-[#D6AE4D]" />
                 ) : (
-                  <Moon className="w-5 h-5 stroke-[2]" />
+                  <Moon className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2]" />
                 )}
               </button>
 
@@ -275,14 +275,14 @@ const Navbar = () => {
               >
                 <button
                   onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                  className="flex items-center gap-1 group p-1 focus:outline-none"
+                  className="flex items-center gap-0.5 group p-0.5 sm:p-1 focus:outline-none"
                   title={loggedUser?.name || userEmail || 'Profile / Account Settings'}
                   aria-label="User Profile"
                 >
-                  <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-[#D6AE4D]/80 bg-[#D6AE4D]/10 flex items-center justify-center font-bold text-xs text-[#D6AE4D] shadow-inner group-hover:bg-[#D6AE4D]/20 transition-all">
+                  <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full border border-[#D6AE4D]/80 bg-[#D6AE4D]/10 flex items-center justify-center font-bold text-[10px] sm:text-xs text-[#D6AE4D] shadow-inner group-hover:bg-[#D6AE4D]/20 transition-all">
                     {userInitial}
                   </div>
-                  <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                  <ChevronDown className={`w-3 h-3 sm:w-3.5 sm:h-3.5 transition-transform duration-200 ${
                     isUserMenuOpen ? 'rotate-180 text-[#D6AE4D]' : isHome ? 'text-white/80' : 'text-[#354F42]'
                   }`} />
                 </button>
