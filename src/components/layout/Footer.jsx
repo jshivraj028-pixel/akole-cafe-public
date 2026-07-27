@@ -2,29 +2,34 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { FiInstagram, FiFacebook, FiTwitter, FiMapPin, FiPhone, FiMail, FiClock } from 'react-icons/fi';
 import { FaWhatsapp } from 'react-icons/fa';
+import { Sparkles } from 'lucide-react';
 import Container from '../common/Container';
-import Button from '../common/Button';
 import logoEmblem from '../../assets/logo-emblem.png';
 
 const Footer = () => {
   return (
-    <footer className="bg-[#1B3828] text-secondary border-t border-[#C8A96A]/20 pt-16 pb-8 relative overflow-hidden">
+    <footer className="bg-[#0F1712] text-white border-t border-[#D6AE4D]/35 pt-20 pb-8 relative overflow-hidden transition-colors duration-300">
+      
+      {/* Decorative Blur Backdrops */}
+      <div className="absolute top-0 left-0 w-80 h-80 bg-[#123524]/20 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#D6AE4D]/5 rounded-full blur-3xl pointer-events-none" />
+
       <Container>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-white/10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 pb-16 border-b border-white/10 relative z-10">
           
           {/* Col 1: Brand Info */}
-          <div className="space-y-4">
-            <Link to="/" className="flex items-center gap-2.5 group">
-              <div className="w-10 h-10 shrink-0 flex items-center justify-center">
+          <div className="space-y-5">
+            <Link to="/" className="flex items-center gap-3.5 group">
+              <div className="w-11 h-11 rounded-full bg-[#2A1D17] border border-[#D6AE4D]/45 shadow-xl p-1 flex items-center justify-center overflow-hidden transition-all duration-300 group-hover:border-[#D6AE4D]">
                 <img
                   src={logoEmblem}
                   alt="Akole Café Logo"
-                  className="w-full h-full object-contain drop-shadow-sm"
+                  className="w-full h-full object-contain filter drop-shadow-md transform scale-[1.1]"
                 />
               </div>
-              <div className="flex items-baseline gap-1">
-                <span className="font-serif text-2xl font-extrabold text-white">Akole</span>
-                <span className="font-serif italic text-2xl text-[#D4B055] ml-0.5">Café</span>
+              <div className="flex items-baseline font-cormorant text-2xl tracking-[-0.5px]">
+                <span className="font-bold text-white">Akole</span>
+                <span className="italic font-medium text-[#D6AE4D] ml-1">Café</span>
               </div>
             </Link>
 
@@ -47,7 +52,7 @@ const Footer = () => {
                   target="_blank"
                   rel="noreferrer"
                   aria-label={s.label}
-                  className="w-8 h-8 rounded-full bg-white/10 text-[#C8A96A] flex items-center justify-center hover:bg-[#C8A96A] hover:text-[#1B3828] transition-all duration-300 transform hover:scale-110"
+                  className="w-9 h-9 rounded-full bg-white/5 text-[#D6AE4D] border border-[#D6AE4D]/25 flex items-center justify-center hover:bg-[#D6AE4D] hover:text-[#123524] transition-all duration-300 transform hover:scale-110 shadow-md"
                 >
                   <s.icon className="w-4 h-4" />
                 </a>
@@ -57,10 +62,10 @@ const Footer = () => {
 
           {/* Col 2: Quick Links */}
           <div>
-            <h4 className="font-serif text-sm font-semibold text-[#C8A96A] tracking-wider mb-4 uppercase">
+            <h4 className="font-serif text-xs font-extrabold text-[#D6AE4D] tracking-widest mb-6 uppercase">
               Quick Navigation
             </h4>
-            <ul className="space-y-2 text-xs text-white/80 font-light">
+            <ul className="space-y-3 text-xs text-white/75 font-light">
               {[
                 { name: 'Menu', path: '/menu' },
                 { name: 'About Us', path: '/about' },
@@ -71,7 +76,7 @@ const Footer = () => {
                 { name: 'Franchise Opportunity', path: '/franchise' },
               ].map((item, idx) => (
                 <li key={idx}>
-                  <Link to={item.path} className="hover:text-[#C8A96A] transition-colors">
+                  <Link to={item.path} className="hover:text-[#D6AE4D] hover:translate-x-1 transition-all duration-200 inline-block">
                     {item.name}
                   </Link>
                 </li>
@@ -81,27 +86,27 @@ const Footer = () => {
 
           {/* Col 3: Hours & Location */}
           <div>
-            <h4 className="font-serif text-sm font-semibold text-[#C8A96A] tracking-wider mb-4 uppercase">
+            <h4 className="font-serif text-xs font-extrabold text-[#D6AE4D] tracking-widest mb-6 uppercase">
               Hours & Location
             </h4>
-            <div className="space-y-3 text-xs text-white/80 font-light">
-              <div className="flex items-start gap-2.5">
-                <FiMapPin className="w-4 h-4 text-[#C8A96A] shrink-0 mt-0.5" />
-                <p>Akole Bypass Road, Near Bus Stand, Akole, Maharashtra 422601</p>
+            <div className="space-y-4 text-xs text-white/75 font-light">
+              <div className="flex items-start gap-3">
+                <FiMapPin className="w-4.5 h-4.5 text-[#D6AE4D] shrink-0 mt-0.5" />
+                <p className="leading-relaxed">Akole Bypass Road, Near Bus Stand, Akole, Maharashtra 422601</p>
               </div>
 
-              <div className="flex items-center gap-2.5">
-                <FiPhone className="w-4 h-4 text-[#C8A96A] shrink-0" />
-                <a href="tel:+918432387670" className="hover:text-[#C8A96A] transition-colors">+91 84323 87670</a>
+              <div className="flex items-center gap-3">
+                <FiPhone className="w-4.5 h-4.5 text-[#D6AE4D] shrink-0" />
+                <a href="tel:+918432387670" className="hover:text-[#D6AE4D] transition-colors">+91 84323 87670</a>
               </div>
 
-              <div className="flex items-center gap-2.5">
-                <FiMail className="w-4 h-4 text-[#C8A96A] shrink-0" />
-                <a href="mailto:akolecafe@gmail.com" className="hover:text-[#C8A96A] transition-colors">akolecafe@gmail.com</a>
+              <div className="flex items-center gap-3">
+                <FiMail className="w-4.5 h-4.5 text-[#D6AE4D] shrink-0" />
+                <a href="mailto:akolecafe@gmail.com" className="hover:text-[#D6AE4D] transition-colors">akolecafe@gmail.com</a>
               </div>
 
-              <div className="flex items-start gap-2.5 pt-1">
-                <FiClock className="w-4 h-4 text-[#C8A96A] shrink-0 mt-0.5" />
+              <div className="flex items-start gap-3 pt-1">
+                <FiClock className="w-4.5 h-4.5 text-[#D6AE4D] shrink-0 mt-0.5" />
                 <p>Mon - Sun: 7:00 AM - 10:30 PM</p>
               </div>
             </div>
@@ -109,32 +114,35 @@ const Footer = () => {
 
           {/* Col 4: Newsletter */}
           <div>
-            <h4 className="font-serif text-sm font-semibold text-[#C8A96A] tracking-wider mb-4 uppercase">
+            <h4 className="font-serif text-xs font-extrabold text-[#D6AE4D] tracking-widest mb-6 uppercase">
               Join VIP Club
             </h4>
-            <p className="text-xs text-white/70 mb-4 font-light leading-relaxed">
+            <p className="text-xs text-white/70 mb-5 font-light leading-relaxed">
               Subscribe to receive exclusive invitations to coffee cuppings and special offers.
             </p>
-            <form onSubmit={(e) => e.preventDefault()} className="space-y-2">
+            <form onSubmit={(e) => e.preventDefault()} className="space-y-2.5">
               <input
                 type="email"
                 placeholder="Enter your email"
                 required
-                className="w-full bg-white/10 border border-white/20 rounded-full py-2 px-4 text-xs text-white placeholder-white/50 focus:outline-none focus:border-[#C8A96A]"
+                className="w-full bg-white/5 border border-white/10 focus:border-[#D6AE4D]/60 rounded-full py-2.5 px-5 text-xs text-white placeholder-white/40 focus:outline-none transition-all"
               />
-              <Button type="submit" variant="gold" size="sm" className="w-full rounded-full bg-[#C8A96A] text-[#1B3828] font-bold text-xs">
-                Join VIP Club
-              </Button>
+              <button 
+                type="submit" 
+                className="w-full rounded-full bg-gradient-to-r from-[#D6AE4D] via-[#F0D588] to-[#B89035] text-[#123524] font-extrabold text-xs py-2.5 uppercase tracking-wider shadow-lg shadow-[#D6AE4D]/15 hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-1.5"
+              >
+                <Sparkles className="w-3.5 h-3.5" /> JOIN VIP CLUB
+              </button>
             </form>
           </div>
         </div>
 
         {/* Bottom Copyright */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-white/50 font-light">
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-white/50 font-light relative z-10">
           <p>© {new Date().getFullYear()} Akole Cafe. All Rights Reserved. Crafted with passion in Maharashtra.</p>
           <div className="flex gap-6">
-            <Link to="/contact" className="hover:text-[#C8A96A] transition-colors">Privacy Policy</Link>
-            <Link to="/contact" className="hover:text-[#C8A96A] transition-colors">Terms of Service</Link>
+            <Link to="/contact" className="hover:text-[#D6AE4D] transition-colors">Privacy Policy</Link>
+            <Link to="/contact" className="hover:text-[#D6AE4D] transition-colors">Terms of Service</Link>
           </div>
         </div>
       </Container>

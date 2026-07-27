@@ -28,10 +28,14 @@ const ProductCard = ({ product, onQuickView }) => {
 
   return (
     <motion.div
-      whileHover={{ y: -5 }}
-      transition={{ duration: 0.25 }}
+      whileHover={{ 
+        y: -10,
+        scale: 1.02,
+        boxShadow: "0 20px 25px -5px rgba(214, 174, 77, 0.15), 0 10px 10px -5px rgba(214, 174, 77, 0.1)"
+      }}
+      transition={{ type: "spring", stiffness: 300, damping: 20 }}
       onClick={handleCardClick}
-      className="group relative rounded-2xl bg-white border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden flex flex-col justify-between cursor-pointer"
+      className="group relative rounded-3xl bg-white/70 dark:bg-[#16231B]/75 backdrop-blur-md border border-gray-200/80 dark:border-[#D6AE4D]/25 shadow-lg hover:border-[#D6AE4D] dark:hover:border-[#D6AE4D] transition-all duration-300 overflow-hidden flex flex-col justify-between cursor-pointer"
     >
       {/* Product Image */}
       <div className="relative h-48 w-full overflow-hidden bg-[#F5F2EA]">
@@ -76,11 +80,6 @@ const ProductCard = ({ product, onQuickView }) => {
             <h3 className="font-serif text-base font-bold text-[#123524] dark:text-white group-hover:text-[#D6AE4D] transition-colors line-clamp-1">
               {product.name}
             </h3>
-            {product.spicyLevel > 0 && (
-              <span className="text-xs shrink-0" title={`Spicy Level: ${product.spicyLevel}/3`}>
-                {'🌶️'.repeat(product.spicyLevel)}
-              </span>
-            )}
           </div>
           <p className="text-[11px] text-[#6B7C70] dark:text-[#A0B0A5] line-clamp-2 mt-1 font-light leading-relaxed">
             {product.description}

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiCheckCircle, FiCalendar } from 'react-icons/fi';
+import { FiCheckCircle, FiCalendar, FiClock, FiUsers, FiMapPin, FiSend } from 'react-icons/fi';
+import { Sparkles } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
 
 const timeSlots = [
@@ -10,11 +11,11 @@ const timeSlots = [
 ];
 
 const zones = [
-  { title: 'Main Hall', desc: 'Open, vibrant atmosphere' },
-  { title: 'The Garden', desc: 'Al fresco dining' },
-  { title: 'The Library', desc: 'Quiet, cozy corner' },
-  { title: 'Sun Deck', desc: 'Rooftop with a view' },
-  { title: 'Private Room', desc: 'Exclusive, intimate space' }
+  { title: 'MAIN HALL', desc: 'OPEN, VIBRANT ATMOSPHERE' },
+  { title: 'THE GARDEN', desc: 'AL FRESCO DINING' },
+  { title: 'THE LIBRARY', desc: 'QUIET, COZY CORNER' },
+  { title: 'SUN DECK', desc: 'ROOFTOP WITH A VIEW' },
+  { title: 'PRIVATE ROOM', desc: 'EXCLUSIVE, INTIMATE SPACE' }
 ];
 
 const ReservationForm = () => {
@@ -27,9 +28,9 @@ const ReservationForm = () => {
     email: '',
     phone: '',
     date: new Date().toISOString().split('T')[0],
-    time: '2:00 PM',
+    time: '7:00 PM',
     guests: '2',
-    zone: 'Main Hall',
+    zone: 'MAIN HALL',
     specialRequest: ''
   });
 
@@ -43,7 +44,7 @@ const ReservationForm = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto py-6">
+    <div className="max-w-3xl mx-auto py-4">
       <AnimatePresence mode="wait">
         {submitted && bookingDetails ? (
           <motion.div
@@ -51,46 +52,46 @@ const ReservationForm = () => {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
-            className="text-center py-10 space-y-6 bg-white/80 rounded-3xl p-8 border border-[#E5DDD0] shadow-sm text-[#1F3A2B]"
+            className="text-center py-12 space-y-6 bg-white dark:bg-[#16231B] rounded-3xl p-8 sm:p-12 border border-[#D6AE4D]/40 shadow-2xl text-[#123524] dark:text-[#EAE3D2]"
           >
-            <div className="w-16 h-16 rounded-full bg-[#D4B055] text-[#2B4236] flex items-center justify-center mx-auto shadow-md">
-              <FiCheckCircle className="w-10 h-10" />
+            <div className="w-20 h-20 rounded-full bg-[#123524] text-[#D6AE4D] border border-[#D6AE4D]/40 flex items-center justify-center mx-auto shadow-xl">
+              <FiCheckCircle className="w-10 h-10 text-[#D6AE4D]" />
             </div>
 
             <div>
-              <span className="text-xs uppercase tracking-widest font-bold text-[#C8A96A]">
-                Reservation Confirmed
+              <span className="text-xs uppercase tracking-[0.25em] font-extrabold text-[#D6AE4D] block">
+                RESERVATION CONFIRMED
               </span>
-              <h3 className="font-serif text-3xl font-bold mt-1 text-[#1F3A2B]">
+              <h3 className="font-serif text-3xl sm:text-4xl font-extrabold mt-1 text-[#123524] dark:text-white">
                 We Can't Wait to Host You!
               </h3>
-              <p className="text-xs text-[#6B7C70] mt-2 font-light">
+              <p className="text-xs sm:text-sm text-[#6B7C70] dark:text-[#A0B0A5] mt-2 font-light">
                 A confirmation SMS & Email has been sent to{' '}
-                <span className="text-[#C8A96A] font-medium">{bookingDetails.email}</span>.
+                <span className="text-[#D6AE4D] font-bold">{bookingDetails.email}</span>.
               </p>
             </div>
 
             {/* Summary Box */}
-            <div className="p-6 rounded-2xl bg-[#FAF6EE] border border-[#E5DDD0] text-left space-y-3 max-w-lg mx-auto text-xs">
-              <div className="flex justify-between items-center pb-2 border-b border-[#E5DDD0]">
-                <span className="text-[#6B7C70]">Booking Reference</span>
-                <span className="font-mono text-sm font-bold text-[#C8A96A]">
+            <div className="p-6 sm:p-8 rounded-2xl bg-[#F8F5EE] dark:bg-[#121A15] border border-gray-200/80 dark:border-[#D6AE4D]/30 text-left space-y-4 max-w-lg mx-auto text-xs sm:text-sm shadow-inner">
+              <div className="flex justify-between items-center pb-3 border-b border-gray-200 dark:border-[#D6AE4D]/20">
+                <span className="text-[#6B7C70] dark:text-[#A0B0A5]">Booking Reference</span>
+                <span className="font-mono text-base font-extrabold text-[#D6AE4D]">
                   {bookingDetails.bookingId}
                 </span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-[#6B7C70]">Guest Name</span>
-                <span className="font-semibold text-[#1F3A2B]">{bookingDetails.name}</span>
+                <span className="text-[#6B7C70] dark:text-[#A0B0A5]">Guest Name</span>
+                <span className="font-bold text-[#123524] dark:text-white">{bookingDetails.name}</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-[#6B7C70]">Date & Time</span>
-                <span className="font-semibold text-[#1F3A2B]">
+                <span className="text-[#6B7C70] dark:text-[#A0B0A5]">Date & Time</span>
+                <span className="font-bold text-[#123524] dark:text-white">
                   {bookingDetails.date} at {bookingDetails.time}
                 </span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-[#6B7C70]">Guests & Zone</span>
-                <span className="font-semibold text-[#1F3A2B]">
+                <span className="text-[#6B7C70] dark:text-[#A0B0A5]">Guests & Zone</span>
+                <span className="font-bold text-[#123524] dark:text-white">
                   {bookingDetails.guests} Guests • {bookingDetails.zone}
                 </span>
               </div>
@@ -98,9 +99,9 @@ const ReservationForm = () => {
 
             <button
               onClick={() => setSubmitted(false)}
-              className="px-8 py-3 rounded-full bg-[#351E13] text-white font-bold text-xs uppercase tracking-wider hover:bg-[#4A2C1D] transition-all"
+              className="px-8 py-3.5 rounded-full bg-[#123524] dark:bg-[#D6AE4D] text-white dark:text-[#123524] font-montserrat font-extrabold text-xs uppercase tracking-widest hover:brightness-110 transition-all cursor-pointer shadow-lg"
             >
-              Make Another Reservation
+              MAKE ANOTHER RESERVATION
             </button>
           </motion.div>
         ) : (
@@ -109,87 +110,84 @@ const ReservationForm = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             onSubmit={handleSubmit}
-            className="space-y-10 text-[#1F3A2B]"
+            className="space-y-12 text-[#123524] dark:text-[#EAE3D2]"
           >
             {/* 1. PERSONAL DETAILS */}
             <div className="space-y-4">
-              <span className="text-xs uppercase tracking-[0.2em] font-semibold text-[#C8A96A] block border-b border-[#C8A96A]/20 pb-2">
-                PERSONAL DETAILS
+              <span className="text-xs uppercase tracking-[0.25em] font-extrabold text-[#D6AE4D] block border-b border-[#D6AE4D]/30 pb-2">
+                1. PERSONAL DETAILS
               </span>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-[11px] text-[#6B7C70] mb-1 font-medium">Full Name</label>
+                  <label className="block text-[10px] font-bold text-[#123524] dark:text-[#D6AE4D] uppercase tracking-wider mb-1.5">Full Name *</label>
                   <input
                     type="text"
                     required
-                    placeholder="Full Name"
+                    placeholder="e.g. Mayur Gambhire"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full bg-[#FAF6EE] border border-[#E5DDD0] rounded-xl py-3 px-4 text-xs text-[#1F3A2B] placeholder-[#A0ACA2] focus:outline-none focus:border-[#C8A96A]"
+                    className="w-full bg-white dark:bg-[#16231B] border border-gray-200/80 dark:border-[#D6AE4D]/30 rounded-xl py-3 px-4 text-xs text-[#123524] dark:text-white placeholder-gray-400 dark:placeholder-[#7A8E81] focus:outline-none focus:ring-2 focus:ring-[#D6AE4D]/50 transition-all shadow-sm font-medium"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[11px] text-[#6B7C70] mb-1 font-medium">Email</label>
+                  <label className="block text-[10px] font-bold text-[#123524] dark:text-[#D6AE4D] uppercase tracking-wider mb-1.5">Email Address *</label>
                   <input
                     type="email"
                     required
-                    placeholder="Email"
+                    placeholder="e.g. user@example.com"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full bg-[#FAF6EE] border border-[#E5DDD0] rounded-xl py-3 px-4 text-xs text-[#1F3A2B] placeholder-[#A0ACA2] focus:outline-none focus:border-[#C8A96A]"
+                    className="w-full bg-white dark:bg-[#16231B] border border-gray-200/80 dark:border-[#D6AE4D]/30 rounded-xl py-3 px-4 text-xs text-[#123524] dark:text-white placeholder-gray-400 dark:placeholder-[#7A8E81] focus:outline-none focus:ring-2 focus:ring-[#D6AE4D]/50 transition-all shadow-sm font-medium"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-[11px] text-[#6B7C70] mb-1 font-medium">Phone</label>
+                <label className="block text-[10px] font-bold text-[#123524] dark:text-[#D6AE4D] uppercase tracking-wider mb-1.5">Phone Number *</label>
                 <input
                   type="tel"
                   required
-                  placeholder="Phone"
+                  placeholder="+91 84323 87670"
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  className="w-full bg-[#FAF6EE] border border-[#E5DDD0] rounded-xl py-3 px-4 text-xs text-[#1F3A2B] placeholder-[#A0ACA2] focus:outline-none focus:border-[#C8A96A]"
+                  className="w-full bg-white dark:bg-[#16231B] border border-gray-200/80 dark:border-[#D6AE4D]/30 rounded-xl py-3 px-4 text-xs text-[#123524] dark:text-white placeholder-gray-400 dark:placeholder-[#7A8E81] focus:outline-none focus:ring-2 focus:ring-[#D6AE4D]/50 transition-all shadow-sm font-medium"
                 />
               </div>
             </div>
 
-            {/* 2. DATE & TIME */}
+            {/* 2. DATE & TIME SELECTION */}
             <div className="space-y-4">
-              <span className="text-xs uppercase tracking-[0.2em] font-semibold text-[#C8A96A] block border-b border-[#C8A96A]/20 pb-2">
-                DATE & TIME
+              <span className="text-xs uppercase tracking-[0.25em] font-extrabold text-[#D6AE4D] block border-b border-[#D6AE4D]/30 pb-2">
+                2. DATE & TIME SLOTS
               </span>
 
               <div>
-                <label className="block text-[11px] text-[#6B7C70] mb-1 font-medium">Select Date</label>
-                <div className="relative">
-                  <input
-                    type="date"
-                    required
-                    value={formData.date}
-                    min={new Date().toISOString().split('T')[0]}
-                    onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                    className="w-full bg-[#FAF6EE] border border-[#E5DDD0] rounded-xl py-3 px-4 text-xs text-[#1F3A2B] focus:outline-none focus:border-[#C8A96A]"
-                  />
-                </div>
+                <label className="block text-[10px] font-bold text-[#123524] dark:text-[#D6AE4D] uppercase tracking-wider mb-1.5">Select Date</label>
+                <input
+                  type="date"
+                  required
+                  value={formData.date}
+                  onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                  className="w-full bg-white dark:bg-[#16231B] border border-gray-200/80 dark:border-[#D6AE4D]/30 rounded-xl py-3 px-4 text-xs text-[#123524] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#D6AE4D]/50 transition-all shadow-sm font-medium cursor-pointer"
+                />
               </div>
 
               <div>
-                <label className="block text-[11px] text-[#6B7C70] mb-2 font-medium">Select Time</label>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                <label className="block text-[10px] font-bold text-[#123524] dark:text-[#D6AE4D] uppercase tracking-wider mb-2">Select Time Slot</label>
+                <div className="grid grid-cols-3 sm:grid-cols-4 gap-2.5">
                   {timeSlots.map((slot) => {
                     const isSelected = formData.time === slot;
                     return (
                       <button
-                        key={slot}
                         type="button"
+                        key={slot}
                         onClick={() => setFormData({ ...formData, time: slot })}
-                        className={`py-2.5 px-3 rounded-xl border text-xs font-semibold tracking-wide transition-all ${
+                        className={`py-2.5 px-3 rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer shadow-sm ${
                           isSelected
-                            ? 'bg-[#EFE8D8] border-[#C8A96A] text-[#1F3A2B] font-bold shadow-sm'
-                            : 'bg-[#FAF6EE] border-[#E5DDD0] text-[#1F3A2B] hover:border-[#C8A96A]'
+                            ? 'bg-gradient-to-r from-[#D6AE4D] to-[#B89035] text-[#123524] shadow-md scale-[1.03] ring-1 ring-[#D6AE4D]/50'
+                            : 'bg-white dark:bg-[#16231B] text-[#123524] dark:text-white border border-gray-200/80 dark:border-[#D6AE4D]/20 hover:border-[#D6AE4D]'
                         }`}
                       >
                         {slot}
@@ -200,27 +198,26 @@ const ReservationForm = () => {
               </div>
             </div>
 
-            {/* 3. PREFERENCES */}
-            <div className="space-y-5">
-              <span className="text-xs uppercase tracking-[0.2em] font-semibold text-[#C8A96A] block border-b border-[#C8A96A]/20 pb-2">
-                PREFERENCES
+            {/* 3. PREFERENCES & GUEST COUNT */}
+            <div className="space-y-4">
+              <span className="text-xs uppercase tracking-[0.25em] font-extrabold text-[#D6AE4D] block border-b border-[#D6AE4D]/30 pb-2">
+                3. PREFERENCES & GUESTS
               </span>
 
-              {/* Number of Guests */}
               <div>
-                <label className="block text-[11px] text-[#6B7C70] mb-2 font-medium">Number of Guests</label>
-                <div className="flex flex-wrap items-center gap-3">
-                  {['1', '2', '3', '4', '5', '6', '7', '8'].map((num) => {
+                <label className="block text-[10px] font-bold text-[#123524] dark:text-[#D6AE4D] uppercase tracking-wider mb-2">Number of Guests</label>
+                <div className="flex items-center gap-2 overflow-x-auto py-1">
+                  {['1', '2', '3', '4', '5', '6', '7', '8+'].map((num) => {
                     const isSelected = formData.guests === num;
                     return (
                       <button
-                        key={num}
                         type="button"
+                        key={num}
                         onClick={() => setFormData({ ...formData, guests: num })}
-                        className={`w-9 h-9 rounded-full font-serif text-sm font-semibold transition-all flex items-center justify-center ${
+                        className={`w-11 h-11 rounded-full text-xs font-extrabold transition-all duration-200 shrink-0 cursor-pointer flex items-center justify-center shadow-sm ${
                           isSelected
-                            ? 'bg-[#351E13] text-white font-bold shadow-md'
-                            : 'bg-[#FAF6EE] border border-[#E5DDD0] text-[#1F3A2B] hover:border-[#C8A96A]'
+                            ? 'bg-[#123524] dark:bg-[#D6AE4D] text-[#D6AE4D] dark:text-[#123524] scale-110 ring-2 ring-[#D6AE4D]/50'
+                            : 'bg-white dark:bg-[#16231B] text-[#123524] dark:text-white border border-gray-200/80 dark:border-[#D6AE4D]/20 hover:border-[#D6AE4D]'
                         }`}
                       >
                         {num}
@@ -230,54 +227,47 @@ const ReservationForm = () => {
                 </div>
               </div>
 
-              {/* Preferred Zone */}
               <div>
-                <label className="block text-[11px] text-[#6B7C70] mb-2 font-medium">Preferred Zone</label>
+                <label className="block text-[10px] font-bold text-[#123524] dark:text-[#D6AE4D] uppercase tracking-wider mb-2">Preferred Seating Zone</label>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {zones.map((z) => {
                     const isSelected = formData.zone === z.title;
                     return (
-                      <button
+                      <div
                         key={z.title}
-                        type="button"
                         onClick={() => setFormData({ ...formData, zone: z.title })}
-                        className={`p-4 rounded-xl border text-left transition-all ${
+                        className={`p-4 rounded-2xl border transition-all duration-200 cursor-pointer flex flex-col justify-between ${
                           isSelected
-                            ? 'bg-[#FAF6EE] border-2 border-[#C8A96A] shadow-sm'
-                            : 'bg-[#FAF6EE] border border-[#E5DDD0] hover:border-[#C8A96A]'
+                            ? 'bg-white dark:bg-[#16231B] border-[#D6AE4D] ring-2 ring-[#D6AE4D]/40 shadow-md'
+                            : 'bg-white/80 dark:bg-[#16231B]/80 border-gray-200/80 dark:border-[#D6AE4D]/20 hover:border-[#D6AE4D]/50'
                         }`}
                       >
-                        <h4 className="font-serif text-sm font-semibold text-[#1F3A2B]">{z.title}</h4>
-                        <p className="text-[11px] text-[#6B7C70] font-light mt-0.5">{z.desc}</p>
-                      </button>
+                        <h5 className="font-serif text-sm font-extrabold text-[#123524] dark:text-white">{z.title}</h5>
+                        <p className="text-[10px] text-[#6B7C70] dark:text-[#A0B0A5] font-light mt-0.5">{z.desc}</p>
+                      </div>
                     );
                   })}
                 </div>
               </div>
 
-              {/* Special Requests */}
               <div>
-                <label className="block text-[11px] text-[#6B7C70] mb-1 font-medium">Special Requests</label>
+                <label className="block text-[10px] font-bold text-[#123524] dark:text-[#D6AE4D] uppercase tracking-wider mb-1.5">Special Requests / Notes</label>
                 <textarea
-                  rows="3"
-                  placeholder="Birthday celebration, dietary needs, etc."
+                  rows={3}
+                  placeholder="Birthday celebration, high chair, floral setup, dietary preferences..."
                   value={formData.specialRequest}
                   onChange={(e) => setFormData({ ...formData, specialRequest: e.target.value })}
-                  className="w-full bg-[#FAF6EE] border border-[#E5DDD0] rounded-xl p-4 text-xs text-[#1F3A2B] placeholder-[#A0ACA2] focus:outline-none focus:border-[#C8A96A]"
+                  className="w-full bg-white dark:bg-[#16231B] border border-gray-200/80 dark:border-[#D6AE4D]/30 rounded-xl py-3 px-4 text-xs text-[#123524] dark:text-white placeholder-gray-400 dark:placeholder-[#7A8E81] focus:outline-none focus:ring-2 focus:ring-[#D6AE4D]/50 transition-all shadow-sm font-medium"
                 />
               </div>
             </div>
 
-            {/* CONFIRM RESERVATION Submit Button */}
-            <div className="pt-2">
-              <button
-                type="submit"
-                className="w-full py-4 rounded-full bg-[#A8988C] hover:bg-[#351E13] text-white font-bold text-xs uppercase tracking-widest shadow-md transition-all flex items-center justify-center gap-2"
-              >
-                <FiCalendar className="w-4 h-4" />
-                <span>CONFIRM RESERVATION</span>
-              </button>
-            </div>
+            <button
+              type="submit"
+              className="w-full py-4 rounded-full bg-gradient-to-r from-[#D6AE4D] via-[#F0D588] to-[#B89035] text-[#123524] font-montserrat font-extrabold text-xs uppercase tracking-widest shadow-xl shadow-[#D6AE4D]/20 hover:brightness-110 transition-all cursor-pointer flex items-center justify-center gap-2"
+            >
+              <Sparkles className="w-4 h-4 text-[#123524]" /> CONFIRM TABLE RESERVATION
+            </button>
           </motion.form>
         )}
       </AnimatePresence>
