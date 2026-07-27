@@ -133,8 +133,8 @@ const Navbar = () => {
 
           {/* Navigation Links + Action Icons Grouped with Balanced Spacing */}
           <div className="flex items-center gap-6 xl:gap-10">
-            {/* Desktop Navigation Links */}
-            <nav className="hidden lg:flex items-center gap-5 xl:gap-7">
+            {/* Desktop Navigation Links with generous left spacing from Logo */}
+            <nav className="hidden lg:flex items-center gap-6 xl:gap-9 ml-6 lg:ml-12 xl:ml-16">
               {navLinks.map((link) => {
                 const isActive = pathname === link.path;
                 return (
