@@ -267,14 +267,15 @@ const Navbar = () => {
                 )}
               </button>
 
-              {/* 6. User Profile Avatar Circle + Interactive Hover Dropdown */}
+              {/* 6. User Profile Avatar Circle + Direct Profile Link + Interactive Hover Dropdown */}
               <div
                 className="relative"
                 onMouseEnter={() => setIsUserMenuOpen(true)}
                 onMouseLeave={() => setIsUserMenuOpen(false)}
               >
-                <button
-                  onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                <Link
+                  to="/profile"
+                  onClick={() => setIsUserMenuOpen(false)}
                   className="flex items-center gap-0.5 group p-0.5 sm:p-1 focus:outline-none"
                   title={loggedUser?.name || userEmail || 'Profile / Account Settings'}
                   aria-label="User Profile"
@@ -289,7 +290,7 @@ const Navbar = () => {
                   <ChevronDown className={`w-3 h-3 sm:w-3.5 sm:h-3.5 transition-transform duration-200 ${
                     isUserMenuOpen ? 'rotate-180 text-[#D6AE4D]' : isHome ? 'text-white/80' : 'text-[#354F42]'
                   }`} />
-                </button>
+                </Link>
 
                 {/* Compact Sleek Dropdown Menu Card */}
                 <AnimatePresence>
