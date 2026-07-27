@@ -83,7 +83,7 @@ const LoyaltyClub = () => {
               to="/profile"
               variant="primary"
               size="lg"
-              className="rounded-full px-8 bg-gradient-to-r from-[#D6AE4D] via-[#F0D588] to-[#B89035] text-[#123524] hover:brightness-110 shadow-xl shadow-[#D6AE4D]/20 text-xs tracking-widest uppercase font-extrabold transition-all"
+              className="rounded-xl px-8 bg-gradient-to-r from-[#D6AE4D] via-[#F0D588] to-[#B89035] text-[#123524] hover:brightness-110 shadow-xl shadow-[#D6AE4D]/20 text-xs tracking-widest uppercase font-extrabold transition-all"
             >
               <Sparkles className="w-4.5 h-4.5 mr-1.5 inline-block" /> JOIN THE CLUB NOW
             </Button>

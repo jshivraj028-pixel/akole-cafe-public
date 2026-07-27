@@ -75,7 +75,7 @@ const AboutCafe = () => {
             <div className="pt-2">
               <Link
                 to="/about"
-                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full border border-[#D6AE4D]/35 hover:border-[#D6AE4D] bg-[#D6AE4D]/5 hover:bg-[#D6AE4D]/10 font-serif text-[#D6AE4D] hover:text-white font-extrabold text-xs tracking-wider uppercase transition-all duration-300 group"
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl border border-[#D6AE4D]/35 hover:border-[#D6AE4D] bg-[#D6AE4D]/5 hover:bg-[#D6AE4D]/10 font-serif text-[#D6AE4D] hover:text-white font-extrabold text-xs tracking-wider uppercase transition-all duration-300 group"
               >
                 <span>EXPLORE OUR STORY</span>
                 <span className="group-hover:translate-x-1.5 transition-transform duration-300">→</span>

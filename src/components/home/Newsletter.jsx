@@ -56,7 +56,7 @@ const Newsletter = () => {
                   placeholder="Enter your email address"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-primary-dark/90 border border-accent-gold/40 rounded-full py-3.5 px-6 text-sm text-secondary placeholder-secondary/50 focus:outline-none focus:border-accent-gold transition-colors shadow-inner"
+                  className="w-full bg-primary-dark/90 border border-accent-gold/40 rounded-xl py-3.5 px-6 text-sm text-secondary placeholder-secondary/50 focus:outline-none focus:border-accent-gold transition-colors shadow-inner"
                 />
                 <Button type="submit" variant="gold" size="lg" className="w-full sm:w-auto shrink-0">
                   Subscribe

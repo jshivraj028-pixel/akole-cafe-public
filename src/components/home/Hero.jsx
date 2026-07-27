@@ -59,7 +59,7 @@ const Hero = () => {
             <div className="flex flex-wrap items-center gap-4 pt-3">
               <Link
                 to="/menu"
-                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full border border-[#1F3A2B] dark:border-[#C8A96A] text-[#1F3A2B] dark:text-[#D4B055] hover:bg-[#1F3A2B] dark:hover:bg-[#C8A96A] hover:text-white dark:hover:text-[#121A15] transition-all font-bold text-xs uppercase tracking-wider shadow-sm"
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl border border-[#1F3A2B] dark:border-[#C8A96A] text-[#1F3A2B] dark:text-[#D4B055] hover:bg-[#1F3A2B] dark:hover:bg-[#C8A96A] hover:text-white dark:hover:text-[#121A15] transition-all font-bold text-xs uppercase tracking-wider shadow-sm"
               >
                 <span>EXPLORE MENU</span>
                 <span className="text-sm">→</span>
@@ -67,7 +67,7 @@ const Hero = () => {
 
               <Link
                 to="/reserve"
-                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full border border-[#B5C2B9] dark:border-[#2D4034] text-[#1F3A2B] dark:text-[#EAE3D2] hover:border-[#1F3A2B] dark:hover:border-[#C8A96A] transition-all font-bold text-xs uppercase tracking-wider"
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl border border-[#B5C2B9] dark:border-[#2D4034] text-[#1F3A2B] dark:text-[#EAE3D2] hover:border-[#1F3A2B] dark:hover:border-[#C8A96A] transition-all font-bold text-xs uppercase tracking-wider"
               >
                 <FiCalendar className="w-4 h-4 text-[#D6AE4D]" />
                 <span>RESERVE A TABLE</span>

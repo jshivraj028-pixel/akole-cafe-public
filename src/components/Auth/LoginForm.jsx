@@ -180,7 +180,7 @@ const LoginForm = () => {
         whileTap={{ scale: 0.98 }}
         type="submit"
         disabled={isLoading}
-        className="w-full py-3.5 px-6 rounded-full bg-[#123524] hover:bg-[#D6AE4D] text-white hover:text-[#123524] font-montserrat font-bold text-xs uppercase tracking-[2px] shadow-md transition-all duration-300 flex items-center justify-center gap-2"
+        className="w-full py-3.5 px-6 rounded-xl bg-[#123524] hover:bg-[#D6AE4D] text-white hover:text-[#123524] font-montserrat font-bold text-xs uppercase tracking-[2px] shadow-md transition-all duration-300 flex items-center justify-center gap-2"
       >
         {isLoading ? (
           <>

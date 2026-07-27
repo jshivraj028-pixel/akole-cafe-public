@@ -101,7 +101,7 @@ const ProductCard = ({ product, onQuickView }) => {
           <button
             onClick={handleAddToCart}
             aria-label="Add to cart"
-            className="w-9 h-9 rounded-full bg-[#123524] text-[#D6AE4D] flex items-center justify-center hover:bg-[#D6AE4D] hover:text-[#123524] transition-all duration-300 shadow-md border border-[#D6AE4D]/30 shrink-0 group/btn"
+            className="w-9 h-9 rounded-xl bg-[#123524] text-[#D6AE4D] flex items-center justify-center hover:bg-[#D6AE4D] hover:text-[#123524] transition-all duration-300 shadow-md border border-[#D6AE4D]/30 shrink-0 group/btn"
             title="Add to Cart"
           >
             <ShoppingCart className="w-4 h-4 stroke-[2.2] group-hover/btn:scale-110 transition-transform" />

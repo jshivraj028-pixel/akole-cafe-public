@@ -103,7 +103,7 @@ const Contact = () => {
                 href="https://maps.google.com/?q=Akole+Bypass+Road+Near+Bus+Stand+Akole+Maharashtra+422601"
                 target="_blank"
                 rel="noreferrer"
-                className="mt-8 w-full py-3 rounded-full bg-[#123524] dark:bg-[#D6AE4D] text-white dark:text-[#123524] font-montserrat font-extrabold text-[11px] uppercase tracking-wider shadow-md hover:brightness-110 transition-all flex items-center justify-center gap-2 group-hover:shadow-lg"
+                className="mt-8 w-full py-3 rounded-xl bg-[#123524] dark:bg-[#D6AE4D] text-white dark:text-[#123524] font-montserrat font-extrabold text-[11px] uppercase tracking-wider shadow-md hover:brightness-110 transition-all flex items-center justify-center gap-2 group-hover:shadow-lg"
               >
                 <FiMapPin className="w-4 h-4 text-[#D6AE4D] dark:text-[#123524]" /> GET DIRECTIONS
               </a>
@@ -136,7 +136,7 @@ const Contact = () => {
                 href="https://wa.me/918432387670?text=Hello%20Akole%20Cafe%2C%20I%20would%20like%20to%20make%20an%20inquiry"
                 target="_blank"
                 rel="noreferrer"
-                className="mt-8 w-full py-3 rounded-full bg-gradient-to-r from-[#25D366] to-[#128C7E] text-white font-montserrat font-extrabold text-[11px] uppercase tracking-wider shadow-md shadow-emerald-600/20 hover:brightness-110 transition-all flex items-center justify-center gap-2"
+                className="mt-8 w-full py-3 rounded-xl bg-gradient-to-r from-[#25D366] to-[#128C7E] text-white font-montserrat font-extrabold text-[11px] uppercase tracking-wider shadow-md shadow-emerald-600/20 hover:brightness-110 transition-all flex items-center justify-center gap-2"
               >
                 <FaWhatsapp className="w-4 h-4" /> CHAT ON WHATSAPP
               </a>
@@ -286,7 +286,7 @@ const Contact = () => {
 
                 <button
                   type="submit"
-                  className="w-full py-4 rounded-full bg-gradient-to-r from-[#D6AE4D] via-[#F0D588] to-[#B89035] text-[#123524] font-montserrat font-extrabold text-xs uppercase tracking-widest shadow-xl shadow-[#D6AE4D]/20 hover:brightness-110 transition-all flex items-center justify-center gap-2 group cursor-pointer"
+                  className="w-full py-4 rounded-xl bg-gradient-to-r from-[#D6AE4D] via-[#F0D588] to-[#B89035] text-[#123524] font-montserrat font-extrabold text-xs uppercase tracking-widest shadow-xl shadow-[#D6AE4D]/20 hover:brightness-110 transition-all flex items-center justify-center gap-2 group cursor-pointer"
                 >
                   <FiSend className="w-4 h-4 group-hover:translate-x-1 transition-transform" /> SUBMIT INQUIRY MESSAGE
                 </button>

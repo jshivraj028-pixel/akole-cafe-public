@@ -65,7 +65,7 @@ const ForgotPasswordForm = () => {
           <div className="pt-4 flex flex-col gap-2">
             <button
               onClick={() => setIsSent(false)}
-              className="w-full py-2.5 rounded-full bg-[#D6AE4D]/15 text-[#123524] dark:text-[#D6AE4D] font-bold text-xs uppercase tracking-wider border border-[#D6AE4D]/30"
+              className="w-full py-2.5 rounded-xl bg-[#D6AE4D]/15 text-[#123524] dark:text-[#D6AE4D] font-bold text-xs uppercase tracking-wider border border-[#D6AE4D]/30"
             >
               Resend Email
             </button>
@@ -111,7 +111,7 @@ const ForgotPasswordForm = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full py-3 rounded-full bg-[#123524] hover:bg-[#D6AE4D] hover:text-[#123524] text-white font-montserrat font-bold text-xs uppercase tracking-[2px] transition-all shadow-md transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2"
+            className="w-full py-3 rounded-xl bg-[#123524] hover:bg-[#D6AE4D] hover:text-[#123524] text-white font-montserrat font-bold text-xs uppercase tracking-[2px] transition-all shadow-md transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2"
           >
             {isLoading ? (
               <span className="inline-block w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />

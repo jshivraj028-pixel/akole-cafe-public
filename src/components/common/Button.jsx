@@ -14,7 +14,7 @@ const Button = ({
   disabled = false,
   ...props
 }) => {
-  const baseStyles = "relative inline-flex items-center justify-center font-medium tracking-wider transition-all duration-300 rounded-full overflow-hidden focus:outline-none cursor-pointer";
+  const baseStyles = "relative inline-flex items-center justify-center font-medium tracking-wider transition-all duration-300 rounded-xl overflow-hidden focus:outline-none cursor-pointer";
   
   const variants = {
     gold: "bg-gold-gradient text-primary font-semibold shadow-gold hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]",
