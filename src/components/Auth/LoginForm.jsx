@@ -184,7 +184,7 @@ const LoginForm = () => {
       >
         {isLoading ? (
           <>
-            <Loader2 className="w-4 h-4 animate-spin text-white" />
+            <Loader2 className="w-4 h-4 animate-spin text-[#0A1A12]" />
             <span>Signing In...</span>
           </>
         ) : (
