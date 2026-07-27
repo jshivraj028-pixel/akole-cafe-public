@@ -1,5 +1,5 @@
 import React from 'react';
-import { FiSearch, FiSliders, FiChevronDown } from 'react-icons/fi';
+import { FiSearch, FiSliders, FiChevronDown, FiX } from 'react-icons/fi';
 import { menuCategories } from '../../data/menu';
 
 const MenuFilter = ({
@@ -25,8 +25,17 @@ const MenuFilter = ({
             placeholder="Search Misal, Vada Pav, Dosa, Biryani, Coffee, Ice Cream..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-white dark:bg-[#16231B] border border-gray-200 dark:border-[#D6AE4D]/30 rounded-full py-2.5 pl-10 pr-4 text-xs text-[#123524] dark:text-[#EAE3D2] placeholder-gray-400 dark:placeholder-[#7A8E81] shadow-sm focus:outline-none focus:ring-2 focus:ring-[#D6AE4D]/50 transition-all"
+            className="w-full bg-white dark:bg-[#16231B] border border-gray-200 dark:border-[#D6AE4D]/30 rounded-full py-2.5 pl-10 pr-9 text-xs text-[#123524] dark:text-[#EAE3D2] placeholder-gray-400 dark:placeholder-[#7A8E81] shadow-sm focus:outline-none focus:ring-2 focus:ring-[#D6AE4D]/50 transition-all"
           />
+          {searchQuery && (
+            <button
+              onClick={() => setSearchQuery('')}
+              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-white p-0.5"
+              title="Clear search"
+            >
+              <FiX className="w-3.5 h-3.5" />
+            </button>
+          )}
         </div>
 
         {/* 2. Veg / Non-Veg Filter Toggle */}
@@ -83,7 +92,7 @@ const MenuFilter = ({
 
       </div>
 
-      {/* Bottom Row: Pure Smooth Scrollable Category Pills Bar (No overlay buttons) */}
+      {/* Bottom Row: Pure Smooth Scrollable Category Pills Bar */}
       <div className="flex items-center gap-2 overflow-x-auto py-2.5 px-1 scroll-smooth w-full no-scrollbar">
         {menuCategories.map((cat) => {
           const isActive = activeCategory === cat.id;

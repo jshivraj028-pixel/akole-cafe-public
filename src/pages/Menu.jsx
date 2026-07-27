@@ -32,7 +32,7 @@ const Menu = () => {
       if (!isSilent) setLoading(true);
       try {
         const data = await fetchMenuItems(activeCategory, searchQuery);
-        if (isMounted && Array.isArray(data)) {
+        if (isMounted && Array.isArray(data) && data.length > 0) {
           setItems(data);
         }
       } catch (err) {
@@ -62,10 +62,19 @@ const Menu = () => {
       isMounted = false;
       clearInterval(interval);
     };
-  }, [activeCategory, searchQuery]);
+  }, [activeCategory]);
 
   const filteredAndSortedItems = useMemo(() => {
     let result = [...items];
+
+    // Real-time Instant LIKE partial search filter
+    if (searchQuery && searchQuery.trim()) {
+      const terms = searchQuery.trim().toLowerCase().split(/\s+/).filter(Boolean);
+      result = result.filter(item => {
+        const text = `${item.name || ''} ${item.description || ''} ${item.category || ''} ${Array.isArray(item.tags) ? item.tags.join(' ') : (item.tags || '')}`.toLowerCase();
+        return terms.every(term => text.includes(term));
+      });
+    }
 
     // Filter by Veg / Non-Veg
     if (vegFilter === 'veg') {
@@ -84,7 +93,7 @@ const Menu = () => {
     }
 
     return result;
-  }, [items, sortBy, vegFilter]);
+  }, [items, searchQuery, sortBy, vegFilter]);
 
   return (
     <div className="bg-[#F5F2EA] dark:bg-[#121A15] min-h-screen">

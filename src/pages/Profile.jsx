@@ -47,14 +47,18 @@ const Profile = () => {
 
   // Load Logged-in user from localStorage
   const [currentUser, setCurrentUser] = useState(() => {
-    const saved = localStorage.getItem('akole_user');
-    return saved ? JSON.parse(saved) : {
-      name: 'Mayur Gambhire',
-      email: 'akolecafe@gmail.com',
-      phone: '+91 84323 87670',
-      address: 'Akole Bypass Road, Near Bus Stand, Akole, Maharashtra 422601',
-      role: 'member'
-    };
+    try {
+      const saved = localStorage.getItem('akole_user');
+      if (!saved) return null;
+      const parsed = JSON.parse(saved);
+      if (parsed.email !== 'akolecafe@gmail.com') {
+        parsed.role = 'user';
+        localStorage.setItem('akole_user', JSON.stringify(parsed));
+      }
+      return parsed;
+    } catch (e) {
+      return null;
+    }
   });
 
   const [userName, setUserName] = useState(currentUser?.name || 'Mayur Gambhire');
@@ -370,7 +374,7 @@ const Profile = () => {
             </div>
           )}
 
-          {/* TAB 2: ORDER HISTORY (Backend Integration) */}
+          {/* TAB 2: ORDER HISTORY */}
           {activeTab === 'orders' && (
             <div className="space-y-4 max-w-3xl mx-auto">
               {loadingOrders ? (

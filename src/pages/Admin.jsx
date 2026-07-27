@@ -13,6 +13,7 @@ import {
   toggleBanUserAPI,
   fetchOrdersAPI,
   updateOrderStatusAPI,
+  deleteOrderAPI,
   createNotificationAPI,
   userLoginAPI, 
   uploadImageAPI 
@@ -287,6 +288,18 @@ const Admin = () => {
     }
   };
 
+  // Delete Order permanently
+  const handleDeleteOrder = async (orderId) => {
+    if (!window.confirm(`Are you sure you want to delete order #${orderId}?`)) return;
+    try {
+      await deleteOrderAPI(orderId);
+      showToast(`Order #${orderId} deleted successfully.`);
+      loadData();
+    } catch (err) {
+      showToast(err.message || 'Failed to delete order', 'error');
+    }
+  };
+
   // User Management Actions (Ban, Delete, Send Discount)
   const [isDiscountModalOpen, setIsDiscountModalOpen] = useState(false);
   const [discountUser, setDiscountUser] = useState(null);
@@ -300,9 +313,10 @@ const Admin = () => {
     }
     try {
       const newBanState = !user.isBanned;
+      setUsers(prev => prev.map(u => (u._id === user._id || u.email === user.email) ? { ...u, isBanned: newBanState } : u));
       await toggleBanUserAPI(user._id || user.id, newBanState);
       showToast(`User "${user.name}" is now ${newBanState ? 'Banned 🚫' : 'Active ✅'}`);
-      loadData();
+      loadData(true);
     } catch (err) {
       showToast('Failed to update ban status: ' + err.message, 'error');
     }
@@ -315,9 +329,10 @@ const Admin = () => {
     }
     if (!window.confirm(`Are you sure you want to permanently delete user "${name}"?`)) return;
     try {
+      setUsers(prev => prev.filter(u => u._id !== id && u.id !== id && u.email !== email));
       await deleteUserAPI(id);
       showToast(`User account "${name}" deleted successfully.`);
-      loadData();
+      loadData(true);
     } catch (err) {
       showToast('Delete user failed: ' + err.message, 'error');
     }
@@ -380,10 +395,21 @@ const Admin = () => {
   // Filter products
   const filteredProducts = products.filter(p => {
     const matchesCategory = selectedCategory === 'all' || p.category === selectedCategory;
-    const matchesSearch = !searchQuery.trim() || 
-      p.name?.toLowerCase().includes(searchQuery.toLowerCase()) || 
-      p.description?.toLowerCase().includes(searchQuery.toLowerCase());
+    let matchesSearch = true;
+    if (searchQuery && searchQuery.trim()) {
+      const terms = searchQuery.trim().toLowerCase().split(/\s+/).filter(Boolean);
+      const text = `${p.name || ''} ${p.description || ''} ${p.category || ''} ${Array.isArray(p.tags) ? p.tags.join(' ') : (p.tags || '')}`.toLowerCase();
+      matchesSearch = terms.every(t => text.includes(t));
+    }
     return matchesCategory && matchesSearch;
+  });
+
+  // Filter users (Instant search for teammate & user accounts)
+  const filteredUsers = users.filter(u => {
+    if (!searchQuery || !searchQuery.trim()) return true;
+    const terms = searchQuery.trim().toLowerCase().split(/\s+/).filter(Boolean);
+    const text = `${u.name || ''} ${u.email || ''} ${u.phone || ''} ${u.role || ''}`.toLowerCase();
+    return terms.every(t => text.includes(t));
   });
 
   if (!isLoggedIn) {
@@ -749,27 +775,28 @@ const Admin = () => {
                     <th className="p-4">Items</th>
                     <th className="p-4">Total</th>
                     <th className="p-4">Status & Update</th>
+                    <th className="p-4 text-right">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-accent-gold/10">
                   {orders.length === 0 ? (
                     <tr>
-                      <td colSpan="5" className="p-8 text-center text-secondary/60">
+                      <td colSpan="6" className="p-8 text-center text-secondary/60">
                         No orders recorded in database.
                       </td>
                     </tr>
                   ) : (
                     orders.map((o) => (
-                      <tr key={o._id || o.orderId} className="hover:bg-secondary/10 transition-colors">
+                      <tr key={o._id || o.orderId || o.id} className="hover:bg-secondary/10 transition-colors">
                         <td className="p-4">
-                          <div className="font-bold text-accent-gold">{o.orderId}</div>
+                          <div className="font-bold text-accent-gold">{o.orderId || o._id}</div>
                           <div className="text-[11px] text-secondary/50">
                             {o.createdAt ? new Date(o.createdAt).toLocaleString() : 'Recent'}
                           </div>
                         </td>
                         <td className="p-4">
                           <div className="font-semibold text-secondary">{o.customerName}</div>
-                          <div className="text-[11px] text-secondary/60">{o.customerPhone}</div>
+                          <div className="text-[11px] text-secondary/60">{o.customerEmail || o.customerPhone}</div>
                           <div className="text-[10px] text-secondary/40 line-clamp-1 max-w-xs">{o.deliveryAddress}</div>
                         </td>
                         <td className="p-4">
@@ -784,8 +811,8 @@ const Admin = () => {
                         <td className="p-4 font-bold text-sm text-secondary">₹{o.totalAmount}</td>
                         <td className="p-4">
                           <select
-                            value={o.status}
-                            onChange={(e) => handleOrderStatusChange(o._id || o.id, e.target.value)}
+                            value={o.status || 'Pending'}
+                            onChange={(e) => handleOrderStatusChange(o._id || o.orderId || o.id, e.target.value)}
                             className={`px-3 py-1.5 rounded-lg text-xs font-bold border focus:outline-none ${
                               o.status === 'Pending' ? 'bg-amber-500/20 text-amber-300 border-amber-500/40' :
                               o.status === 'Confirmed' ? 'bg-blue-500/20 text-blue-300 border-blue-500/40' :
@@ -800,6 +827,15 @@ const Admin = () => {
                             <option value="Delivered" className="bg-primary text-secondary">Delivered</option>
                             <option value="Cancelled" className="bg-primary text-secondary">Cancelled</option>
                           </select>
+                        </td>
+                        <td className="p-4 text-right">
+                          <button
+                            onClick={() => handleDeleteOrder(o._id || o.orderId || o.id)}
+                            title="Delete Order Permanently"
+                            className="p-2 rounded-lg bg-red-500/10 hover:bg-red-500/30 text-red-400 border border-red-500/30 transition-all hover:scale-105"
+                          >
+                            <FiTrash2 className="w-4 h-4" />
+                          </button>
                         </td>
                       </tr>
                     ))
@@ -824,14 +860,14 @@ const Admin = () => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-accent-gold/10">
-                  {users.length === 0 ? (
+                  {filteredUsers.length === 0 ? (
                     <tr>
                       <td colSpan="6" className="p-8 text-center text-secondary/60">
                         No registered users found in database.
                       </td>
                     </tr>
                   ) : (
-                    users.map((u) => (
+                    filteredUsers.map((u) => (
                       <tr key={u._id || u.email} className="hover:bg-secondary/10 transition-colors">
                         <td className="p-4 font-bold flex items-center gap-3 text-secondary">
                           <img 
@@ -845,11 +881,11 @@ const Admin = () => {
                         <td className="p-4 text-secondary/60">{u.phone || 'N/A'}</td>
                         <td className="p-4">
                           <span className={`px-2 py-1 rounded text-[10px] uppercase font-bold tracking-wider ${
-                            u.role === 'admin' || u.email === 'akolecafe@gmail.com'
+                            u.email === 'akolecafe@gmail.com' || u.role === 'admin'
                               ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40' 
                               : 'bg-blue-500/20 text-blue-300 border border-blue-500/40'
                           }`}>
-                            {u.role || 'user'}
+                            {u.email === 'akolecafe@gmail.com' ? 'admin' : (u.role || 'user')}
                           </span>
                         </td>
                         <td className="p-4">
