@@ -29,21 +29,6 @@ const Navbar = () => {
   const [isCartDrawerOpen, setIsCartDrawerOpen] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
-    window.addEventListener('scroll', handleScroll);
-    // Trigger initially
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -110,37 +95,13 @@ const Navbar = () => {
   const unreadCount = notifications.filter(n => !n.isRead).length;
   const isHome = pathname === '/' || pathname === '/home';
 
-
-  const logoTextColor = isScrolled
-    ? 'text-white'
-    : 'text-[#123524] dark:text-[#EAE3D2]';
-
-  const iconColorClass = isScrolled
-    ? 'text-white hover:text-[#D6AE4D]'
-    : 'text-[#123524] dark:text-[#EAE3D2] hover:text-[#D6AE4D]';
-
-  const linkColorClass = (isActive) => {
-    if (isActive) return 'text-[#D6AE4D]';
-    return isScrolled
-      ? 'text-[#D6E0DA] hover:text-[#D6AE4D]'
-      : 'text-[#123524] dark:text-[#EAE3D2] hover:text-[#D6AE4D]';
-  };
-
-  const buttonClass = isScrolled
-    ? 'bg-gradient-to-r from-[#D6AE4D] via-[#F0D588] to-[#B89035] text-[#123524] border border-[#FFF5D6]/70 hover:from-[#E5BC58] hover:via-[#FFF3C4] hover:to-[#C99D3B] shadow-lg shadow-[#D6AE4D]/30 transform hover:scale-105 active:scale-95'
-    : 'bg-[#123524] dark:bg-[#D6AE4D] text-[#D6AE4D] dark:text-[#123524] border border-[#D6AE4D]/45 hover:opacity-90 shadow-md shadow-[#123524]/20 transform hover:scale-105 active:scale-95';
-
-  const buttonIconColor = isScrolled
-    ? 'text-[#123524]'
-    : 'text-[#D6AE4D] dark:text-[#123524]';
-
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 h-[74px] sm:h-[82px] px-2.5 sm:px-8 transition-all duration-300 flex items-center ${
-          isScrolled
-            ? 'bg-[#123524]/95 backdrop-blur-md border-b border-[#D6AE4D]/35 shadow-lg'
-            : 'bg-[#EFE8D8] dark:bg-[#0F1712] border-b border-[#D6AE4D]/25 shadow-md'
+        className={`fixed top-0 left-0 right-0 z-50 h-[74px] sm:h-[82px] px-2.5 sm:px-8 transition-colors duration-300 shadow-md flex items-center ${
+          isHome
+            ? 'bg-[#445648] border-b border-[#536958]'
+            : 'bg-[#EFE8D8] border-b border-[#D8CEB8]'
         }`}
       >
         <div className="w-full max-w-[1400px] mx-auto flex items-center justify-between gap-1">
@@ -158,7 +119,9 @@ const Navbar = () => {
             {/* Brand Name Text: Akole (700 White) Café (500 Italic Gold #D6AE4D) */}
             <div className="flex items-baseline font-cormorant text-xl sm:text-3xl tracking-[-0.5px]">
               <span
-                className={`font-bold transition-colors ${logoTextColor}`}
+                className={`font-bold transition-colors ${
+                  isHome ? 'text-white' : 'text-[#354F42]'
+                }`}
               >
                 Akole
               </span>
@@ -178,7 +141,13 @@ const Navbar = () => {
                   <Link
                     key={link.name}
                     to={link.path}
-                    className={`relative font-montserrat text-[11px] xl:text-xs font-semibold tracking-widest uppercase transition-colors duration-200 py-1 ${linkColorClass(isActive)}`}
+                    className={`relative font-montserrat text-[11px] xl:text-xs font-semibold tracking-widest uppercase transition-colors duration-200 py-1 ${
+                      isActive
+                        ? 'text-[#D6AE4D]'
+                        : isHome
+                        ? 'text-[#D6E0DA] hover:text-[#D6AE4D]'
+                        : 'text-[#4A5D50] hover:text-[#D6AE4D]'
+                    }`}
                   >
                     {link.name}
                     {isActive && (
@@ -198,9 +167,9 @@ const Navbar = () => {
               {/* 1. Ultra-Luxury Executive ORDER NOW Button */}
               <Link
                 to="/menu"
-                className={`hidden sm:inline-flex items-center justify-center px-4.5 sm:px-5 py-2 rounded-full font-montserrat font-extrabold text-[11px] xl:text-xs uppercase tracking-[2px] transition-all duration-300 group ${buttonClass}`}
+                className="hidden sm:inline-flex items-center justify-center px-4.5 sm:px-5 py-2 rounded-full bg-gradient-to-r from-[#D6AE4D] via-[#F0D588] to-[#B89035] text-[#0A1A12] font-montserrat font-extrabold text-[11px] xl:text-xs uppercase tracking-[2px] shadow-lg shadow-[#D6AE4D]/30 border border-[#FFF5D6]/70 hover:from-[#E5BC58] hover:via-[#FFF3C4] hover:to-[#C99D3B] hover:shadow-xl hover:shadow-[#D6AE4D]/50 transition-all duration-300 transform hover:scale-105 active:scale-95 group"
               >
-                <Sparkles className={`w-3.5 h-3.5 mr-1.5 stroke-[2.5] group-hover:scale-110 transition-transform ${buttonIconColor}`} />
+                <Sparkles className="w-3.5 h-3.5 mr-1.5 stroke-[2.5] text-[#0A1A12] group-hover:scale-110 transition-transform" />
                 <span className="font-extrabold tracking-[2px]">ORDER NOW</span>
               </Link>
 
@@ -208,7 +177,9 @@ const Navbar = () => {
               <div className="relative">
                 <button
                   onClick={() => setIsSearchOpen(!isSearchOpen)}
-                  className={`p-1 sm:p-1.5 transition-colors ${iconColorClass}`}
+                  className={`p-1 sm:p-1.5 transition-colors ${
+                    isHome ? 'text-white hover:text-[#D6AE4D]' : 'text-[#354F42] hover:text-[#D6AE4D]'
+                  }`}
                   title="Search Menu Items"
                   aria-label="Search"
                 >
@@ -254,7 +225,9 @@ const Navbar = () => {
               {/* 3. Location Pin Icon & Satellite Map Modal Trigger */}
               <button
                 onClick={() => setIsLocationModalOpen(true)}
-                className={`p-1 sm:p-1.5 transition-colors ${iconColorClass}`}
+                className={`p-1 sm:p-1.5 transition-colors ${
+                  isHome ? 'text-white hover:text-[#D6AE4D]' : 'text-[#354F42] hover:text-[#D6AE4D]'
+                }`}
                 title="Our Location & Satellite Earth Map"
                 aria-label="Location Map"
               >
@@ -264,7 +237,9 @@ const Navbar = () => {
               {/* 4. Shopping Cart Icon & Slide-Over Cart Drawer Trigger */}
               <button
                 onClick={() => setIsCartDrawerOpen(true)}
-                className={`p-1 sm:p-1.5 transition-colors relative ${iconColorClass}`}
+                className={`p-1 sm:p-1.5 transition-colors relative ${
+                  isHome ? 'text-white hover:text-[#D6AE4D]' : 'text-[#354F42] hover:text-[#D6AE4D]'
+                }`}
                 title="Shopping Cart & Quick Order"
                 aria-label="Shopping Cart"
               >
@@ -279,7 +254,9 @@ const Navbar = () => {
               {/* 5. Theme Mode Toggle (Sun/Moon) */}
               <button
                 onClick={toggleDarkMode}
-                className={`p-1 sm:p-1.5 transition-colors relative ${iconColorClass}`}
+                className={`p-1 sm:p-1.5 transition-colors relative ${
+                  isHome ? 'text-white hover:text-[#D6AE4D]' : 'text-[#354F42] hover:text-[#D6AE4D]'
+                }`}
                 title={isDarkMode ? 'Switch to Light Mode ☀️' : 'Switch to Dark Mode 🌙'}
                 aria-label="Toggle Light Dark Theme"
               >
@@ -487,7 +464,9 @@ const Navbar = () => {
               {/* Mobile Toggle Button */}
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className={`p-1.5 lg:hidden ${iconColorClass}`}
+                className={`p-1.5 lg:hidden ${
+                  isHome ? 'text-white hover:text-[#D6AE4D]' : 'text-[#354F42] hover:text-[#D6AE4D]'
+                }`}
                 aria-label="Toggle Menu"
               >
                 {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
