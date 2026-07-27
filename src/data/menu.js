@@ -10,6 +10,10 @@ import ferreroRocherCrunchImg from '../assets/ferrero-rocher-crunch.png';
 import sizzlingBrownieFudgeImg from '../assets/sizzling-brownie-fudge.png';
 import roastedAlmondFudgeImg from '../assets/roasted-almond-fudge.png';
 import cookiesCreamOreoScoopImg from '../assets/cookies-cream-oreo-scoop.png';
+import ultimateChocolateSundaeImg from '../assets/ultimate-chocolate-sundae.png';
+import kesariAmrakhandIceCreamImg from '../assets/kesari-amrakhand-ice-cream.png';
+import rainbowUnicornIceCreamImg from '../assets/rainbow-unicorn-ice-cream.png';
+import goldenButterscotchCrunchImg from '../assets/golden-butterscotch-crunch.png';
 
 export const menuCategories = [
   { id: 'all', name: 'All Items' },
@@ -3741,7 +3745,7 @@ export const menuItems = [
     isVeg: true,
     spicyLevel: 0,
     prepTime: '3 mins',
-    image: 'https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=800&q=80',
+    image: rainbowUnicornIceCreamImg,
     tags: ['Rainbow Kids']
   },
   {
@@ -3786,5 +3790,34 @@ export const menuItems = [
     prepTime: '3 mins',
     image: tenderCoconutScoopImg,
     tags: ['Natural Shahale', 'Fresh Malai']
+  },
+  {
+    id: 'nat-ic-3',
+    name: 'Kesari Amrakhand Ice Cream',
+    category: 'ice-creams',
+    description: 'Traditional Maharashtrian rich mango saffron shrikhand gelato scoop garnished with pistachios & saffron.',
+    price: 140,
+    rating: 5.0,
+    isVeg: true,
+    isBestseller: true,
+    isChefSpecial: true,
+    spicyLevel: 0,
+    prepTime: '3 mins',
+    image: kesariAmrakhandIceCreamImg,
+    tags: ['Mango Saffron', 'Amrakhand Special']
+  },
+  {
+    id: 'prem-ic-1',
+    name: 'Golden Butterscotch Crunch',
+    category: 'ice-creams',
+    description: 'Creamy caramel butterscotch gelato loaded with golden praline crunchy bits & warm caramel drizzle.',
+    price: 135,
+    rating: 5.0,
+    isVeg: true,
+    isBestseller: true,
+    spicyLevel: 0,
+    prepTime: '3 mins',
+    image: goldenButterscotchCrunchImg,
+    tags: ['Butterscotch Crunch', 'Caramel Praline']
   }
 ];
