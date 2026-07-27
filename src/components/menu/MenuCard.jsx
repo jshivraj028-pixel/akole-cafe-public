@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FiShoppingBag, FiStar } from 'react-icons/fi';
-import { Leaf } from 'lucide-react';
+import { FiStar } from 'react-icons/fi';
+import { Leaf, ShoppingCart } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import { useTheme } from '../../context/ThemeContext';
 
@@ -37,11 +37,6 @@ const MenuCard = ({ item }) => {
             </span>
           </div>
         )}
-
-        {/* Green Leaf Badge (Top Right) */}
-        <div className="absolute top-3 right-3 w-6 h-6 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-sm">
-          <Leaf className="w-3.5 h-3.5 text-emerald-600 fill-emerald-600/20 stroke-[2.2]" />
-        </div>
       </div>
 
       {/* Content */}
@@ -55,7 +50,7 @@ const MenuCard = ({ item }) => {
           </p>
         </div>
 
-        {/* Bottom row: Price, Rating & Shopping Bag Button */}
+        {/* Bottom row: Price, Rating & Shopping Cart Button */}
         <div className="flex items-center justify-between pt-2 border-t border-gray-100">
           <div className="flex items-center gap-2">
             <span className="font-serif text-base font-bold text-[#2F4436]">₹{item.price}</span>
@@ -70,9 +65,9 @@ const MenuCard = ({ item }) => {
           <button
             onClick={handleAddToCart}
             aria-label="Add to cart"
-            className="w-8 h-8 rounded-full bg-[#1B3828] text-white flex items-center justify-center hover:bg-[#D4B055] hover:text-[#1B3828] transition-all duration-300 shadow-sm"
+            className="w-8.5 h-8.5 rounded-full bg-[#1B3828] text-white flex items-center justify-center hover:bg-[#D4B055] hover:text-[#1B3828] transition-all duration-300 shadow-sm"
           >
-            <FiShoppingBag className="w-4 h-4 stroke-[2]" />
+            <ShoppingCart className="w-4 h-4 stroke-[2]" />
           </button>
         </div>
       </div>
