@@ -164,11 +164,12 @@ const Navbar = () => {
 
             {/* Right Action Icons & Gold Rounded ORDER NOW Button */}
             <div className="flex items-center gap-3.5 sm:gap-4 shrink-0">
-              {/* 1. Gold Rounded ORDER NOW Button */}
+              {/* 1. Gold Rounded ORDER NOW Button with Shopping Bag Icon */}
               <Link
                 to="/menu"
                 className="hidden sm:inline-flex items-center justify-center px-5 py-2 rounded-full bg-gradient-to-r from-[#D6AE4D] via-[#F3E5AB] to-[#B89035] hover:from-[#E5BC58] hover:via-[#FFF3C4] hover:to-[#C99D3B] text-[#123524] font-montserrat font-extrabold text-[11px] xl:text-xs uppercase tracking-[2px] shadow-lg shadow-[#D6AE4D]/30 border border-[#FFF5D6]/60 transition-all duration-300 transform hover:scale-105 active:scale-95 group"
               >
+                <ShoppingBag className="w-3.5 h-3.5 mr-1.5 stroke-[2.5] text-[#123524] group-hover:scale-110 transition-transform" />
                 <span>ORDER NOW</span>
               </Link>
 
