@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { FiCalendar } from 'react-icons/fi';
 import Container from '../common/Container';
 import botanicalPattern from '../../assets/botanical-banner.png';
+import heroCoffeeImg from '../../assets/hero-coffee.png';
 
 const Hero = () => {
   return (
@@ -24,12 +25,12 @@ const Hero = () => {
         />
       </div>
 
-      <Container className="relative z-10 px-4 sm:px-8 lg:px-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
+      <Container className="relative z-10 px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           
-          {/* Left Column: Typography & CTAs */}
+          {/* Left Column: Typography & CTAs (Clean, perfectly aligned without clipping) */}
           <motion.div 
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             className="lg:col-span-7 xl:col-span-7 space-y-6 text-left"
@@ -83,8 +84,8 @@ const Hero = () => {
           >
             <div className="relative w-full max-w-md sm:max-w-lg h-[460px] sm:h-[520px] rounded-3xl overflow-hidden shadow-2xl border-4 border-white/60 dark:border-[#C8A96A]/30">
               <img
-                src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=1000&q=80"
-                alt="Hot Coffee Pouring Stream"
+                src={heroCoffeeImg}
+                alt="Artisanal Latte Art Coffee Experience"
                 className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700"
               />
             </div>

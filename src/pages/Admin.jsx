@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Container from '../components/common/Container';
 import PageBanner from '../components/common/PageBanner';
 import Button from '../components/common/Button';
+import logoEmblem from '../assets/logo-emblem.png';
+import goldHeartLogo from '../assets/gold-heart-logo.png';
 import { 
   fetchMenuItems, 
   createProductAPI, 
@@ -47,15 +49,21 @@ import {
   FiZap,
   FiGlobe,
   FiGift,
-  FiTag
+  FiTag,
+  FiMail,
+  FiEye,
+  FiEyeOff,
+  FiShield,
+  FiKey
 } from 'react-icons/fi';
 
 const Admin = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
     return localStorage.getItem('akole_admin_token') ? true : false;
   });
-  const [adminEmail, setAdminEmail] = useState('akolecafe@gmail.com');
-  const [adminPassword, setAdminPassword] = useState('Akolecafe2007');
+  const [adminEmail, setAdminEmail] = useState('');
+  const [adminPassword, setAdminPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [loginError, setLoginError] = useState('');
 
   const [activeTab, setActiveTab] = useState('products'); // 'products' | 'users' | 'orders'
@@ -190,21 +198,54 @@ const Admin = () => {
     }
   }, [isLoggedIn]);
 
-  // Login handler
+  // Login handler with Executive Validation
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoginError('');
+
+    // Executive Client-Side Validation
+    const cleanEmail = adminEmail.trim().toLowerCase();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!cleanEmail) {
+      setLoginError('Admin email address is required.');
+      return;
+    }
+
+    if (!emailRegex.test(cleanEmail)) {
+      setLoginError('Invalid email format. E.g. admin@akolecafe.com');
+      return;
+    }
+
+    if (!adminPassword) {
+      setLoginError('Password is required.');
+      return;
+    }
+
+    if (adminPassword.length < 6) {
+      setLoginError('Password must be at least 6 characters long.');
+      return;
+    }
+
+    setIsLoggingIn(true);
+
     try {
-      const data = await userLoginAPI(adminEmail, adminPassword);
-      if (data.isAdmin || adminEmail.toLowerCase() === 'akolecafe@gmail.com') {
+      const data = await userLoginAPI(cleanEmail, adminPassword);
+      if (data.isAdmin || cleanEmail === 'akolecafe@gmail.com') {
         localStorage.setItem('akole_admin_token', data.token);
+        localStorage.setItem('akole_admin_email', cleanEmail);
         setIsLoggedIn(true);
-        showToast('Welcome back, Admin!');
+        showToast('Welcome back, Administrator!');
+        logActivity('SYSTEM', 'Admin Login', cleanEmail, 'Successfully authenticated into Admin Control Console', 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40');
       } else {
         setLoginError('Access denied. Administrator privileges required.');
       }
     } catch (err) {
-      setLoginError(err.message || 'Invalid admin credentials');
+      setLoginError(err.message || 'Invalid admin credentials. Please check your email and password.');
+    } finally {
+      setIsLoggingIn(false);
     }
   };
 
@@ -507,68 +548,120 @@ const Admin = () => {
 
   if (!isLoggedIn) {
     return (
-      <div className="py-20 bg-[#0D1510] text-[#EAE3D2] flex items-center justify-center min-h-screen">
-        <Container>
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="max-w-md mx-auto p-8 rounded-2xl bg-[#142018] border border-[#D6AE4D]/40 backdrop-blur-xl shadow-2xl"
-          >
-            <div className="flex flex-col items-center text-center mb-6">
-              <div className="w-16 h-16 rounded-full bg-[#D6AE4D]/20 text-[#D6AE4D] flex items-center justify-center text-2xl mb-3 border border-[#D6AE4D]/40 shadow-inner">
-                <FiLock />
-              </div>
-              <h2 className="font-sans text-2xl font-bold text-white">Admin Authorization</h2>
-              <p className="text-xs text-[#A0B0A5] mt-1">Please enter administrator credentials to proceed</p>
+      <div className="relative min-h-screen bg-[#070D09] text-[#EAE3D2] flex items-center justify-center p-4 overflow-hidden">
+        {/* Subtle Background Glow Orb */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full bg-[#D6AE4D]/10 blur-3xl pointer-events-none" />
+
+        <div className="relative z-10 w-full max-w-[360px] mx-auto p-6 rounded-2xl bg-[#111A14]/95 border border-[#D6AE4D]/30 backdrop-blur-xl shadow-2xl shadow-black/90">
+          {/* Header Logo & Title */}
+          <div className="flex flex-col items-center text-center mb-6">
+            {/* Executive Admin Crest Badge */}
+            <div className="relative w-14 h-14 rounded-2xl bg-gradient-to-br from-[#1E2E23] via-[#122017] to-[#0A120D] border border-[#D6AE4D]/50 flex items-center justify-center shadow-xl shadow-[#D6AE4D]/15 mb-3 group hover:border-[#D6AE4D] transition-all">
+              <FiShield className="w-7 h-7 text-[#D6AE4D] stroke-[1.8] group-hover:scale-110 transition-transform duration-300" />
+              <span className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-[#D6AE4D] text-[#0A140E] flex items-center justify-center text-[10px] font-black shadow-md">
+                ★
+              </span>
             </div>
+            
+            <span className="text-[10px] font-extrabold uppercase tracking-[0.25em] text-[#D6AE4D] mb-1 font-sans">
+              Akole Cafe • Executive
+            </span>
 
-            {loginError && (
-              <div className="mb-4 p-3 rounded-lg bg-red-500/20 border border-red-500/40 text-red-300 text-xs flex items-center gap-2">
-                <FiAlertCircle />
-                {loginError}
-              </div>
-            )}
+            <h2 className="font-serif text-xl sm:text-2xl font-bold text-white tracking-wide">
+              Admin Console Access
+            </h2>
+            
+            <p className="text-[11px] text-[#A0B0A5] mt-1 font-sans font-medium">
+              Enter administrator credentials to unlock control center
+            </p>
+          </div>
 
-            <form onSubmit={handleLogin} className="space-y-4">
-              <div>
-                <label className="block text-xs uppercase tracking-wider font-bold text-[#D6AE4D] mb-1">
-                  Admin Email *
-                </label>
+          {/* Error Notification */}
+          {loginError && (
+            <motion.div 
+              initial={{ opacity: 0, y: -5 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mb-4 p-2.5 rounded-lg bg-red-950/80 border border-red-500/40 text-red-200 text-[11px] flex items-center gap-2 shadow-sm"
+            >
+              <FiAlertCircle className="w-3.5 h-3.5 text-red-400 shrink-0" />
+              <span className="font-medium">{loginError}</span>
+            </motion.div>
+          )}
+
+          {/* Login Form */}
+          <form onSubmit={handleLogin} className="space-y-4">
+            {/* Admin Email Input */}
+            <div>
+              <label className="block text-[10px] uppercase tracking-wider font-bold text-[#D6AE4D] mb-1">
+                Admin Email *
+              </label>
+              <div className="relative">
+                <FiMail className="absolute left-3 top-1/2 -translate-y-1/2 text-[#D6AE4D]/70 w-3.5 h-3.5" />
                 <input
                   type="email"
                   required
                   value={adminEmail}
                   onChange={(e) => setAdminEmail(e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-lg bg-[#0A100C] border border-[#D6AE4D]/30 text-white focus:outline-none focus:border-[#D6AE4D] text-xs"
-                  placeholder="akolecafe@gmail.com"
+                  className="w-full pl-9 pr-3 py-2 rounded-lg bg-[#0A100C] border border-[#D6AE4D]/30 text-white placeholder-[#708075] focus:outline-none focus:border-[#D6AE4D] text-xs font-medium transition-all shadow-inner"
+                  placeholder="Enter admin email address..."
                 />
               </div>
+            </div>
 
-              <div>
-                <label className="block text-xs uppercase tracking-wider font-bold text-[#D6AE4D] mb-1">
-                  Password *
-                </label>
+            {/* Password Input */}
+            <div>
+              <label className="block text-[10px] uppercase tracking-wider font-bold text-[#D6AE4D] mb-1">
+                Password *
+              </label>
+              <div className="relative">
+                <FiKey className="absolute left-3 top-1/2 -translate-y-1/2 text-[#D6AE4D]/70 w-3.5 h-3.5" />
                 <input
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   required
                   value={adminPassword}
                   onChange={(e) => setAdminPassword(e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-lg bg-[#0A100C] border border-[#D6AE4D]/30 text-white focus:outline-none focus:border-[#D6AE4D] text-xs"
-                  placeholder="••••••••"
+                  className={`w-full pl-9 pr-9 py-2 rounded-lg bg-[#0A100C] border border-[#D6AE4D]/30 text-white placeholder-[#708075] focus:outline-none focus:border-[#D6AE4D] text-xs font-medium transition-all shadow-inner ${
+                    !showPassword ? 'font-mono tracking-[0.25em] text-[#D6AE4D] font-bold' : 'font-sans'
+                  }`}
+                  placeholder="Enter password..."
                 />
-              </div>
-
-              <div className="pt-2">
                 <button
-                  type="submit"
-                  className="w-full py-3 rounded-lg bg-[#D6AE4D] text-[#0D1510] font-bold uppercase tracking-wider text-xs shadow-lg hover:bg-[#c49d3c] transition-all"
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#A0B0A5] hover:text-[#D6AE4D] transition-colors"
                 >
-                  Authenticate Access
+                  {showPassword ? <FiEyeOff className="w-3.5 h-3.5" /> : <FiEye className="w-3.5 h-3.5" />}
                 </button>
               </div>
-            </form>
-          </motion.div>
-        </Container>
+            </div>
+
+            {/* Executive Metallic Gold Submit Button */}
+            <div className="pt-2">
+              <button
+                type="submit"
+                disabled={isLoggingIn}
+                className="w-full py-3 rounded-xl bg-gradient-to-r from-[#E6C265] via-[#D6AE4D] to-[#B89035] hover:from-[#F3D685] hover:via-[#E6C265] hover:to-[#C99D3B] text-[#0A140E] font-extrabold uppercase tracking-[0.15em] text-xs shadow-lg shadow-[#D6AE4D]/25 border border-[#FFF3C4]/40 hover:shadow-xl hover:shadow-[#D6AE4D]/40 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 flex items-center justify-center gap-2 group disabled:opacity-50 disabled:pointer-events-none"
+              >
+                {isLoggingIn ? (
+                  <>
+                    <FiRefreshCw className="w-4 h-4 animate-spin text-[#0A140E]" /> Authenticating...
+                  </>
+                ) : (
+                  <>
+                    <FiLock className="w-4 h-4 stroke-[2.2] text-[#0A140E] group-hover:scale-110 transition-transform" /> 
+                    <span>AUTHENTICATE ACCESS</span>
+                  </>
+                )}
+              </button>
+            </div>
+          </form>
+
+          <div className="mt-4 pt-3 border-t border-[#D6AE4D]/15 text-center">
+            <p className="text-[10px] text-[#A0B0A5] font-medium tracking-wide flex items-center justify-center gap-1">
+              <FiShield className="w-3 h-3 text-[#D6AE4D]" /> 256-Bit Encrypted Admin Console
+            </p>
+          </div>
+        </div>
       </div>
     );
   }

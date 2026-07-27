@@ -107,12 +107,12 @@ const Navbar = () => {
         <div className="w-full max-w-[1400px] mx-auto flex items-center justify-between gap-1">
           
           {/* Logo: Circular Emblem Image + Cormorant Garamond Typography */}
-          <Link to="/" className="flex items-center gap-1.5 sm:gap-3 group shrink-0">
-            <div className="w-9 h-9 sm:w-12 sm:h-12 shrink-0 flex items-center justify-center bg-transparent">
+          <Link to="/" className="flex items-center gap-2 sm:gap-3 group shrink-0">
+            <div className="w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-[#2A1D17] border-2 border-[#D6AE4D]/45 shadow-xl shrink-0 flex items-center justify-center p-1 sm:p-1.5 overflow-hidden group-hover:border-[#D6AE4D] group-hover:shadow-[#D6AE4D]/25 transition-all duration-300">
               <img
                 src={logoEmblem}
                 alt="Akole Café Emblem Logo"
-                className="w-full h-full object-contain drop-shadow-md transform group-hover:scale-105 transition-transform duration-300"
+                className="w-full h-full object-contain filter drop-shadow-md transform scale-[1.15] group-hover:scale-[1.22] transition-transform duration-300"
               />
             </div>
 
@@ -164,13 +164,13 @@ const Navbar = () => {
 
             {/* Right Action Icons & Gold Rounded ORDER NOW Button */}
             <div className="flex items-center gap-1 sm:gap-2.5 shrink-0">
-              {/* 1. Gold Rounded ORDER NOW Button with Shopping Bag Icon */}
+              {/* 1. Ultra-Luxury Executive ORDER NOW Button */}
               <Link
                 to="/menu"
-                className="hidden sm:inline-flex items-center justify-center px-4 sm:px-5 py-2 rounded-full bg-gradient-to-r from-[#D6AE4D] via-[#F3E5AB] to-[#B89035] hover:from-[#E5BC58] hover:via-[#FFF3C4] hover:to-[#C99D3B] text-[#123524] font-montserrat font-extrabold text-[11px] xl:text-xs uppercase tracking-[2px] shadow-lg shadow-[#D6AE4D]/30 border border-[#FFF5D6]/60 transition-all duration-300 transform hover:scale-105 active:scale-95 group"
+                className="hidden sm:inline-flex items-center justify-center px-4.5 sm:px-5 py-2 rounded-full bg-gradient-to-r from-[#D6AE4D] via-[#F0D588] to-[#B89035] text-[#0A1A12] font-montserrat font-extrabold text-[11px] xl:text-xs uppercase tracking-[2px] shadow-lg shadow-[#D6AE4D]/30 border border-[#FFF5D6]/70 hover:from-[#E5BC58] hover:via-[#FFF3C4] hover:to-[#C99D3B] hover:shadow-xl hover:shadow-[#D6AE4D]/50 transition-all duration-300 transform hover:scale-105 active:scale-95 group"
               >
-                <ShoppingBag className="w-3.5 h-3.5 mr-1.5 stroke-[2.5] text-[#123524] group-hover:scale-110 transition-transform" />
-                <span>ORDER NOW</span>
+                <Sparkles className="w-3.5 h-3.5 mr-1.5 stroke-[2.5] text-[#0A1A12] group-hover:scale-110 transition-transform" />
+                <span className="font-extrabold tracking-[2px]">ORDER NOW</span>
               </Link>
 
               {/* 2. Search Icon & Popover */}

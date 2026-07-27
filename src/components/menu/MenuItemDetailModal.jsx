@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Star, ShoppingBag, Plus, Minus, Check, Sparkles, Heart } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import { useTheme } from '../../context/ThemeContext';
+import { getProductImage } from '../../utils/imageHelper';
 
 const MenuItemDetailModal = ({ product, isOpen, onClose }) => {
   const { addToCart } = useCart();
@@ -96,7 +97,7 @@ const MenuItemDetailModal = ({ product, isOpen, onClose }) => {
             {/* Top Product Hero Image Banner */}
             <div className="relative h-64 sm:h-72 w-full overflow-hidden bg-[#1B3828]">
               <img
-                src={product.image}
+                src={getProductImage(product)}
                 alt={product.name}
                 className="w-full h-full object-cover"
               />

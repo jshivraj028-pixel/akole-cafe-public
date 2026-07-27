@@ -1,3 +1,16 @@
+import ukadicheModakImg from '../assets/ukadiche-modak.png';
+import cottonCandyScoopImg from '../assets/cotton-candy-scoop.png';
+import icedCaramelMacchiatoImg from '../assets/iced-caramel-macchiato.png';
+import shuddhaMilkPedhaImg from '../assets/shuddha-milk-pedha.png';
+import villageWhiteButterImg from '../assets/village-white-butter.png';
+import freshSitaphalImg from '../assets/fresh-sitaphal.png';
+import tenderCoconutScoopImg from '../assets/tender-coconut-scoop.png';
+import belgianDarkChocolateImg from '../assets/belgian-dark-chocolate.png';
+import ferreroRocherCrunchImg from '../assets/ferrero-rocher-crunch.png';
+import sizzlingBrownieFudgeImg from '../assets/sizzling-brownie-fudge.png';
+import roastedAlmondFudgeImg from '../assets/roasted-almond-fudge.png';
+import cookiesCreamOreoScoopImg from '../assets/cookies-cream-oreo-scoop.png';
+
 export const menuCategories = [
   { id: 'all', name: 'All Items' },
   { id: 'akole-special', name: 'Akole & Rajur Specials' },
@@ -3367,8 +3380,38 @@ export const menuItems = [
     isChefSpecial: true,
     spicyLevel: 0,
     prepTime: '12 mins',
-    image: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=800&q=80',
+    image: ukadicheModakImg,
     tags: ['Modak Special']
+  },
+  {
+    id: 'des-pedha-1',
+    name: 'Shuddha Milk Pedha Box (250g)',
+    category: 'desserts',
+    description: 'Traditional Maharashtrian pure mawa milk pedhas garnished with pistachios & saffron strands in an ornate gift box.',
+    price: 180,
+    rating: 5.0,
+    isVeg: true,
+    isBestseller: true,
+    isChefSpecial: true,
+    spicyLevel: 0,
+    prepTime: '5 mins',
+    image: shuddhaMilkPedhaImg,
+    tags: ['Pure Mawa', 'Special Pedha Box']
+  },
+  {
+    id: 'ako-loni-1',
+    name: 'Fresh Village White Butter (Loni 100g)',
+    category: 'akole-special',
+    description: 'Freshly churned traditional Indian village white butter (Loni) served in an earthen clay matka pot.',
+    price: 80,
+    rating: 5.0,
+    isVeg: true,
+    isBestseller: true,
+    isChefSpecial: true,
+    spicyLevel: 0,
+    prepTime: '2 mins',
+    image: villageWhiteButterImg,
+    tags: ['Fresh Loni', 'Village Pure Butter']
   },
   {
     id: 'des-3',
@@ -3711,7 +3754,37 @@ export const menuItems = [
     isVeg: true,
     spicyLevel: 0,
     prepTime: '3 mins',
-    image: 'https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=800&q=80',
+    image: cottonCandyScoopImg,
     tags: ['Cotton Candy']
+  },
+  {
+    id: 'nat-ic-1',
+    name: 'Fresh Sitaphal (Custard Apple) Scoop',
+    category: 'ice-creams',
+    description: '100% natural creamy Sitaphal pulp ice cream scoop made with fresh fruit & pure milk.',
+    price: 130,
+    rating: 5.0,
+    isVeg: true,
+    isBestseller: true,
+    isChefSpecial: true,
+    spicyLevel: 0,
+    prepTime: '3 mins',
+    image: freshSitaphalImg,
+    tags: ['100% Natural Fruit', 'Sitaphal Special']
+  },
+  {
+    id: 'nat-ic-2',
+    name: 'Tender Coconut (Shahale) Scoop',
+    category: 'ice-creams',
+    description: 'Natural tender coconut gelato scoop served with fresh coconut malai bits.',
+    price: 130,
+    rating: 5.0,
+    isVeg: true,
+    isBestseller: true,
+    isChefSpecial: true,
+    spicyLevel: 0,
+    prepTime: '3 mins',
+    image: tenderCoconutScoopImg,
+    tags: ['Natural Shahale', 'Fresh Malai']
   }
 ];

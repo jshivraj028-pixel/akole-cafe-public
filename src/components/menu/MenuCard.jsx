@@ -4,6 +4,7 @@ import { FiStar } from 'react-icons/fi';
 import { Leaf, ShoppingCart } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import { useTheme } from '../../context/ThemeContext';
+import { getProductImage } from '../../utils/imageHelper';
 
 const MenuCard = ({ item, onQuickView }) => {
   const { addToCart } = useCart();
@@ -23,6 +24,8 @@ const MenuCard = ({ item, onQuickView }) => {
     showToast(`Added "${item.name}" to cart!`);
   };
 
+  const imgSrc = getProductImage(item);
+
   return (
     <motion.div
       whileHover={{ y: -6 }}
@@ -33,7 +36,7 @@ const MenuCard = ({ item, onQuickView }) => {
       {/* Product Image */}
       <div className="relative h-48 w-full overflow-hidden bg-[#F5F2EA]">
         <img
-          src={item.image}
+          src={imgSrc}
           alt={item.name}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />

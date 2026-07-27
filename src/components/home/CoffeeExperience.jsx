@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import Container from '../common/Container';
 import botanicalPattern from '../../assets/botanical-banner.png';
 import logoEmblem from '../../assets/logo-emblem.png';
+import goldHeartLogo from '../../assets/gold-heart-logo.png';
 
 const CoffeeExperience = () => {
   return (
@@ -27,9 +28,13 @@ const CoffeeExperience = () => {
             transition={{ duration: 0.7 }}
             className="space-y-4 flex flex-col items-center"
           >
-            {/* Akole Cafe Logo Emblem */}
-            <div className="w-12 h-12 mb-1 flex items-center justify-center">
-              <img src={logoEmblem} alt="Akole Cafe Emblem Logo" className="w-full h-full object-contain drop-shadow-md" />
+            {/* Official Akole Cafe Circular Emblem Logo (Matching Navbar Logo) */}
+            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#2A1D17] border-2 border-[#D6AE4D]/45 shadow-xl flex items-center justify-center p-1 sm:p-1.5 overflow-hidden mb-2 group hover:border-[#D6AE4D] transition-all">
+              <img 
+                src={logoEmblem} 
+                alt="Akole Cafe Emblem Logo" 
+                className="w-full h-full object-contain filter drop-shadow-md transform scale-[1.15] group-hover:scale-[1.22] transition-transform duration-300" 
+              />
             </div>
 
             {/* Main Title: Brewing Connections, Serving Memories. */}

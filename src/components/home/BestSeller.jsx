@@ -6,6 +6,7 @@ import Button from '../common/Button';
 import { fetchMenuItems } from '../../services/api';
 import { menuItems as staticFallbackItems } from '../../data/menu';
 import { FiArrowRight } from 'react-icons/fi';
+import icedCaramelMacchiatoImg from '../../assets/iced-caramel-macchiato.png';
 
 const categories = [
   { id: 'all', name: 'All Selections' },
@@ -23,7 +24,7 @@ const staticBestsellers = [
     description: 'Rich espresso layered with vanilla, cold milk & caramel drizzle.',
     price: 180,
     rating: 4.9,
-    image: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=800&q=80',
+    image: icedCaramelMacchiatoImg,
     tag: 'BESTSELLER',
     isBestseller: true
   },
@@ -40,10 +41,10 @@ const staticBestsellers = [
   },
   {
     id: 'bs-3',
-    name: 'Classic Hot Chocolate',
+    name: 'Artisanal Earl Grey Tea',
     category: 'teas',
-    description: 'Rich cocoa melted with steamed milk & dark chocolate shavings.',
-    price: 170,
+    description: 'Aromatic bergamot infused black tea brewed to perfection with lemon.',
+    price: 140,
     rating: 4.9,
     image: 'https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=800&q=80',
     tag: 'BESTSELLER',
@@ -51,13 +52,57 @@ const staticBestsellers = [
   },
   {
     id: 'bs-4',
-    name: 'Caramel Cold Brew',
-    category: 'coffee',
-    description: 'Slow-steeped cold brew infused with salted caramel & cream.',
+    name: 'Matcha Green Tea Latte',
+    category: 'teas',
+    description: 'Ceremonial grade Japanese green matcha whisked with warm oat milk.',
     price: 190,
-    rating: 4.7,
-    image: 'https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=800&q=80',
+    rating: 4.8,
+    image: 'https://images.unsplash.com/photo-1536256263959-770b48d82b0a?auto=format&fit=crop&w=800&q=80',
     tag: 'BESTSELLER',
+    isBestseller: true
+  },
+  {
+    id: 'bs-5',
+    name: 'Belgian Chocolate Croissant',
+    category: 'bakery',
+    description: 'Flaky butter croissant filled with melted rich Belgian dark chocolate.',
+    price: 150,
+    rating: 4.9,
+    image: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=800&q=80',
+    tag: 'FRESH BAKED',
+    isBestseller: true
+  },
+  {
+    id: 'bs-6',
+    name: 'Artisanal Blueberry Cheesecake',
+    category: 'bakery',
+    description: 'Creamy New York cheesecake topped with fresh blueberry compote.',
+    price: 220,
+    rating: 5.0,
+    image: 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=800&q=80',
+    tag: 'BESTSELLER',
+    isBestseller: true
+  },
+  {
+    id: 'bs-7',
+    name: 'Paneer Tikka Grilled Sandwich',
+    category: 'bites',
+    description: 'Smoky grilled paneer tikka layered with mint chutney in sourdough.',
+    price: 180,
+    rating: 4.8,
+    image: 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=800&q=80',
+    tag: 'POPULAR',
+    isBestseller: true
+  },
+  {
+    id: 'bs-8',
+    name: 'Akole Special Misal Pav',
+    category: 'bites',
+    description: 'Authentic spicy sprout curry served with butter toasted pav & farsan.',
+    price: 140,
+    rating: 4.9,
+    image: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=800&q=80',
+    tag: 'LOCAL SPECIAL',
     isBestseller: true
   }
 ];
@@ -72,7 +117,16 @@ const BestSeller = ({ onQuickView }) => {
       try {
         const items = await fetchMenuItems('all');
         if (isMounted && Array.isArray(items) && items.length > 0) {
-          setAllProducts(items);
+          // Merge API items with fallback items to guarantee category availability
+          setAllProducts(prev => {
+            const combined = [...items];
+            staticBestsellers.forEach(staticItem => {
+              if (!combined.some(i => i.name.toLowerCase() === staticItem.name.toLowerCase())) {
+                combined.push(staticItem);
+              }
+            });
+            return combined;
+          });
         }
       } catch (err) {
         console.error('Failed to load menu items for bestsellers:', err);
@@ -83,13 +137,28 @@ const BestSeller = ({ onQuickView }) => {
   }, []);
 
   const displayedItems = (() => {
-    let list = allProducts.filter(item => item.isBestseller || item.tag === 'BESTSELLER');
-    if (list.length === 0) list = allProducts;
-    if (activeCategory !== 'all') {
-      const catFiltered = list.filter(item => item.category === activeCategory);
-      return catFiltered.length > 0 ? catFiltered : list.slice(0, 4);
+    if (activeCategory === 'all') {
+      return allProducts.slice(0, 8);
     }
-    return list.slice(0, 4);
+    
+    return allProducts.filter(item => {
+      const cat = (item.category || '').toLowerCase();
+      const name = (item.name || '').toLowerCase();
+
+      if (activeCategory === 'coffee') {
+        return cat.includes('coffee') || cat.includes('beverage') || name.includes('coffee') || name.includes('cappuccino') || name.includes('latte') || name.includes('espresso') || name.includes('macchiato') || name.includes('brew');
+      }
+      if (activeCategory === 'teas') {
+        return cat.includes('tea') || cat.includes('chai') || name.includes('tea') || name.includes('chai') || name.includes('matcha');
+      }
+      if (activeCategory === 'bakery') {
+        return cat.includes('bakery') || cat.includes('cake') || cat.includes('pastry') || cat.includes('dessert') || cat.includes('sweet') || name.includes('croissant') || name.includes('cake') || name.includes('brownie');
+      }
+      if (activeCategory === 'bites') {
+        return cat.includes('bites') || cat.includes('snack') || cat.includes('starter') || cat.includes('fast') || cat.includes('south indian') || name.includes('sandwich') || name.includes('misal') || name.includes('dosa') || name.includes('pav') || name.includes('burger') || name.includes('pizza');
+      }
+      return cat.includes(activeCategory);
+    });
   })();
 
   return (
