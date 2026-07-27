@@ -5,16 +5,16 @@ const PageBanner = ({
   title = "",
   highlight = "",
   subtitle = "",
-  bgImage = "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1920&q=80"
+  bgImage = "/assets/maharashtrian-photo-banner.svg"
 }) => {
   return (
-    <div className="relative h-64 sm:h-80 md:h-96 flex items-center justify-center bg-[#1B110B] overflow-hidden pt-16">
-      {/* Dark Cozy Cafe Background Image */}
+    <div className="relative h-72 sm:h-80 md:h-96 flex items-center justify-center bg-[#0C1A12] overflow-hidden pt-16 border-b border-[#D6AE4D]/30 shadow-2xl">
+      {/* Authentic Maharashtrian Heritage Akole Cafe Background */}
       <div 
-        className="absolute inset-0 bg-cover bg-center opacity-60 mix-blend-luminosity"
+        className="absolute inset-0 bg-cover bg-center opacity-85 transition-all duration-500 hover:scale-105"
         style={{ backgroundImage: `url(${bgImage})` }}
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#1B110B] via-transparent to-[#1B110B]/70" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#0C1A12] via-[#0C1A12]/30 to-[#0C1A12]/80" />
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}

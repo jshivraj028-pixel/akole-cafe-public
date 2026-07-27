@@ -1,0 +1,184 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient: Deep Emerald & Rich Teakwood Maroon -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0A160F" />
+      <stop offset="35%" stop-color="#182E20" />
+      <stop offset="70%" stop-color="#261612" />
+      <stop offset="100%" stop-color="#0B120C" />
+    </linearGradient>
+
+    <!-- Gold Calligraphy & Accent Gradient -->
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF5D6" />
+      <stop offset="25%" stop-color="#F3D379" />
+      <stop offset="65%" stop-color="#D6AE4D" />
+      <stop offset="100%" stop-color="#9B732B" />
+    </linearGradient>
+
+    <!-- Royal Maroon Accent -->
+    <linearGradient id="maroonGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#8B1E1E" />
+      <stop offset="50%" stop-color="#C0392B" />
+      <stop offset="100%" stop-color="#8B1E1E" />
+    </linearGradient>
+
+    <!-- Radial Lamp Flame Glows -->
+    <radialGradient id="lampGlowLeft" cx="12%" cy="50%" r="35%">
+      <stop offset="0%" stop-color="#FFD700" stop-opacity="0.4" />
+      <stop offset="40%" stop-color="#E67E22" stop-opacity="0.15" />
+      <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+    </radialGradient>
+
+    <radialGradient id="lampGlowRight" cx="88%" cy="50%" r="35%">
+      <stop offset="0%" stop-color="#FFD700" stop-opacity="0.4" />
+      <stop offset="40%" stop-color="#E67E22" stop-opacity="0.15" />
+      <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+    </radialGradient>
+
+    <radialGradient id="centerGlow" cx="50%" cy="45%" r="50%">
+      <stop offset="0%" stop-color="#F3D379" stop-opacity="0.2" />
+      <stop offset="60%" stop-color="#182E20" stop-opacity="0.05" />
+      <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Drop Shadow Glow Filter -->
+    <filter id="goldGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="7" result="blur" />
+      <feComponentTransfer in="blur" result="glow">
+        <feFuncA type="linear" slope="0.9" />
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode in="glow" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="1920" height="1080" fill="url(#bgGrad)" />
+
+  <!-- Lighting & Ambient Glow Layers -->
+  <rect width="1920" height="1080" fill="url(#centerGlow)" />
+  <rect width="1920" height="1080" fill="url(#lampGlowLeft)" />
+  <rect width="1920" height="1080" fill="url(#lampGlowRight)" />
+
+  <!-- SAHYADRI MOUNTAIN SILHOUETTE (AKOLE & Bhandardara Vibe) -->
+  <path d="M 0 720 Q 300 580 600 660 T 1200 640 T 1920 700 L 1920 1080 L 0 1080 Z" fill="#060E08" opacity="0.6" />
+
+  <!-- TRADITIONAL PAITHANI ZARI BORDER PATTERN (Top & Bottom) -->
+  <g fill="url(#goldGrad)" opacity="0.5">
+    <!-- Top Border -->
+    <rect x="0" y="20" width="1920" height="8" />
+    <path d="M 0 35 L 1920 35 M 0 45 L 1920 45" stroke="url(#goldGrad)" stroke-width="1.5" />
+    
+    <!-- Paithani Diamond Loop Motif Top -->
+    <g transform="translate(0, 30)">
+      <circle cx="100" cy="0" r="4" />
+      <circle cx="300" cy="0" r="4" />
+      <circle cx="500" cy="0" r="4" />
+      <circle cx="700" cy="0" r="4" />
+      <circle cx="960" cy="0" r="6" />
+      <circle cx="1220" cy="0" r="4" />
+      <circle cx="1420" cy="0" r="4" />
+      <circle cx="1620" cy="0" r="4" />
+      <circle cx="1820" cy="0" r="4" />
+    </g>
+
+    <!-- Bottom Border -->
+    <rect x="0" y="1052" width="1920" height="8" />
+    <path d="M 0 1035 L 1920 1035 M 0 1043 L 1920 1043" stroke="url(#goldGrad)" stroke-width="1.5" />
+  </g>
+
+  <!-- WARLI ART CULTURE ACCENTS (Left & Right Flanks) -->
+  <!-- Left Warli Dance Circle -->
+  <g transform="translate(140, 520)" fill="none" stroke="url(#goldGrad)" stroke-width="2" opacity="0.45">
+    <circle cx="0" cy="0" r="70" stroke-dasharray="6 6" />
+    <!-- Warli Dancers -->
+    <polygon points="0,-60 -15,-40 15,-40" fill="url(#goldGrad)" />
+    <polygon points="0,-40 -15,-20 15,-20" fill="url(#goldGrad)" />
+    <circle cx="0" cy="-70" r="6" fill="url(#goldGrad)" />
+
+    <polygon points="50,-20 40,-5 60,-5" fill="url(#goldGrad)" />
+    <polygon points="50,-5 40,10 60,10" fill="url(#goldGrad)" />
+    <circle cx="58" cy="-25" r="5" fill="url(#goldGrad)" />
+  </g>
+
+  <!-- Right Warli Tarpa Music Circle -->
+  <g transform="translate(1780, 520)" fill="none" stroke="url(#goldGrad)" stroke-width="2" opacity="0.45">
+    <circle cx="0" cy="0" r="70" stroke-dasharray="6 6" />
+    <polygon points="0,-60 -15,-40 15,-40" fill="url(#goldGrad)" />
+    <polygon points="0,-40 -15,-20 15,-20" fill="url(#goldGrad)" />
+    <circle cx="0" cy="-70" r="6" fill="url(#goldGrad)" />
+  </g>
+
+  <!-- TRADITIONAL BRASS SAMAI OIL LAMPS (समई) WITH FIERY GLOW -->
+  <!-- Left Samai Lamp -->
+  <g transform="translate(240, 280)" fill="url(#goldGrad)" opacity="0.85" filter="url(#goldGlow)">
+    <ellipse cx="60" cy="500" rx="60" ry="15" />
+    <path d="M 25 500 L 45 400 L 75 400 L 95 500 Z" />
+    <rect x="54" y="160" width="12" height="240" rx="4" />
+    <!-- Multi-tiered Oil Dishes -->
+    <ellipse cx="60" cy="320" rx="45" ry="10" />
+    <ellipse cx="60" cy="240" rx="40" ry="9" />
+    <ellipse cx="60" cy="160" rx="55" ry="12" />
+    <!-- Flaming Diya Wick -->
+    <path d="M 60 90 Q 76 125 60 145 Q 44 125 60 90 Z" fill="#FFA500" />
+    <path d="M 60 102 Q 70 125 60 140 Q 50 125 60 102 Z" fill="#FFE066" />
+    <circle cx="60" cy="132" r="5" fill="#FFFFFF" />
+  </g>
+
+  <!-- Right Samai Lamp -->
+  <g transform="translate(1560, 280)" fill="url(#goldGrad)" opacity="0.85" filter="url(#goldGlow)">
+    <ellipse cx="60" cy="500" rx="60" ry="15" />
+    <path d="M 25 500 L 45 400 L 75 400 L 95 500 Z" />
+    <rect x="54" y="160" width="12" height="240" rx="4" />
+    <!-- Multi-tiered Oil Dishes -->
+    <ellipse cx="60" cy="320" rx="45" ry="10" />
+    <ellipse cx="60" cy="240" rx="40" ry="9" />
+    <ellipse cx="60" cy="160" rx="55" ry="12" />
+    <!-- Flaming Diya Wick -->
+    <path d="M 60 90 Q 76 125 60 145 Q 44 125 60 90 Z" fill="#FFA500" />
+    <path d="M 60 102 Q 70 125 60 140 Q 50 125 60 102 Z" fill="#FFE066" />
+    <circle cx="60" cy="132" r="5" fill="#FFFFFF" />
+  </g>
+
+  <!-- CENTRAL SHAHI MAHARASHTRIAN BRANDING STACK -->
+  <g text-anchor="middle" filter="url(#goldGlow)">
+    
+    <!-- Royal Shield Emblem Crest -->
+    <g transform="translate(960, 250)">
+      <polygon points="0,-40 35,-15 25,30 0,45 -25,30 -35,-15" fill="url(#goldGrad)" />
+      <polygon points="0,-32 27,-12 19,23 0,35 -19,23 -27,-12" fill="#0A160F" />
+      <circle cx="0" cy="0" r="10" fill="url(#goldGrad)" />
+    </g>
+
+    <!-- Subtitle Header -->
+    <text x="960" y="360" fill="url(#goldGrad)" font-family="'Montserrat', sans-serif" font-size="16" font-weight="800" letter-spacing="12" opacity="0.95">
+      ★ SHAHI MAHARASHTRIAN SPECIALTY CAFÉ ★
+    </text>
+
+    <!-- MARATHI DEVANAAGARI CALLIGRAPHY: अकोले -->
+    <text x="960" y="530" fill="url(#goldGrad)" font-family="'Yatra One', 'Rozha One', 'Noto Sans Devanagari', 'Mukta', sans-serif" font-size="155" font-weight="900" letter-spacing="6">
+      अकोले
+    </text>
+
+    <!-- ENGLISH ELEGANT TITLE: CAFÉ -->
+    <text x="960" y="665" fill="url(#goldGrad)" font-family="'Cinzel', 'Playfair Display', serif" font-size="95" font-weight="900" letter-spacing="24">
+      CAFÉ
+    </text>
+
+    <!-- Traditional Decorative Maroon & Gold Ribbon Divider -->
+    <g transform="translate(960, 715)">
+      <rect x="-240" y="-12" width="480" height="24" rx="12" fill="url(#maroonGrad)" stroke="url(#goldGrad)" stroke-width="1.5" />
+      <text x="0" y="5" fill="#FFF5D6" font-family="'Mukta', sans-serif" font-size="14" font-weight="700" letter-spacing="4" text-anchor="middle">
+        ESTD. 2018 • AKOLE, MAHARASHTRA
+      </text>
+    </g>
+
+    <!-- MARATHI TAGLINE BELOW -->
+    <text x="960" y="790" fill="#EAE3D2" font-family="'Mukta', 'Noto Sans Devanagari', sans-serif" font-size="28" font-weight="700" letter-spacing="3" opacity="0.95">
+      अस्सल महाराष्ट्रीयन चव • गरमागरम चहा-कॉफी • आपुलकीचं ठिकाण
+    </text>
+  </g>
+</svg>

@@ -163,7 +163,7 @@ const Profile = () => {
       <PageBanner
         title="My Member Profile"
         subtitle="Manage Personal Details, Saved Delivery Address & Account Activity"
-        bgImage="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1920&q=80"
+        bgImage="/assets/maharashtrian-photo-banner.svg"
       />
 
       <section className="py-12 sm:py-16 bg-[#F5EFE3] dark:bg-[#121A15] text-[#1F3A2B] dark:text-[#EAE3D2] transition-colors duration-300 min-h-[75vh]">

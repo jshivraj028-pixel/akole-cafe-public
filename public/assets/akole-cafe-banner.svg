@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#08140D" />
+      <stop offset="40%" stop-color="#142B1F" />
+      <stop offset="70%" stop-color="#1D2A18" />
+      <stop offset="100%" stop-color="#09120C" />
+    </linearGradient>
+
+    <!-- Gold Calligraphy Gradient -->
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF3C4" />
+      <stop offset="30%" stop-color="#F0D588" />
+      <stop offset="70%" stop-color="#D6AE4D" />
+      <stop offset="100%" stop-color="#9E782F" />
+    </linearGradient>
+
+    <!-- Radial Lamp Glow -->
+    <radialGradient id="lampGlowLeft" cx="15%" cy="50%" r="40%">
+      <stop offset="0%" stop-color="#FFD700" stop-opacity="0.3" />
+      <stop offset="50%" stop-color="#D6AE4D" stop-opacity="0.1" />
+      <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+    </radialGradient>
+
+    <radialGradient id="lampGlowRight" cx="85%" cy="50%" r="40%">
+      <stop offset="0%" stop-color="#FFD700" stop-opacity="0.3" />
+      <stop offset="50%" stop-color="#D6AE4D" stop-opacity="0.1" />
+      <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+    </radialGradient>
+
+    <radialGradient id="centerGlow" cx="50%" cy="50%" r="45%">
+      <stop offset="0%" stop-color="#D6AE4D" stop-opacity="0.18" />
+      <stop offset="60%" stop-color="#142B1F" stop-opacity="0.05" />
+      <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Drop Shadow Filter -->
+    <filter id="goldGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feComponentTransfer in="blur" result="glow">
+        <feFuncA type="linear" slope="0.8" />
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode in="glow" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background Rect -->
+  <rect width="1920" height="1080" fill="url(#bgGrad)" />
+
+  <!-- Ambient Radial Light Layers -->
+  <rect width="1920" height="1080" fill="url(#centerGlow)" />
+  <rect width="1920" height="1080" fill="url(#lampGlowLeft)" />
+  <rect width="1920" height="1080" fill="url(#lampGlowRight)" />
+
+  <!-- Traditional Decorative Border Frame -->
+  <g stroke="url(#goldGrad)" stroke-width="2" fill="none" opacity="0.45">
+    <rect x="40" y="40" width="1840" height="1000" rx="20" stroke-width="1.5" />
+    <rect x="55" y="55" width="1810" height="970" rx="14" stroke-width="2" stroke-dasharray="8 6" />
+
+    <!-- Corner Motifs -->
+    <!-- Top Left -->
+    <path d="M 65 110 L 110 65 L 140 65 L 65 140 Z" fill="url(#goldGrad)" opacity="0.6" />
+    <circle cx="85" cy="85" r="8" fill="url(#goldGrad)" />
+
+    <!-- Top Right -->
+    <path d="M 1855 110 L 1810 65 L 1780 65 L 1855 140 Z" fill="url(#goldGrad)" opacity="0.6" />
+    <circle cx="1835" cy="85" r="8" fill="url(#goldGrad)" />
+
+    <!-- Bottom Left -->
+    <path d="M 65 970 L 110 1015 L 140 1015 L 65 940 Z" fill="url(#goldGrad)" opacity="0.6" />
+    <circle cx="85" cy="995" r="8" fill="url(#goldGrad)" />
+
+    <!-- Bottom Right -->
+    <path d="M 1855 970 L 1810 1015 L 1780 1015 L 1855 940 Z" fill="url(#goldGrad)" opacity="0.6" />
+    <circle cx="1835" cy="995" r="8" fill="url(#goldGrad)" />
+  </g>
+
+  <!-- Left Brass Samai Lamp Silhouette -->
+  <g transform="translate(180, 320)" fill="url(#goldGrad)" opacity="0.75" filter="url(#goldGlow)">
+    <!-- Base -->
+    <ellipse cx="60" cy="440" rx="50" ry="12" />
+    <path d="M 30 440 L 45 360 L 75 360 L 90 440 Z" />
+    <cylinder cx="60" cy="350" r="15" height="40" />
+    <!-- Pillars -->
+    <rect x="54" y="160" width="12" height="190" rx="4" />
+    <!-- Plates -->
+    <ellipse cx="60" cy="240" rx="35" ry="8" />
+    <ellipse cx="60" cy="160" rx="45" ry="10" />
+    <!-- Flames -->
+    <path d="M 60 110 Q 72 135 60 148 Q 48 135 60 110 Z" fill="#FFE27A" />
+    <circle cx="60" cy="138" r="6" fill="#FFF5D6" />
+  </g>
+
+  <!-- Right Brass Samai Lamp Silhouette -->
+  <g transform="translate(1620, 320)" fill="url(#goldGrad)" opacity="0.75" filter="url(#goldGlow)">
+    <!-- Base -->
+    <ellipse cx="60" cy="440" rx="50" ry="12" />
+    <path d="M 30 440 L 45 360 L 75 360 L 90 440 Z" />
+    <!-- Pillars -->
+    <rect x="54" y="160" width="12" height="190" rx="4" />
+    <!-- Plates -->
+    <ellipse cx="60" cy="240" rx="35" ry="8" />
+    <ellipse cx="60" cy="160" rx="45" ry="10" />
+    <!-- Flames -->
+    <path d="M 60 110 Q 72 135 60 148 Q 48 135 60 110 Z" fill="#FFE27A" />
+    <circle cx="60" cy="138" r="6" fill="#FFF5D6" />
+  </g>
+
+  <!-- Central Header Text Stack -->
+  <g text-anchor="middle" filter="url(#goldGlow)">
+    
+    <!-- Top Crown Badge -->
+    <path d="M 960 270 L 975 300 L 1005 300 L 980 320 L 990 350 L 960 330 L 930 350 L 940 320 L 915 300 L 945 300 Z" fill="url(#goldGrad)" opacity="0.9" />
+
+    <!-- Subtitle English -->
+    <text x="960" y="410" fill="url(#goldGrad)" font-family="'Montserrat', sans-serif" font-size="18" font-weight="800" letter-spacing="10" opacity="0.9">
+      AUTHENTIC MAHARASHTRIAN HERITAGE &amp; ARTISANAL BREWS
+    </text>
+
+    <!-- MARATHI CALLIGRAPHY TITLE: अकोले -->
+    <text x="960" y="560" fill="url(#goldGrad)" font-family="'Yatra One', 'Rozha One', 'Noto Sans Devanagari', 'Mukta', sans-serif" font-size="145" font-weight="900" letter-spacing="4">
+      अकोले
+    </text>
+
+    <!-- ENGLISH TITLE: CAFÉ -->
+    <text x="960" y="690" fill="url(#goldGrad)" font-family="'Cinzel', 'Playfair Display', serif" font-size="90" font-weight="900" letter-spacing="22">
+      CAFÉ
+    </text>
+
+    <!-- Decorative Divider Line with Diamond -->
+    <line x1="660" y1="735" x2="920" y2="735" stroke="url(#goldGrad)" stroke-width="2" opacity="0.7" />
+    <polygon points="960,727 968,735 960,743 952,735" fill="url(#goldGrad)" />
+    <line x1="1000" y1="735" x2="1260" y2="735" stroke="url(#goldGrad)" stroke-width="2" opacity="0.7" />
+
+    <!-- MARATHI TAGLINE BELOW -->
+    <text x="960" y="800" fill="#EAE3D2" font-family="'Mukta', 'Noto Sans Devanagari', sans-serif" font-size="28" font-weight="600" letter-spacing="2" opacity="0.95">
+      अस्सल महाराष्ट्रीयन स्वाद • सुवासिक कॉफी • आपुलकीची माणसं
+    </text>
+  </g>
+</svg>

@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1920 1080" width="100%" height="100%">
+  <defs>
+    <!-- Gold Calligraphy Gradient -->
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF8DC" />
+      <stop offset="30%" stop-color="#F5D77F" />
+      <stop offset="70%" stop-color="#D6AE4D" />
+      <stop offset="100%" stop-color="#9B732B" />
+    </linearGradient>
+
+    <!-- Dark Vignette Overlay Gradient -->
+    <radialGradient id="vignette" cx="50%" cy="50%" r="65%">
+      <stop offset="0%" stop-color="#000000" stop-opacity="0.2" />
+      <stop offset="60%" stop-color="#08140D" stop-opacity="0.65" />
+      <stop offset="100%" stop-color="#040A06" stop-opacity="0.9" />
+    </radialGradient>
+
+    <!-- Lamp Flame Glow -->
+    <radialGradient id="lampGlowLeft" cx="12%" cy="50%" r="30%">
+      <stop offset="0%" stop-color="#FFD700" stop-opacity="0.45" />
+      <stop offset="50%" stop-color="#E67E22" stop-opacity="0.15" />
+      <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+    </radialGradient>
+
+    <radialGradient id="lampGlowRight" cx="88%" cy="50%" r="30%">
+      <stop offset="0%" stop-color="#FFD700" stop-opacity="0.45" />
+      <stop offset="50%" stop-color="#E67E22" stop-opacity="0.15" />
+      <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Shadow Filter -->
+    <filter id="goldGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feComponentTransfer in="blur" result="glow">
+        <feFuncA type="linear" slope="0.9" />
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode in="glow" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- 1. Photorealistic Cozy Cafe Photography Background -->
+  <image 
+    href="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1920&q=80" 
+    x="0" y="0" width="1920" height="1080" 
+    preserveAspectRatio="xMidYMid slice"
+  />
+
+  <!-- 2. Rich Dark Atmosphere Vignette Overlay -->
+  <rect width="1920" height="1080" fill="url(#vignette)" />
+
+  <!-- 3. Warm Ambient Lamp Glows -->
+  <rect width="1920" height="1080" fill="url(#lampGlowLeft)" />
+  <rect width="1920" height="1080" fill="url(#lampGlowRight)" />
+
+  <!-- 4. Paithani Gold Pattern Borders -->
+  <g fill="url(#goldGrad)" opacity="0.6">
+    <rect x="30" y="30" width="1860" height="4" />
+    <rect x="30" y="1046" width="1860" height="4" />
+    <line x1="30" y1="40" x2="1890" y2="40" stroke="url(#goldGrad)" stroke-width="1.5" stroke-dasharray="8 6" />
+    <line x1="30" y1="1036" x2="1890" y2="1036" stroke="url(#goldGrad)" stroke-width="1.5" stroke-dasharray="8 6" />
+  </g>
+
+  <!-- 5. Brass Samai Oil Lamps on Left & Right -->
+  <g transform="translate(200, 260)" fill="url(#goldGrad)" opacity="0.9" filter="url(#goldGlow)">
+    <ellipse cx="60" cy="520" rx="55" ry="14" />
+    <rect x="54" y="170" width="12" height="250" rx="4" />
+    <ellipse cx="60" cy="330" rx="42" ry="10" />
+    <ellipse cx="60" cy="250" rx="38" ry="9" />
+    <ellipse cx="60" cy="170" rx="50" ry="12" />
+    <!-- Flame -->
+    <path d="M 60 100 Q 75 130 60 150 Q 45 130 60 100 Z" fill="#FFA500" />
+    <path d="M 60 112 Q 70 130 60 145 Q 50 130 60 112 Z" fill="#FFE066" />
+    <circle cx="60" cy="138" r="4" fill="#FFFFFF" />
+  </g>
+
+  <g transform="translate(1600, 260)" fill="url(#goldGrad)" opacity="0.9" filter="url(#goldGlow)">
+    <ellipse cx="60" cy="520" rx="55" ry="14" />
+    <rect x="54" y="170" width="12" height="250" rx="4" />
+    <ellipse cx="60" cy="330" rx="42" ry="10" />
+    <ellipse cx="60" cy="250" rx="38" ry="9" />
+    <ellipse cx="60" cy="170" rx="50" ry="12" />
+    <!-- Flame -->
+    <path d="M 60 100 Q 75 130 60 150 Q 45 130 60 100 Z" fill="#FFA500" />
+    <path d="M 60 112 Q 70 130 60 145 Q 50 130 60 112 Z" fill="#FFE066" />
+    <circle cx="60" cy="138" r="4" fill="#FFFFFF" />
+  </g>
+
+  <!-- 6. Central Header Marathi Calligraphy & Branding -->
+  <g text-anchor="middle" filter="url(#goldGlow)">
+    
+    <!-- Top Crown Emblem -->
+    <path d="M 960 260 L 975 285 L 1005 285 L 980 305 L 990 335 L 960 315 L 930 335 L 940 305 L 915 285 L 945 285 Z" fill="url(#goldGrad)" opacity="0.95" />
+
+    <text x="960" y="375" fill="url(#goldGrad)" font-family="'Montserrat', sans-serif" font-size="15" font-weight="800" letter-spacing="12" opacity="0.95">
+      ★ SHAHI MAHARASHTRIAN HERITAGE CAFÉ ★
+    </text>
+
+    <!-- MARATHI DEVANAAGARI CALLIGRAPHY: अकोले -->
+    <text x="960" y="540" fill="url(#goldGrad)" font-family="'Yatra One', 'Rozha One', 'Noto Sans Devanagari', 'Mukta', sans-serif" font-size="160" font-weight="900" letter-spacing="6">
+      अकोले
+    </text>
+
+    <!-- ENGLISH TITLE: CAFÉ -->
+    <text x="960" y="675" fill="url(#goldGrad)" font-family="'Cinzel', 'Playfair Display', serif" font-size="95" font-weight="900" letter-spacing="24">
+      CAFÉ
+    </text>
+
+    <!-- Ribbon Divider Line -->
+    <line x1="680" y1="720" x2="920" y2="720" stroke="url(#goldGrad)" stroke-width="2" opacity="0.8" />
+    <polygon points="960,712 968,720 960,728 952,720" fill="url(#goldGrad)" />
+    <line x1="1000" y1="720" x2="1240" y2="720" stroke="url(#goldGrad)" stroke-width="2" opacity="0.8" />
+
+    <!-- MARATHI TAGLINE BELOW -->
+    <text x="960" y="790" fill="#EAE3D2" font-family="'Mukta', 'Noto Sans Devanagari', sans-serif" font-size="28" font-weight="700" letter-spacing="3" opacity="0.95">
+      अस्सल महाराष्ट्रीयन स्वाद • सुवासिक कॉफी • आपुलकीची माणसं
+    </text>
+  </g>
+</svg>

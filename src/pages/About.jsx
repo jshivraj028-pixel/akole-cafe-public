@@ -70,7 +70,7 @@ const About = () => {
       <PageBanner
         title="Our Story"
         subtitle="CRAFTING MEMORIES & ARTISANAL COFFEE SINCE 2018"
-        bgImage="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1920&q=80"
+        bgImage="/assets/maharashtrian-photo-banner.svg"
       />
 
       {/* 2. Brand Story Paragraph Section */}
