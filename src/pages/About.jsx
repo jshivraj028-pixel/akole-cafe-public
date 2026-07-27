@@ -4,6 +4,7 @@ import { FiCoffee, FiCompass, FiEye, FiAward, FiBookmark, FiHeart, FiCheckCircle
 import { Sparkles } from 'lucide-react';
 import PageBanner from '../components/common/PageBanner';
 import Container from '../components/common/Container';
+import logoEmblem from '../assets/logo-emblem.png';
 
 const milestones = [
   {
@@ -75,8 +76,12 @@ const About = () => {
       {/* 2. Brand Story Paragraph Section */}
       <section className="py-20 bg-white dark:bg-[#121A15]">
         <Container className="max-w-4xl text-center space-y-6">
-          <div className="w-14 h-14 rounded-full bg-[#123524]/10 dark:bg-[#D6AE4D]/15 border border-[#D6AE4D]/40 flex items-center justify-center text-[#D6AE4D] mx-auto shadow-md">
-            <FiCoffee className="w-6 h-6" />
+          <div className="w-16 h-16 rounded-full bg-[#2A1D17] border-2 border-[#D6AE4D]/45 shadow-xl flex items-center justify-center p-1.5 overflow-hidden mx-auto">
+            <img
+              src={logoEmblem}
+              alt="Akole Café Emblem Logo"
+              className="w-full h-full object-contain filter drop-shadow-md transform scale-[1.1]"
+            />
           </div>
 
           <motion.div
