@@ -104,7 +104,7 @@ const Navbar = () => {
             : 'bg-[#EFE8D8] border-b border-[#D8CEB8]'
         }`}
       >
-        <div className="w-full max-w-[1280px] mx-auto flex items-center justify-between">
+        <div className="w-full max-w-[1400px] mx-auto flex items-center justify-between gap-4">
           
           {/* Logo: Circular Emblem Image + Cormorant Garamond Typography */}
           <Link to="/" className="flex items-center gap-3 group shrink-0">
@@ -125,7 +125,7 @@ const Navbar = () => {
               >
                 Akole
               </span>
-              <span className="italic font-medium text-[#D6AE4D] ml-1">
+              <span className="italic font-medium text-[#D6AE4D] ml-1.5">
                 Café
               </span>
             </div>
@@ -471,8 +471,7 @@ const Navbar = () => {
               </button>
             </div>
           </div>
-        </div>
-      </header>
+        </header>
 
       {/* Mobile Menu */}
       <MobileMenu
