@@ -350,21 +350,21 @@ const Contact = () => {
               return (
                 <div
                   key={index}
-                  className={`rounded-2xl transition-all duration-300 overflow-hidden border ${
+                  className={`rounded-[24px] transition-all duration-300 overflow-hidden border ${
                     isOpen 
-                      ? 'bg-white dark:bg-[#16231B] border-[#D6AE4D] shadow-xl ring-1 ring-[#D6AE4D]/30' 
-                      : 'bg-white/80 dark:bg-[#16231B]/80 border-gray-200 dark:border-[#D6AE4D]/20 hover:border-[#D6AE4D]/50'
+                      ? 'bg-white/95 dark:bg-[#16231B]/95 border-[#D6AE4D] shadow-2xl scale-[1.01]' 
+                      : 'bg-white/60 dark:bg-[#16231B]/60 border-white/20 dark:border-[#D6AE4D]/15 backdrop-blur-xs shadow-md hover:border-[#D6AE4D]/55 hover:scale-[1.005]'
                   }`}
                 >
                   <button
                     onClick={() => setActiveFaq(isOpen ? null : index)}
-                    className="w-full p-6 text-left flex items-center justify-between font-serif font-bold text-base text-[#123524] dark:text-white cursor-pointer"
+                    className="w-full p-6 text-left flex items-center justify-between font-serif font-extrabold text-sm sm:text-base text-[#123524] dark:text-white cursor-pointer select-none"
                   >
-                    <span className="flex items-center gap-3">
-                      <span className="w-7 h-7 rounded-full bg-[#123524]/10 dark:bg-[#D6AE4D]/20 text-[#D6AE4D] flex items-center justify-center text-xs font-sans">
+                    <span className="flex items-center gap-3.5">
+                      <span className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#123524] to-[#1D4732] text-[#D6AE4D] flex items-center justify-center text-xs font-sans font-bold border border-[#D6AE4D]/35 shrink-0">
                         0{index + 1}
                       </span>
-                      {faq.q}
+                      <span className="pr-2">{faq.q}</span>
                     </span>
                     <FiChevronDown className={`w-5 h-5 text-[#D6AE4D] transition-transform duration-300 shrink-0 ${isOpen ? 'rotate-180' : ''}`} />
                   </button>
