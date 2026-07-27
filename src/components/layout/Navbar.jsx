@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Bell, Heart, Sun, Moon, Menu, X, User } from 'lucide-react';
+import { Search, MapPin, ShoppingCart, Sun, Moon, Menu, X, User, ChevronDown, Settings, Package, ShoppingBag, Heart, ShieldCheck, LogOut, LogIn, ChevronRight, Sparkles } from 'lucide-react';
 import { FiPackage, FiInfo, FiBell } from 'react-icons/fi';
 import { useCart } from '../../context/CartContext';
 import { useTheme } from '../../context/ThemeContext';
@@ -16,19 +16,20 @@ const navLinks = [
   { name: 'RESERVE', path: '/reserve' },
   { name: 'EVENTS', path: '/events' },
   { name: 'GALLERY', path: '/gallery' },
-  { name: 'BLOG', path: '/blog' },
-  { name: 'FRANCHISE', path: '/franchise' },
   { name: 'CONTACT', path: '/contact' },
 ];
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [notifications, setNotifications] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
 
+  const navigate = useNavigate();
   const { pathname } = useLocation();
   const { totalItemsCount } = useCart();
-  const { setIsSearchOpen, isDarkMode, toggleDarkMode, wishlistItems, isAuthenticated, userEmail } = useTheme();
+  const { isSearchOpen, setIsSearchOpen, isDarkMode, toggleDarkMode, wishlistItems, isAuthenticated, userEmail, logoutUser, showToast } = useTheme();
 
   const loggedUser = (() => {
     try {
@@ -38,6 +39,18 @@ const Navbar = () => {
       return null;
     }
   })();
+
+  const userInitial = (loggedUser?.name?.[0] || userEmail?.[0] || 'S').toUpperCase();
+
+  const handleLogout = () => {
+    try {
+      if (logoutUser) logoutUser();
+      localStorage.removeItem('akole_user');
+      if (showToast) showToast('Successfully logged out!', 'info');
+    } catch (e) {}
+    setIsUserMenuOpen(false);
+    navigate('/login');
+  };
 
   const loadNotifications = async () => {
     const email = loggedUser?.email || userEmail || '';
@@ -64,6 +77,14 @@ const Navbar = () => {
       setNotifications(prev => prev.map(n => (n._id === id || n.id === id) ? { ...n, isRead: true } : n));
     } catch (err) {
       console.error(err);
+    }
+  };
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (searchTerm.trim()) {
+      setIsSearchOpen(false);
+      navigate(`/menu?search=${encodeURIComponent(searchTerm.trim())}`);
     }
   };
 
@@ -139,122 +160,93 @@ const Navbar = () => {
 
             {/* Right Action Icons & Gold Rounded ORDER NOW Button */}
             <div className="flex items-center gap-3.5 sm:gap-4 shrink-0">
-              {/* 1. Search Icon */}
-              <button
-                onClick={() => setIsSearchOpen(true)}
-                className={`p-1.5 transition-colors ${
-                  isHome ? 'text-white hover:text-[#D6AE4D]' : 'text-[#354F42] hover:text-[#D6AE4D]'
-                }`}
-                title="Search"
-                aria-label="Search"
+              {/* 1. Gold Rounded ORDER NOW Button */}
+              <Link
+                to="/menu"
+                className="hidden sm:inline-flex items-center justify-center px-5 py-2 rounded-full bg-gradient-to-r from-[#D6AE4D] via-[#F3E5AB] to-[#B89035] hover:from-[#E5BC58] hover:via-[#FFF3C4] hover:to-[#C99D3B] text-[#123524] font-montserrat font-extrabold text-[11px] xl:text-xs uppercase tracking-[2px] shadow-lg shadow-[#D6AE4D]/30 border border-[#FFF5D6]/60 transition-all duration-300 transform hover:scale-105 active:scale-95 group"
               >
-                <Search className="w-5 h-5 stroke-[2]" />
-              </button>
+                <span>ORDER NOW</span>
+              </Link>
 
-              {/* 2. LIVE Notification Bell Icon & Drawer */}
+              {/* 2. Search Icon & Popover */}
               <div className="relative">
                 <button
-                  onClick={() => setIsNotificationsOpen(!isNotificationsOpen)}
-                  className={`p-1.5 transition-colors relative ${
+                  onClick={() => setIsSearchOpen(!isSearchOpen)}
+                  className={`p-1.5 transition-colors ${
                     isHome ? 'text-white hover:text-[#D6AE4D]' : 'text-[#354F42] hover:text-[#D6AE4D]'
                   }`}
-                  title="Notifications & Order Updates"
-                  aria-label="Notifications"
+                  title="Search Menu Items"
+                  aria-label="Search"
                 >
-                  <Bell className="w-5 h-5 stroke-[2]" />
-                  {unreadCount > 0 ? (
-                    <span className="absolute top-0 right-0 w-4 h-4 bg-amber-500 text-white font-extrabold text-[9px] rounded-full flex items-center justify-center animate-pulse">
-                      {unreadCount}
-                    </span>
-                  ) : (
-                    <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-[#D6AE4D]" />
-                  )}
+                  <Search className="w-5 h-5 stroke-[2]" />
                 </button>
 
-                {/* Notifications Dropdown Drawer */}
+                {/* Popover Card */}
                 <AnimatePresence>
-                  {isNotificationsOpen && (
+                  {isSearchOpen && (
                     <motion.div
-                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                      initial={{ opacity: 0, y: 8, scale: 0.95 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                      className="absolute right-0 top-12 w-80 sm:w-96 bg-[#123524] border border-[#D6AE4D]/30 rounded-2xl shadow-2xl p-4 text-white z-50 backdrop-blur-xl"
+                      exit={{ opacity: 0, y: 8, scale: 0.95 }}
+                      className="absolute right-0 sm:right-auto sm:-left-28 top-11 w-72 sm:w-80 bg-white p-2 rounded-2xl shadow-2xl border border-gray-200/80 z-50"
                     >
-                      <div className="flex items-center justify-between pb-3 border-b border-[#D6AE4D]/20 mb-3">
-                        <div className="flex items-center gap-2">
-                          <FiBell className="text-[#D6AE4D] text-base" />
-                          <h4 className="font-serif font-bold text-sm text-white">Live Notifications</h4>
-                        </div>
-                        {unreadCount > 0 && (
-                          <span className="px-2 py-0.5 rounded-full bg-[#D6AE4D]/20 text-[#D6AE4D] text-[10px] font-bold">
-                            {unreadCount} Unread
-                          </span>
-                        )}
-                      </div>
-
-                      <div className="space-y-2.5 max-h-80 overflow-y-auto pr-1">
-                        {notifications.length === 0 ? (
-                          <div className="text-center py-8 text-white/50 text-xs">
-                            No notifications yet.
-                          </div>
-                        ) : (
-                          notifications.map((notif) => (
-                            <div
-                              key={notif._id || notif.id}
-                              className={`p-3 rounded-xl border text-xs transition-colors flex items-start gap-3 ${
-                                notif.isRead 
-                                  ? 'bg-white/5 border-white/10 text-white/70' 
-                                  : 'bg-[#D6AE4D]/15 border-[#D6AE4D]/40 text-white'
-                              }`}
+                      <form onSubmit={handleSearchSubmit}>
+                        <div className="w-full bg-[#FAF4E6] border border-[#E5D7BE] rounded-xl py-2 px-3 flex items-center gap-2 shadow-inner">
+                          <Search className="w-4 h-4 text-[#8B9B90] shrink-0 stroke-[2]" />
+                          <input
+                            type="text"
+                            autoFocus
+                            placeholder="Search menu items..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            className="w-full bg-transparent text-xs text-[#2A2A2A] placeholder-[#9EA59D] focus:outline-none font-sans"
+                          />
+                          {searchTerm && (
+                            <button
+                              type="button"
+                              onClick={() => setSearchTerm('')}
+                              className="text-gray-400 hover:text-gray-600 p-0.5"
                             >
-                              <div className="mt-0.5 text-[#D6AE4D] shrink-0">
-                                {notif.type === 'order_update' ? <FiPackage className="text-base" /> : <FiInfo className="text-base" />}
-                              </div>
-                              <div className="flex-1 min-w-0">
-                                <div className="font-serif font-bold text-xs text-white flex items-center justify-between">
-                                  <span>{notif.title}</span>
-                                  {!notif.isRead && (
-                                    <button
-                                      onClick={() => handleMarkAsRead(notif._id || notif.id)}
-                                      className="text-[10px] text-[#D6AE4D] hover:underline font-normal"
-                                      title="Mark as read"
-                                    >
-                                      Mark Read
-                                    </button>
-                                  )}
-                                </div>
-                                <p className="text-[11px] text-white/80 mt-1 leading-snug">{notif.message}</p>
-                                <span className="text-[9px] text-white/40 block mt-1">
-                                  {notif.createdAt ? new Date(notif.createdAt).toLocaleTimeString() : 'Just now'}
-                                </span>
-                              </div>
-                            </div>
-                          ))
-                        )}
-                      </div>
+                              <X className="w-3.5 h-3.5" />
+                            </button>
+                          )}
+                        </div>
+                      </form>
                     </motion.div>
                   )}
                 </AnimatePresence>
               </div>
 
-              {/* 3. Wishlist Heart Icon */}
+              {/* 3. Location Pin Icon */}
               <Link
-                to="/profile"
+                to="/contact"
+                className={`p-1.5 transition-colors ${
+                  isHome ? 'text-white hover:text-[#D6AE4D]' : 'text-[#354F42] hover:text-[#D6AE4D]'
+                }`}
+                title="Our Location & Contact"
+                aria-label="Location"
+              >
+                <MapPin className="w-5 h-5 stroke-[2]" />
+              </Link>
+
+              {/* 4. Shopping Cart Icon */}
+              <Link
+                to="/cart"
                 className={`p-1.5 transition-colors relative ${
                   isHome ? 'text-white hover:text-[#D6AE4D]' : 'text-[#354F42] hover:text-[#D6AE4D]'
                 }`}
-                title="Wishlist"
-                aria-label="Wishlist"
+                title="Shopping Cart"
+                aria-label="Shopping Cart"
               >
-                <Heart className="w-5 h-5 stroke-[2]" />
-                {wishlistItems && wishlistItems.length > 0 && (
-                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-[#D6AE4D] text-[#2A3B2F] font-bold text-[10px] rounded-full flex items-center justify-center shadow-sm">
-                    {wishlistItems.length}
+                <ShoppingCart className="w-5 h-5 stroke-[2]" />
+                {totalItemsCount > 0 && (
+                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-[#D6AE4D] text-[#123524] font-extrabold text-[9px] rounded-full flex items-center justify-center shadow-md">
+                    {totalItemsCount}
                   </span>
                 )}
               </Link>
 
-              {/* 4. Theme Mode Toggle Button (Light/Dark Toggle) */}
+              {/* 5. Theme Mode Toggle (Sun/Moon) */}
               <button
                 onClick={toggleDarkMode}
                 className={`p-1.5 transition-colors relative ${
@@ -270,39 +262,197 @@ const Navbar = () => {
                 )}
               </button>
 
-              {/* 5. User Profile / Logout Icon Link */}
-              {isAuthenticated || loggedUser ? (
-                <Link
-                  to="/profile"
-                  className={`p-1.5 transition-colors relative flex items-center gap-1 ${
-                    isHome ? 'text-white hover:text-[#D6AE4D]' : 'text-[#354F42] hover:text-[#D6AE4D]'
-                  }`}
-                  title={`Profile (${loggedUser?.name || userEmail})`}
-                  aria-label="Profile"
-                >
-                  <User className="w-5 h-5 stroke-[2] text-[#D6AE4D]" />
-                  <span className="w-2 h-2 rounded-full bg-emerald-400" />
-                </Link>
-              ) : (
-                <Link
-                  to="/login"
-                  className={`p-1.5 transition-colors relative ${
-                    isHome ? 'text-white hover:text-[#D6AE4D]' : 'text-[#354F42] hover:text-[#D6AE4D]'
-                  }`}
-                  title="Sign In / Login"
-                  aria-label="Sign In / Login"
-                >
-                  <User className="w-5 h-5 stroke-[2]" />
-                </Link>
-              )}
-
-              {/* 6. Gold Rounded ORDER NOW Button */}
-              <Link
-                to="/menu"
-                className="hidden sm:inline-flex items-center justify-center px-4.5 py-1.5 rounded-full bg-[#D6AE4D] hover:bg-[#c59d3c] text-[#2A3B2F] font-montserrat font-bold text-[11px] xl:text-xs uppercase tracking-widest shadow-sm transition-all transform hover:scale-105 active:scale-95 ml-1"
+              {/* 6. User Profile Avatar Circle + Interactive Hover Dropdown */}
+              <div
+                className="relative"
+                onMouseEnter={() => setIsUserMenuOpen(true)}
+                onMouseLeave={() => setIsUserMenuOpen(false)}
               >
-                ORDER NOW
-              </Link>
+                <button
+                  onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                  className="flex items-center gap-1 group p-1 focus:outline-none"
+                  title={loggedUser?.name || userEmail || 'Profile / Account Settings'}
+                  aria-label="User Profile"
+                >
+                  <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-[#D6AE4D]/80 bg-[#D6AE4D]/10 flex items-center justify-center font-bold text-xs text-[#D6AE4D] shadow-inner group-hover:bg-[#D6AE4D]/20 transition-all">
+                    {userInitial}
+                  </div>
+                  <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                    isUserMenuOpen ? 'rotate-180 text-[#D6AE4D]' : isHome ? 'text-white/80' : 'text-[#354F42]'
+                  }`} />
+                </button>
+
+                {/* Compact Sleek Dropdown Menu Card */}
+                <AnimatePresence>
+                  {isUserMenuOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 8, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: 8, scale: 0.95 }}
+                      transition={{ duration: 0.18, ease: "easeOut" }}
+                      className="absolute right-0 top-10 w-56 bg-[#10291C]/95 border border-[#D6AE4D]/35 rounded-2xl shadow-xl p-2 text-white z-50 backdrop-blur-2xl ring-1 ring-[#D6AE4D]/15"
+                    >
+                      {/* Golden Top Accent Line */}
+                      <div className="h-[2px] w-1/3 mx-auto bg-gradient-to-r from-transparent via-[#D6AE4D] to-transparent rounded-full mb-1.5 opacity-80" />
+
+                      {/* Compact User Header Card */}
+                      <div className="p-2 bg-gradient-to-br from-[#1B3E2D] to-[#0A1A12] border border-[#D6AE4D]/25 rounded-xl mb-1.5 flex items-center gap-2 relative shadow-inner">
+                        <div className="relative shrink-0">
+                          <div className="w-7 h-7 rounded-full border border-[#D6AE4D] bg-gradient-to-tr from-[#D6AE4D] to-[#F3E5AB] flex items-center justify-center font-bold font-serif text-xs text-[#123524]">
+                            {userInitial}
+                          </div>
+                          <span className="absolute bottom-0 right-0 w-2 h-2 bg-emerald-400 border border-[#10291C] rounded-full" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-1 text-[8px] uppercase font-extrabold tracking-wider text-[#D6AE4D]">
+                            <Sparkles className="w-2.5 h-2.5 text-[#D6AE4D]" />
+                            <span>Gold Member</span>
+                          </div>
+                          <p className="font-serif font-bold text-xs text-white truncate">
+                            {loggedUser?.name || userEmail || 'Guest Explorer'}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Compact Options List */}
+                      <div className="space-y-0.5">
+                        {/* Item 1: My Profile */}
+                        <Link
+                          to="/profile"
+                          onClick={() => setIsUserMenuOpen(false)}
+                          className="flex items-center justify-between px-2 py-1.5 rounded-lg text-[11px] font-semibold text-white/90 hover:text-white hover:bg-[#D6AE4D]/15 transition-all group"
+                        >
+                          <div className="flex items-center gap-2">
+                            <div className="w-5 h-5 rounded-md bg-[#D6AE4D]/10 border border-[#D6AE4D]/20 flex items-center justify-center text-[#D6AE4D] group-hover:bg-[#D6AE4D] group-hover:text-[#123524] transition-all">
+                              <User className="w-3 h-3 stroke-[2.5]" />
+                            </div>
+                            <span>My Profile</span>
+                          </div>
+                          <ChevronRight className="w-3 h-3 text-white/30 group-hover:text-[#D6AE4D] group-hover:translate-x-0.5 transition-all" />
+                        </Link>
+
+                        {/* Item 2: My Orders */}
+                        <Link
+                          to="/profile"
+                          onClick={() => setIsUserMenuOpen(false)}
+                          className="flex items-center justify-between px-2 py-1.5 rounded-lg text-[11px] font-semibold text-white/90 hover:text-white hover:bg-[#D6AE4D]/15 transition-all group"
+                        >
+                          <div className="flex items-center gap-2">
+                            <div className="w-5 h-5 rounded-md bg-[#D6AE4D]/10 border border-[#D6AE4D]/20 flex items-center justify-center text-[#D6AE4D] group-hover:bg-[#D6AE4D] group-hover:text-[#123524] transition-all">
+                              <Package className="w-3 h-3 stroke-[2.5]" />
+                            </div>
+                            <span>My Orders & Status</span>
+                          </div>
+                          <ChevronRight className="w-3 h-3 text-white/30 group-hover:text-[#D6AE4D] group-hover:translate-x-0.5 transition-all" />
+                        </Link>
+
+                        {/* Item 3: Cart */}
+                        <Link
+                          to="/cart"
+                          onClick={() => setIsUserMenuOpen(false)}
+                          className="flex items-center justify-between px-2 py-1.5 rounded-lg text-[11px] font-semibold text-white/90 hover:text-white hover:bg-[#D6AE4D]/15 transition-all group"
+                        >
+                          <div className="flex items-center gap-2">
+                            <div className="w-5 h-5 rounded-md bg-[#D6AE4D]/10 border border-[#D6AE4D]/20 flex items-center justify-center text-[#D6AE4D] group-hover:bg-[#D6AE4D] group-hover:text-[#123524] transition-all">
+                              <ShoppingBag className="w-3 h-3 stroke-[2.5]" />
+                            </div>
+                            <span>View Cart</span>
+                          </div>
+                          <div className="flex items-center gap-1.5">
+                            <span className="px-1.5 py-0.2 text-[9px] font-bold rounded-full bg-[#D6AE4D]/20 text-[#D6AE4D] border border-[#D6AE4D]/30">
+                              {totalItemsCount}
+                            </span>
+                            <ChevronRight className="w-3 h-3 text-white/30 group-hover:text-[#D6AE4D] group-hover:translate-x-0.5 transition-all" />
+                          </div>
+                        </Link>
+
+                        {/* Item 4: Wishlist */}
+                        <Link
+                          to="/profile"
+                          onClick={() => setIsUserMenuOpen(false)}
+                          className="flex items-center justify-between px-2 py-1.5 rounded-lg text-[11px] font-semibold text-white/90 hover:text-white hover:bg-[#D6AE4D]/15 transition-all group"
+                        >
+                          <div className="flex items-center gap-2">
+                            <div className="w-5 h-5 rounded-md bg-[#D6AE4D]/10 border border-[#D6AE4D]/20 flex items-center justify-center text-[#D6AE4D] group-hover:bg-[#D6AE4D] group-hover:text-[#123524] transition-all">
+                              <Heart className="w-3 h-3 stroke-[2.5]" />
+                            </div>
+                            <span>Wishlist</span>
+                          </div>
+                          <div className="flex items-center gap-1.5">
+                            {wishlistItems?.length > 0 && (
+                              <span className="px-1.5 py-0.2 text-[9px] font-bold rounded-full bg-[#D6AE4D]/20 text-[#D6AE4D] border border-[#D6AE4D]/30">
+                                {wishlistItems.length}
+                              </span>
+                            )}
+                            <ChevronRight className="w-3 h-3 text-white/30 group-hover:text-[#D6AE4D] group-hover:translate-x-0.5 transition-all" />
+                          </div>
+                        </Link>
+
+                        {/* Item 5: Settings */}
+                        <Link
+                          to="/profile"
+                          onClick={() => setIsUserMenuOpen(false)}
+                          className="flex items-center justify-between px-2 py-1.5 rounded-lg text-[11px] font-semibold text-white/90 hover:text-white hover:bg-[#D6AE4D]/15 transition-all group"
+                        >
+                          <div className="flex items-center gap-2">
+                            <div className="w-5 h-5 rounded-md bg-[#D6AE4D]/10 border border-[#D6AE4D]/20 flex items-center justify-center text-[#D6AE4D] group-hover:bg-[#D6AE4D] group-hover:text-[#123524] transition-all">
+                              <Settings className="w-3 h-3 stroke-[2.5]" />
+                            </div>
+                            <span>Settings & Preferences</span>
+                          </div>
+                          <ChevronRight className="w-3 h-3 text-white/30 group-hover:text-[#D6AE4D] group-hover:translate-x-0.5 transition-all" />
+                        </Link>
+
+                        {/* Item 6: Admin Dashboard */}
+                        <Link
+                          to="/admin"
+                          onClick={() => setIsUserMenuOpen(false)}
+                          className="flex items-center justify-between px-2 py-1.5 rounded-lg text-[11px] font-semibold text-white/90 hover:text-white hover:bg-[#D6AE4D]/15 transition-all group"
+                        >
+                          <div className="flex items-center gap-2">
+                            <div className="w-5 h-5 rounded-md bg-[#D6AE4D]/10 border border-[#D6AE4D]/20 flex items-center justify-center text-[#D6AE4D] group-hover:bg-[#D6AE4D] group-hover:text-[#123524] transition-all">
+                              <ShieldCheck className="w-3 h-3 stroke-[2.5]" />
+                            </div>
+                            <span>Admin Dashboard</span>
+                          </div>
+                          <ChevronRight className="w-3 h-3 text-white/30 group-hover:text-[#D6AE4D] group-hover:translate-x-0.5 transition-all" />
+                        </Link>
+                      </div>
+
+                      {/* Divider */}
+                      <div className="h-[1px] bg-[#D6AE4D]/20 my-1" />
+
+                      {/* Action Footer */}
+                      {isAuthenticated || loggedUser ? (
+                        <button
+                          onClick={handleLogout}
+                          className="w-full flex items-center justify-between px-2 py-1.5 rounded-lg text-[11px] font-bold text-rose-300 hover:text-white hover:bg-rose-500/20 border border-rose-500/20 transition-all group"
+                        >
+                          <div className="flex items-center gap-2">
+                            <div className="w-5 h-5 rounded-md bg-rose-500/20 border border-rose-500/30 flex items-center justify-center text-rose-400 group-hover:bg-rose-500 group-hover:text-white transition-all">
+                              <LogOut className="w-3 h-3 stroke-[2.5]" />
+                            </div>
+                            <span>Sign Out / Logout</span>
+                          </div>
+                          <ChevronRight className="w-3 h-3 text-rose-400/50 group-hover:text-rose-200 group-hover:translate-x-0.5 transition-all" />
+                        </button>
+                      ) : (
+                        <Link
+                          to="/login"
+                          onClick={() => setIsUserMenuOpen(false)}
+                          className="w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-[11px] font-extrabold text-[#123524] bg-gradient-to-r from-[#D6AE4D] via-[#F3E5AB] to-[#B89035] hover:from-[#E5BC58] hover:via-[#FFF3C4] hover:to-[#C99D3B] shadow-sm transition-all group"
+                        >
+                          <div className="flex items-center gap-2">
+                            <LogIn className="w-3.5 h-3.5 text-[#123524]" />
+                            <span>Sign In / Register</span>
+                          </div>
+                          <ChevronRight className="w-3.5 h-3.5 text-[#123524] group-hover:translate-x-0.5 transition-all" />
+                        </Link>
+                      )}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
 
               {/* Mobile Toggle Button */}
               <button

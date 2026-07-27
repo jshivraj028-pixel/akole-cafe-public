@@ -18,7 +18,7 @@ const seatingAreas = [
     description: 'Open-air al-fresco dining surrounded by flowering jasmines, fairy lights, and cool mountain breezes.'
   },
   {
-    title: 'Private Mezzanine VIP',
+    title: 'Private Mezzanine Suite',
     image: 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=800&q=80',
     description: 'Exclusive elevated seating area dedicated to private celebrations, corporate dinners, and birthdays.'
   }

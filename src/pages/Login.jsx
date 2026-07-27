@@ -68,7 +68,7 @@ const Login = () => {
           </h1>
 
           <p className="text-xs xl:text-sm font-montserrat text-white/80 font-light leading-relaxed max-w-md">
-            Sign in to manage your VIP table reservations, earn gold loyalty points, and pre-order your favorite specialty brews.
+            Sign in to manage your table reservations, earn loyalty points, and pre-order your favorite specialty brews.
           </p>
 
           <div className="flex items-center gap-4 text-xs text-[#D6AE4D] pt-2">

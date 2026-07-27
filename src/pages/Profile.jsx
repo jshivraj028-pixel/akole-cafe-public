@@ -123,7 +123,7 @@ const Profile = () => {
     <>
       <PageBanner
         title="Member Profile & Loyalty"
-        subtitle="Manage Your VIP Rewards, Saved Favorites, & Order History"
+        subtitle="Manage Your Member Rewards, Saved Favorites, & Order History"
         bgImage="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1920&q=80"
       />
 
@@ -147,7 +147,7 @@ const Profile = () => {
                 <div className="space-y-1">
                   <div className="inline-flex items-center gap-1.5 px-3.5 py-0.5 rounded-full bg-[#D6AE4D]/20 text-[#D6AE4D] text-[11px] uppercase font-bold tracking-widest border border-[#D6AE4D]/40">
                     <Sparkles className="w-3.5 h-3.5" />
-                    <span>{currentUser?.role === 'admin' ? 'Cafe Administrator' : 'Gold VIP Tier Member'}</span>
+                    <span>{currentUser?.role === 'admin' ? 'Cafe Administrator' : 'Cafe Member'}</span>
                   </div>
 
                   <h2 className="font-serif text-3xl sm:text-4xl font-extrabold text-white">
@@ -168,10 +168,10 @@ const Profile = () => {
               <div className="flex flex-col sm:flex-row items-center gap-4 shrink-0">
                 <div className="p-5 rounded-2xl bg-[#0E291C]/90 border border-[#D6AE4D]/40 text-center sm:text-right shadow-inner">
                   <span className="text-[10px] uppercase tracking-[2px] text-white/70 block font-semibold">
-                    AVAILABLE VIP POINTS
+                    AVAILABLE REWARD POINTS
                   </span>
                   <span className="font-serif text-3xl font-extrabold text-[#D6AE4D] block my-0.5">
-                    500 Gold Points
+                    500 Points
                   </span>
                   <span className="text-[11px] text-[#D6AE4D]/90 block font-light">
                     Worth ₹250 discount on next order
@@ -301,7 +301,7 @@ const Profile = () => {
                   : 'bg-white/60 dark:bg-[#1D2C22] text-[#123524] dark:text-[#EAE3D2] hover:text-[#D6AE4D]'
               }`}
             >
-              <FiAward /> VIP Perks & Offers
+              <FiAward /> Member Perks & Offers
             </button>
           </div>
 
@@ -452,7 +452,7 @@ const Profile = () => {
                   <FiTag className="w-6 h-6" />
                 </div>
                 <h4 className="font-serif text-xl font-bold text-[#123524] dark:text-white">
-                  15% VIP Discount
+                  15% Member Discount
                 </h4>
                 <p className="text-xs text-[#6B7C70] dark:text-[#A0B0A5] font-light mt-2 mb-4">
                   Get 15% discount on all online orders above ₹500.

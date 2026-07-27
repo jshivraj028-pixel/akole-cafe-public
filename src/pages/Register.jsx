@@ -59,16 +59,16 @@ const Register = () => {
         >
           <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#D6AE4D]/15 border border-[#D6AE4D]/35 text-[#D6AE4D] text-[11px] uppercase font-bold tracking-[3px]">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>JOIN THE VIP AKOLE CLUB</span>
+            <span>JOIN THE AKOLE CLUB</span>
           </div>
 
           <h1 className="font-cormorant text-5xl xl:text-6xl font-normal leading-[1.08] text-white">
             Start Your Journey, <br />
-            <span className="italic font-light text-[#D6AE4D]">Unlock Exclusive VIP Rewards.</span>
+            <span className="italic font-light text-[#D6AE4D]">Unlock Exclusive Member Rewards.</span>
           </h1>
 
           <p className="text-xs xl:text-sm font-montserrat text-white/80 font-light leading-relaxed max-w-md">
-            Create an account to earn 500 Welcome Gold Loyalty Points, reserve priority tables, and enjoy exclusive artisanal coffee member perks.
+            Create an account to earn 500 Welcome Loyalty Points, reserve priority tables, and enjoy exclusive artisanal coffee member perks.
           </p>
 
           <div className="flex items-center gap-3 text-xs text-[#D6AE4D] pt-1">
@@ -107,7 +107,7 @@ const Register = () => {
         <div className="my-auto flex justify-center py-4">
           <AuthCard
             title="Create Account"
-            subtitle="Join the Akole Cafe VIP Club and earn welcome rewards."
+            subtitle="Join the Akole Cafe Member Club and earn welcome rewards."
           >
             <RegisterForm />
           </AuthCard>

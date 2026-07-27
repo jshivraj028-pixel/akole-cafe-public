@@ -325,8 +325,8 @@ const Admin = () => {
 
   const openDiscountModal = (user) => {
     setDiscountUser(user);
-    setDiscountCode('VIPDISCOUNT20');
-    setDiscountMsg(`Hi ${user.name}! Enjoy an exclusive 20% VIP discount on your next order.`);
+    setDiscountCode('SPECIAL20');
+    setDiscountMsg(`Hi ${user.name}! Enjoy an exclusive 20% discount on your next order.`);
     setIsDiscountModalOpen(true);
   };
 
@@ -336,7 +336,7 @@ const Admin = () => {
     try {
       await createNotificationAPI({
         userEmail: discountUser.email,
-        title: `🎁 Exclusive VIP Discount: ${discountCode}`,
+        title: `🎁 Special Member Discount: ${discountCode}`,
         message: discountMsg,
         type: 'custom_admin'
       });

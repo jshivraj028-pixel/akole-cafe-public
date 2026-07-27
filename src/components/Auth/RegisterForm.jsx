@@ -330,14 +330,15 @@ const RegisterForm = () => {
 
       {/* Terms Custom Checkbox */}
       <div className="pt-1">
-        <label
-          onClick={() => {
-            const newVal = !formData.agreeTerms;
-            handleChange({ target: { name: 'agreeTerms', value: newVal, type: 'checkbox', checked: newVal } });
-            handleBlur({ target: { name: 'agreeTerms', value: newVal, type: 'checkbox', checked: newVal } });
-          }}
-          className="flex items-center gap-2.5 cursor-pointer select-none text-[#6B7C70] dark:text-[#A0B0A5] hover:text-[#123524] dark:hover:text-white transition-colors group"
-        >
+        <label className="flex items-center gap-2.5 cursor-pointer select-none text-[#6B7C70] dark:text-[#A0B0A5] hover:text-[#123524] dark:hover:text-white transition-colors group">
+          <input
+            type="checkbox"
+            name="agreeTerms"
+            checked={formData.agreeTerms}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            className="sr-only"
+          />
           <div
             className={`w-5 h-5 rounded-md border-2 transition-all duration-200 flex items-center justify-center shrink-0 transform group-hover:scale-105 ${
               formData.agreeTerms

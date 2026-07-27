@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import PageBanner from '../components/common/PageBanner';
 import Container from '../components/common/Container';
 import MenuFilter from '../components/menu/MenuFilter';
@@ -7,11 +8,21 @@ import { fetchMenuItems } from '../services/api';
 import { menuItems as staticFallbackItems } from '../data/menu';
 
 const Menu = () => {
+  const [searchParams] = useSearchParams();
+  const initialSearch = searchParams.get('search') || '';
+
   const [activeCategory, setActiveCategory] = useState('all');
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState(initialSearch);
   const [sortBy, setSortBy] = useState('featured');
   const [items, setItems] = useState(staticFallbackItems);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const q = searchParams.get('search');
+    if (q !== null) {
+      setSearchQuery(q);
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     let isMounted = true;

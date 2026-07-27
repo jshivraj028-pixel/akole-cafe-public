@@ -372,7 +372,7 @@ const Cart = () => {
 
                     {discountAmount > 0 && (
                       <div className="flex justify-between text-emerald-400 font-semibold">
-                        <span>VIP Discount</span>
+                        <span>Promo Discount</span>
                         <span>- ₹{discountAmount}</span>
                       </div>
                     )}
