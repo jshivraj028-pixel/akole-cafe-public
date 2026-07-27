@@ -120,7 +120,7 @@ const Navbar = () => {
             <div className="flex items-baseline font-cormorant text-xl sm:text-3xl tracking-[-0.5px]">
               <span
                 className={`font-bold transition-colors ${
-                  isHome ? 'text-white' : 'text-[#354F42]'
+                  isHome ? 'text-white' : 'text-[#123524] dark:text-white'
                 }`}
               >
                 Akole

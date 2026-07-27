@@ -15,11 +15,35 @@ import kesariAmrakhandIceCreamImg from '../assets/kesari-amrakhand-ice-cream.png
 import rainbowUnicornIceCreamImg from '../assets/rainbow-unicorn-ice-cream.png';
 import goldenButterscotchCrunchImg from '../assets/golden-butterscotch-crunch.png';
 import classicVanillaBeanImg from '../assets/classic-vanilla-bean.png';
+import akolePremiumWaterImg from '../assets/akole-premium-water.png';
+import shahiRoyalFaloodaImg from '../assets/shahi-royal-falooda.png';
+import kulhadMasalaChaiImg from '../assets/kulhad-masala-chai.png';
+import specialIraniDumTeaImg from '../assets/special-irani-dum-tea.png';
+import spicedVillageMatthaImg from '../assets/spiced-village-mattha.png';
+import hotCappuccinoCoffeeImg from '../assets/hot-cappuccino-coffee.png';
+import coldCoffeeVanillaImg from '../assets/cold-coffee-vanilla.png';
+import thickChocolateFudgeShakeImg from '../assets/thick-chocolate-fudge-shake.png';
+import shahiGulabJamunImg from '../assets/shahi-gulab-jamun.png';
+import specialChickenDumBiryaniImg from '../assets/special-chicken-dum-biryani.png';
+import spicyRedSauceArrabbiataPastaImg from '../assets/spicy-red-sauce-arrabbiata-pasta.png';
+import vegHakkaNoodlesImg from '../assets/veg-hakka-noodles.png';
 
 export const getProductImage = (item) => {
   if (!item) return '';
   const name = (item.name || '').toLowerCase();
 
+  if (name.includes('hakka') || name.includes('noodles')) return vegHakkaNoodlesImg;
+  if (name.includes('pasta') || name.includes('arrabbiata')) return spicyRedSauceArrabbiataPastaImg;
+  if (name.includes('chicken') && name.includes('biryani')) return specialChickenDumBiryaniImg;
+  if (name.includes('gulab jamun')) return shahiGulabJamunImg;
+  if (name.includes('chocolate fudge') || name.includes('fudge shake')) return thickChocolateFudgeShakeImg;
+  if (name.includes('mattha') || name.includes('buttermilk')) return spicedVillageMatthaImg;
+  if (name.includes('cappuccino')) return hotCappuccinoCoffeeImg;
+  if (name.includes('cold coffee') || name.includes('vanilla ice cream')) return coldCoffeeVanillaImg;
+  if (name.includes('water') || name.includes('mineral water')) return akolePremiumWaterImg;
+  if (name.includes('falooda') || name.includes('royal falooda')) return shahiRoyalFaloodaImg;
+  if (name.includes('irani') || name.includes('dum tea')) return specialIraniDumTeaImg;
+  if (name.includes('kulhad') || name.includes('masala chai')) return kulhadMasalaChaiImg;
   if (name.includes('modak')) return ukadicheModakImg;
   if (name.includes('cotton candy')) return cottonCandyScoopImg;
   if (name.includes('caramel macchiato') || name.includes('macchiato')) return icedCaramelMacchiatoImg;
@@ -38,7 +62,11 @@ export const getProductImage = (item) => {
   if (name.includes('strawberry')) return rainbowUnicornIceCreamImg;
   if (name.includes('rainbow') || name.includes('unicorn')) return rainbowUnicornIceCreamImg;
   if (name.includes('butterscotch') || name.includes('golden butterscotch')) return goldenButterscotchCrunchImg;
-  if (name.includes('vanilla bean') || name.includes('classic vanilla')) return classicVanillaBeanImg;
+  if (name.includes('schezwan') || name.includes('fried rice')) return 'https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&w=800&q=80';
+  if (name.includes('manchurian')) return 'https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?auto=format&fit=crop&w=800&q=80';
+  if (name.includes('veg dum biryani') || name.includes('hyderabadi veg')) return 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=800&q=80';
+  if (name.includes('dal tadka') || name.includes('jeera rice')) return 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=800&q=80';
+  if (name.includes('paneer chilli') || name.includes('chilli fry')) return 'https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?auto=format&fit=crop&w=800&q=80';
 
   return item.image || item.imageUrl || '/images/hero-coffee.png';
 };

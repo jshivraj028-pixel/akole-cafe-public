@@ -63,6 +63,26 @@ export const menuCategories = [
 
 export const menuItems = [
   {
+    "id": "drk-water-bottle",
+    "name": "Akole Premium Mineral Water (500ml)",
+    "category": "akole-special",
+    "description": "Pure premium natural mineral water sourced from pristine natural springs, packaged in our custom eco-friendly Akole Café designer glass bottle.",
+    "price": 40,
+    "rating": 5,
+    "isVeg": true,
+    "isBestseller": true,
+    "isChefSpecial": true,
+    "spicyLevel": 0,
+    "prepTime": "1 min",
+    "image": "/assets/akole-premium-water.png",
+    "tags": [
+      "Mineral Water",
+      "Premium Bottle",
+      "Akole Branded",
+      "Bestseller"
+    ]
+  },
+  {
     "id": "mah-add-1",
     "name": "Authentic Zunka Bhakri Platter",
     "category": "traditional",
@@ -1289,7 +1309,7 @@ export const menuItems = [
     "isBestseller": true,
     "spicyLevel": 0,
     "prepTime": "5 mins",
-    "image": "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=800&q=80",
+    "image": "/assets/kulhad-masala-chai.png",
     "tags": [
       "Masala Chai"
     ]
@@ -1304,7 +1324,7 @@ export const menuItems = [
     "isVeg": true,
     "spicyLevel": 0,
     "prepTime": "5 mins",
-    "image": "https://images.unsplash.com/photo-1597481499750-3e6b22637e12?auto=format&fit=crop&w=800&q=80",
+    "image": "/assets/special-irani-dum-tea.png",
     "tags": [
       "Irani Chai"
     ]
@@ -1569,7 +1589,7 @@ export const menuItems = [
     "isBestseller": true,
     "spicyLevel": 0,
     "prepTime": "6 mins",
-    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80&sig=0.337055234154518",
+    "image": "/assets/shahi-royal-falooda.png",
     "tags": [
       "Royal Falooda"
     ]
