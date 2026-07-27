@@ -52,8 +52,9 @@ const LocationModal = ({ isOpen, onClose }) => {
               <div>
                 <h3 className="font-serif font-bold text-lg sm:text-xl text-white flex items-center gap-2">
                   <span>Akole Café Location</span>
-                  <span className="text-[10px] font-sans font-extrabold uppercase px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
-                    🟢 Open Now
+                  <span className="text-[10px] font-sans font-extrabold uppercase px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    <span>Open Now</span>
                   </span>
                 </h3>
                 <p className="text-xs text-[#D6AE4D] font-mono">Interactive Satellite & Map View</p>
@@ -93,6 +94,7 @@ const LocationModal = ({ isOpen, onClose }) => {
                       : 'text-white/70 hover:text-white'
                   }`}
                 >
+                  <Globe className="w-3.5 h-3.5 opacity-80" />
                   <span>Hybrid</span>
                 </button>
               </div>
@@ -149,14 +151,6 @@ const LocationModal = ({ isOpen, onClose }) => {
               referrerPolicy="no-referrer-when-downgrade"
               className="w-full h-full filter contrast-[1.05] brightness-[0.95]"
             />
-
-            {/* Map Overlay Badge */}
-            <div className="absolute top-3 left-3 bg-[#10291C]/90 border border-[#D6AE4D]/40 backdrop-blur-md px-3 py-1.5 rounded-xl shadow-lg flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-[#D6AE4D] animate-ping" />
-              <span className="text-xs font-bold text-white font-mono">
-                {mapType === 'k' ? '🛰️ Satellite View' : mapType === 'm' ? '🗺️ Roadmap View' : '🌐 Hybrid Earth View'}
-              </span>
-            </div>
           </div>
 
           {/* Modal Footer & Info Bar */}

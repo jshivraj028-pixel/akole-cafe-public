@@ -794,11 +794,11 @@ const Admin = () => {
                               'bg-red-500/20 text-red-300 border-red-500/40'
                             }`}
                           >
-                            <option value="Pending" className="bg-primary text-secondary">Pending ⏳</option>
-                            <option value="Confirmed" className="bg-primary text-secondary">Confirmed 👍</option>
-                            <option value="Out for Delivery" className="bg-primary text-secondary">Out for Delivery 🛵</option>
-                            <option value="Delivered" className="bg-primary text-secondary">Delivered ✅</option>
-                            <option value="Cancelled" className="bg-primary text-secondary">Cancelled ❌</option>
+                            <option value="Pending" className="bg-primary text-secondary">Pending</option>
+                            <option value="Confirmed" className="bg-primary text-secondary">Confirmed</option>
+                            <option value="Out for Delivery" className="bg-primary text-secondary">Out for Delivery</option>
+                            <option value="Delivered" className="bg-primary text-secondary">Delivered</option>
+                            <option value="Cancelled" className="bg-primary text-secondary">Cancelled</option>
                           </select>
                         </td>
                       </tr>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { FiShoppingBag, FiStar } from 'react-icons/fi';
+import { Leaf } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import { useTheme } from '../../context/ThemeContext';
 
@@ -39,7 +40,7 @@ const MenuCard = ({ item }) => {
 
         {/* Green Leaf Badge (Top Right) */}
         <div className="absolute top-3 right-3 w-6 h-6 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-sm">
-          <span className="text-[11px] leading-none">🍃</span>
+          <Leaf className="w-3.5 h-3.5 text-emerald-600 fill-emerald-600/20 stroke-[2.2]" />
         </div>
       </div>
 
