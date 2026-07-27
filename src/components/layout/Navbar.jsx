@@ -7,6 +7,7 @@ import { useCart } from '../../context/CartContext';
 import { useTheme } from '../../context/ThemeContext';
 import MobileMenu from './MobileMenu';
 import LocationModal from './LocationModal';
+import CartDrawer from './CartDrawer';
 import logoEmblem from '../../assets/logo-emblem.png';
 import { fetchNotificationsAPI, markNotificationReadAPI } from '../../services/api';
 
@@ -25,6 +26,7 @@ const Navbar = () => {
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
+  const [isCartDrawerOpen, setIsCartDrawerOpen] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -231,22 +233,22 @@ const Navbar = () => {
                 <MapPin className="w-5 h-5 stroke-[2]" />
               </button>
 
-              {/* 4. Shopping Cart Icon */}
-              <Link
-                to="/cart"
+              {/* 4. Shopping Cart Icon & Slide-Over Cart Drawer Trigger */}
+              <button
+                onClick={() => setIsCartDrawerOpen(true)}
                 className={`p-1.5 transition-colors relative ${
                   isHome ? 'text-white hover:text-[#D6AE4D]' : 'text-[#354F42] hover:text-[#D6AE4D]'
                 }`}
-                title="Shopping Cart"
+                title="Shopping Cart & Quick Order"
                 aria-label="Shopping Cart"
               >
                 <ShoppingCart className="w-5 h-5 stroke-[2]" />
                 {totalItemsCount > 0 && (
-                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-[#D6AE4D] text-[#123524] font-extrabold text-[9px] rounded-full flex items-center justify-center shadow-md">
+                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-[#D6AE4D] text-[#123524] font-extrabold text-[9px] rounded-full flex items-center justify-center shadow-md animate-pulse">
                     {totalItemsCount}
                   </span>
                 )}
-              </Link>
+              </button>
 
               {/* 5. Theme Mode Toggle (Sun/Moon) */}
               <button
@@ -482,6 +484,12 @@ const Navbar = () => {
       <LocationModal
         isOpen={isLocationModalOpen}
         onClose={() => setIsLocationModalOpen(false)}
+      />
+
+      {/* Right Slide-Over Cart Drawer */}
+      <CartDrawer
+        isOpen={isCartDrawerOpen}
+        onClose={() => setIsCartDrawerOpen(false)}
       />
     </>
   );
