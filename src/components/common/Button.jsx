@@ -17,7 +17,7 @@ const Button = ({
   const baseStyles = "relative inline-flex items-center justify-center font-medium tracking-wider transition-all duration-300 rounded-xl overflow-hidden focus:outline-none cursor-pointer";
   
   const variants = {
-    gold: "bg-gold-gradient text-primary font-semibold shadow-gold hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]",
+    gold: "bg-gradient-to-r from-[#D6AE4D] via-[#F3E5AB] to-[#B89035] text-[#0C1A12] font-black shadow-gold hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] border border-[#FFF5D6]",
     primary: "bg-primary text-secondary border border-accent-gold/30 hover:bg-primary-light hover:border-accent-gold shadow-luxury hover:scale-[1.02]",
     outline: "border-2 border-accent-gold text-accent-gold hover:bg-accent-gold hover:text-primary transition-colors",
     ghost: "text-secondary hover:text-accent-gold hover:bg-white/5",
