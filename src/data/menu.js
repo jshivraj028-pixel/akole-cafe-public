@@ -3819,5 +3819,20 @@ export const menuItems = [
     prepTime: '3 mins',
     image: goldenButterscotchCrunchImg,
     tags: ['Butterscotch Crunch', 'Caramel Praline']
+  },
+  {
+    id: 'prem-ic-2',
+    name: 'Royal Shahi Dry Fruit Sundae',
+    category: 'ice-creams',
+    description: 'Regal sundae with royal kulfi & saffron gelato scoops, loaded with roasted almonds, cashews, pistachios, silver varq & honey.',
+    price: 180,
+    rating: 5.0,
+    isVeg: true,
+    isBestseller: true,
+    isChefSpecial: true,
+    spicyLevel: 0,
+    prepTime: '5 mins',
+    image: kesariAmrakhandIceCreamImg,
+    tags: ['Royal Sundae', 'Shahi Dry Fruit']
   }
 ];
