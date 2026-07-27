@@ -471,7 +471,8 @@ const Navbar = () => {
               </button>
             </div>
           </div>
-        </header>
+        </div>
+      </header>
 
       {/* Mobile Menu */}
       <MobileMenu
