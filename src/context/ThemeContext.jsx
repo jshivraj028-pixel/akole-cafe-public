@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import MenuItemDetailModal from '../components/menu/MenuItemDetailModal';
 
 const ThemeContext = createContext();
 
@@ -115,6 +116,16 @@ export const ThemeProvider = ({ children }) => {
     return wishlistItems.some((item) => item.id === productId);
   };
 
+  const [selectedMenuItem, setSelectedMenuItem] = useState(null);
+
+  const openQuickView = (product) => {
+    setSelectedMenuItem(product);
+  };
+
+  const closeQuickView = () => {
+    setSelectedMenuItem(null);
+  };
+
   return (
     <ThemeContext.Provider
       value={{
@@ -134,9 +145,17 @@ export const ThemeProvider = ({ children }) => {
         setIsSearchOpen,
         isCartOpen,
         setIsCartOpen,
+        selectedMenuItem,
+        openQuickView,
+        closeQuickView,
       }}
     >
       {children}
+      <MenuItemDetailModal
+        product={selectedMenuItem}
+        isOpen={!!selectedMenuItem}
+        onClose={closeQuickView}
+      />
     </ThemeContext.Provider>
   );
 };

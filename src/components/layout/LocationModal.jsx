@@ -8,7 +8,7 @@ const LocationModal = ({ isOpen, onClose }) => {
   const [copied, setCopied] = useState(false);
   const { showToast } = useTheme();
 
-  const cafeAddress = "Akole Café, Main Road, Near Bus Stand, Akole, District Ahmednagar, Maharashtra 422601";
+  const cafeAddress = "Akole Bypass Road, Near Bus Stand, Akole, Maharashtra 422601";
   const mapsSearchQuery = "Akole,Maharashtra,India";
 
   // Google Maps Embed URL based on view mode (t=k for Satellite, t=m for Map, t=h for Hybrid)
@@ -181,7 +181,7 @@ const LocationModal = ({ isOpen, onClose }) => {
                 </div>
                 <div className="flex items-center gap-2 text-white/80">
                   <Phone className="w-4 h-4 text-[#D6AE4D]" />
-                  <span>+91 98765 43210</span>
+                  <a href="tel:+918432387670" className="hover:text-[#D6AE4D] transition-colors">+91 84323 87670</a>
                 </div>
               </div>
             </div>

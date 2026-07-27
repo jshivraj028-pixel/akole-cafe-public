@@ -1,14 +1,14 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FiCoffee } from 'react-icons/fi';
 import Container from '../common/Container';
 import botanicalPattern from '../../assets/botanical-banner.png';
+import logoEmblem from '../../assets/logo-emblem.png';
 
 const CoffeeExperience = () => {
   return (
-    <div className="w-full bg-[#F5EFE3]">
+    <div className="w-full bg-[#351E13]">
       {/* 1. Ultra-HD Vintage Botanical Coffee Cherry Banner Strip (Proper Height & Seamless Framing) */}
-      <div className="w-full h-52 sm:h-64 md:h-72 lg:h-80 relative overflow-hidden bg-[#F5EFE3] border-t border-b border-[#E5DDD0]">
+      <div className="w-full h-52 sm:h-64 md:h-72 lg:h-80 relative overflow-hidden bg-[#F5EFE3] border-t border-[#E5DDD0]">
         <div
           className="w-full h-full bg-repeat-x bg-cover bg-center transition-all duration-300"
           style={{ backgroundImage: `url(${botanicalPattern})` }}
@@ -27,9 +27,9 @@ const CoffeeExperience = () => {
             transition={{ duration: 0.7 }}
             className="space-y-4 flex flex-col items-center"
           >
-            {/* Minimalist Coffee Icon */}
-            <div className="text-[#C8A96A] text-3xl mb-1 flex items-center justify-center">
-              <FiCoffee className="w-8 h-8 stroke-[1.5]" />
+            {/* Akole Cafe Logo Emblem */}
+            <div className="w-12 h-12 mb-1 flex items-center justify-center">
+              <img src={logoEmblem} alt="Akole Cafe Emblem Logo" className="w-full h-full object-contain drop-shadow-md" />
             </div>
 
             {/* Main Title: Brewing Connections, Serving Memories. */}

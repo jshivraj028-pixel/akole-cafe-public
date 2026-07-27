@@ -7,7 +7,15 @@ import { useTheme } from '../../context/ThemeContext';
 
 const ProductCard = ({ product, onQuickView }) => {
   const { addToCart } = useCart();
-  const { showToast } = useTheme();
+  const { showToast, openQuickView } = useTheme();
+
+  const handleCardClick = () => {
+    if (onQuickView) {
+      onQuickView(product);
+    } else if (openQuickView) {
+      openQuickView(product);
+    }
+  };
 
   const handleAddToCart = (e) => {
     e.stopPropagation();
@@ -19,7 +27,7 @@ const ProductCard = ({ product, onQuickView }) => {
     <motion.div
       whileHover={{ y: -5 }}
       transition={{ duration: 0.25 }}
-      onClick={() => onQuickView && onQuickView(product)}
+      onClick={handleCardClick}
       className="group relative rounded-2xl bg-white border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden flex flex-col justify-between cursor-pointer"
     >
       {/* Product Image */}
@@ -30,23 +38,48 @@ const ProductCard = ({ product, onQuickView }) => {
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />
 
-        {/* Bestseller Badge (Top Left) */}
-        {(product.isBestseller || product.tag === 'BESTSELLER') && (
-          <div className="absolute top-3 left-3">
-            <span className="text-[9px] font-extrabold tracking-widest px-2.5 py-1 rounded-md bg-[#D4B055] text-white uppercase shadow-sm">
+        {/* Badges Overlay (Top Left & Right) */}
+        <div className="absolute top-3 left-3 flex flex-col gap-1 items-start z-10">
+          {(product.isBestseller || product.tag === 'BESTSELLER') && (
+            <span className="text-[9px] font-extrabold tracking-widest px-2.5 py-0.5 rounded-md bg-[#D6AE4D] text-[#123524] uppercase shadow-sm">
               BESTSELLER
             </span>
-          </div>
-        )}
+          )}
+          {product.isChefSpecial && (
+            <span className="text-[9px] font-extrabold tracking-widest px-2.5 py-0.5 rounded-md bg-[#123524] text-[#D6AE4D] border border-[#D6AE4D]/40 uppercase shadow-sm">
+              CHEF SPECIAL
+            </span>
+          )}
+        </div>
+
+        {/* Veg / Non-Veg Indicator (Top Right) */}
+        <div className="absolute top-3 right-3 z-10">
+          {product.isVeg === false ? (
+            <div className="w-5 h-5 rounded-md bg-white/90 border-2 border-red-600 flex items-center justify-center p-0.5 shadow-md" title="Non-Vegetarian">
+              <div className="w-2.5 h-2.5 bg-red-600 rounded-full" />
+            </div>
+          ) : (
+            <div className="w-5 h-5 rounded-md bg-white/90 border-2 border-emerald-600 flex items-center justify-center p-0.5 shadow-md" title="100% Pure Vegetarian">
+              <div className="w-2.5 h-2.5 bg-emerald-600 rounded-full" />
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Content */}
       <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
         <div>
-          <h3 className="font-serif text-base font-medium text-[#2F4436] group-hover:text-[#C8A96A] transition-colors line-clamp-1">
-            {product.name}
-          </h3>
-          <p className="text-[11px] text-gray-500 line-clamp-2 mt-1 font-light leading-relaxed">
+          <div className="flex items-center justify-between gap-2">
+            <h3 className="font-serif text-base font-bold text-[#123524] dark:text-white group-hover:text-[#D6AE4D] transition-colors line-clamp-1">
+              {product.name}
+            </h3>
+            {product.spicyLevel > 0 && (
+              <span className="text-xs shrink-0" title={`Spicy Level: ${product.spicyLevel}/3`}>
+                {'🌶️'.repeat(product.spicyLevel)}
+              </span>
+            )}
+          </div>
+          <p className="text-[11px] text-[#6B7C70] dark:text-[#A0B0A5] line-clamp-2 mt-1 font-light leading-relaxed">
             {product.description}
           </p>
         </div>

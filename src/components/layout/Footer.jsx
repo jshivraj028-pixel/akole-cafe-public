@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FiInstagram, FiFacebook, FiTwitter, FiMapPin, FiPhone, FiMail, FiClock } from 'react-icons/fi';
+import { FaWhatsapp } from 'react-icons/fa';
 import Container from '../common/Container';
 import Button from '../common/Button';
 import logoEmblem from '../../assets/logo-emblem.png';
@@ -35,9 +36,10 @@ const Footer = () => {
             {/* Social Icons */}
             <div className="flex items-center gap-3 pt-2">
               {[
-                { icon: FiInstagram, href: 'https://instagram.com', label: 'Instagram' },
-                { icon: FiFacebook, href: 'https://facebook.com', label: 'Facebook' },
-                { icon: FiTwitter, href: 'https://twitter.com', label: 'Twitter' },
+                { icon: FiInstagram, href: 'https://instagram.com/akolecafe', label: 'Instagram' },
+                { icon: FiFacebook, href: 'https://facebook.com/akolecafe', label: 'Facebook' },
+                { icon: FiTwitter, href: 'https://twitter.com/akolecafe', label: 'Twitter' },
+                { icon: FaWhatsapp, href: 'https://wa.me/918432387670?text=Hello%20Akole%20Cafe%2C%20I%20would%20like%20to%20make%20an%20inquiry', label: 'WhatsApp' },
               ].map((s, idx) => (
                 <a
                   key={idx}
@@ -45,7 +47,7 @@ const Footer = () => {
                   target="_blank"
                   rel="noreferrer"
                   aria-label={s.label}
-                  className="w-8 h-8 rounded-full bg-white/10 text-[#C8A96A] flex items-center justify-center hover:bg-[#C8A96A] hover:text-[#1B3828] transition-all duration-300"
+                  className="w-8 h-8 rounded-full bg-white/10 text-[#C8A96A] flex items-center justify-center hover:bg-[#C8A96A] hover:text-[#1B3828] transition-all duration-300 transform hover:scale-110"
                 >
                   <s.icon className="w-4 h-4" />
                 </a>
@@ -90,12 +92,12 @@ const Footer = () => {
 
               <div className="flex items-center gap-2.5">
                 <FiPhone className="w-4 h-4 text-[#C8A96A] shrink-0" />
-                <p>+91 98765 43210</p>
+                <a href="tel:+918432387670" className="hover:text-[#C8A96A] transition-colors">+91 84323 87670</a>
               </div>
 
               <div className="flex items-center gap-2.5">
                 <FiMail className="w-4 h-4 text-[#C8A96A] shrink-0" />
-                <p>hello@akolecafe.com</p>
+                <a href="mailto:akolecafe@gmail.com" className="hover:text-[#C8A96A] transition-colors">akolecafe@gmail.com</a>
               </div>
 
               <div className="flex items-start gap-2.5 pt-1">

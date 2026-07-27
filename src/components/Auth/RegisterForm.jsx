@@ -50,8 +50,9 @@ const RegisterForm = () => {
     }
 
     if (name === 'phone') {
-      if (!value.trim()) error = 'Phone number is required';
-      else if (!/^[0-9+\s-]{10,14}$/.test(value.trim())) error = 'Please enter a valid 10-digit phone number';
+      if (value && value.trim() && !/^[0-9+\s-]{10,14}$/.test(value.trim())) {
+        error = 'Please enter a valid 10-digit phone number';
+      }
     }
 
     if (name === 'password') {
@@ -106,7 +107,6 @@ const RegisterForm = () => {
     setTouched({
       fullName: true,
       email: true,
-      phone: true,
       password: true,
       confirmPassword: true,
       agreeTerms: true
@@ -215,10 +215,10 @@ const RegisterForm = () => {
         )}
       </div>
 
-      {/* Phone Number Input */}
+      {/* Phone Number Input (Optional) */}
       <div>
         <label className="block text-[11px] uppercase tracking-widest font-semibold text-[#123524] dark:text-[#EAE3D2] mb-1">
-          Phone Number <span className="text-red-500">*</span>
+          Phone Number <span className="text-gray-400 font-normal lowercase tracking-normal text-[10px]">(optional)</span>
         </label>
         <div className="relative">
           <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#D6AE4D]" />

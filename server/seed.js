@@ -15,7 +15,7 @@ const seedDatabase = async () => {
 
     console.log('🌱 Starting database seeding process...');
 
-    // Clear existing products and re-seed with isActive flag
+    // Clear existing products and re-seed with full fields
     await Product.deleteMany({});
     console.log('🧹 Existing products cleared.');
 
@@ -25,9 +25,12 @@ const seedDatabase = async () => {
       description: item.description,
       price: item.price,
       rating: item.rating || 4.8,
+      isVeg: item.isVeg !== undefined ? item.isVeg : true,
+      spicyLevel: item.spicyLevel !== undefined ? item.spicyLevel : 0,
+      isBestseller: Boolean(item.isBestseller),
+      isChefSpecial: Boolean(item.isChefSpecial),
       image: item.image,
       tags: item.tags || [],
-      isBestseller: item.isBestseller || false,
       isActive: true,
       prepTime: item.prepTime || '10 mins',
       calories: item.calories || '200 kcal'
@@ -48,10 +51,9 @@ const seedDatabase = async () => {
       email: adminEmail,
       password: hashedPassword,
       role: 'admin',
-      phone: '+91 98765 43210'
+      isVerified: true
     });
-    console.log('✅ Main Admin Account Ready: akolecafe@gmail.com / Akolecafe2007');
-    console.log('🧹 All test dummy users cleared from database.');
+    console.log(`✅ Main Admin Account Ready: ${adminEmail} / Akolecafe2007`);
 
     // Clear test dummy orders
     await Order.deleteMany({});

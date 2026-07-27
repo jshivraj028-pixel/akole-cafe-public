@@ -145,7 +145,7 @@ const EventCard = ({ event }) => {
             }}
             className="px-7 py-2.5 rounded-full bg-[#351E13] dark:bg-[#D6AE4D] hover:bg-[#4A2C1D] dark:hover:bg-[#c59d3c] text-white dark:text-[#123524] font-bold text-xs uppercase tracking-wider shadow-sm transition-all"
           >
-            REGISTER VIP PASS
+            REGISTER PASS
           </button>
         </div>
       </motion.div>
@@ -183,7 +183,7 @@ const EventCard = ({ event }) => {
                     <div className="absolute top-2 right-2 opacity-20 text-7xl font-bold">AKOLE</div>
                     <div className="flex items-center justify-between mb-2">
                       <span className="px-3 py-0.5 rounded-full bg-white/20 text-[10px] font-bold uppercase tracking-widest border border-white/40">
-                        OFFICIAL VIP EVENT PASS
+                        OFFICIAL EVENT PASS
                       </span>
                       <span className="font-mono text-xs font-bold text-amber-200">{passId}</span>
                     </div>
@@ -211,7 +211,7 @@ const EventCard = ({ event }) => {
 
                     <div className="flex items-center justify-between border-b border-white/15 pb-2">
                       <span className="text-white/60 uppercase tracking-wider">Reserved Passes</span>
-                      <span className="font-extrabold text-amber-400 text-sm">{guestCount} VIP Seats</span>
+                      <span className="font-extrabold text-amber-400 text-sm">{guestCount} Reserved Seats</span>
                     </div>
 
                     <div className="flex items-center justify-between border-b border-white/15 pb-2">
@@ -231,7 +231,7 @@ const EventCard = ({ event }) => {
                   <div className="flex items-center justify-center gap-3 p-4 rounded-xl bg-white/10 dark:bg-black/20 border border-[#D6AE4D]/20 text-center">
                     <FiGrid className="w-10 h-10 text-[#D6AE4D]" />
                     <div className="text-left">
-                      <div className="text-xs font-bold font-mono tracking-widest text-[#1F3A2B] dark:text-white">VERIFIED VIP ENTRY PASS</div>
+                      <div className="text-xs font-bold font-mono tracking-widest text-[#1F3A2B] dark:text-white">VERIFIED ENTRY PASS</div>
                       <div className="text-[10px] text-[#6B7C70] dark:text-[#A0B0A5]">Akole Cafe Entrance • Single Scan Verified</div>
                     </div>
                   </div>
@@ -258,7 +258,7 @@ const EventCard = ({ event }) => {
                 <form onSubmit={handleRSVP} className="space-y-4 text-xs">
                   <div className="text-center mb-4">
                     <span className="text-xs uppercase tracking-widest text-[#C8A96A] block font-semibold mb-1">
-                      VIP EVENT RESERVATION
+                      EVENT RESERVATION
                     </span>
                     <h3 className="font-serif text-xl font-bold text-[#1F3A2B] dark:text-white">{event.title}</h3>
                     <p className="text-xs text-[#6B7C70] dark:text-[#A0B0A5] mt-1">{event.date} • {event.time}</p>
@@ -300,7 +300,7 @@ const EventCard = ({ event }) => {
                       <input
                         type="tel"
                         required
-                        placeholder="+91 98765 43210"
+                        placeholder="+91 84323 87670"
                         value={guestPhone}
                         onChange={(e) => setGuestPhone(e.target.value)}
                         className="w-full bg-[#F5EFE3] dark:bg-[#16231B] border border-[#E5DDD0] dark:border-[#D6AE4D]/30 rounded-xl py-2.5 px-4 text-xs text-[#1F3A2B] dark:text-[#EAE3D2] focus:outline-none focus:border-[#C8A96A]"
@@ -318,10 +318,10 @@ const EventCard = ({ event }) => {
                         onChange={(e) => setGuestCount(Number(e.target.value))}
                         className="w-full bg-[#F5EFE3] dark:bg-[#16231B] border border-[#E5DDD0] dark:border-[#D6AE4D]/30 rounded-xl py-2.5 px-4 text-xs text-[#1F3A2B] dark:text-[#EAE3D2] focus:outline-none focus:border-[#C8A96A]"
                       >
-                        <option value="1">1 VIP Pass</option>
-                        <option value="2">2 VIP Passes</option>
-                        <option value="4">4 VIP Passes</option>
-                        <option value="6">6 VIP Passes</option>
+                        <option value="1">1 Pass</option>
+                        <option value="2">2 Passes</option>
+                        <option value="4">4 Passes</option>
+                        <option value="6">6 Passes</option>
                       </select>
                     </div>
 
@@ -345,7 +345,7 @@ const EventCard = ({ event }) => {
                     type="submit"
                     className="w-full py-3 rounded-full bg-[#351E13] dark:bg-[#D6AE4D] hover:bg-[#4A2C1D] dark:hover:bg-[#c59d3c] text-white dark:text-[#123524] font-bold text-xs uppercase tracking-wider shadow-md transition-all mt-3"
                   >
-                    Confirm & Generate VIP Pass Receipt
+                    Confirm & Generate Event Pass
                   </button>
                 </form>
               )}

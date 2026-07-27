@@ -98,65 +98,125 @@
   background: linear-gradient(135deg, #D6AE4D 0%, #E5C989 50%, #B89035 100%);
 }
 
-/* Glassmorphism Styles */
+/* Luxury Glassmorphism Design System */
 .glass-panel {
-  background: rgba(68, 86, 72, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(214, 174, 77, 0.25);
+  background: rgba(18, 53, 36, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(214, 174, 77, 0.3);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
 }
 
 .glass-card {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(214, 174, 77, 0.25);
+  box-shadow: 0 10px 30px -10px rgba(18, 53, 36, 0.15);
+  transition: all 0.3s ease;
 }
 
-/* Global Dark Mode Luxury Overrides */
+.glass-card:hover {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(214, 174, 77, 0.6);
+  box-shadow: 0 14px 40px -10px rgba(214, 174, 77, 0.25);
+}
+
+.glass-dark {
+  background: rgba(18, 26, 21, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(214, 174, 77, 0.35);
+  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.4);
+}
+
+.glass-gold {
+  background: linear-gradient(135deg, rgba(214, 174, 77, 0.15) 0%, rgba(18, 53, 36, 0.85) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(214, 174, 77, 0.4);
+}
+
+/* Global Dark Mode Luxury Overrides & High-Contrast Readability */
 html.dark body {
   background-color: #121A15 !important;
-  color: #E8E2D5 !important;
+  color: #EAE3D2 !important;
 }
 
 html.dark header {
   background-color: #18261E !important;
-  border-color: #26382C !important;
+  border-color: rgba(214, 174, 77, 0.25) !important;
 }
 
 html.dark section,
+html.dark main,
 html.dark div.bg-\[\#F5EFE3\],
-html.dark div.bg-\[\#FAF6EE\] {
-  background-color: #141F18 !important;
+html.dark div.bg-\[\#FAF6EE\],
+html.dark div.bg-gray-50 {
+  background-color: #121A15 !important;
 }
 
-html.dark .text-\[\#1F3A2B\] {
+/* Text Color Fixes for Dark Mode */
+html.dark h1, 
+html.dark h2, 
+html.dark h3, 
+html.dark h4, 
+html.dark h5, 
+html.dark h6 {
+  color: #FFFFFF !important;
+}
+
+html.dark .text-\[\#123524\],
+html.dark .text-\[\#1F3A2B\],
+html.dark .text-\[\#2F4436\],
+html.dark .text-\[\#351E13\],
+html.dark .text-gray-900,
+html.dark .text-gray-800,
+html.dark .text-gray-700 {
   color: #EAE3D2 !important;
 }
 
+html.dark .text-\[\#6B7C70\],
+html.dark .text-\[\#8B9B90\],
 html.dark .text-\[\#4A5D50\],
-html.dark .text-\[\#6B7C70\] {
-  color: #B2C4B7 !important;
+html.dark .text-gray-600,
+html.dark .text-gray-500 {
+  color: #A0B0A5 !important;
 }
 
+/* Card & Background Fixes for Dark Mode */
 html.dark .bg-white,
 html.dark .bg-white\/80,
+html.dark .bg-white\/90,
+html.dark .bg-gray-50,
+html.dark .bg-gray-100,
 html.dark .bg-\[\#FAF6EE\],
+html.dark .bg-\[\#F5EFE3\],
 html.dark .bg-\[\#EFE8D8\] {
   background-color: #1D2C22 !important;
   border-color: rgba(214, 174, 77, 0.3) !important;
   color: #EAE3D2 !important;
 }
 
+/* Border Fixes for Dark Mode */
+html.dark .border-gray-100,
+html.dark .border-gray-200,
+html.dark .border-gray-300,
+html.dark .border-\[\#E5DDD0\] {
+  border-color: rgba(214, 174, 77, 0.25) !important;
+}
+
+/* Form Input & Textarea Fixes for Dark Mode */
 html.dark input,
 html.dark select,
 html.dark textarea {
   background-color: #16231B !important;
-  color: #EAE3D2 !important;
-  border-color: rgba(214, 174, 77, 0.35) !important;
+  color: #FFFFFF !important;
+  border-color: rgba(214, 174, 77, 0.4) !important;
 }
 
-html.dark ::placeholder {
+html.dark input::placeholder,
+html.dark textarea::placeholder {
   color: #7A8E81 !important;
 }
 

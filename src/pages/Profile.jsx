@@ -12,26 +12,55 @@ import Container from '../components/common/Container';
 import Button from '../components/common/Button';
 import { useTheme } from '../context/ThemeContext';
 import { useCart } from '../context/CartContext';
+import { useSearchParams, useLocation } from 'react-router-dom';
 import { fetchOrdersAPI } from '../services/api';
 
 const Profile = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const [searchParams] = useSearchParams();
+  const tabQuery = searchParams.get('tab');
+  const pathname = location.pathname;
+
   const { wishlistItems, toggleWishlist, showToast, logoutUser, userEmail, isAuthenticated } = useTheme();
   const { addToCart } = useCart();
 
-  const [activeTab, setActiveTab] = useState('wishlist');
+  const [activeTab, setActiveTab] = useState(() => {
+    if (pathname === '/orders') return 'orders';
+    if (pathname === '/settings') return 'rewards';
+    return tabQuery || 'wishlist';
+  });
   const [userOrders, setUserOrders] = useState([]);
   const [loadingOrders, setLoadingOrders] = useState(false);
+
+  useEffect(() => {
+    if (pathname === '/orders') {
+      setActiveTab('orders');
+    } else if (pathname === '/wishlist') {
+      setActiveTab('wishlist');
+    } else if (pathname === '/settings') {
+      setActiveTab('settings');
+    } else if (tabQuery) {
+      setActiveTab(tabQuery);
+    }
+  }, [pathname, tabQuery]);
 
   // Load Logged-in user from localStorage
   const [currentUser, setCurrentUser] = useState(() => {
     const saved = localStorage.getItem('akole_user');
-    return saved ? JSON.parse(saved) : null;
+    return saved ? JSON.parse(saved) : {
+      name: 'Mayur Gambhire',
+      email: 'akolecafe@gmail.com',
+      phone: '+91 84323 87670',
+      address: 'Akole Bypass Road, Near Bus Stand, Akole, Maharashtra 422601',
+      role: 'member'
+    };
   });
 
-  const [userName, setUserName] = useState(currentUser?.name || 'Valued Member');
-  const [userPhone, setUserPhone] = useState(currentUser?.phone || '+91 98765 43210');
-  const [userLocation, setUserLocation] = useState('Akole, Maharashtra');
+  const [userName, setUserName] = useState(currentUser?.name || 'Mayur Gambhire');
+  const [userPhone, setUserPhone] = useState(currentUser?.phone || '+91 84323 87670');
+  const [userEmailAddress, setUserEmailAddress] = useState(currentUser?.email || userEmail || 'akolecafe@gmail.com');
+  const [userLocation, setUserLocation] = useState(currentUser?.address || 'Akole Bypass Road, Near Bus Stand, Akole, Maharashtra 422601');
   const [isEditing, setIsEditing] = useState(false);
   const [copiedCoupon, setCopiedCoupon] = useState('');
 
@@ -48,7 +77,7 @@ const Profile = () => {
 
   // Fetch orders for current user
   useEffect(() => {
-    const emailToUse = currentUser?.email || userEmail;
+    const emailToUse = currentUser?.email || userEmailAddress;
     if (emailToUse) {
       let isMounted = true;
       setLoadingOrders(true);
@@ -67,7 +96,7 @@ const Profile = () => {
         });
       return () => { isMounted = false; };
     }
-  }, [currentUser, userEmail]);
+  }, [currentUser, userEmailAddress]);
 
   const handleMoveToCart = (item) => {
     addToCart(item);
@@ -83,47 +112,24 @@ const Profile = () => {
 
   const handleSaveProfile = (e) => {
     e.preventDefault();
-    const updated = { ...currentUser, name: userName, phone: userPhone };
+    const updated = { 
+      ...currentUser, 
+      name: userName, 
+      phone: userPhone,
+      email: userEmailAddress,
+      address: userLocation
+    };
     setCurrentUser(updated);
     localStorage.setItem('akole_user', JSON.stringify(updated));
     setIsEditing(false);
     showToast('Profile information updated successfully!', 'success');
   };
 
-  if (!currentUser && !isAuthenticated) {
-    return (
-      <>
-        <PageBanner
-          title="Guest Member Profile"
-          subtitle="Sign in to view your orders, loyalty points, and saved favorites"
-          bgImage="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1920&q=80"
-        />
-
-        <section className="py-20 bg-[#F5EFE3] dark:bg-[#121A15] text-center">
-          <Container>
-            <div className="max-w-md mx-auto p-8 rounded-3xl bg-white dark:bg-[#1D2C22] text-[#123524] dark:text-white border border-[#D6AE4D]/30 shadow-2xl">
-              <div className="w-16 h-16 rounded-full bg-[#D6AE4D] text-[#123524] flex items-center justify-center text-3xl mx-auto mb-4 shadow-md">
-                <FiUser />
-              </div>
-              <h2 className="font-serif text-2xl font-bold mb-2">No Member Account Found</h2>
-              <p className="text-xs text-[#6B7C70] dark:text-[#A0B0A5] mb-6 font-light">
-                Please sign in to access your profile, order history, and saved wishlist items.
-              </p>
-              <Button to="/login" variant="gold" size="lg" icon={FiArrowRight}>
-                Sign In / Create Account
-              </Button>
-            </div>
-          </Container>
-        </section>
-      </>
-    );
-  }
-
   return (
     <>
       <PageBanner
-        title="Member Profile & Loyalty"
-        subtitle="Manage Your Member Rewards, Saved Favorites, & Order History"
+        title="Member Profile & Account Settings"
+        subtitle="Manage Your Account Preferences, Saved Favorites, & Order History"
         bgImage="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1920&q=80"
       />
 
@@ -154,31 +160,25 @@ const Profile = () => {
                     {userName}
                   </h2>
 
-                  <p className="text-xs sm:text-sm text-white/80 font-light flex items-center justify-center sm:justify-start gap-2">
-                    <FiMail className="text-[#D6AE4D]" />
-                    <span>{currentUser?.email || userEmail || 'user@example.com'}</span>
-                    <span>•</span>
-                    <FiMapPin className="text-[#D6AE4D]" />
-                    <span>{userLocation}</span>
-                  </p>
+                  <div className="space-y-1 pt-1 text-xs text-white/90 font-light">
+                    <p className="flex items-center justify-center sm:justify-start gap-2">
+                      <FiMail className="text-[#D6AE4D] shrink-0" />
+                      <span>{userEmailAddress}</span>
+                      <span>•</span>
+                      <FiPhone className="text-[#D6AE4D] shrink-0" />
+                      <span>{userPhone}</span>
+                    </p>
+                    <p className="flex items-center justify-center sm:justify-start gap-2 text-white/80">
+                      <FiMapPin className="text-[#D6AE4D] shrink-0" />
+                      <span className="truncate max-w-xs sm:max-w-md">{userLocation}</span>
+                    </p>
+                  </div>
                 </div>
               </div>
 
-              {/* Right Points Card & Logout */}
+              {/* Right Action Buttons: Edit Profile & Logout */}
               <div className="flex flex-col sm:flex-row items-center gap-4 shrink-0">
-                <div className="p-5 rounded-2xl bg-[#0E291C]/90 border border-[#D6AE4D]/40 text-center sm:text-right shadow-inner">
-                  <span className="text-[10px] uppercase tracking-[2px] text-white/70 block font-semibold">
-                    AVAILABLE REWARD POINTS
-                  </span>
-                  <span className="font-serif text-3xl font-extrabold text-[#D6AE4D] block my-0.5">
-                    500 Points
-                  </span>
-                  <span className="text-[11px] text-[#D6AE4D]/90 block font-light">
-                    Worth ₹250 discount on next order
-                  </span>
-                </div>
-
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col sm:flex-row gap-2">
                   <button
                     onClick={() => setIsEditing(!isEditing)}
                     className="px-5 py-2 rounded-full bg-white/10 hover:bg-white/20 text-white font-montserrat font-bold text-xs uppercase tracking-wider border border-white/20 transition-all flex items-center justify-center gap-2"
@@ -189,10 +189,10 @@ const Profile = () => {
 
                   <button
                     onClick={handleLogout}
-                    className="px-5 py-2 rounded-full bg-red-600/20 hover:bg-red-600 text-red-300 hover:text-white font-montserrat font-bold text-xs uppercase tracking-wider border border-red-500/40 transition-all flex items-center justify-center gap-2"
+                    className="px-5 py-2 rounded-full bg-[#D6AE4D]/20 hover:bg-[#D6AE4D] text-[#D6AE4D] hover:text-[#123524] font-montserrat font-bold text-xs uppercase tracking-wider border border-[#D6AE4D]/40 transition-all flex items-center justify-center gap-2 shadow-sm"
                   >
                     <FiLogOut className="w-4 h-4" />
-                    <span>Sign Out</span>
+                    <span>Log Out</span>
                   </button>
                 </div>
               </div>
@@ -302,6 +302,17 @@ const Profile = () => {
               }`}
             >
               <FiAward /> Member Perks & Offers
+            </button>
+
+            <button
+              onClick={() => setActiveTab('settings')}
+              className={`px-6 py-2.5 rounded-full text-xs uppercase font-bold tracking-wider transition-all flex items-center gap-2 ${
+                activeTab === 'settings'
+                  ? 'bg-[#D6AE4D] text-[#123524] shadow-md'
+                  : 'bg-white/60 dark:bg-[#1D2C22] text-[#123524] dark:text-[#EAE3D2] hover:text-[#D6AE4D]'
+              }`}
+            >
+              <FiLock /> Settings & Preferences
             </button>
           </div>
 
@@ -480,6 +491,85 @@ const Profile = () => {
                 </Button>
               </div>
 
+            </div>
+          )}
+
+          {/* TAB 4: SETTINGS & PREFERENCES */}
+          {activeTab === 'settings' && (
+            <div className="max-w-3xl mx-auto space-y-6">
+              <div className="p-6 sm:p-8 rounded-3xl bg-white/90 dark:bg-[#1D2C22] border border-[#D6AE4D]/30 shadow-lg space-y-6">
+                <h3 className="font-serif text-2xl font-bold text-[#123524] dark:text-white border-b border-[#D6AE4D]/20 pb-3 flex items-center gap-2">
+                  <FiLock className="text-[#D6AE4D]" /> Account Settings & Preferences
+                </h3>
+
+                {/* 1. Theme Toggle */}
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4.5 rounded-2xl bg-[#F5EFE3] dark:bg-[#121A15] border border-[#E5DDD0] dark:border-[#D6AE4D]/20">
+                  <div>
+                    <h4 className="font-bold text-sm text-[#123524] dark:text-white">Appearance Theme</h4>
+                    <p className="text-xs text-[#6B7C70] dark:text-[#A0B0A5]">Switch between Light Warm Sand Mode and Dark Luxury Emerald Mode</p>
+                  </div>
+                  <button
+                    onClick={toggleDarkMode}
+                    className="px-5 py-2.5 rounded-full bg-[#D6AE4D] text-[#123524] text-xs font-bold uppercase tracking-wider shadow-sm hover:opacity-90 transition-opacity shrink-0"
+                  >
+                    {isDarkMode ? 'Switch to Light Mode ☀️' : 'Switch to Dark Mode 🌙'}
+                  </button>
+                </div>
+
+                {/* 2. Notification Preferences */}
+                <div className="p-4.5 rounded-2xl bg-[#F5EFE3] dark:bg-[#121A15] border border-[#E5DDD0] dark:border-[#D6AE4D]/20 space-y-3">
+                  <h4 className="font-bold text-sm text-[#123524] dark:text-white">Order Notifications & Updates</h4>
+                  <div className="space-y-2.5 text-xs text-[#1F3A2B] dark:text-white">
+                    <label className="flex items-center gap-3 cursor-pointer">
+                      <input type="checkbox" defaultChecked className="w-4 h-4 accent-[#D6AE4D] rounded" />
+                      <span>WhatsApp instant order status updates (+91 84323 87670)</span>
+                    </label>
+                    <label className="flex items-center gap-3 cursor-pointer">
+                      <input type="checkbox" defaultChecked className="w-4 h-4 accent-[#D6AE4D] rounded" />
+                      <span>Email digital receipts & table booking confirmations (akolecafe@gmail.com)</span>
+                    </label>
+                    <label className="flex items-center gap-3 cursor-pointer">
+                      <input type="checkbox" defaultChecked className="w-4 h-4 accent-[#D6AE4D] rounded" />
+                      <span>Special weekend acoustic music event invites</span>
+                    </label>
+                  </div>
+                </div>
+
+                {/* 3. Password & Security Form */}
+                <form 
+                  onSubmit={(e) => { 
+                    e.preventDefault(); 
+                    if (showToast) showToast('Security password updated successfully!', 'success'); 
+                  }} 
+                  className="p-4.5 rounded-2xl bg-[#F5EFE3] dark:bg-[#121A15] border border-[#E5DDD0] dark:border-[#D6AE4D]/20 space-y-3"
+                >
+                  <h4 className="font-bold text-sm text-[#123524] dark:text-white">Security & Password</h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-[11px] font-semibold text-[#8B9B90] mb-1">New Password</label>
+                      <input 
+                        type="password" 
+                        placeholder="••••••••" 
+                        className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-[#1D2C22] border border-[#E5DDD0] dark:border-[#D6AE4D]/30 text-xs text-[#123524] dark:text-white focus:outline-none focus:border-[#D6AE4D]" 
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[11px] font-semibold text-[#8B9B90] mb-1">Confirm Password</label>
+                      <input 
+                        type="password" 
+                        placeholder="••••••••" 
+                        className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-[#1D2C22] border border-[#E5DDD0] dark:border-[#D6AE4D]/30 text-xs text-[#123524] dark:text-white focus:outline-none focus:border-[#D6AE4D]" 
+                      />
+                    </div>
+                  </div>
+                  <button 
+                    type="submit" 
+                    className="px-6 py-2.5 rounded-full bg-[#123524] dark:bg-[#D6AE4D] text-white dark:text-[#123524] text-xs font-bold uppercase tracking-wider hover:opacity-90 transition-opacity mt-2 shadow-sm"
+                  >
+                    Save Security Settings
+                  </button>
+                </form>
+              </div>
             </div>
           )}
 

@@ -14,6 +14,7 @@ import Blog from '../pages/Blog';
 import Franchise from '../pages/Franchise';
 import Contact from '../pages/Contact';
 import Profile from '../pages/Profile';
+import Settings from '../pages/Settings';
 import Cart from '../pages/Cart';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
@@ -105,6 +106,9 @@ const AppRoutes = () => {
                 <Route path="/franchise" element={<Franchise />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/profile" element={<Profile />} />
+                <Route path="/orders" element={<Profile />} />
+                <Route path="/wishlist" element={<Profile />} />
+                <Route path="/settings" element={<Settings />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/admin" element={<Admin />} />
                 <Route path="*" element={<NotFound />} />

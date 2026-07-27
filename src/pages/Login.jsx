@@ -30,7 +30,7 @@ const Login = () => {
           transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
           className="absolute bottom-16 right-10 opacity-15 pointer-events-none z-0"
         >
-          <Coffee className="w-56 h-56 text-[#D6AE4D] stroke-[1]" />
+          <img src={logoEmblem} alt="Akole Cafe Emblem" className="w-56 h-56 object-contain opacity-25 drop-shadow-xl" />
         </motion.div>
 
         {/* 1. Top Left: Brand Logo & Title */}
@@ -72,11 +72,6 @@ const Login = () => {
           </p>
 
           <div className="flex items-center gap-4 text-xs text-[#D6AE4D] pt-2">
-            <div className="flex items-center gap-1.5 font-semibold">
-              <Award className="w-4 h-4 text-[#D6AE4D]" />
-              <span>500 Welcome Points</span>
-            </div>
-            <span>•</span>
             <div className="flex items-center gap-1.5 font-semibold">
               <Coffee className="w-4 h-4 text-[#D6AE4D]" />
               <span>Priority Table Access</span>

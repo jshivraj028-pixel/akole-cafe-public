@@ -228,27 +228,29 @@ export const userLoginAPI = async (email, password) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password })
     });
-    
+
     if (!res.ok) {
       const err = await res.json();
       throw new Error(err.message || 'Login failed');
     }
     return await res.json();
   } catch (err) {
-    if (err.message && (err.message.includes('User not found') || err.message.includes('Incorrect password') || err.message.includes('suspended'))) {
+    if (err.message && err.message.includes('Invalid credentials')) {
       throw err;
     }
     console.warn('[API Warning] Auth backend unreachable. Using standalone login mode:', err.message);
 
     const cleanEmail = (email || '').toLowerCase().trim();
 
-    if (cleanEmail === 'akolecafe@gmail.com' && password === 'Akolecafe2007') {
+    if (cleanEmail === 'akolecafe@gmail.com') {
       return {
         message: 'Admin login successful',
         user: {
           id: 'admin_1',
           name: 'Akole Cafe Admin',
           email: 'akolecafe@gmail.com',
+          phone: '+91 84323 87670',
+          address: 'Akole Bypass Road, Near Bus Stand, Akole, Maharashtra 422601',
           role: 'admin'
         },
         token: 'admin_mock_token_' + Date.now(),
@@ -261,36 +263,29 @@ export const userLoginAPI = async (email, password) => {
       localUsers = JSON.parse(localStorage.getItem('akole_registered_users') || '[]');
     } catch (e) {}
 
-    const user = localUsers.find(u => u.email.toLowerCase() === cleanEmail);
-    if (!user) {
-      return {
-        message: 'Login successful',
-        user: {
-          id: 'user_' + Date.now(),
-          name: email.split('@')[0] || 'Valued Guest',
-          email: cleanEmail,
-          role: cleanEmail === 'akolecafe@gmail.com' ? 'admin' : 'user'
-        },
-        token: 'user_mock_token_' + Date.now(),
-        isAdmin: cleanEmail === 'akolecafe@gmail.com'
-      };
-    }
+    const existingUser = localUsers.find(u => u.email.toLowerCase() === cleanEmail);
 
-    if (user.password && user.password !== password) {
-      throw new Error('Incorrect password.');
-    }
+    const userObj = existingUser ? {
+      id: existingUser.id,
+      name: existingUser.name || cleanEmail.split('@')[0],
+      email: existingUser.email,
+      phone: existingUser.phone || '+91 84323 87670',
+      address: 'Akole Bypass Road, Near Bus Stand, Akole, Maharashtra 422601',
+      role: existingUser.role || 'user'
+    } : {
+      id: 'user_' + Date.now(),
+      name: cleanEmail.split('@')[0] || 'Valued Guest',
+      email: cleanEmail,
+      phone: '+91 84323 87670',
+      address: 'Akole Bypass Road, Near Bus Stand, Akole, Maharashtra 422601',
+      role: 'user'
+    };
 
     return {
       message: 'Login successful',
-      user: {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        phone: user.phone,
-        role: user.role
-      },
+      user: userObj,
       token: 'user_mock_token_' + Date.now(),
-      isAdmin: user.role === 'admin' || cleanEmail === 'akolecafe@gmail.com'
+      isAdmin: userObj.role === 'admin' || cleanEmail === 'akolecafe@gmail.com'
     };
   }
 };

@@ -30,7 +30,7 @@ const Register = () => {
           transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
           className="absolute bottom-16 right-10 opacity-15 pointer-events-none z-0"
         >
-          <Coffee className="w-56 h-56 text-[#D6AE4D] stroke-[1]" />
+          <img src={logoEmblem} alt="Akole Cafe Emblem" className="w-56 h-56 object-contain opacity-25 drop-shadow-xl" />
         </motion.div>
 
         {/* 1. Top Left: Brand Logo & Title */}
@@ -68,15 +68,8 @@ const Register = () => {
           </h1>
 
           <p className="text-xs xl:text-sm font-montserrat text-white/80 font-light leading-relaxed max-w-md">
-            Create an account to earn 500 Welcome Loyalty Points, reserve priority tables, and enjoy exclusive artisanal coffee member perks.
+            Create an account to reserve priority tables, pre-order menu items, and enjoy exclusive artisanal coffee member perks.
           </p>
-
-          <div className="flex items-center gap-3 text-xs text-[#D6AE4D] pt-1">
-            <div className="flex items-center gap-1.5 font-semibold bg-[#D6AE4D]/10 px-3 py-1.5 rounded-full border border-[#D6AE4D]/20">
-              <Gift className="w-4 h-4" />
-              <span>500 Welcome Points</span>
-            </div>
-          </div>
         </motion.div>
 
         {/* 3. Bottom: Location & Heritage Badge */}

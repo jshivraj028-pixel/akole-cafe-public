@@ -111,7 +111,10 @@ const MobileMenu = ({ isOpen, onClose, links }) => {
                   <FiMapPin className="text-[#D4B055]" /> Akole Bypass Road, Akole 422601
                 </p>
                 <p className="flex items-center gap-2">
-                  <FiPhone className="text-[#D4B055]" /> +91 98765 43210
+                  <FiPhone className="text-[#D4B055]" /> <a href="tel:+918432387670" className="hover:text-[#D4B055] transition-colors">+91 84323 87670</a>
+                </p>
+                <p className="flex items-center gap-2">
+                  <FiMail className="text-[#D4B055]" /> <a href="mailto:akolecafe@gmail.com" className="hover:text-[#D4B055] transition-colors">akolecafe@gmail.com</a>
                 </p>
               </div>
             </div>

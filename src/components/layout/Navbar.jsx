@@ -311,7 +311,7 @@ const Navbar = () => {
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-1 text-[8px] uppercase font-extrabold tracking-wider text-[#D6AE4D]">
                             <Sparkles className="w-2.5 h-2.5 text-[#D6AE4D]" />
-                            <span>Gold Member</span>
+                            <span>Akole Member</span>
                           </div>
                           <p className="font-serif font-bold text-xs text-white truncate">
                             {loggedUser?.name || userEmail || 'Guest Explorer'}
@@ -338,7 +338,7 @@ const Navbar = () => {
 
                         {/* Item 2: My Orders */}
                         <Link
-                          to="/profile"
+                          to="/orders"
                           onClick={() => setIsUserMenuOpen(false)}
                           className="flex items-center justify-between px-2 py-1.5 rounded-lg text-[11px] font-semibold text-white/90 hover:text-white hover:bg-[#D6AE4D]/15 transition-all group"
                         >
@@ -373,7 +373,7 @@ const Navbar = () => {
 
                         {/* Item 4: Wishlist */}
                         <Link
-                          to="/profile"
+                          to="/wishlist"
                           onClick={() => setIsUserMenuOpen(false)}
                           className="flex items-center justify-between px-2 py-1.5 rounded-lg text-[11px] font-semibold text-white/90 hover:text-white hover:bg-[#D6AE4D]/15 transition-all group"
                         >
@@ -395,7 +395,7 @@ const Navbar = () => {
 
                         {/* Item 5: Settings */}
                         <Link
-                          to="/profile"
+                          to="/settings"
                           onClick={() => setIsUserMenuOpen(false)}
                           className="flex items-center justify-between px-2 py-1.5 rounded-lg text-[11px] font-semibold text-white/90 hover:text-white hover:bg-[#D6AE4D]/15 transition-all group"
                         >
@@ -408,20 +408,22 @@ const Navbar = () => {
                           <ChevronRight className="w-3 h-3 text-white/30 group-hover:text-[#D6AE4D] group-hover:translate-x-0.5 transition-all" />
                         </Link>
 
-                        {/* Item 6: Admin Dashboard */}
-                        <Link
-                          to="/admin"
-                          onClick={() => setIsUserMenuOpen(false)}
-                          className="flex items-center justify-between px-2 py-1.5 rounded-lg text-[11px] font-semibold text-white/90 hover:text-white hover:bg-[#D6AE4D]/15 transition-all group"
-                        >
-                          <div className="flex items-center gap-2">
-                            <div className="w-5 h-5 rounded-md bg-[#D6AE4D]/10 border border-[#D6AE4D]/20 flex items-center justify-center text-[#D6AE4D] group-hover:bg-[#D6AE4D] group-hover:text-[#123524] transition-all">
-                              <ShieldCheck className="w-3 h-3 stroke-[2.5]" />
+                        {/* Item 6: Admin Dashboard (Only visible for Admin accounts) */}
+                        {(loggedUser?.role === 'admin' || loggedUser?.email === 'akolecafe@gmail.com' || userEmail === 'akolecafe@gmail.com') && (
+                          <Link
+                            to="/admin"
+                            onClick={() => setIsUserMenuOpen(false)}
+                            className="flex items-center justify-between px-2 py-1.5 rounded-lg text-[11px] font-semibold text-amber-300 hover:text-white hover:bg-[#D6AE4D]/15 transition-all group"
+                          >
+                            <div className="flex items-center gap-2">
+                              <div className="w-5 h-5 rounded-md bg-[#D6AE4D]/10 border border-[#D6AE4D]/20 flex items-center justify-center text-[#D6AE4D] group-hover:bg-[#D6AE4D] group-hover:text-[#123524] transition-all">
+                                <ShieldCheck className="w-3 h-3 stroke-[2.5]" />
+                              </div>
+                              <span>Admin Dashboard</span>
                             </div>
-                            <span>Admin Dashboard</span>
-                          </div>
-                          <ChevronRight className="w-3 h-3 text-white/30 group-hover:text-[#D6AE4D] group-hover:translate-x-0.5 transition-all" />
-                        </Link>
+                            <ChevronRight className="w-3 h-3 text-white/30 group-hover:text-[#D6AE4D] group-hover:translate-x-0.5 transition-all" />
+                          </Link>
+                        )}
                       </div>
 
                       {/* Divider */}
@@ -431,15 +433,15 @@ const Navbar = () => {
                       {isAuthenticated || loggedUser ? (
                         <button
                           onClick={handleLogout}
-                          className="w-full flex items-center justify-between px-2 py-1.5 rounded-lg text-[11px] font-bold text-rose-300 hover:text-white hover:bg-rose-500/20 border border-rose-500/20 transition-all group"
+                          className="w-full flex items-center justify-between px-2.5 py-2 rounded-lg text-[11px] font-extrabold text-[#D6AE4D] hover:text-[#123524] bg-[#D6AE4D]/10 hover:bg-gradient-to-r hover:from-[#D6AE4D] hover:via-[#F3E5AB] hover:to-[#B89035] border border-[#D6AE4D]/40 shadow-sm transition-all group"
                         >
                           <div className="flex items-center gap-2">
-                            <div className="w-5 h-5 rounded-md bg-rose-500/20 border border-rose-500/30 flex items-center justify-center text-rose-400 group-hover:bg-rose-500 group-hover:text-white transition-all">
+                            <div className="w-5 h-5 rounded-md bg-[#D6AE4D]/20 border border-[#D6AE4D]/30 flex items-center justify-center text-[#D6AE4D] group-hover:bg-[#123524] group-hover:text-[#D6AE4D] transition-all">
                               <LogOut className="w-3 h-3 stroke-[2.5]" />
                             </div>
-                            <span>Sign Out / Logout</span>
+                            <span className="uppercase tracking-wider">Log Out</span>
                           </div>
-                          <ChevronRight className="w-3 h-3 text-rose-400/50 group-hover:text-rose-200 group-hover:translate-x-0.5 transition-all" />
+                          <ChevronRight className="w-3.5 h-3.5 text-[#D6AE4D] group-hover:text-[#123524] group-hover:translate-x-0.5 transition-all" />
                         </button>
                       ) : (
                         <Link
