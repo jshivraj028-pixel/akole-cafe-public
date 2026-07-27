@@ -1,11 +1,26 @@
 import express from 'express';
+import bcrypt from 'bcryptjs';
 import User from '../models/User.js';
 
 const router = express.Router();
 
-// GET all registered users (Admin view)
+// GET all registered users from single shared MongoDB Atlas database (Admin view)
 router.get('/', async (req, res) => {
   try {
+    // Ensure Main Admin Account exists in MongoDB Atlas
+    let admin = await User.findOne({ email: 'akolecafe@gmail.com' });
+    if (!admin) {
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash('Akolecafe2007', salt);
+      await User.create({
+        name: 'Akole Cafe Admin',
+        email: 'akolecafe@gmail.com',
+        password: hashedPassword,
+        role: 'admin',
+        phone: '+91 98765 43210'
+      });
+    }
+
     const users = await User.find({}).select('-password').sort({ createdAt: -1 });
     res.json(users);
   } catch (error) {
