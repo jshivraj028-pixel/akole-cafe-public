@@ -56,7 +56,7 @@ const SearchModal = ({ isOpen, onClose }) => {
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-start justify-center pt-24 px-4">
+      <div className="fixed inset-0 z-50 flex items-start justify-center pt-16 sm:pt-24 px-3 sm:px-4">
         {/* Dark Blurred Backdrop */}
         <motion.div
           initial={{ opacity: 0 }}

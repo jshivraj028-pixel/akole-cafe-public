@@ -36,11 +36,11 @@ const ForgotPassword = () => {
         {/* 1. Top Left: Brand Logo & Title */}
         <div className="relative z-10">
           <Link to="/" className="inline-flex items-center gap-3 group">
-            <div className="w-11 h-11 rounded-full overflow-hidden bg-[#123524] shadow-md flex items-center justify-center">
+            <div className="w-11 h-11 flex items-center justify-center">
               <img
                 src={logoEmblem}
                 alt="Akole Café Emblem Logo"
-                className="w-full h-full object-cover rounded-full transform group-hover:scale-105 transition-transform"
+                className="w-full h-full object-contain drop-shadow-md transform group-hover:scale-105 transition-transform"
               />
             </div>
             <div className="flex items-baseline font-cormorant text-3xl tracking-[-0.5px]">

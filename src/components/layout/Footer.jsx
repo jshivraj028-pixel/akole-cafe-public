@@ -14,11 +14,11 @@ const Footer = () => {
           {/* Col 1: Brand Info */}
           <div className="space-y-4">
             <Link to="/" className="flex items-center gap-2.5 group">
-              <div className="w-9 h-9 rounded-full overflow-hidden shrink-0 flex items-center justify-center">
+              <div className="w-10 h-10 shrink-0 flex items-center justify-center">
                 <img
                   src={logoEmblem}
                   alt="Akole Café Logo"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain drop-shadow-sm"
                 />
               </div>
               <div className="flex items-baseline gap-1">

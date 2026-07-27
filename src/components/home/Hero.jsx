@@ -32,7 +32,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="lg:col-span-7 xl:col-span-7 space-y-6 text-left lg:-ml-6 xl:-ml-12 2xl:-ml-16"
+            className="lg:col-span-7 xl:col-span-7 space-y-6 text-left"
           >
             {/* Small Gold Uppercase Subtitle */}
             <div>

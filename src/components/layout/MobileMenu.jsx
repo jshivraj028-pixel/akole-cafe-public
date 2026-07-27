@@ -32,11 +32,11 @@ const MobileMenu = ({ isOpen, onClose, links }) => {
               {/* Header */}
               <div className="flex items-center justify-between pb-5 border-b border-[#456455]">
                 <div className="flex items-center gap-2">
-                  <div className="w-9 h-9 shrink-0 rounded-full overflow-hidden flex items-center justify-center">
+                  <div className="w-10 h-10 shrink-0 flex items-center justify-center">
                     <img
                       src={logoEmblem}
                       alt="Akole Café Logo"
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-contain drop-shadow-sm"
                     />
                   </div>
                   <div className="flex items-baseline gap-1">

@@ -36,11 +36,11 @@ const Login = () => {
         {/* 1. Top Left: Brand Logo & Title */}
         <div className="relative z-10">
           <Link to="/" className="inline-flex items-center gap-3 group">
-            <div className="w-11 h-11 rounded-full overflow-hidden bg-[#0D2818] shadow-md border border-[#D6AE4D]/40 flex items-center justify-center">
+            <div className="w-11 h-11 flex items-center justify-center">
               <img
                 src={logoEmblem}
                 alt="Akole Café Emblem Logo"
-                className="w-full h-full object-cover rounded-full transform group-hover:scale-105 transition-transform"
+                className="w-full h-full object-contain drop-shadow-md transform group-hover:scale-105 transition-transform"
               />
             </div>
             <div className="flex items-baseline font-cormorant text-3xl tracking-[-0.5px]">
@@ -98,8 +98,8 @@ const Login = () => {
         {/* Top Mobile Header (Logo Only on Mobile) */}
         <div className="flex lg:hidden items-center mb-4 z-10">
           <Link to="/" className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-full overflow-hidden">
-              <img src={logoEmblem} alt="Logo" className="w-full h-full object-cover rounded-full" />
+            <div className="w-9 h-9 flex items-center justify-center">
+              <img src={logoEmblem} alt="Logo" className="w-full h-full object-contain" />
             </div>
             <div className="flex items-baseline font-cormorant text-2xl">
               <span className="font-bold text-[#123524] dark:text-white">Akole</span>

@@ -108,11 +108,11 @@ const Navbar = () => {
           
           {/* Logo: Circular Emblem Image + Cormorant Garamond Typography */}
           <Link to="/" className="flex items-center gap-3 group shrink-0">
-            <div className="w-10 h-10 sm:w-11 sm:h-11 shrink-0 rounded-full overflow-hidden flex items-center justify-center bg-transparent">
+            <div className="w-11 h-11 sm:w-12 sm:h-12 shrink-0 flex items-center justify-center bg-transparent">
               <img
                 src={logoEmblem}
                 alt="Akole Café Emblem Logo"
-                className="w-full h-full object-cover transform group-hover:scale-105 transition-transform rounded-full"
+                className="w-full h-full object-contain drop-shadow-md transform group-hover:scale-105 transition-transform duration-300"
               />
             </div>
 
@@ -131,10 +131,10 @@ const Navbar = () => {
             </div>
           </Link>
 
-          {/* Navigation Links + Action Icons Grouped with Balanced Spacing */}
-          <div className="flex items-center gap-6 xl:gap-10">
-            {/* Desktop Navigation Links with generous left spacing from Logo */}
-            <nav className="hidden lg:flex items-center gap-6 xl:gap-9 ml-6 lg:ml-12 xl:ml-16">
+          {/* Navigation Links + Action Icons Grouped with Compact Balanced Spacing */}
+          <div className="flex items-center gap-4 xl:gap-6 ml-auto justify-end">
+            {/* Desktop Navigation Links */}
+            <nav className="hidden lg:flex items-center gap-4 xl:gap-6 ml-auto">
               {navLinks.map((link) => {
                 const isActive = pathname === link.path;
                 return (
@@ -163,7 +163,7 @@ const Navbar = () => {
             </nav>
 
             {/* Right Action Icons & Gold Rounded ORDER NOW Button */}
-            <div className="flex items-center gap-3.5 sm:gap-4 shrink-0">
+            <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
               {/* 1. Gold Rounded ORDER NOW Button with Shopping Bag Icon */}
               <Link
                 to="/menu"

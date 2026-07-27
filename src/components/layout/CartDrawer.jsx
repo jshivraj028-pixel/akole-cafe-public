@@ -52,13 +52,13 @@ const CartDrawer = ({ isOpen, onClose }) => {
           />
 
           {/* Right Slide-Over Panel */}
-          <div className="fixed inset-y-0 right-0 max-w-full flex pl-6">
+          <div className="fixed inset-y-0 right-0 max-w-full flex pl-0 sm:pl-4">
             <motion.div
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', stiffness: 350, damping: 32 }}
-              className="w-screen max-w-xs sm:max-w-sm bg-[#10291C] border-l border-[#D6AE4D]/35 shadow-2xl text-white flex flex-col justify-between overflow-hidden"
+              className="w-full max-w-full sm:max-w-md bg-[#10291C] border-l border-[#D6AE4D]/35 shadow-2xl text-white flex flex-col justify-between overflow-hidden"
             >
               {/* Drawer Top Header */}
               <div className="px-3.5 py-3 bg-gradient-to-r from-[#183B2A] to-[#10291C] border-b border-[#D6AE4D]/25 flex items-center justify-between shrink-0">
