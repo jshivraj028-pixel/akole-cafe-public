@@ -28,7 +28,7 @@ const teamMembers = [
   {
     initials: 'MG',
     name: 'Mayur Gambhire',
-    role: 'Co-Founder & Managing Director',
+    role: 'Founder & Managing Director',
     socialLink: 'https://instagram.com/mayurgambhire4565'
   },
   {
@@ -40,7 +40,7 @@ const teamMembers = [
   {
     initials: 'RK',
     name: 'Rohan Kulkarni',
-    role: 'Founder & Head Barista Roaster',
+    role: 'Head Barista & Master Roaster',
     socialLink: 'https://instagram.com'
   },
   {
