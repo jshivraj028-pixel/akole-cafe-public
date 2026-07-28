@@ -1,12 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FiInstagram, FiFacebook, FiTwitter, FiMapPin, FiPhone, FiMail, FiClock } from 'react-icons/fi';
+import { FiInstagram, FiFacebook, FiTwitter, FiMapPin, FiPhone, FiMail, FiClock, FiCheckCircle } from 'react-icons/fi';
 import { FaWhatsapp } from 'react-icons/fa';
 import { Sparkles } from 'lucide-react';
 import Container from '../common/Container';
 import logoEmblem from '../../assets/logo-emblem.png';
+import { useTheme } from '../../context/ThemeContext';
 
 const Footer = () => {
+  const [vipEmail, setVipEmail] = useState('');
+  const [subscribed, setSubscribed] = useState(false);
+  const { showToast } = useTheme();
+
+  const handleVipSubmit = (e) => {
+    e.preventDefault();
+    if (!vipEmail.trim()) return;
+    setSubscribed(true);
+    if (showToast) {
+      showToast('🎉 Welcome to Akole VIP Club! Exclusive invitation sent to your email.', 'success');
+    }
+    setVipEmail('');
+  };
   return (
     <footer className="bg-[#0F1712] text-white border-t border-[#D6AE4D]/35 pt-20 pb-8 relative overflow-hidden transition-colors duration-300">
       
@@ -120,21 +134,30 @@ const Footer = () => {
             <p className="text-xs text-white/70 mb-5 font-light leading-relaxed">
               Subscribe to receive exclusive invitations to coffee cuppings and special offers.
             </p>
-            <form onSubmit={(e) => e.preventDefault()} className="space-y-2.5">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                required
-                className="w-full bg-white/5 border border-white/10 focus:border-[#D6AE4D]/60 rounded-full py-2.5 px-5 text-xs text-white placeholder-white/40 focus:outline-none transition-all"
-              />
-              <button 
-                type="submit" 
-                className="w-full rounded-full bg-gradient-to-r from-[#C8A96A] via-[#E8CE8E] to-[#B08E48] text-[#123524] font-extrabold text-xs py-3 uppercase tracking-[2px] shadow-lg shadow-[#C8A96A]/25 hover:brightness-105 active:scale-95 transition-all flex items-center justify-center gap-2 border border-[#F0D89E]/60 cursor-pointer"
-              >
-                <Sparkles className="w-4 h-4 text-[#123524] stroke-[2.2]" /> 
-                <span className="font-extrabold text-[#123524]">JOIN VIP CLUB</span>
-              </button>
-            </form>
+            {subscribed ? (
+              <div className="p-4 rounded-2xl bg-[#123524] border-2 border-[#D6AE4D] text-[#D6AE4D] text-xs font-extrabold flex items-center justify-center gap-2 shadow-xl animate-fade-in">
+                <FiCheckCircle className="w-5 h-5 text-emerald-400 shrink-0" />
+                <span>You are on the VIP Guest List! 🎉</span>
+              </div>
+            ) : (
+              <form onSubmit={handleVipSubmit} className="space-y-2.5">
+                <input
+                  type="email"
+                  value={vipEmail}
+                  onChange={(e) => setVipEmail(e.target.value)}
+                  placeholder="Enter your email"
+                  required
+                  className="w-full bg-[#122419] border border-[#D6AE4D]/40 focus:border-[#D6AE4D] rounded-2xl py-3 px-5 text-xs text-white placeholder-white/50 focus:outline-none transition-all shadow-inner font-medium"
+                />
+                <button 
+                  type="submit" 
+                  className="w-full rounded-2xl bg-gradient-to-r from-[#C8A96A] via-[#E8CE8E] to-[#B08E48] text-[#123524] font-extrabold text-xs py-3 uppercase tracking-[2px] shadow-lg shadow-[#C8A96A]/25 hover:brightness-105 active:scale-95 transition-all flex items-center justify-center gap-2 border border-[#F0D89E]/60 cursor-pointer"
+                >
+                  <Sparkles className="w-4 h-4 text-[#123524] stroke-[2.2]" /> 
+                  <span className="font-extrabold text-[#123524]">JOIN VIP CLUB</span>
+                </button>
+              </form>
+            )}
           </div>
         </div>
 

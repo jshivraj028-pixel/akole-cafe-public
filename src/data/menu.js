@@ -67,6 +67,26 @@ export const menuCategories = [
 
 export const menuItems = [
   {
+    "id": "drk-real-mixed-fruit-juice-200ml",
+    "name": "Real Mixed Fruit Juice (200ml)",
+    "category": "cold-drinks",
+    "description": "Rich blend of fresh 9 delicious fruits packed with natural vitamins, energy & refreshing taste in a 200ml chilled pack.",
+    "price": 30,
+    "rating": 5,
+    "isVeg": true,
+    "isBestseller": true,
+    "isChefSpecial": true,
+    "prepTime": "1 min",
+    "image": "https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=800&q=80",
+    "tags": [
+      "Real Juice",
+      "Mixed Fruit",
+      "200ml",
+      "Cold Drink",
+      "Fresh Fruit"
+    ]
+  },
+  {
     "id": "drk-water-bottle",
     "name": "Akole Premium Mineral Water (1 Litre)",
     "category": "cold-drinks",

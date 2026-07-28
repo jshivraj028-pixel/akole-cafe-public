@@ -323,11 +323,12 @@ const Cart = () => {
                           {/* Pure White Circular Stepper */}
                           <div className="flex items-center gap-2">
                             <button
-                              onClick={() => updateQuantity(item.id, 1)}
+                              onClick={() => updateQuantity(item.id, -1)}
                               className="w-8 h-8 rounded-full bg-white border border-white shadow-sm hover:shadow-md active:scale-90 flex items-center justify-center transition-all cursor-pointer"
                               style={{ color: '#1E2621' }}
+                              title="Decrease quantity"
                             >
-                              <FiPlus className="w-3.5 h-3.5 stroke-[2.2]" />
+                              <FiMinus className="w-3.5 h-3.5 stroke-[2.2]" />
                             </button>
 
                             <span className="w-6 text-center font-bold text-sm" style={{ color: '#1E2621' }}>
@@ -335,11 +336,12 @@ const Cart = () => {
                             </span>
 
                             <button
-                              onClick={() => updateQuantity(item.id, -1)}
+                              onClick={() => updateQuantity(item.id, 1)}
                               className="w-8 h-8 rounded-full bg-white border border-white shadow-sm hover:shadow-md active:scale-90 flex items-center justify-center transition-all cursor-pointer"
                               style={{ color: '#1E2621' }}
+                              title="Increase quantity"
                             >
-                              <FiMinus className="w-3.5 h-3.5 stroke-[2.2]" />
+                              <FiPlus className="w-3.5 h-3.5 stroke-[2.2]" />
                             </button>
                           </div>
 
@@ -505,75 +507,74 @@ const Cart = () => {
                   initial={{ opacity: 0, scale: 0.95, y: 20 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                  className="relative z-10 w-full max-w-lg bg-[#F2F6ED] border border-white rounded-[32px] p-6 sm:p-8 shadow-2xl overflow-y-auto max-h-[90vh]"
-                  style={{ color: '#1E2621' }}
+                  className="relative z-10 w-full max-w-lg bg-[#0C1E14]/95 backdrop-blur-2xl border-2 border-[#D6AE4D]/60 rounded-3xl p-6 sm:p-8 text-white shadow-[0_25px_60px_rgba(0,0,0,0.6)] overflow-y-auto max-h-[92vh]"
                 >
                   <button
                     onClick={() => setIsCheckoutOpen(false)}
-                    className="absolute top-5 right-5 text-gray-400 hover:text-black transition-colors"
+                    className="absolute top-5 right-5 text-white/60 hover:text-[#D6AE4D] transition-colors p-1 cursor-pointer"
                   >
-                    <FiX className="w-6 h-6" />
+                    <FiX className="w-6 h-6 stroke-[2.2]" />
                   </button>
 
                   {/* STEP 2: COLORFUL ORDER CONFIRMATION RECEIPT */}
                   {checkoutStep === 'receipt' && confirmedOrder ? (
                     <div className="space-y-6">
                       {/* Vibrant Banner */}
-                      <div className="p-6 rounded-2xl bg-gradient-to-r from-emerald-700 via-teal-700 to-emerald-900 text-white shadow-xl relative overflow-hidden border border-white/30">
+                      <div className="p-6 rounded-2xl bg-gradient-to-r from-[#183B2A] via-[#123524] to-[#0A1A11] text-white shadow-2xl relative overflow-hidden border-2 border-[#D6AE4D]">
                         <div className="flex items-center justify-between mb-2">
-                          <span className="px-3 py-0.5 rounded-full bg-white/20 text-[10px] font-bold uppercase tracking-widest border border-white/40">
+                          <span className="px-3 py-0.5 rounded-full bg-[#D6AE4D]/20 text-[#D6AE4D] text-[10px] font-extrabold uppercase tracking-widest border border-[#D6AE4D]/40">
                             ORDER CONFIRMED & SENT TO KITCHEN
                           </span>
-                          <span className="font-mono text-xs font-bold text-amber-200">{confirmedOrder.orderId}</span>
+                          <span className="font-mono text-xs font-extrabold text-[#D6AE4D]">{confirmedOrder.orderId}</span>
                         </div>
 
                         <h3 className="text-2xl font-extrabold text-white mb-1">
                           Thank you, {confirmedOrder.customerName}!
                         </h3>
-                        <p className="text-xs text-emerald-100 font-medium">
+                        <p className="text-xs text-emerald-300 font-medium">
                           Fulfillment: {orderType} • Preparation Started ☕🍕
                         </p>
                       </div>
 
                       {/* Order Receipt Details Table */}
-                      <div className="p-5 rounded-2xl bg-white/80 border border-white text-xs space-y-3 shadow-sm">
-                        <div className="flex items-center justify-between border-b border-[#D8E3D2] pb-2">
-                          <span className="text-gray-500 uppercase tracking-wider">Customer Name</span>
-                          <span className="font-bold text-sm" style={{ color: '#1E2621' }}>{confirmedOrder.customerName}</span>
+                      <div className="p-6 rounded-2xl bg-[#07140D] border border-[#D6AE4D]/35 text-xs space-y-3">
+                        <div className="flex items-center justify-between border-b border-[#D6AE4D]/20 pb-2">
+                          <span className="text-[#D6AE4D] uppercase font-bold tracking-wider text-[10px]">Customer Name</span>
+                          <span className="font-bold text-white text-sm">{confirmedOrder.customerName}</span>
                         </div>
 
-                        <div className="flex items-center justify-between border-b border-[#D8E3D2] pb-2">
-                          <span className="text-gray-500 uppercase tracking-wider">Contact Phone</span>
-                          <span className="font-bold text-[#1E2621]">{confirmedOrder.customerPhone}</span>
+                        <div className="flex items-center justify-between border-b border-[#D6AE4D]/20 pb-2">
+                          <span className="text-[#D6AE4D] uppercase font-bold tracking-wider text-[10px]">Contact Phone</span>
+                          <span className="font-medium text-white">{confirmedOrder.customerPhone}</span>
                         </div>
 
-                        <div className="flex items-center justify-between border-b border-[#D8E3D2] pb-2">
-                          <span className="text-gray-500 uppercase tracking-wider">Delivery Address</span>
-                          <span className="font-medium text-right line-clamp-2 max-w-xs" style={{ color: '#1E2621' }}>
+                        <div className="flex items-center justify-between border-b border-[#D6AE4D]/20 pb-2">
+                          <span className="text-[#D6AE4D] uppercase font-bold tracking-wider text-[10px]">Delivery Address</span>
+                          <span className="font-medium text-white text-right line-clamp-2 max-w-xs">
                             {confirmedOrder.deliveryAddress}
                           </span>
                         </div>
 
-                        <div className="border-b border-[#D8E3D2] pb-2">
-                          <span className="text-gray-500 uppercase tracking-wider block mb-1">Ordered Items</span>
+                        <div className="border-b border-[#D6AE4D]/20 pb-2">
+                          <span className="text-[#D6AE4D] uppercase font-bold tracking-wider text-[10px] block mb-1">Ordered Items</span>
                           <div className="space-y-1">
                             {confirmedOrder.items && confirmedOrder.items.map((it, idx) => (
-                              <div key={idx} className="flex justify-between font-bold" style={{ color: '#1E2621' }}>
+                              <div key={idx} className="flex justify-between font-medium text-white/90">
                                 <span>• {it.name} (x{it.quantity})</span>
-                                <span>₹{it.price * it.quantity}</span>
+                                <span className="text-[#D6AE4D] font-bold">₹{it.price * it.quantity}</span>
                               </div>
                             ))}
                           </div>
                         </div>
 
-                        <div className="flex items-center justify-between border-b border-[#D8E3D2] pb-2">
-                          <span className="text-gray-500 uppercase tracking-wider">Payment Method</span>
-                          <span className="font-bold text-emerald-700">{confirmedOrder.paymentMethod}</span>
+                        <div className="flex items-center justify-between border-b border-[#D6AE4D]/20 pb-2">
+                          <span className="text-[#D6AE4D] uppercase font-bold tracking-wider text-[10px]">Payment Method</span>
+                          <span className="font-bold text-emerald-400">{confirmedOrder.paymentMethod}</span>
                         </div>
 
                         <div className="flex items-center justify-between pt-1">
-                          <span className="text-gray-600 uppercase tracking-wider font-bold">Total Paid</span>
-                          <span className="text-xl font-extrabold" style={{ color: '#1E2621' }}>
+                          <span className="text-white uppercase tracking-wider font-extrabold text-xs">Total Paid</span>
+                          <span className="font-serif text-xl font-extrabold text-[#D6AE4D]">
                             ₹{confirmedOrder.totalAmount}
                           </span>
                         </div>
@@ -583,213 +584,200 @@ const Cart = () => {
                       <div className="grid grid-cols-2 gap-3 pt-2">
                         <button
                           onClick={handleDownloadReceipt}
-                          className="py-3 px-4 rounded-2xl bg-[#1E2621] text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-md hover:bg-black transition-colors cursor-pointer"
+                          className="py-3 px-4 rounded-2xl bg-gradient-to-r from-[#C8A96A] via-[#E8CE8E] to-[#B08E48] text-[#123524] font-extrabold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg border border-[#F0D89E] cursor-pointer"
                         >
-                          <FiDownload className="text-base" /> Download Receipt
+                          <FiDownload className="text-base text-[#123524]" /> Download Receipt
                         </button>
 
                         <button
                           onClick={handleShareReceipt}
-                          className="py-3 px-4 rounded-2xl bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-md hover:bg-emerald-800 transition-colors cursor-pointer"
+                          className="py-3 px-4 rounded-2xl bg-emerald-600 text-white font-extrabold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg hover:bg-emerald-500 transition-colors cursor-pointer"
                         >
                           <FiShare2 className="text-base" /> Share Order
                         </button>
                       </div>
 
-                      <Button onClick={handleFinishCheckout} variant="gold" size="lg" className="w-full rounded-full">
+                      <button 
+                        onClick={handleFinishCheckout} 
+                        className="w-full py-3.5 rounded-2xl bg-[#D6AE4D] text-[#123524] font-black text-xs uppercase tracking-wider shadow-lg hover:bg-white transition-all cursor-pointer"
+                      >
                         Done & Return to Homepage
-                      </Button>
+                      </button>
                     </div>
                   ) : (
                     /* STEP 1: ADDRESS DETAILS & PAYMENT SELECTION */
-                    <div className="space-y-4 text-xs">
-                      <div className="text-center mb-4">
-                        <span className="text-xs uppercase tracking-widest font-bold block" style={{ color: '#48594B' }}>
+                    <div className="space-y-5 text-xs">
+                      <div className="text-center mb-4 border-b border-[#D6AE4D]/30 pb-4">
+                        <span className="text-[10px] uppercase tracking-[2px] text-[#D6AE4D] block font-extrabold">
                           ORDER FULFILLMENT & ADDRESS
                         </span>
-                        <h3 className="text-2xl font-bold" style={{ color: '#1E2621' }}>Delivery & Payment Details</h3>
-                        <p className="text-xs text-gray-600">Total Payable: ₹{grandTotal}</p>
+                        <h3 className="font-serif text-2xl font-extrabold text-white">Delivery & Payment Details</h3>
+                        <p className="text-xs text-[#D6AE4D] font-bold mt-1">Total Payable: ₹{grandTotal}</p>
                       </div>
 
                       {/* SAVED ADDRESS CARD VS EDIT FORM */}
                       {savedAddress && !isEditingAddress ? (
-                        <div className="p-4 rounded-2xl bg-white/80 border border-white relative shadow-sm">
+                        <div className="p-5 rounded-2xl bg-[#07140D] border-2 border-[#D6AE4D]/50 relative space-y-2">
                           <div className="flex items-center justify-between mb-2">
-                            <span className="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] uppercase font-bold tracking-wider border border-emerald-200 flex items-center gap-1">
-                              <FiMapPin /> Saved Delivery Address
+                            <span className="px-3 py-1 rounded-full bg-[#D6AE4D]/20 text-[#D6AE4D] text-[10px] uppercase font-black tracking-wider border border-[#D6AE4D]/40 flex items-center gap-1.5">
+                              <FiMapPin className="text-[#D6AE4D]" /> Saved Primary Address
                             </span>
                             <button
                               type="button"
                               onClick={() => setIsEditingAddress(true)}
-                              className="text-[#1E2621] hover:underline flex items-center gap-1 text-[11px] font-bold cursor-pointer"
+                              className="text-[#D6AE4D] hover:underline flex items-center gap-1 text-xs font-bold uppercase tracking-wider cursor-pointer"
                             >
                               <FiEdit3 /> Edit Address
                             </button>
                           </div>
 
-                          <div className="font-bold text-sm" style={{ color: '#1E2621' }}>{savedAddress.name}</div>
-                          <div className="text-gray-600 text-[11px] mt-0.5">{savedAddress.phone} • {savedAddress.email}</div>
-                          <div className="text-gray-800 text-xs mt-2 font-medium">
+                          <div className="font-bold text-base text-white">{savedAddress.name}</div>
+                          <div className="text-white/70 text-xs font-medium">{savedAddress.phone} • {savedAddress.email}</div>
+                          <div className="text-white text-xs mt-2 font-semibold leading-relaxed">
                             {savedAddress.street}, {savedAddress.area ? savedAddress.area + ', ' : ''}{savedAddress.city} - {savedAddress.pincode}
                           </div>
                           {savedAddress.landmark && (
-                            <div className="text-gray-500 text-[11px] mt-1">Landmark: {savedAddress.landmark}</div>
+                            <div className="text-[#D6AE4D] text-xs mt-1 font-medium">Landmark: {savedAddress.landmark}</div>
                           )}
                         </div>
                       ) : (
-                        /* ADDRESS EDIT FORM */
-                        <form onSubmit={handleSaveAddress} className="space-y-3 p-4 rounded-2xl bg-white/80 border border-white shadow-sm">
-                          <div className="flex items-center justify-between border-b border-[#D8E3D2] pb-2">
-                            <span className="font-bold uppercase tracking-wider" style={{ color: '#1E2621' }}>
+                        /* ADDRESS EDIT / FIRST TIME FORM */
+                        <form onSubmit={handleSaveAddress} className="space-y-4 p-5 rounded-2xl bg-[#07140D] border-2 border-[#D6AE4D]/50">
+                          <div className="flex items-center justify-between border-b border-[#D6AE4D]/30 pb-2">
+                            <span className="text-[#D6AE4D] font-extrabold uppercase tracking-wider text-xs">
                               {savedAddress ? 'Edit Delivery Address' : '1st Time Delivery Address'}
                             </span>
                             {savedAddress && (
                               <button
                                 type="button"
                                 onClick={() => setIsEditingAddress(false)}
-                                className="text-gray-400 hover:text-black text-[11px]"
+                                className="text-white/60 hover:text-white text-xs font-bold cursor-pointer"
                               >
                                 Cancel
                               </button>
                             )}
                           </div>
 
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                             <div>
-                              <label className="block text-gray-600 mb-1">Full Name *</label>
+                              <label className="block text-[#D6AE4D] font-extrabold uppercase text-[10px] tracking-wider mb-1">Full Name *</label>
                               <input
                                 type="text"
                                 required
                                 value={addressForm.name}
                                 onChange={(e) => setAddressForm({ ...addressForm, name: e.target.value })}
-                                className="w-full p-2.5 rounded-xl bg-white border border-[#C5D4C2] text-[#1E2621] focus:outline-none focus:border-[#1E2621]"
-                                placeholder="Rahul Patil"
+                                className="w-full p-3 rounded-2xl bg-[#0C1E14] border border-[#D6AE4D]/40 text-white font-semibold text-xs focus:outline-none focus:border-[#D6AE4D]"
+                                placeholder="e.g. Mayur Gambhire"
                               />
                             </div>
                             <div>
-                              <label className="block text-gray-600 mb-1">Phone Number *</label>
+                              <label className="block text-[#D6AE4D] font-extrabold uppercase text-[10px] tracking-wider mb-1">Phone Number *</label>
                               <input
                                 type="tel"
                                 required
                                 value={addressForm.phone}
                                 onChange={(e) => setAddressForm({ ...addressForm, phone: e.target.value })}
-                                className="w-full p-2.5 rounded-xl bg-white border border-[#C5D4C2] text-[#1E2621] focus:outline-none focus:border-[#1E2621]"
+                                className="w-full p-3 rounded-2xl bg-[#0C1E14] border border-[#D6AE4D]/40 text-white font-semibold text-xs focus:outline-none focus:border-[#D6AE4D]"
                                 placeholder="+91 98765 43210"
                               />
                             </div>
                           </div>
 
                           <div>
-                            <label className="block text-gray-600 mb-1">Flat / House No / Street Address *</label>
+                            <label className="block text-[#D6AE4D] font-extrabold uppercase text-[10px] tracking-wider mb-1">Flat / House No / Street Address *</label>
                             <input
                               type="text"
                               required
                               value={addressForm.street}
                               onChange={(e) => setAddressForm({ ...addressForm, street: e.target.value })}
-                              className="w-full p-2.5 rounded-xl bg-white border border-[#C5D4C2] text-[#1E2621] focus:outline-none focus:border-[#1E2621]"
-                              placeholder="Flat 302, Green Valley Apartments"
+                              className="w-full p-3 rounded-2xl bg-[#0C1E14] border border-[#D6AE4D]/40 text-white font-semibold text-xs focus:outline-none focus:border-[#D6AE4D]"
+                              placeholder="House 42, Main Market Road"
                             />
                           </div>
 
-                          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                             <div>
-                              <label className="block text-gray-600 mb-1">Area / Sector</label>
+                              <label className="block text-[#D6AE4D] font-extrabold uppercase text-[10px] tracking-wider mb-1">Locality / Area</label>
                               <input
                                 type="text"
                                 value={addressForm.area}
                                 onChange={(e) => setAddressForm({ ...addressForm, area: e.target.value })}
-                                className="w-full p-2.5 rounded-xl bg-white border border-[#C5D4C2] text-[#1E2621] focus:outline-none focus:border-[#1E2621]"
+                                className="w-full p-3 rounded-2xl bg-[#0C1E14] border border-[#D6AE4D]/40 text-white font-semibold text-xs focus:outline-none focus:border-[#D6AE4D]"
                                 placeholder="Near Bus Stand"
                               />
                             </div>
                             <div>
-                              <label className="block text-gray-600 mb-1">City</label>
+                              <label className="block text-[#D6AE4D] font-extrabold uppercase text-[10px] tracking-wider mb-1">Landmark</label>
                               <input
                                 type="text"
-                                value={addressForm.city}
-                                onChange={(e) => setAddressForm({ ...addressForm, city: e.target.value })}
-                                className="w-full p-2.5 rounded-xl bg-white border border-[#C5D4C2] text-[#1E2621] focus:outline-none focus:border-[#1E2621]"
-                                placeholder="Akole"
-                              />
-                            </div>
-                            <div>
-                              <label className="block text-gray-600 mb-1">Pincode</label>
-                              <input
-                                type="text"
-                                value={addressForm.pincode}
-                                onChange={(e) => setAddressForm({ ...addressForm, pincode: e.target.value })}
-                                className="w-full p-2.5 rounded-xl bg-white border border-[#C5D4C2] text-[#1E2621] focus:outline-none focus:border-[#1E2621]"
-                                placeholder="422601"
+                                value={addressForm.landmark}
+                                onChange={(e) => setAddressForm({ ...addressForm, landmark: e.target.value })}
+                                className="w-full p-3 rounded-2xl bg-[#0C1E14] border border-[#D6AE4D]/40 text-white font-semibold text-xs focus:outline-none focus:border-[#D6AE4D]"
+                                placeholder="Opp. SBI Bank"
                               />
                             </div>
                           </div>
 
+                          <div className="flex items-center gap-2 pt-1">
+                            <input
+                              type="checkbox"
+                              id="saveForFuture"
+                              checked={addressForm.saveForFuture}
+                              onChange={(e) => setAddressForm({ ...addressForm, saveForFuture: e.target.checked })}
+                              className="w-4 h-4 accent-[#D6AE4D] rounded cursor-pointer"
+                            />
+                            <label htmlFor="saveForFuture" className="text-white/90 text-xs font-medium cursor-pointer">
+                              Save address for fast 1-click future orders
+                            </label>
+                          </div>
+
                           <button
                             type="submit"
-                            className="w-full py-2.5 rounded-xl bg-[#1E2621] text-white font-bold text-xs uppercase tracking-wider hover:bg-black transition-colors"
+                            className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-[#C8A96A] via-[#E8CE8E] to-[#B08E48] text-[#123524] font-montserrat font-extrabold uppercase tracking-wider text-xs shadow-lg border border-[#F0D89E]/60 cursor-pointer hover:brightness-105 active:scale-95 transition-all"
                           >
                             Save Address
                           </button>
                         </form>
                       )}
 
-                      {/* PAYMENT METHOD SELECTION */}
-                      <div className="space-y-2 pt-2">
-                        <label className="block text-xs uppercase tracking-wider font-bold" style={{ color: '#48594B' }}>
+                      {/* PAYMENT METHOD SELECTOR */}
+                      <div className="pt-2 space-y-2">
+                        <label className="block text-[#D6AE4D] font-extrabold uppercase tracking-wider text-[11px]">
                           Select Payment Method
                         </label>
-
-                        <div className="space-y-2">
+                        <div className="grid grid-cols-3 gap-2.5">
                           {[
-                            { id: 'UPI / Google Pay / PhonePe', label: 'UPI (GPay / PhonePe / Paytm / BHIM)', badge: 'FASTEST' },
-                            { id: 'Cash on Delivery (COD)', label: 'Cash on Delivery (COD)', badge: 'POPULAR' },
-                            { id: 'Credit / Debit Card', label: 'Credit / Debit / ATM Card', badge: 'SECURE' }
-                          ].map((pay) => (
-                            <label
-                              key={pay.id}
-                              className={`flex items-center justify-between p-3 rounded-2xl border cursor-pointer transition-all ${
-                                addressForm.paymentMethod === pay.id
-                                  ? 'bg-white border-[#1E2621] shadow-sm'
-                                  : 'bg-white/50 border-[#D8E3D2] hover:bg-white'
+                            'UPI / Google Pay / PhonePe',
+                            'Credit / Debit Card',
+                            'Cash on Delivery'
+                          ].map((pm) => (
+                            <button
+                              key={pm}
+                              type="button"
+                              onClick={() => setAddressForm({ ...addressForm, paymentMethod: pm })}
+                              className={`py-3 px-2 rounded-2xl text-[10px] font-extrabold uppercase tracking-wider transition-all border text-center cursor-pointer ${
+                                addressForm.paymentMethod === pm
+                                  ? 'bg-gradient-to-r from-[#C8A96A] via-[#E8CE8E] to-[#B08E48] text-[#123524] border-[#F0D89E] shadow-lg scale-[1.02]'
+                                  : 'bg-[#07140D] text-white/80 border-[#D6AE4D]/35 hover:border-[#D6AE4D]'
                               }`}
                             >
-                              <div className="flex items-center gap-2.5">
-                                <input
-                                  type="radio"
-                                  name="paymentMethod"
-                                  value={pay.id}
-                                  checked={addressForm.paymentMethod === pay.id}
-                                  onChange={(e) => setAddressForm({ ...addressForm, paymentMethod: e.target.value })}
-                                  className="accent-[#1E2621] w-4 h-4"
-                                />
-                                <span className="font-bold text-xs" style={{ color: '#1E2621' }}>{pay.label}</span>
-                              </div>
-                              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-gray-100 text-gray-700">
-                                {pay.badge}
-                              </span>
-                            </label>
+                              {pm}
+                            </button>
                           ))}
                         </div>
                       </div>
 
-                      {/* PLACE ORDER FINAL CTA */}
-                      <div className="pt-3">
+                      {/* FINAL SUBMIT ORDER BUTTON */}
+                      <form onSubmit={(e) => { e.preventDefault(); handleConfirmOrder(); }} className="pt-2">
                         <button
-                          type="button"
-                          onClick={handleConfirmOrder}
+                          type="submit"
                           disabled={placingOrder}
-                          className="w-full py-4 rounded-[28px] bg-[#1E2621] hover:bg-black text-white font-bold text-sm uppercase tracking-widest shadow-xl hover:shadow-2xl transition-all cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50"
+                          className="w-full py-4 rounded-2xl bg-gradient-to-r from-[#C8A96A] via-[#E8CE8E] to-[#B08E48] hover:brightness-110 text-[#123524] font-montserrat font-black text-xs uppercase tracking-[2px] shadow-xl shadow-[#C8A96A]/25 border border-[#F0D89E] cursor-pointer active:scale-95 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
                         >
-                          {placingOrder ? (
-                            <span>Placing Order...</span>
-                          ) : (
-                            <>
-                              <FiCheck className="w-5 h-5" />
-                              <span>Confirm & Place Order (₹{grandTotal})</span>
-                            </>
-                          )}
+                          <FiCheck className="w-4 h-4" />
+                          <span>{placingOrder ? 'Processing Order...' : `Confirm Order & Pay ₹${grandTotal}`}</span>
                         </button>
-                      </div>
+                      </form>
                     </div>
                   )}
                 </motion.div>

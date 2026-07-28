@@ -191,23 +191,8 @@ const CartDrawer = ({ isOpen, onClose }) => {
                               </div>
                             </div>
 
-                            {/* Right: Circular Stepper Controls (+ Qty -) */}
+                            {/* Right: Circular Stepper Controls (- Qty +) */}
                             <div className="flex items-center gap-2 shrink-0 ml-2">
-                              {/* Plus Circle Button */}
-                              <button
-                                onClick={() => updateQuantity(item.id, 1)}
-                                className="w-9 h-9 rounded-full bg-white border border-white shadow-[0_3px_10px_rgba(0,0,0,0.08)] hover:shadow-md active:scale-90 flex items-center justify-center transition-all cursor-pointer"
-                                style={{ color: '#1E2621' }}
-                                aria-label="Increase quantity"
-                              >
-                                <Plus className="w-4 h-4 stroke-[2.2]" />
-                              </button>
-
-                              {/* Quantity Number */}
-                              <span className="w-5 text-center text-sm font-medium" style={{ color: '#1E2621' }}>
-                                {item.quantity}
-                              </span>
-
                               {/* Minus / Delete Circle Button */}
                               <button
                                 onClick={() => {
@@ -226,6 +211,21 @@ const CartDrawer = ({ isOpen, onClose }) => {
                                 ) : (
                                   <Minus className="w-4 h-4 stroke-[2.2]" />
                                 )}
+                              </button>
+
+                              {/* Quantity Number */}
+                              <span className="w-5 text-center text-sm font-medium" style={{ color: '#1E2621' }}>
+                                {item.quantity}
+                              </span>
+
+                              {/* Plus Circle Button */}
+                              <button
+                                onClick={() => updateQuantity(item.id, 1)}
+                                className="w-9 h-9 rounded-full bg-white border border-white shadow-[0_3px_10px_rgba(0,0,0,0.08)] hover:shadow-md active:scale-90 flex items-center justify-center transition-all cursor-pointer"
+                                style={{ color: '#1E2621' }}
+                                aria-label="Increase quantity"
+                              >
+                                <Plus className="w-4 h-4 stroke-[2.2]" />
                               </button>
                             </div>
                           </motion.div>

@@ -88,79 +88,82 @@ const Events = () => {
                 </div>
               </div>
 
-              {/* Private Enquiry Form - Crisp High-Contrast Inputs */}
-              <form onSubmit={handlePrivateSubmit} className="lg:col-span-6 bg-white/95 dark:bg-[#122219] p-7 sm:p-8 rounded-[28px] border-2 border-[#D6AE4D] shadow-2xl space-y-4 text-left">
-                <div className="space-y-1">
-                  <h4 className="font-serif text-xl font-bold text-[#123524] dark:text-[#D6AE4D]">Request Private Event Consultation</h4>
-                  <p className="text-xs text-gray-600 dark:text-white/70">Fill out your details to receive a custom quote & menu package.</p>
+              {/* Private Enquiry Form - 5-Star Ultra Luxury Dark Green & Gold Styling */}
+              <form onSubmit={handlePrivateSubmit} className="lg:col-span-6 bg-[#0C1E14]/90 backdrop-blur-xl p-8 rounded-3xl border-2 border-[#D6AE4D]/60 shadow-[0_20px_50px_rgba(0,0,0,0.5)] space-y-4 text-left text-white">
+                <div className="space-y-1 border-b border-[#D6AE4D]/30 pb-4">
+                  <h4 className="font-serif text-2xl font-extrabold text-[#D6AE4D] flex items-center gap-2">
+                    <Sparkles className="w-5 h-5 text-[#D6AE4D]" />
+                    <span>Request Private Event Consultation</span>
+                  </h4>
+                  <p className="text-xs text-white/75 font-light">Fill out your details to receive a custom quote & menu package.</p>
                 </div>
                 
                 <div>
-                  <label className="block text-[11px] uppercase font-bold text-[#123524] dark:text-white/80 mb-1">Your Full Name *</label>
+                  <label className="block text-[11px] uppercase font-extrabold tracking-wider text-[#D6AE4D] mb-1.5">Your Full Name *</label>
                   <input
                     type="text"
                     required
                     placeholder="e.g. Mayur Gambhire"
                     value={privateForm.name}
                     onChange={(e) => setPrivateForm({ ...privateForm, name: e.target.value })}
-                    className="w-full bg-gray-50 dark:bg-[#1C2D23] border border-gray-300 dark:border-[#D6AE4D]/40 rounded-xl py-3 px-4 text-xs font-medium text-[#123524] dark:text-white placeholder-gray-400 dark:placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-[#D6AE4D] transition-all"
+                    className="w-full bg-[#07140D] border border-[#D6AE4D]/40 rounded-2xl py-3 px-4 text-xs font-semibold text-white placeholder-white/40 focus:outline-none focus:border-[#D6AE4D] transition-all shadow-inner"
                   />
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-[11px] uppercase font-bold text-[#123524] dark:text-white/80 mb-1">Mobile Number *</label>
+                    <label className="block text-[11px] uppercase font-extrabold tracking-wider text-[#D6AE4D] mb-1.5">Mobile Number *</label>
                     <input
                       type="tel"
                       required
                       placeholder="e.g. 98765 43210"
                       value={privateForm.phone}
                       onChange={(e) => setPrivateForm({ ...privateForm, phone: e.target.value })}
-                      className="w-full bg-gray-50 dark:bg-[#1C2D23] border border-gray-300 dark:border-[#D6AE4D]/40 rounded-xl py-3 px-4 text-xs font-medium text-[#123524] dark:text-white placeholder-gray-400 dark:placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-[#D6AE4D] transition-all"
+                      className="w-full bg-[#07140D] border border-[#D6AE4D]/40 rounded-2xl py-3 px-4 text-xs font-semibold text-white placeholder-white/40 focus:outline-none focus:border-[#D6AE4D] transition-all shadow-inner"
                     />
                   </div>
                   <div>
-                    <label className="block text-[11px] uppercase font-bold text-[#123524] dark:text-white/80 mb-1">Event Type</label>
+                    <label className="block text-[11px] uppercase font-extrabold tracking-wider text-[#D6AE4D] mb-1.5">Event Type</label>
                     <select
                       value={privateForm.eventType}
                       onChange={(e) => setPrivateForm({ ...privateForm, eventType: e.target.value })}
-                      className="w-full bg-gray-50 dark:bg-[#1C2D23] border border-gray-300 dark:border-[#D6AE4D]/40 rounded-xl py-3 px-3 text-xs font-medium text-[#123524] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#D6AE4D] transition-all cursor-pointer"
+                      className="w-full bg-[#07140D] border border-[#D6AE4D]/40 rounded-2xl py-3 px-4 text-xs font-semibold text-white focus:outline-none focus:border-[#D6AE4D] transition-all cursor-pointer shadow-inner"
                     >
-                      <option value="Birthday Party">Birthday Party</option>
-                      <option value="Anniversary">Anniversary Dinner</option>
-                      <option value="Corporate Meet">Corporate Meetup</option>
-                      <option value="Coffee Workshop">Custom Coffee Tasting</option>
+                      <option value="Birthday Party" className="bg-[#0A1A12] text-white">Birthday Party</option>
+                      <option value="Anniversary" className="bg-[#0A1A12] text-white">Anniversary Dinner</option>
+                      <option value="Corporate Meet" className="bg-[#0A1A12] text-white">Corporate Meetup</option>
+                      <option value="Coffee Workshop" className="bg-[#0A1A12] text-white">Custom Coffee Tasting</option>
                     </select>
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-[11px] uppercase font-bold text-[#123524] dark:text-white/80 mb-1">Event Date *</label>
+                  <label className="block text-[11px] uppercase font-extrabold tracking-wider text-[#D6AE4D] mb-1.5">Event Date *</label>
                   <input
                     type="date"
                     required
                     value={privateForm.date}
                     onChange={(e) => setPrivateForm({ ...privateForm, date: e.target.value })}
-                    className="w-full bg-gray-50 dark:bg-[#1C2D23] border border-gray-300 dark:border-[#D6AE4D]/40 rounded-xl py-3 px-4 text-xs font-medium text-[#123524] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#D6AE4D] transition-all"
+                    className="w-full bg-[#07140D] border border-[#D6AE4D]/40 rounded-2xl py-3 px-4 text-xs font-semibold text-white focus:outline-none focus:border-[#D6AE4D] transition-all shadow-inner"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[11px] uppercase font-bold text-[#123524] dark:text-white/80 mb-1">Special Requests</label>
+                  <label className="block text-[11px] uppercase font-extrabold tracking-wider text-[#D6AE4D] mb-1.5">Special Requests</label>
                   <textarea
                     rows="2"
                     placeholder="Guest count, decor preferences, dietary requirements..."
                     value={privateForm.notes}
                     onChange={(e) => setPrivateForm({ ...privateForm, notes: e.target.value })}
-                    className="w-full bg-gray-50 dark:bg-[#1C2D23] border border-gray-300 dark:border-[#D6AE4D]/40 rounded-xl py-3 px-4 text-xs font-medium text-[#123524] dark:text-white placeholder-gray-400 dark:placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-[#D6AE4D] transition-all"
+                    className="w-full bg-[#07140D] border border-[#D6AE4D]/40 rounded-2xl py-3 px-4 text-xs font-semibold text-white placeholder-white/40 focus:outline-none focus:border-[#D6AE4D] transition-all shadow-inner"
                   />
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#D6AE4D] via-[#F3E5AB] to-[#B89035] text-[#0C1A12] font-black text-xs uppercase tracking-widest shadow-lg hover:brightness-110 transition-all cursor-pointer flex items-center justify-center gap-2 border border-[#FFF5D6]"
+                  className="w-full py-4 rounded-2xl bg-gradient-to-r from-[#C8A96A] via-[#E8CE8E] to-[#B08E48] text-[#123524] font-montserrat font-black text-xs uppercase tracking-[2px] shadow-xl shadow-[#C8A96A]/25 hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-2 border border-[#F0D89E]/60 cursor-pointer mt-2"
                 >
-                  <FiSend className="w-4 h-4 text-[#0C1A12]" />
+                  <FiSend className="w-4 h-4 text-[#123524]" />
                   <span>SUBMIT EVENT ENQUIRY</span>
                 </button>
               </form>

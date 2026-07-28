@@ -240,7 +240,7 @@ const Profile = () => {
               <div className="flex items-center gap-3 shrink-0">
                 <button
                   onClick={() => setIsEditing(!isEditing)}
-                  className="px-5 py-2.5 rounded-full bg-[#D6AE4D] text-[#123524] font-montserrat font-bold text-xs uppercase tracking-wider hover:bg-white transition-all shadow-lg flex items-center gap-2 cursor-pointer"
+                  className="px-5 py-2.5 rounded-2xl bg-[#D6AE4D] text-[#123524] font-montserrat font-bold text-xs uppercase tracking-wider hover:bg-white transition-all shadow-lg flex items-center gap-2 cursor-pointer border border-[#FFF5D6]"
                 >
                   <FiEdit3 className="w-4 h-4" />
                   <span>{isEditing ? 'Close Form' : 'Edit Profile'}</span>
@@ -248,7 +248,7 @@ const Profile = () => {
 
                 <button
                   onClick={handleLogout}
-                  className="px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white font-montserrat font-bold text-xs uppercase tracking-wider border border-white/20 transition-all flex items-center gap-2 cursor-pointer"
+                  className="px-5 py-2.5 rounded-2xl bg-white/10 hover:bg-white/20 text-white font-montserrat font-bold text-xs uppercase tracking-wider border border-white/20 transition-all flex items-center gap-2 cursor-pointer"
                 >
                   <FiLogOut className="w-4 h-4" />
                   <span>Log Out</span>
@@ -357,7 +357,7 @@ const Profile = () => {
           <div className="flex items-center justify-start sm:justify-center gap-3 border-b border-[#D6AE4D]/20 pb-4 mb-8 overflow-x-auto">
             <button
               onClick={() => setActiveTab('details')}
-              className={`px-5 py-2.5 rounded-full text-xs uppercase font-bold tracking-wider transition-all shrink-0 flex items-center gap-2 cursor-pointer ${
+              className={`px-5 py-2.5 rounded-2xl text-xs uppercase font-bold tracking-wider transition-all shrink-0 flex items-center gap-2 cursor-pointer ${
                 activeTab === 'details'
                   ? 'bg-[#D6AE4D] text-[#123524] shadow-md'
                   : 'bg-white/70 dark:bg-[#1D2C22] text-[#123524] dark:text-[#EAE3D2] hover:text-[#D6AE4D]'
@@ -368,7 +368,7 @@ const Profile = () => {
 
             <button
               onClick={() => setActiveTab('orders')}
-              className={`px-5 py-2.5 rounded-full text-xs uppercase font-bold tracking-wider transition-all shrink-0 flex items-center gap-2 cursor-pointer ${
+              className={`px-5 py-2.5 rounded-2xl text-xs uppercase font-bold tracking-wider transition-all shrink-0 flex items-center gap-2 cursor-pointer ${
                 activeTab === 'orders'
                   ? 'bg-[#D6AE4D] text-[#123524] shadow-md'
                   : 'bg-white/70 dark:bg-[#1D2C22] text-[#123524] dark:text-[#EAE3D2] hover:text-[#D6AE4D]'
@@ -379,7 +379,7 @@ const Profile = () => {
 
             <button
               onClick={() => setActiveTab('wishlist')}
-              className={`px-5 py-2.5 rounded-full text-xs uppercase font-bold tracking-wider transition-all shrink-0 flex items-center gap-2 cursor-pointer ${
+              className={`px-5 py-2.5 rounded-2xl text-xs uppercase font-bold tracking-wider transition-all shrink-0 flex items-center gap-2 cursor-pointer ${
                 activeTab === 'wishlist'
                   ? 'bg-[#D6AE4D] text-[#123524] shadow-md'
                   : 'bg-white/70 dark:bg-[#1D2C22] text-[#123524] dark:text-[#EAE3D2] hover:text-[#D6AE4D]'
@@ -390,7 +390,7 @@ const Profile = () => {
 
             <button
               onClick={() => setActiveTab('rewards')}
-              className={`px-5 py-2.5 rounded-full text-xs uppercase font-bold tracking-wider transition-all shrink-0 flex items-center gap-2 cursor-pointer ${
+              className={`px-5 py-2.5 rounded-2xl text-xs uppercase font-bold tracking-wider transition-all shrink-0 flex items-center gap-2 cursor-pointer ${
                 activeTab === 'rewards'
                   ? 'bg-[#D6AE4D] text-[#123524] shadow-md'
                   : 'bg-white/70 dark:bg-[#1D2C22] text-[#123524] dark:text-[#EAE3D2] hover:text-[#D6AE4D]'
