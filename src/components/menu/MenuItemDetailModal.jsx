@@ -84,51 +84,67 @@ const MenuItemDetailModal = ({ product, isOpen, onClose }) => {
           transition={{ type: 'spring', stiffness: 350, damping: 28 }}
           className="relative z-10 w-full max-w-2xl bg-[#FAF6EE] dark:bg-[#121A15] border border-[#E5DDD0] dark:border-[#D6AE4D]/30 rounded-3xl overflow-hidden text-[#1F3A2B] dark:text-[#EAE3D2] shadow-2xl my-auto max-h-[92vh] flex flex-col"
         >
-          {/* Close Button */}
-          <button
+          {/* Close Button with Liquid Glass Effect */}
+          <motion.button
+            whileHover={{ scale: 1.15 }}
+            whileTap={{ scale: 0.9 }}
             onClick={onClose}
-            className="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-black/40 hover:bg-black/70 text-white flex items-center justify-center transition-colors shadow-lg border border-white/20"
+            className="absolute top-4 right-4 z-20 w-11 h-11 rounded-full bg-white/20 dark:bg-black/40 hover:bg-white/35 dark:hover:bg-black/60 text-white flex items-center justify-center transition-all duration-300 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] border border-white/60 backdrop-blur-2xl cursor-pointer group overflow-hidden"
             aria-label="Close"
           >
-            <X className="w-5 h-5" />
-          </button>
+            {/* Liquid Glass Wave Sweep on Hover */}
+            <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/50 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out pointer-events-none" />
+            {/* Liquid Gloss Circle Reflection */}
+            <span className="absolute inset-0 rounded-full border border-white/30 group-hover:border-white/80 transition-colors pointer-events-none" />
+            <X className="w-5 h-5 transition-transform duration-300 group-hover:rotate-90 relative z-10" />
+          </motion.button>
 
           <div className="overflow-y-auto flex-1 p-0">
             {/* Top Product Hero Image Banner */}
             <div className="relative h-64 sm:h-72 w-full overflow-hidden bg-[#1B3828]">
-              <img
+              <motion.img
+                initial={{ scale: 1.15 }}
+                animate={{ scale: 1 }}
+                transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
                 src={getProductImage(product)}
                 alt={product.name}
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#121A15] via-transparent to-black/30" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#121A15] via-transparent to-black/40" />
 
               {/* Tag / Bestseller Badge */}
               <div className="absolute top-4 left-4 flex items-center gap-2">
                 {(product.isBestseller || product.tag === 'BESTSELLER') && (
-                  <span className="px-3 py-1 rounded-full bg-[#D6AE4D] text-[#123524] font-extrabold text-[10px] uppercase tracking-widest shadow-md">
+                  <span className="px-3.5 py-1 rounded-full bg-[#D6AE4D] text-[#123524] font-extrabold text-[10px] uppercase tracking-widest shadow-lg border border-[#FFE8A3]/50">
                     BESTSELLER
                   </span>
                 )}
                 {product.category && (
-                  <span className="px-3 py-1 rounded-full bg-black/50 text-white font-semibold text-[10px] uppercase tracking-widest border border-white/20 backdrop-blur-sm">
-                    {product.category.replace('-', ' ')}
+                  <span className="px-3.5 py-1 rounded-full bg-white/20 dark:bg-black/40 text-white font-bold text-[10px] uppercase tracking-widest border border-white/40 backdrop-blur-2xl shadow-[0_4px_16px_0_rgba(0,0,0,0.25)] relative overflow-hidden group">
+                    <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 pointer-events-none" />
+                    <span className="relative z-10">{product.category.replace('-', ' ')}</span>
                   </span>
                 )}
               </div>
 
-              {/* Wishlist Button */}
-              <button
+              {/* Wishlist Button with Liquid Glass Effect */}
+              <motion.button
+                whileHover={{ scale: 1.15 }}
+                whileTap={{ scale: 0.9 }}
                 onClick={() => toggleWishlist(product)}
-                className={`absolute bottom-4 right-4 w-10 h-10 rounded-full flex items-center justify-center shadow-lg transition-all border ${
+                className={`absolute bottom-4 right-4 z-20 w-11 h-11 rounded-full flex items-center justify-center transition-all duration-300 border backdrop-blur-2xl cursor-pointer group overflow-hidden ${
                   isWishlisted 
-                    ? 'bg-rose-500 text-white border-rose-400' 
-                    : 'bg-black/50 text-white hover:bg-black/80 border-white/20'
+                    ? 'bg-rose-500/85 hover:bg-rose-500 text-white border-rose-300/70 shadow-[0_8px_32px_0_rgba(225,29,72,0.5)]' 
+                    : 'bg-white/20 dark:bg-black/40 hover:bg-white/35 dark:hover:bg-black/60 text-white border-white/60 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)]'
                 }`}
                 title={isWishlisted ? 'Remove from Wishlist' : 'Save to Wishlist'}
               >
-                <Heart className={`w-5 h-5 ${isWishlisted ? 'fill-current' : ''}`} />
-              </button>
+                {/* Liquid Glass Wave Sweep on Hover */}
+                <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/50 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out pointer-events-none" />
+                {/* Liquid Glow Inner Ring */}
+                <span className="absolute inset-0 rounded-full border border-white/30 group-hover:border-white/80 transition-colors pointer-events-none" />
+                <Heart className={`w-5 h-5 transition-transform duration-300 relative z-10 ${isWishlisted ? 'fill-current text-white scale-110' : 'group-hover:scale-125'}`} />
+              </motion.button>
             </div>
 
             {/* Product Info & Options */}
@@ -255,31 +271,43 @@ const MenuItemDetailModal = ({ product, isOpen, onClose }) => {
             
             {/* Quantity Stepper */}
             <div className="flex items-center gap-3 bg-[#FAF6EE] dark:bg-[#121A15] p-1.5 rounded-full border border-[#E5DDD0] dark:border-[#D6AE4D]/30">
-              <button
+              <motion.button
                 type="button"
+                whileHover={{ scale: 1.15, rotate: -10 }}
+                whileTap={{ scale: 0.85 }}
                 onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                className="w-8 h-8 rounded-full bg-white dark:bg-[#1D2C22] text-[#123524] dark:text-white flex items-center justify-center hover:bg-[#D6AE4D] hover:text-[#123524] transition-colors shadow-sm"
+                className="w-8 h-8 rounded-full bg-white dark:bg-[#1D2C22] text-[#123524] dark:text-white flex items-center justify-center hover:bg-[#D6AE4D] hover:text-[#123524] transition-colors shadow-sm cursor-pointer"
               >
                 <Minus className="w-3.5 h-3.5 stroke-[2.5]" />
-              </button>
+              </motion.button>
               <span className="font-bold text-sm text-[#123524] dark:text-white px-2 font-mono">{quantity}</span>
-              <button
+              <motion.button
                 type="button"
+                whileHover={{ scale: 1.15, rotate: 10 }}
+                whileTap={{ scale: 0.85 }}
                 onClick={() => setQuantity(quantity + 1)}
-                className="w-8 h-8 rounded-full bg-white dark:bg-[#1D2C22] text-[#123524] dark:text-white flex items-center justify-center hover:bg-[#D6AE4D] hover:text-[#123524] transition-colors shadow-sm"
+                className="w-8 h-8 rounded-full bg-white dark:bg-[#1D2C22] text-[#123524] dark:text-white flex items-center justify-center hover:bg-[#D6AE4D] hover:text-[#123524] transition-colors shadow-sm cursor-pointer"
               >
                 <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
-              </button>
+              </motion.button>
             </div>
 
-            {/* Add to Cart CTA */}
-            <button
+            {/* Add to Cart CTA with Professional Shimmer Animation */}
+            <motion.button
+              whileHover={{ 
+                scale: 1.03, 
+                boxShadow: "0 16px 32px -6px rgba(214, 174, 77, 0.5), 0 8px 16px -4px rgba(0, 0, 0, 0.3)" 
+              }}
+              whileTap={{ scale: 0.95 }}
               onClick={handleAddToCart}
-              className="w-full sm:w-auto flex-1 py-3 px-6 rounded-full bg-gradient-to-r from-[#D6AE4D] via-[#F3E5AB] to-[#B89035] hover:from-[#E5BC58] hover:via-[#FFF3C4] hover:to-[#C99D3B] text-[#123524] font-montserrat font-extrabold text-xs uppercase tracking-widest shadow-lg shadow-[#D6AE4D]/30 border border-[#FFF5D6]/60 transition-all flex items-center justify-center gap-2 transform active:scale-95"
+              className="w-full sm:w-auto flex-1 py-3.5 px-6 rounded-full bg-gradient-to-r from-[#D6AE4D] via-[#FCE8B3] to-[#C99D3B] text-[#123524] font-montserrat font-extrabold text-xs uppercase tracking-widest shadow-lg shadow-[#D6AE4D]/30 border border-[#FFF5D6]/70 transition-all flex items-center justify-center gap-2 relative overflow-hidden cursor-pointer group"
             >
-              <ShoppingBag className="w-4 h-4 stroke-[2.5]" />
-              <span>ADD TO CART • ₹{totalPrice}</span>
-            </button>
+              {/* Liquid Shimmer Sweep Animation */}
+              <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/60 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out pointer-events-none" />
+
+              <ShoppingBag className="w-4 h-4 stroke-[2.5] relative z-10 transition-transform group-hover:scale-110" />
+              <span className="relative z-10">ADD TO CART • ₹{totalPrice}</span>
+            </motion.button>
 
           </div>
 
