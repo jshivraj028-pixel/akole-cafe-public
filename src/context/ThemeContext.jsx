@@ -222,21 +222,33 @@ export const ThemeProvider = ({ children }) => {
     setToasts((prev) => prev.filter((t) => t.id !== id));
   };
 
+  const getProductKey = (prod) => {
+    if (!prod) return '';
+    if (typeof prod === 'string' || typeof prod === 'number') return String(prod).trim();
+    return String(prod.id || prod._id || prod.name || '').trim();
+  };
+
   const toggleWishlist = (product) => {
+    if (!product) return;
+    const targetKey = getProductKey(product);
+    if (!targetKey) return;
+
     setWishlistItems((prev) => {
-      const exists = prev.some((item) => item.id === product.id);
+      const exists = prev.some((item) => getProductKey(item) === targetKey);
       if (exists) {
-        showToast(`Removed "${product.name}" from Wishlist`, 'info');
-        return prev.filter((item) => item.id !== product.id);
+        showToast(`Removed "${product.name || 'Item'}" from Favorites`, 'info');
+        return prev.filter((item) => getProductKey(item) !== targetKey);
       } else {
-        showToast(`Added "${product.name}" to Wishlist!`, 'success');
+        showToast(`Added "${product.name || 'Item'}" to Favorites!`, 'success');
         return [...prev, product];
       }
     });
   };
 
-  const isInWishlist = (productId) => {
-    return wishlistItems.some((item) => item.id === productId);
+  const isInWishlist = (productIdOrItem) => {
+    const targetKey = getProductKey(productIdOrItem);
+    if (!targetKey) return false;
+    return wishlistItems.some((item) => getProductKey(item) === targetKey);
   };
 
   const [selectedMenuItem, setSelectedMenuItem] = useState(null);

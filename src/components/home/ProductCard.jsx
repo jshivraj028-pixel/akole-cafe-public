@@ -10,7 +10,7 @@ const ProductCard = ({ product, onQuickView }) => {
   const { addToCart } = useCart();
   const { showToast, openQuickView, toggleWishlist, isInWishlist } = useTheme();
 
-  const isLiked = isInWishlist ? isInWishlist(product.id) : false;
+  const isLiked = isInWishlist ? isInWishlist(product) : false;
 
   const handleCardClick = () => {
     if (onQuickView) {
