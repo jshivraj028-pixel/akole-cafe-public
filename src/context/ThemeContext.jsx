@@ -67,15 +67,22 @@ export const ThemeProvider = ({ children }) => {
     const checkCurrentUserBanStatus = async () => {
       try {
         const savedUserStr = localStorage.getItem('akole_user');
-        if (!savedUserStr) return;
+        const savedEmailStr = localStorage.getItem('akole_user_email');
+        const savedTokenStr = localStorage.getItem('akole_token');
 
-        const userObj = JSON.parse(savedUserStr);
-        const identifier = userObj?.id || userObj?._id || userObj?.email || localStorage.getItem('akole_user_email');
+        if (!savedUserStr && !savedEmailStr && !savedTokenStr) return;
 
+        let userObj = null;
+        if (savedUserStr) {
+          try { userObj = JSON.parse(savedUserStr); } catch (e) {}
+        }
+
+        const identifier = userObj?.id || userObj?._id || userObj?.email || savedEmailStr;
         if (!identifier) return;
 
-        // Do not check main administrator account
-        if (userObj?.role === 'admin' || userObj?.email?.toLowerCase() === 'akolecafe@gmail.com') {
+        // Skip main administrator account check
+        const cleanIdentifier = String(identifier).toLowerCase().trim();
+        if (userObj?.role === 'admin' || cleanIdentifier === 'akolecafe@gmail.com' || (savedEmailStr && savedEmailStr.toLowerCase() === 'akolecafe@gmail.com')) {
           return;
         }
 
@@ -102,21 +109,26 @@ export const ThemeProvider = ({ children }) => {
       }
     };
 
-    if (isAuthenticated || localStorage.getItem('akole_user')) {
-      checkCurrentUserBanStatus();
-      intervalId = setInterval(checkCurrentUserBanStatus, 3000);
-    }
+    checkCurrentUserBanStatus();
+    intervalId = setInterval(checkCurrentUserBanStatus, 2000);
 
     const handleCustomBanEvent = (e) => {
       const savedUserStr = localStorage.getItem('akole_user');
-      if (!savedUserStr) return;
-      const userObj = JSON.parse(savedUserStr);
+      const savedEmailStr = localStorage.getItem('akole_user_email');
+      let userObj = null;
+      if (savedUserStr) {
+        try { userObj = JSON.parse(savedUserStr); } catch (e) {}
+      }
+
       const bannedEmail = e.detail?.email?.toLowerCase();
       const bannedId = e.detail?.id;
 
+      const currentEmail = (userObj?.email || savedEmailStr || '').toLowerCase();
+      const currentId = userObj?.id || userObj?._id;
+
       if (
-        (bannedEmail && userObj.email?.toLowerCase() === bannedEmail) ||
-        (bannedId && (userObj.id === bannedId || userObj._id === bannedId))
+        (bannedEmail && currentEmail === bannedEmail) ||
+        (bannedId && String(currentId) === String(bannedId))
       ) {
         if (e.detail?.isBanned) {
           localStorage.removeItem('akole_user');
@@ -139,7 +151,7 @@ export const ThemeProvider = ({ children }) => {
       if (intervalId) clearInterval(intervalId);
       window.removeEventListener('akole_user_banned', handleCustomBanEvent);
     };
-  }, [isAuthenticated, userEmail]);
+  }, []);
 
   const loginUser = (email) => {
     setIsAuthenticated(true);
