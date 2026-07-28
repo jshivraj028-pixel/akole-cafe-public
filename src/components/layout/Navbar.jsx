@@ -498,6 +498,8 @@ const Navbar = () => {
         isOpen={isMobileMenuOpen}
         onClose={() => setIsMobileMenuOpen(false)}
         links={navLinks}
+        isAuthenticated={isAuthenticated || Boolean(loggedUser)}
+        onLogout={handleLogout}
       />
 
       {/* Interactive Satellite & Location Map Modal */}
