@@ -233,6 +233,20 @@ export const menuItems = [
     "tags": ["Rajur Special", "Pedha", "Sweets"]
   },
   {
+    "id": "mah-surmai-1",
+    "name": "Surmai Fish Rava Fry",
+    "category": "traditional",
+    "description": "Fresh king fish steak marinated in Malvani spicy kokum masala, coated with crispy semolina (rava) & shallow fried to golden perfection.",
+    "price": 320,
+    "rating": 4.9,
+    "isVeg": false,
+    "isChefSpecial": true,
+    "spicyLevel": 2,
+    "prepTime": "15 mins",
+    "image": "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=800&q=80",
+    "tags": ["Surmai Fry", "Konkani Special", "Seafood"]
+  },
+  {
     "id": "mah-new-2",
     "name": "Shuddha Milk Pedha Box (250g)",
     "category": "traditional",

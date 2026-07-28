@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
+import React from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import MainLayout from '../layouts/MainLayout';
 import { useTheme } from '../context/ThemeContext';
 
@@ -24,26 +24,6 @@ import PrivacyPolicy from '../pages/PrivacyPolicy';
 import Admin from '../pages/Admin';
 import NotFound from '../pages/NotFound';
 
-const ScrollToTopOnRoute = () => {
-  const { pathname } = useLocation();
-
-  useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-  }, [pathname]);
-
-  return null;
-};
-
-// Route wrapper for authenticated users
-const ProtectedRoute = ({ children }) => {
-  const { isAuthenticated } = useTheme();
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
-  }
-  return children;
-};
-
-// Route wrapper for unauthenticated users (login, signup, forgot password)
 const PublicAuthRoute = ({ children }) => {
   const { isAuthenticated } = useTheme();
   if (isAuthenticated) {
@@ -54,8 +34,7 @@ const PublicAuthRoute = ({ children }) => {
 
 const AppRoutes = () => {
   return (
-    <>
-      <ScrollToTopOnRoute />
+    <MainLayout>
       <Routes>
         {/* Auth Full-Screen Routes */}
         <Route
@@ -91,39 +70,30 @@ const AppRoutes = () => {
           }
         />
 
-        {/* Main Application Layout Routes */}
-        <Route
-          path="*"
-          element={
-            <MainLayout>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/home" element={<Home />} />
-                <Route path="/menu" element={<Menu />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/reserve" element={<Reserve />} />
-                <Route path="/events" element={<Events />} />
-                <Route path="/gallery" element={<Gallery />} />
-                <Route path="/blog" element={<Blog />} />
-                <Route path="/franchise" element={<Franchise />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/orders" element={<Profile />} />
-                <Route path="/wishlist" element={<Profile />} />
-                <Route path="/settings" element={<Settings />} />
-                <Route path="/cart" element={<Cart />} />
-                <Route path="/terms" element={<TermsOfService />} />
-                <Route path="/terms-of-service" element={<TermsOfService />} />
-                <Route path="/privacy" element={<PrivacyPolicy />} />
-                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-                <Route path="/admin" element={<Admin />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </MainLayout>
-          }
-        />
+        {/* Main Pages */}
+        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/menu" element={<Menu />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/reserve" element={<Reserve />} />
+        <Route path="/events" element={<Events />} />
+        <Route path="/gallery" element={<Gallery />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/franchise" element={<Franchise />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/orders" element={<Profile />} />
+        <Route path="/wishlist" element={<Profile />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/terms" element={<TermsOfService />} />
+        <Route path="/terms-of-service" element={<TermsOfService />} />
+        <Route path="/privacy" element={<PrivacyPolicy />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/admin" element={<Admin />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
-    </>
+    </MainLayout>
   );
 };
 

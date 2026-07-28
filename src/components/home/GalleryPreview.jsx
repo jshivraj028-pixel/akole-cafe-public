@@ -28,31 +28,35 @@ const GalleryPreview = () => {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: idx * 0.1 }}
-              className="relative h-72 rounded-2xl overflow-hidden group shadow-luxury border border-accent-gold/20 cursor-pointer"
+              className="relative h-80 rounded-3xl overflow-hidden group shadow-luxury border border-[#D6AE4D]/30 cursor-pointer bg-[#0C1A12]"
               onClick={() => setSelectedImage(item)}
             >
               <img
                 src={item.image}
                 alt={item.title}
-                className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-out"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/40 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
+              {/* Permanent dark gradient bottom overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0C1A12]/95 via-[#0C1A12]/40 to-transparent" />
               
-              <div className="absolute top-4 left-4">
-                <span className="px-3 py-1 bg-primary/80 backdrop-blur-md text-accent-gold text-[10px] uppercase font-bold tracking-widest rounded-full border border-accent-gold/30">
+              <div className="absolute top-4 left-4 z-10">
+                <span className="px-3 py-1 bg-[#123524]/90 backdrop-blur-md text-[#D6AE4D] text-[10px] uppercase font-bold tracking-widest rounded-full border border-[#D6AE4D]/40 shadow-md">
                   {item.category}
                 </span>
               </div>
 
-              <div className="absolute bottom-4 left-4 right-4 text-secondary flex items-end justify-between">
+              <div className="absolute bottom-4 left-4 right-4 text-white z-10 flex items-end justify-between">
                 <div>
-                  <h4 className="font-serif text-lg font-bold group-hover:text-accent-gold transition-colors">
+                  <h4 className="font-serif text-lg font-bold group-hover:text-[#D6AE4D] transition-colors leading-tight">
                     {item.title}
                   </h4>
-                  <p className="text-xs text-secondary/70 line-clamp-1 font-light">{item.description}</p>
+                  <p className="text-xs text-white/80 line-clamp-1 font-light mt-0.5">{item.description}</p>
                 </div>
-                <div className="w-9 h-9 rounded-full bg-gold-gradient text-primary flex items-center justify-center shrink-0 ml-2 group-hover:scale-110 transition-transform">
-                  <FiMaximize2 className="w-4 h-4" />
+                <div 
+                  style={{ borderRadius: '50%', width: '36px', height: '36px', minWidth: '36px', minHeight: '36px' }}
+                  className="bg-black/40 hover:bg-black/60 dark:bg-black/50 dark:hover:bg-black/80 backdrop-blur-md border border-white/30 text-[#D6AE4D] flex items-center justify-center shrink-0 ml-2 group-hover:scale-110 transition-all p-0 shadow-lg"
+                >
+                  <FiMaximize2 className="w-4 h-4 text-[#D6AE4D]" />
                 </div>
               </div>
             </motion.div>
@@ -80,27 +84,27 @@ const GalleryPreview = () => {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
-                className="relative z-10 max-w-4xl w-full bg-primary border border-accent-gold/40 rounded-2xl overflow-hidden shadow-2xl"
+                className="relative z-10 max-w-4xl w-full bg-[#122219] border border-[#D6AE4D]/40 rounded-3xl overflow-hidden shadow-2xl text-white"
               >
                 <button
                   onClick={() => setSelectedImage(null)}
-                  className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-primary/80 text-secondary hover:text-accent-gold flex items-center justify-center border border-accent-gold/30"
+                  className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-black/60 text-white hover:text-[#D6AE4D] flex items-center justify-center border border-white/30 cursor-pointer"
                 >
                   <FiX className="w-6 h-6" />
                 </button>
-                <div className="relative h-96 sm:h-[500px]">
+                <div className="relative h-80 sm:h-[480px]">
                   <img
                     src={selectedImage.image}
                     alt={selectedImage.title}
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <div className="p-6 bg-primary text-secondary flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-t border-accent-gold/20">
+                <div className="p-6 bg-[#122219] text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-t border-[#D6AE4D]/20">
                   <div>
-                    <h3 className="font-serif text-2xl font-bold text-accent-gold">{selectedImage.title}</h3>
-                    <p className="text-sm text-secondary/70 font-light mt-1">{selectedImage.description}</p>
+                    <h3 className="font-serif text-2xl font-bold text-[#D6AE4D]">{selectedImage.title}</h3>
+                    <p className="text-xs text-white/80 font-light mt-1">{selectedImage.description}</p>
                   </div>
-                  <span className="px-4 py-1.5 rounded-full bg-accent-gold/15 text-accent-gold text-xs font-semibold uppercase tracking-wider border border-accent-gold/30 shrink-0">
+                  <span className="px-3 py-1 bg-[#D6AE4D] text-[#123524] text-[10px] font-extrabold uppercase tracking-widest rounded-md shrink-0">
                     {selectedImage.category}
                   </span>
                 </div>

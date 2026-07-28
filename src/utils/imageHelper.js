@@ -39,7 +39,8 @@ export const getProductImage = (item) => {
   if (!item) return '';
   const name = (item.name || '').toLowerCase();
 
-  if (name.includes('rajur') || name.includes('kandi pedha')) return rajurKandiPedhaImg;
+  if (name.includes('surmai') || name.includes('fish rava')) return 'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=800&q=80';
+  if (name.includes('pedha') || name.includes('rajur') || name.includes('kandi')) return rajurKandiPedhaImg;
   if (name.includes('honey') || name.includes('wild forest')) return bhandardaraWildHoneyImg;
   if (name.includes('misal')) return kolhapuriMisalPavImg;
   if (name.includes('vada pav') || name.includes('samosa pav')) return classicMumbaiVadaPavImg;

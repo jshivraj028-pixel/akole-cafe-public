@@ -100,8 +100,8 @@ const Navbar = () => {
       <header
         className={`fixed top-0 left-0 right-0 z-50 h-[74px] sm:h-[82px] px-2.5 sm:px-8 transition-colors duration-300 shadow-md flex items-center ${
           isHome
-            ? 'bg-[#445648] border-b border-[#536958]'
-            : 'bg-[#EFE8D8] border-b border-[#D8CEB8]'
+            ? 'bg-[#445648] dark:bg-[#0F261A] border-b border-[#536958] dark:border-[#D6AE4D]/30'
+            : 'bg-[#EFE8D8] dark:bg-[#121A15] border-b border-[#D8CEB8] dark:border-[#D6AE4D]/30'
         }`}
       >
         <div className="w-full max-w-[1400px] mx-auto flex items-center justify-between gap-1">
@@ -186,33 +186,41 @@ const Navbar = () => {
                   <Search className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2]" />
                 </button>
 
-                {/* Popover Card */}
+                {/* Search Input Popover */}
                 <AnimatePresence>
                   {isSearchOpen && (
                     <motion.div
-                      initial={{ opacity: 0, y: 8, scale: 0.95 }}
+                      initial={{ opacity: 0, y: -10, scale: 0.96 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: 8, scale: 0.95 }}
-                      className="absolute right-0 sm:right-auto sm:-left-28 top-11 w-72 sm:w-80 bg-white p-2 rounded-2xl shadow-2xl border border-gray-200/80 z-50"
+                      exit={{ opacity: 0, y: -10, scale: 0.96 }}
+                      className="fixed sm:absolute top-16 sm:top-12 left-3 right-3 sm:left-auto sm:right-0 sm:w-80 z-50"
                     >
                       <form onSubmit={handleSearchSubmit}>
-                        <div className="w-full bg-[#FAF4E6] border border-[#E5D7BE] rounded-xl py-2 px-3 flex items-center gap-2 shadow-inner">
-                          <Search className="w-4 h-4 text-[#8B9B90] shrink-0 stroke-[2]" />
+                        <div className="w-full bg-[#FAF6EE] dark:bg-[#122219] border-2 border-[#D6AE4D] rounded-2xl py-3 px-4 flex items-center gap-3 shadow-2xl backdrop-blur-2xl">
+                          <Search className="w-4 h-4 text-[#D6AE4D] shrink-0 stroke-[2.5]" />
                           <input
                             type="text"
                             autoFocus
-                            placeholder="Search menu items..."
+                            placeholder="Search delicacies, coffee, misal..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full bg-transparent text-xs text-[#2A2A2A] placeholder-[#9EA59D] focus:outline-none font-sans"
+                            className="w-full bg-transparent text-xs sm:text-sm font-medium text-[#123524] dark:text-white placeholder:text-[#6B7C70]/80 dark:placeholder:text-[#A0B0A5]/75 focus:outline-none border-none outline-none ring-0 font-sans shadow-none truncate pr-1"
                           />
-                          {searchTerm && (
+                          {searchTerm ? (
                             <button
                               type="button"
                               onClick={() => setSearchTerm('')}
-                              className="text-gray-400 hover:text-gray-600 p-0.5"
+                              className="text-gray-400 dark:text-white/70 hover:text-[#D6AE4D] p-1 cursor-pointer"
                             >
-                              <X className="w-3.5 h-3.5" />
+                              <X className="w-4 h-4" />
+                            </button>
+                          ) : (
+                            <button
+                              type="button"
+                              onClick={() => setIsSearchOpen(false)}
+                              className="text-xs font-extrabold text-[#D6AE4D] hover:underline uppercase tracking-wider cursor-pointer whitespace-nowrap"
+                            >
+                              Close
                             </button>
                           )}
                         </div>
@@ -237,15 +245,15 @@ const Navbar = () => {
               {/* 4. Shopping Cart Icon & Slide-Over Cart Drawer Trigger */}
               <button
                 onClick={() => setIsCartDrawerOpen(true)}
-                className={`p-1 sm:p-1.5 transition-colors relative ${
+                className={`p-1 sm:p-1.5 transition-colors relative flex items-center justify-center ${
                   isHome ? 'text-white hover:text-[#D6AE4D]' : 'text-[#354F42] hover:text-[#D6AE4D]'
                 }`}
                 title="Shopping Cart & Quick Order"
                 aria-label="Shopping Cart"
               >
-                <ShoppingCart className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2]" />
+                <ShoppingCart className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.2]" />
                 {totalItemsCount > 0 && (
-                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-[#D6AE4D] text-[#123524] font-extrabold text-[9px] rounded-full flex items-center justify-center shadow-md animate-pulse">
+                  <span className="absolute -top-1.5 -right-1.5 min-w-[17px] h-[17px] px-1 bg-[#D6AE4D] text-[#123524] font-black text-[10px] rounded-full flex items-center justify-center shadow-md border border-[#123524]/20 leading-none">
                     {totalItemsCount}
                   </span>
                 )}

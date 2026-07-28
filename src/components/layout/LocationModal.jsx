@@ -25,7 +25,7 @@ const LocationModal = ({ isOpen, onClose }) => {
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-black/75 backdrop-blur-md">
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-black/80 backdrop-blur-md">
         {/* Backdrop overlay click to close */}
         <motion.div
           initial={{ opacity: 0 }}
@@ -41,23 +41,23 @@ const LocationModal = ({ isOpen, onClose }) => {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.9, y: 20 }}
           transition={{ type: 'spring', stiffness: 350, damping: 25 }}
-          className="relative w-full max-w-4xl bg-[#10291C] border border-[#D6AE4D]/40 rounded-3xl shadow-[0_25px_60px_rgba(0,0,0,0.8)] text-white overflow-hidden z-10 flex flex-col max-h-[90vh]"
+          className="relative w-full max-w-4xl bg-[#10291C] border border-[#D6AE4D]/40 rounded-3xl shadow-[0_25px_60px_rgba(0,0,0,0.8)] text-white overflow-hidden z-10 flex flex-col max-h-[92vh]"
         >
           {/* Modal Header */}
-          <div className="px-5 py-4 bg-gradient-to-r from-[#183B2A] via-[#10291C] to-[#183B2A] border-b border-[#D6AE4D]/25 flex items-center justify-between shrink-0">
+          <div className="px-4 sm:px-5 py-4 bg-gradient-to-r from-[#183B2A] via-[#10291C] to-[#183B2A] border-b border-[#D6AE4D]/25 flex items-center justify-between shrink-0">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-[#D6AE4D]/15 border border-[#D6AE4D]/30 flex items-center justify-center text-[#D6AE4D] shadow-inner">
+              <div className="w-10 h-10 rounded-2xl bg-[#D6AE4D]/15 border border-[#D6AE4D]/30 flex items-center justify-center text-[#D6AE4D] shadow-inner shrink-0">
                 <MapPin className="w-5 h-5 stroke-[2.5]" />
               </div>
               <div>
-                <h3 className="font-serif font-bold text-lg sm:text-xl text-white flex items-center gap-2">
+                <h3 className="font-serif font-bold text-base sm:text-xl text-white flex items-center gap-2">
                   <span>Akole Café Location</span>
-                  <span className="text-[10px] font-sans font-extrabold uppercase px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center gap-1.5">
+                  <span className="text-[9px] sm:text-[10px] font-sans font-extrabold uppercase px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center gap-1.5 shrink-0">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                     <span>Open Now</span>
                   </span>
                 </h3>
-                <p className="text-xs text-[#D6AE4D] font-mono">Interactive Satellite & Map View</p>
+                <p className="text-[11px] sm:text-xs text-[#D6AE4D] font-mono">Interactive Satellite & Map View</p>
               </div>
             </div>
 
@@ -66,7 +66,7 @@ const LocationModal = ({ isOpen, onClose }) => {
               <div className="hidden sm:flex items-center bg-[#0A1A12] border border-[#D6AE4D]/30 p-1 rounded-xl gap-1">
                 <button
                   onClick={() => setMapType('k')}
-                  className={`px-3 py-1 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 ${
+                  className={`px-3 py-1 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer ${
                     mapType === 'k'
                       ? 'bg-gradient-to-r from-[#D6AE4D] to-[#F3E5AB] text-[#123524] font-extrabold shadow-sm'
                       : 'text-white/70 hover:text-white'
@@ -77,7 +77,7 @@ const LocationModal = ({ isOpen, onClose }) => {
                 </button>
                 <button
                   onClick={() => setMapType('m')}
-                  className={`px-3 py-1 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 ${
+                  className={`px-3 py-1 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer ${
                     mapType === 'm'
                       ? 'bg-gradient-to-r from-[#D6AE4D] to-[#F3E5AB] text-[#123524] font-extrabold shadow-sm'
                       : 'text-white/70 hover:text-white'
@@ -88,7 +88,7 @@ const LocationModal = ({ isOpen, onClose }) => {
                 </button>
                 <button
                   onClick={() => setMapType('h')}
-                  className={`px-3 py-1 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 ${
+                  className={`px-3 py-1 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer ${
                     mapType === 'h'
                       ? 'bg-gradient-to-r from-[#D6AE4D] to-[#F3E5AB] text-[#123524] font-extrabold shadow-sm'
                       : 'text-white/70 hover:text-white'
@@ -102,7 +102,7 @@ const LocationModal = ({ isOpen, onClose }) => {
               {/* Close Button */}
               <button
                 onClick={onClose}
-                className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 text-white/80 hover:text-white flex items-center justify-center transition-colors ml-2"
+                className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 text-white/80 hover:text-white flex items-center justify-center transition-colors ml-1 cursor-pointer"
                 aria-label="Close Map Modal"
               >
                 <X className="w-5 h-5 stroke-[2.5]" />
@@ -114,7 +114,7 @@ const LocationModal = ({ isOpen, onClose }) => {
           <div className="flex sm:hidden items-center justify-center bg-[#0A1A12] border-b border-[#D6AE4D]/20 p-2 gap-1.5">
             <button
               onClick={() => setMapType('k')}
-              className={`px-3 py-1 rounded-lg text-xs font-bold transition-all flex items-center gap-1 ${
+              className={`px-3 py-1 rounded-lg text-xs font-bold transition-all flex items-center gap-1 cursor-pointer ${
                 mapType === 'k' ? 'bg-[#D6AE4D] text-[#123524]' : 'text-white/70'
               }`}
             >
@@ -122,7 +122,7 @@ const LocationModal = ({ isOpen, onClose }) => {
             </button>
             <button
               onClick={() => setMapType('m')}
-              className={`px-3 py-1 rounded-lg text-xs font-bold transition-all flex items-center gap-1 ${
+              className={`px-3 py-1 rounded-lg text-xs font-bold transition-all flex items-center gap-1 cursor-pointer ${
                 mapType === 'm' ? 'bg-[#D6AE4D] text-[#123524]' : 'text-white/70'
               }`}
             >
@@ -130,7 +130,7 @@ const LocationModal = ({ isOpen, onClose }) => {
             </button>
             <button
               onClick={() => setMapType('h')}
-              className={`px-3 py-1 rounded-lg text-xs font-bold transition-all flex items-center gap-1 ${
+              className={`px-3 py-1 rounded-lg text-xs font-bold transition-all flex items-center gap-1 cursor-pointer ${
                 mapType === 'h' ? 'bg-[#D6AE4D] text-[#123524]' : 'text-white/70'
               }`}
             >
@@ -139,7 +139,7 @@ const LocationModal = ({ isOpen, onClose }) => {
           </div>
 
           {/* Map View Frame */}
-          <div className="relative w-full h-[350px] sm:h-[420px] bg-[#0A1A12]">
+          <div className="relative w-full h-[280px] sm:h-[400px] bg-[#0A1A12]">
             <iframe
               title="Akole Café Satellite Map"
               src={mapIframeSrc}
@@ -154,7 +154,7 @@ const LocationModal = ({ isOpen, onClose }) => {
           </div>
 
           {/* Modal Footer & Info Bar */}
-          <div className="p-4 sm:p-5 bg-gradient-to-b from-[#0F261B] to-[#0A1A12] border-t border-[#D6AE4D]/20 space-y-3 shrink-0">
+          <div className="p-4 sm:p-5 bg-gradient-to-b from-[#0F261B] to-[#0A1A12] border-t border-[#D6AE4D]/20 space-y-3 shrink-0 overflow-y-auto">
             {/* Address & Hours */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
               <div className="md:col-span-2 bg-[#183B2A]/60 border border-[#D6AE4D]/20 p-3 rounded-2xl flex items-start justify-between gap-3">
@@ -167,7 +167,7 @@ const LocationModal = ({ isOpen, onClose }) => {
                 </div>
                 <button
                   onClick={handleCopyAddress}
-                  className="p-1.5 rounded-lg bg-white/10 hover:bg-[#D6AE4D]/20 text-[#D6AE4D] transition-colors shrink-0"
+                  className="p-1.5 rounded-lg bg-white/10 hover:bg-[#D6AE4D]/20 text-[#D6AE4D] transition-colors shrink-0 cursor-pointer"
                   title="Copy Address"
                 >
                   {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
@@ -176,25 +176,25 @@ const LocationModal = ({ isOpen, onClose }) => {
 
               <div className="bg-[#183B2A]/60 border border-[#D6AE4D]/20 p-3 rounded-2xl space-y-1.5 flex flex-col justify-center">
                 <div className="flex items-center gap-2 text-white/80">
-                  <Clock className="w-4 h-4 text-[#D6AE4D]" />
+                  <Clock className="w-4 h-4 text-[#D6AE4D] shrink-0" />
                   <span>8:00 AM – 10:30 PM (Daily)</span>
                 </div>
                 <div className="flex items-center gap-2 text-white/80">
-                  <Phone className="w-4 h-4 text-[#D6AE4D]" />
+                  <Phone className="w-4 h-4 text-[#D6AE4D] shrink-0" />
                   <a href="tel:+918432387670" className="hover:text-[#D6AE4D] transition-colors">+91 84323 87670</a>
                 </div>
               </div>
             </div>
 
-            {/* Action Buttons */}
-            <div className="flex flex-wrap items-center justify-between gap-2.5 pt-1">
+            {/* Responsive Action Buttons (No Text Breaking on Mobile) */}
+            <div className="flex flex-col sm:flex-row items-center gap-2.5 pt-1">
               <a
                 href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(mapsSearchQuery)}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#D6AE4D] via-[#F3E5AB] to-[#B89035] hover:from-[#E5BC58] hover:via-[#FFF3C4] hover:to-[#C99D3B] text-[#123524] font-montserrat font-extrabold text-xs uppercase tracking-wider shadow-md hover:shadow-lg transition-all"
+                className="w-full sm:flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-[#D6AE4D] via-[#F3E5AB] to-[#B89035] hover:from-[#E5BC58] hover:via-[#FFF3C4] hover:to-[#C99D3B] text-[#123524] font-montserrat font-black text-xs uppercase tracking-wider shadow-md hover:shadow-lg transition-all whitespace-nowrap"
               >
-                <Navigation className="w-4 h-4 fill-[#123524]" />
+                <Navigation className="w-4 h-4 fill-[#123524] shrink-0" />
                 <span>Get Live Directions</span>
               </a>
 
@@ -202,11 +202,11 @@ const LocationModal = ({ isOpen, onClose }) => {
                 href={`https://earth.google.com/web/search/${encodeURIComponent(mapsSearchQuery)}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/15 text-xs font-semibold text-white transition-all"
+                className="w-full sm:flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-white/10 hover:bg-white/20 border border-white/15 text-xs font-bold text-white transition-all whitespace-nowrap"
               >
-                <Globe className="w-4 h-4 text-[#D6AE4D]" />
+                <Globe className="w-4 h-4 text-[#D6AE4D] shrink-0" />
                 <span>Google Earth 3D</span>
-                <ExternalLink className="w-3 h-3 text-white/50" />
+                <ExternalLink className="w-3.5 h-3.5 text-white/50 shrink-0" />
               </a>
             </div>
           </div>
