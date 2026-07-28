@@ -156,6 +156,18 @@ export const toggleBanUserAPI = async (id, isBanned) => {
   return data;
 };
 
+// Check User Status (Ban / Active)
+export const checkUserStatusAPI = async (idOrEmail) => {
+  if (!idOrEmail) return { isBanned: false };
+  try {
+    const res = await fetch(`${API_BASE_URL}/users/status/${encodeURIComponent(idOrEmail)}`);
+    if (!res.ok) return { isBanned: false };
+    return await res.json();
+  } catch (err) {
+    return { isBanned: false };
+  }
+};
+
 // User / Admin Login - Single Source of Truth via MongoDB Atlas
 // User / Admin Login - Single Source of Truth via MongoDB Atlas
 export const userLoginAPI = async (email, password) => {

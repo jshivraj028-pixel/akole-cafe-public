@@ -1,12 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Coffee, MapPin, Sparkles, Award } from 'lucide-react';
+import { Coffee, MapPin, Sparkles, AlertOctagon } from 'lucide-react';
 import AuthCard from '../components/Auth/AuthCard';
 import LoginForm from '../components/Auth/LoginForm';
 import logoEmblem from '../assets/logo-emblem.png';
 
 const Login = () => {
+  const location = useLocation();
+  const isBannedReason = new URLSearchParams(location.search).get('reason') === 'banned';
+
   return (
     <div className="min-h-screen w-full flex flex-col lg:flex-row font-montserrat bg-[#F9F6F0] dark:bg-[#121A15] overflow-x-hidden">
       
@@ -113,6 +116,19 @@ const Login = () => {
             title="Welcome Back"
             subtitle="Sign in to continue your Akole Cafe experience."
           >
+            {isBannedReason && (
+              <motion.div
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mb-4 p-3 rounded-xl bg-red-500/10 border border-red-500/30 flex items-start gap-2 text-red-600 dark:text-red-400 text-xs"
+              >
+                <AlertOctagon className="w-5 h-5 shrink-0 mt-0.5" />
+                <div>
+                  <strong className="block font-bold">Account Suspended / Banned 🚫</strong>
+                  <span>Your account has been banned by the Administrator. Access has been revoked.</span>
+                </div>
+              </motion.div>
+            )}
             <LoginForm />
           </AuthCard>
         </div>

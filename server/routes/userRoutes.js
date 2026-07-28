@@ -40,6 +40,42 @@ router.get('/stats', async (req, res) => {
   }
 });
 
+// GET check user ban & account status
+router.get('/status/:idOrEmail', async (req, res) => {
+  try {
+    const { idOrEmail } = req.params;
+    if (!idOrEmail || idOrEmail === 'undefined' || idOrEmail === 'null') {
+      return res.status(400).json({ message: 'User ID or Email is required' });
+    }
+
+    let user = null;
+    if (idOrEmail.match(/^[0-9a-fA-F]{24}$/)) {
+      user = await User.findById(idOrEmail);
+    }
+    if (!user) {
+      const cleanInput = idOrEmail.toLowerCase().trim();
+      user = await User.findOne({ 
+        $or: [{ email: cleanInput }, { name: cleanInput }] 
+      });
+    }
+
+    if (!user) {
+      return res.json({ exists: false, isBanned: false });
+    }
+
+    res.json({
+      exists: true,
+      id: user._id,
+      email: user.email,
+      name: user.name,
+      isBanned: Boolean(user.isBanned),
+      role: user.role
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Error checking user status', error: error.message });
+  }
+});
+
 // PUT toggle user ban status (Admin)
 router.put('/:id/ban', async (req, res) => {
   try {

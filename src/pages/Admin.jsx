@@ -436,6 +436,9 @@ const Admin = () => {
       const newBanState = !user.isBanned;
       setUsers(prev => prev.map(u => (u._id === user._id || u.email === user.email) ? { ...u, isBanned: newBanState } : u));
       await toggleBanUserAPI(user._id || user.id, newBanState);
+      window.dispatchEvent(new CustomEvent('akole_user_banned', {
+        detail: { email: user.email, id: user._id || user.id, isBanned: newBanState }
+      }));
       showToast(`User "${user.name}" is now ${newBanState ? 'Banned' : 'Active'}`);
       logActivity('USER_ACTION', newBanState ? 'User Banned' : 'User Unbanned', user.name, `Account status changed to ${newBanState ? 'Banned 🚫' : 'Active 🟢'}`, 'bg-indigo-500/20 text-indigo-300 border-indigo-500/40');
       loadData(true);

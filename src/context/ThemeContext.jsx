@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import MenuItemDetailModal from '../components/menu/MenuItemDetailModal';
+import { checkUserStatusAPI } from '../services/api';
 
 const ThemeContext = createContext();
 
@@ -58,6 +59,87 @@ export const ThemeProvider = ({ children }) => {
       document.documentElement.classList.remove('dark');
     }
   }, [isDarkMode]);
+
+  // Realtime & Periodic Ban Status Check for Logged-In User
+  useEffect(() => {
+    let intervalId;
+
+    const checkCurrentUserBanStatus = async () => {
+      try {
+        const savedUserStr = localStorage.getItem('akole_user');
+        if (!savedUserStr) return;
+
+        const userObj = JSON.parse(savedUserStr);
+        const identifier = userObj?.id || userObj?._id || userObj?.email || localStorage.getItem('akole_user_email');
+
+        if (!identifier) return;
+
+        // Do not check main administrator account
+        if (userObj?.role === 'admin' || userObj?.email?.toLowerCase() === 'akolecafe@gmail.com') {
+          return;
+        }
+
+        const res = await checkUserStatusAPI(identifier);
+        if (res && res.isBanned) {
+          // Banned by Admin! Clear all user sessions immediately
+          localStorage.removeItem('akole_user');
+          localStorage.removeItem('akole_token');
+          localStorage.removeItem('akole_is_authenticated');
+          localStorage.removeItem('akole_user_email');
+          localStorage.removeItem('akole_cart');
+
+          setIsAuthenticated(false);
+          setUserEmail('');
+
+          showToast('⛔ Your account has been suspended by Administrator.', 'error');
+
+          if (window.location.pathname !== '/login') {
+            window.location.href = '/login?reason=banned';
+          }
+        }
+      } catch (e) {
+        // Ignore fetch errors
+      }
+    };
+
+    if (isAuthenticated || localStorage.getItem('akole_user')) {
+      checkCurrentUserBanStatus();
+      intervalId = setInterval(checkCurrentUserBanStatus, 3000);
+    }
+
+    const handleCustomBanEvent = (e) => {
+      const savedUserStr = localStorage.getItem('akole_user');
+      if (!savedUserStr) return;
+      const userObj = JSON.parse(savedUserStr);
+      const bannedEmail = e.detail?.email?.toLowerCase();
+      const bannedId = e.detail?.id;
+
+      if (
+        (bannedEmail && userObj.email?.toLowerCase() === bannedEmail) ||
+        (bannedId && (userObj.id === bannedId || userObj._id === bannedId))
+      ) {
+        if (e.detail?.isBanned) {
+          localStorage.removeItem('akole_user');
+          localStorage.removeItem('akole_token');
+          localStorage.removeItem('akole_is_authenticated');
+          localStorage.removeItem('akole_user_email');
+          localStorage.removeItem('akole_cart');
+
+          setIsAuthenticated(false);
+          setUserEmail('');
+          showToast('⛔ Your account has been suspended by Administrator.', 'error');
+          window.location.href = '/login?reason=banned';
+        }
+      }
+    };
+
+    window.addEventListener('akole_user_banned', handleCustomBanEvent);
+
+    return () => {
+      if (intervalId) clearInterval(intervalId);
+      window.removeEventListener('akole_user_banned', handleCustomBanEvent);
+    };
+  }, [isAuthenticated, userEmail]);
 
   const loginUser = (email) => {
     setIsAuthenticated(true);
