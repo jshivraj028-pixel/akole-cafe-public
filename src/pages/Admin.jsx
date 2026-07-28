@@ -304,7 +304,7 @@ const Admin = () => {
       description: '',
       price: '',
       rating: 4.8,
-      image: 'https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=800&q=80',
+      image: '',
       prepTime: '10 mins',
       calories: '200 kcal',
       isBestseller: false,

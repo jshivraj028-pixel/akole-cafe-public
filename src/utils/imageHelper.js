@@ -52,17 +52,28 @@ import kesarDryFruitPedhaImg from '../assets/kesar-dry-fruit-pedha.png';
 
 export const getProductImage = (item) => {
   if (!item) return '';
-
-  // If item has a custom uploaded/provided image (URL/Base64/Upload), use it if valid
-  const customImg = item.image || item.imageUrl;
-  if (customImg && typeof customImg === 'string' && customImg.trim() !== '' && !customImg.includes('hero-coffee.png') && (customImg.startsWith('http') || customImg.startsWith('data:') || customImg.startsWith('/uploads') || customImg.startsWith('blob:'))) {
-    return customImg;
-  }
-
   const name = (item.name || '').toLowerCase();
+
+  // 1. Keyword matching for high-res cafe assets (ALWAYS PREVAILS FOR KNOWN ITEMS)
+  // Samosa (All varieties)
+  if (name.includes('samosa')) return crispyPunjabiSamosaPavImg;
 
   // Surmai Fish Fry
   if (name.includes('surmai') || name.includes('fish rava')) return surmaiFishRavaFryImg;
+
+  // Vada Pav Varieties
+  if (name.includes('schezwan') && name.includes('vada')) return schezwanCrispyVadaPavImg;
+  if (name.includes('cheese lava') || name.includes('lava vada')) return cheeseLavaVadaPavImg;
+  if (name.includes('butter tossed') || name.includes('butter vada')) return butterTossedVadaPavImg;
+  if (name.includes('vada')) return classicMumbaiVadaPavImg;
+
+  // Misal Specific Mappings
+  if (name.includes('nashik') || name.includes('kala rassa') || name.includes('kala misal')) return nashikKalaRassaMisalImg;
+  if (name.includes('tandoori') || name.includes('smoked misal')) return tandooriSmokedMisalImg;
+  if (name.includes('cheese butter misal') || name.includes('cheese misal')) return cheeseButterMisalImg;
+  if (name.includes('dahi misal')) return dahiMisalPavImg;
+  if (name.includes('puneri misal')) return puneriMisalPavImg;
+  if (name.includes('kolhapuri misal') || name.includes('misal')) return kolhapuriMisalPavImg;
 
   // Pedha Specific Mappings
   if (name.includes('kesar dry fruit pedha') || name.includes('kesar pedha')) return kesarDryFruitPedhaImg;
@@ -73,31 +84,20 @@ export const getProductImage = (item) => {
   if (name.includes('honey') || name.includes('wild forest')) return bhandardaraWildHoneyImg;
   if (name.includes('white butter') || name.includes('loni')) return villageWhiteButterImg;
 
-  // Misal Specific Mappings
-  if (name.includes('nashik') || name.includes('kala rassa') || name.includes('kala misal')) return nashikKalaRassaMisalImg;
-  if (name.includes('tandoori') || name.includes('smoked misal')) return tandooriSmokedMisalImg;
-  if (name.includes('cheese butter misal') || name.includes('cheese misal')) return cheeseButterMisalImg;
-  if (name.includes('dahi misal')) return dahiMisalPavImg;
-  if (name.includes('puneri misal')) return puneriMisalPavImg;
-  if (name.includes('kolhapuri misal') || name.includes('misal')) return kolhapuriMisalPavImg;
-
-  // Vada Pav & Samosa Mappings (Broad matching for any samosa or vada pav)
-  if (name.includes('schezwan') && name.includes('vada')) return schezwanCrispyVadaPavImg;
-  if (name.includes('cheese lava') || name.includes('lava vada')) return cheeseLavaVadaPavImg;
-  if (name.includes('butter tossed') || name.includes('butter vada')) return butterTossedVadaPavImg;
-  if (name.includes('samosa')) return crispyPunjabiSamosaPavImg;
-  if (name.includes('vada')) return classicMumbaiVadaPavImg;
-
   // Pav Bhaji & Patra
   if (name.includes('pav bhaji')) return butterLoadedPavBhajiImg;
-  if (name.includes('alu vadi') || name.includes('patra')) return crispyAluVadiPatraImg;
-  if (name.includes('hurda')) return crispyAluVadiPatraImg;
+  if (name.includes('alu vadi') || name.includes('patra') || name.includes('hurda')) return crispyAluVadiPatraImg;
   if (name.includes('bhutta') || name.includes('corn')) return villageWhiteButterImg;
 
-  // Chinese & Fast Food
+  // Rice / Biryani / Chinese
+  if (name.includes('manchurian')) return vegManchurianDryImg;
   if (name.includes('hakka') || name.includes('noodles')) return vegHakkaNoodlesImg;
-  if (name.includes('pasta') || name.includes('arrabbiata')) return spicyRedSauceArrabbiataPastaImg;
+  if (name.includes('dal tadka') || name.includes('jeera rice')) return dalTadkaJeeraRiceImg;
+  if (name.includes('rice') || name.includes('bhaat') || name.includes('fried rice') || (name.includes('schezwan') && !name.includes('vada'))) return schezwanFriedRiceImg;
   if (name.includes('biryani')) return specialChickenDumBiryaniImg;
+
+  // Fast food & Desserts
+  if (name.includes('pasta') || name.includes('arrabbiata')) return spicyRedSauceArrabbiataPastaImg;
   if (name.includes('gulab jamun')) return shahiGulabJamunImg;
   if (name.includes('chocolate fudge') || name.includes('fudge shake')) return thickChocolateFudgeShakeImg;
   if (name.includes('mattha') || name.includes('buttermilk')) return spicedVillageMatthaImg;
@@ -120,18 +120,27 @@ export const getProductImage = (item) => {
   if (name.includes('shahi dry fruit') || name.includes('dry fruit sundae')) return kesariAmrakhandIceCreamImg;
   if (name.includes('sundae') || name.includes('overload')) return ultimateChocolateSundaeImg;
   if (name.includes('amrakhand') || name.includes('kesari amrakhand')) return kesariAmrakhandIceCreamImg;
-  if (name.includes('strawberry')) return rainbowUnicornIceCreamImg;
-  if (name.includes('rainbow') || name.includes('unicorn')) return rainbowUnicornIceCreamImg;
+  if (name.includes('strawberry') || name.includes('rainbow') || name.includes('unicorn')) return rainbowUnicornIceCreamImg;
   if (name.includes('butterscotch') || name.includes('golden butterscotch')) return goldenButterscotchCrunchImg;
-  if (name.includes('rice') || name.includes('fried rice') || (name.includes('schezwan') && !name.includes('vada'))) return schezwanFriedRiceImg;
-  if (name.includes('manchurian')) return vegManchurianDryImg;
-  if (name.includes('dal tadka') || name.includes('jeera rice')) return dalTadkaJeeraRiceImg;
   if (name.includes('paneer chilli') || name.includes('chilli fry')) return 'https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?auto=format&fit=crop&w=800&q=80';
   if (name.includes('pizza')) return 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80';
   if (name.includes('burger')) return 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80';
   if (name.includes('sandwich')) return 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=800&q=80';
   if (name.includes('coffee')) return hotCappuccinoCoffeeImg;
 
-  // Generic fallback if item.image exists or return samosa/snack default instead of coffee for non-beverages
-  return customImg || crispyPunjabiSamosaPavImg;
+  // 2. Check if user provided a custom image URL (ignoring default coffee placeholders)
+  const customImg = item.image || item.imageUrl;
+  if (
+    customImg && 
+    typeof customImg === 'string' && 
+    customImg.trim() !== '' && 
+    !customImg.includes('hero-coffee.png') && 
+    !customImg.includes('photo-1541167760496-1628856ab772') && 
+    (customImg.startsWith('http') || customImg.startsWith('data:') || customImg.startsWith('/uploads') || customImg.startsWith('blob:'))
+  ) {
+    return customImg;
+  }
+
+  // 3. Fallback default to Samosa/Snack asset instead of coffee
+  return crispyPunjabiSamosaPavImg;
 };
