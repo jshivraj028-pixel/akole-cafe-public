@@ -25,7 +25,20 @@ export const ThemeProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(() => {
     try {
       const saved = localStorage.getItem('akole_user');
-      return saved ? JSON.parse(saved) : null;
+      let parsed = saved ? JSON.parse(saved) : null;
+      const savedEmail = localStorage.getItem('akole_user_email') || parsed?.email || '';
+      const cleanEmail = (savedEmail || '').toLowerCase().trim();
+      const savedAvatar = cleanEmail ? localStorage.getItem(`akole_avatar_${cleanEmail}`) : null;
+      if (savedAvatar) {
+        if (!parsed) {
+          parsed = { email: savedEmail, name: savedEmail.split('@')[0] };
+        }
+        parsed.avatar = savedAvatar;
+        try {
+          localStorage.setItem('akole_user', JSON.stringify(parsed));
+        } catch (e) {}
+      }
+      return parsed;
     } catch (e) {
       return null;
     }
@@ -194,16 +207,41 @@ export const ThemeProvider = ({ children }) => {
   const loginUser = (email, userObj = null) => {
     setIsAuthenticated(true);
     setUserEmail(email);
-    if (userObj) {
-      setCurrentUser(userObj);
+    const cleanEmail = (email || '').toLowerCase().trim();
+    const savedAvatar = cleanEmail ? localStorage.getItem(`akole_avatar_${cleanEmail}`) : null;
+    
+    let finalUser = userObj || currentUser;
+    if (finalUser) {
+      if (savedAvatar && !finalUser.avatar) {
+        finalUser = { ...finalUser, avatar: savedAvatar };
+      }
+      setCurrentUser(finalUser);
+      try {
+        localStorage.setItem('akole_user', JSON.stringify(finalUser));
+      } catch (e) {}
     }
+    
     try {
       localStorage.setItem('akole_is_authenticated', JSON.stringify(true));
       localStorage.setItem('akole_user_email', email);
-      if (userObj) {
-        localStorage.setItem('akole_user', JSON.stringify(userObj));
-      }
     } catch (e) {}
+  };
+
+  const updateUserAvatar = (base64Url) => {
+    const email = userEmail || currentUser?.email || localStorage.getItem('akole_user_email') || '';
+    const cleanEmail = (email || '').toLowerCase().trim();
+    if (cleanEmail) {
+      try {
+        localStorage.setItem(`akole_avatar_${cleanEmail}`, base64Url);
+      } catch (e) {}
+    }
+    setCurrentUser((prev) => {
+      const updated = { ...(prev || { email }), avatar: base64Url };
+      try {
+        localStorage.setItem('akole_user', JSON.stringify(updated));
+      } catch (e) {}
+      return updated;
+    });
   };
 
   const logoutUser = () => {
@@ -287,6 +325,7 @@ export const ThemeProvider = ({ children }) => {
         userEmail,
         currentUser,
         setCurrentUser,
+        updateUserAvatar,
         loginUser,
         logoutUser,
         wishlistItems,

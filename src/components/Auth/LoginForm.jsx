@@ -76,9 +76,16 @@ const LoginForm = () => {
 
     try {
       const data = await userLoginAPI(email, password);
+      const cleanEmail = (email || '').toLowerCase().trim();
+      const savedAvatar = localStorage.getItem(`akole_avatar_${cleanEmail}`);
+      const userWithAvatar = {
+        ...(data.user || {}),
+        avatar: data.user?.avatar || savedAvatar || ''
+      };
+
       localStorage.setItem('akole_token', data.token);
-      localStorage.setItem('akole_user', JSON.stringify(data.user));
-      loginUser(email, data.user);
+      localStorage.setItem('akole_user', JSON.stringify(userWithAvatar));
+      loginUser(email, userWithAvatar);
 
       if (data.isAdmin || email.toLowerCase() === 'akolecafe@gmail.com') {
         localStorage.setItem('akole_admin_token', data.token);

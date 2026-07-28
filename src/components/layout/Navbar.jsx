@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, MapPin, ShoppingCart, Sun, Moon, Menu, X, User, ChevronDown, Settings, Package, ShoppingBag, Heart, ShieldCheck, LogOut, LogIn, ChevronRight, Sparkles, BookOpen, Store } from 'lucide-react';
+import { Search, MapPin, ShoppingCart, Sun, Moon, Menu, X, User, ChevronDown, Settings, Package, ShoppingBag, Heart, ShieldCheck, LogOut, LogIn, ChevronRight, Sparkles, BookOpen, Store, LayoutGrid } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import { useTheme } from '../../context/ThemeContext';
 import MobileMenu from './MobileMenu';
@@ -31,9 +31,9 @@ const Navbar = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { totalItemsCount } = useCart();
-  const { isSearchOpen, setIsSearchOpen, isDarkMode, toggleDarkMode, wishlistItems, isAuthenticated, userEmail, logoutUser, showToast } = useTheme();
+  const { isSearchOpen, setIsSearchOpen, isDarkMode, toggleDarkMode, wishlistItems, isAuthenticated, userEmail, currentUser, logoutUser, showToast } = useTheme();
 
-  const loggedUser = (() => {
+  const savedUser = (() => {
     try {
       const saved = localStorage.getItem('akole_user');
       return saved ? JSON.parse(saved) : null;
@@ -41,6 +41,8 @@ const Navbar = () => {
       return null;
     }
   })();
+
+  const loggedUser = currentUser || savedUser;
 
   const userInitial = (loggedUser?.name?.[0] || userEmail?.[0] || 'S').toUpperCase();
 
@@ -316,7 +318,7 @@ const Navbar = () => {
                         className="flex items-center justify-between px-2.5 py-1.5 rounded-xl hover:bg-black/5 transition-colors"
                       >
                         <div className="flex items-center gap-2">
-                          <User className="w-3.5 h-3.5 text-gray-600" />
+                          <LayoutGrid className="w-3.5 h-3.5 text-gray-600" />
                           <span>Dashboard</span>
                         </div>
                       </Link>
@@ -327,7 +329,7 @@ const Navbar = () => {
                         className="flex items-center justify-between px-2.5 py-1.5 rounded-xl hover:bg-black/5 transition-colors"
                       >
                         <div className="flex items-center gap-2">
-                          <ShieldCheck className="w-3.5 h-3.5 text-gray-600" />
+                          <User className="w-3.5 h-3.5 text-gray-600" />
                           <span>My Profile</span>
                         </div>
                       </Link>

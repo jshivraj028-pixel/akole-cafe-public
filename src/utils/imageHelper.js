@@ -74,6 +74,9 @@ import mixVegBhajiImg from '../assets/mix-veg-bhaji.png';
 
 export const getProductImage = (item) => {
   if (!item) return '';
+  if (item.image && typeof item.image === 'string' && item.image.trim() !== '') {
+    return item.image;
+  }
   const name = (item.name || '').toLowerCase();
 
   // 1. Keyword matching for high-res cafe assets (ALWAYS PREVAILS FOR KNOWN ITEMS)

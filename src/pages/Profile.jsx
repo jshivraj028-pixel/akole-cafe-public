@@ -35,7 +35,7 @@ import {
 const Profile = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { currentUser, setCurrentUser, wishlist, showToast, logout } = useTheme();
+  const { currentUser, setCurrentUser, updateUserAvatar, wishlist, showToast, logout } = useTheme();
 
   // Saved user sync
   const savedUserStr = typeof window !== 'undefined' ? localStorage.getItem('akole_user') : null;
@@ -72,11 +72,15 @@ const Profile = () => {
     const userToSync = currentUser || (localStorage.getItem('akole_user') ? JSON.parse(localStorage.getItem('akole_user')) : null);
     if (userToSync) {
       const email = userToSync.email || localStorage.getItem('akole_user_email') || 'mayurgambhire4565@gmail.com';
+      const cleanEmail = email.toLowerCase().trim();
+      const savedAvatar = localStorage.getItem(`akole_avatar_${cleanEmail}`);
+      const avatarToUse = userToSync.avatar || savedAvatar || '';
+
       const name = userToSync.name || userToSync.username || 'Mayur Gambhire';
       setUserName(name);
       setUserEmailAddress(email);
       if (userToSync.phone) setUserPhone(userToSync.phone);
-      if (userToSync.avatar) setUserAvatar(userToSync.avatar);
+      if (avatarToUse) setUserAvatar(avatarToUse);
     }
   }, [currentUser]);
 
@@ -122,12 +126,9 @@ const Profile = () => {
       reader.onloadend = () => {
         const base64Url = reader.result;
         setUserAvatar(base64Url);
-        const updated = {
-          ...(currentUser || {}),
-          avatar: base64Url
-        };
-        setCurrentUser(updated);
-        localStorage.setItem('akole_user', JSON.stringify(updated));
+        if (updateUserAvatar) {
+          updateUserAvatar(base64Url);
+        }
         showToast('Profile photo updated successfully!', 'success');
       };
       reader.readAsDataURL(file);
@@ -144,8 +145,12 @@ const Profile = () => {
       email: userEmailAddress,
       avatar: userAvatar
     };
-    setCurrentUser(updated);
-    localStorage.setItem('akole_user', JSON.stringify(updated));
+    if (updateUserAvatar && userAvatar) {
+      updateUserAvatar(userAvatar);
+    } else {
+      setCurrentUser(updated);
+      localStorage.setItem('akole_user', JSON.stringify(updated));
+    }
     localStorage.setItem('akole_user_email', userEmailAddress);
     showToast('Profile settings saved successfully!', 'success');
   };
