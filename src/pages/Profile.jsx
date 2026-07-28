@@ -407,91 +407,207 @@ const Profile = () => {
               animate={{ opacity: 1, y: 0 }}
               className="max-w-4xl mx-auto space-y-6"
             >
-              {/* DETAILS CARD */}
-              <div className="p-6 sm:p-8 rounded-3xl bg-white/90 dark:bg-[#1D2C22] border border-[#D6AE4D]/30 shadow-xl space-y-6">
+              {/* DETAILS & EDIT FORM CARD */}
+              <div className="p-6 sm:p-10 rounded-3xl bg-gradient-to-br from-[#143322] via-[#0F261A] to-[#0A1A11] border-2 border-[#D6AE4D]/50 shadow-2xl space-y-8 text-white">
                 
-                <div className="flex items-center justify-between border-b border-[#D6AE4D]/20 pb-4">
-                  <h3 className="font-serif text-2xl font-bold text-[#123524] dark:text-white flex items-center gap-2.5">
-                    <FiUser className="text-[#D6AE4D]" />
-                    <span>Member Personal Information</span>
-                  </h3>
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-[#D6AE4D]/30 pb-5 gap-3">
+                  <div>
+                    <h3 className="font-serif text-2xl sm:text-3xl font-extrabold text-white flex items-center gap-3">
+                      <FiUser className="text-[#D6AE4D]" />
+                      <span>Member Profile & Delivery Address</span>
+                    </h3>
+                    <p className="text-xs text-[#D6AE4D]/80 font-light mt-1">
+                      Update your account details below and click "SAVE CHANGES" to update your profile.
+                    </p>
+                  </div>
 
                   <button
-                    onClick={() => setIsEditing(true)}
-                    className="text-xs text-[#D6AE4D] font-bold uppercase tracking-wider hover:underline flex items-center gap-1 cursor-pointer"
+                    type="button"
+                    onClick={() => setIsEditing(!isEditing)}
+                    className="px-4 py-2 rounded-xl bg-[#D6AE4D]/15 border border-[#D6AE4D]/40 text-[#D6AE4D] text-xs font-bold uppercase tracking-wider hover:bg-[#D6AE4D] hover:text-[#0C1E14] transition-all cursor-pointer flex items-center gap-1.5"
                   >
-                    <FiEdit3 /> Edit Info
+                    <FiEdit3 className="w-3.5 h-3.5" />
+                    <span>{isEditing ? 'View Mode' : 'Edit All Fields'}</span>
                   </button>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-xs">
-                  
-                  <div className="p-4 rounded-2xl bg-[#FAF6EE] dark:bg-[#121A15] border border-[#E5DDD0] dark:border-[#D6AE4D]/20">
-                    <span className="text-[10px] uppercase font-bold text-[#8B9B90] block mb-1">Full Member Name</span>
-                    <p className="font-serif text-base font-bold text-[#123524] dark:text-white flex items-center gap-2">
-                      <FiUser className="text-[#D6AE4D]" /> {userName}
-                    </p>
-                  </div>
+                <form onSubmit={handleSaveProfile} className="space-y-8">
+                  {/* Personal Information Grid */}
+                  <div className="space-y-4">
+                    <h4 className="font-serif text-lg font-bold text-[#D6AE4D] uppercase tracking-wider flex items-center gap-2">
+                      <Sparkles className="w-4 h-4 text-[#D6AE4D]" />
+                      <span>Personal Information</span>
+                    </h4>
 
-                  <div className="p-4 rounded-2xl bg-[#FAF6EE] dark:bg-[#121A15] border border-[#E5DDD0] dark:border-[#D6AE4D]/20">
-                    <span className="text-[10px] uppercase font-bold text-[#8B9B90] block mb-1">Registered Email Address</span>
-                    <p className="font-serif text-base font-bold text-[#123524] dark:text-white flex items-center gap-2 truncate">
-                      <FiMail className="text-[#D6AE4D] shrink-0" /> {userEmailAddress}
-                    </p>
-                  </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 text-xs">
+                      
+                      {/* Full Name */}
+                      <div className="p-4 rounded-2xl bg-[#09170F]/90 border border-[#D6AE4D]/35 space-y-1.5 focus-within:border-[#D6AE4D] transition-colors">
+                        <label className="text-[10px] uppercase font-black tracking-wider text-[#D6AE4D] block">
+                          Full Member Name
+                        </label>
+                        {isEditing ? (
+                          <input
+                            type="text"
+                            value={userName}
+                            onChange={(e) => setUserName(e.target.value)}
+                            className="w-full bg-transparent font-serif text-base font-bold text-white focus:outline-none border-b border-[#D6AE4D]/40 pb-1"
+                            required
+                          />
+                        ) : (
+                          <p className="font-serif text-base font-bold text-white flex items-center gap-2">
+                            <FiUser className="text-[#D6AE4D]" /> {userName}
+                          </p>
+                        )}
+                      </div>
 
-                  <div className="p-4 rounded-2xl bg-[#FAF6EE] dark:bg-[#121A15] border border-[#E5DDD0] dark:border-[#D6AE4D]/20">
-                    <span className="text-[10px] uppercase font-bold text-[#8B9B90] block mb-1">Phone Number</span>
-                    <p className="font-serif text-base font-bold text-[#123524] dark:text-white flex items-center gap-2">
-                      <FiPhone className="text-[#D6AE4D]" /> {userPhone}
-                    </p>
-                  </div>
+                      {/* Email Address */}
+                      <div className="p-4 rounded-2xl bg-[#09170F]/90 border border-[#D6AE4D]/35 space-y-1.5 focus-within:border-[#D6AE4D] transition-colors">
+                        <label className="text-[10px] uppercase font-black tracking-wider text-[#D6AE4D] block">
+                          Registered Email Address
+                        </label>
+                        {isEditing ? (
+                          <input
+                            type="email"
+                            value={userEmailAddress}
+                            onChange={(e) => setUserEmailAddress(e.target.value)}
+                            className="w-full bg-transparent font-serif text-base font-bold text-white focus:outline-none border-b border-[#D6AE4D]/40 pb-1"
+                            required
+                          />
+                        ) : (
+                          <p className="font-serif text-base font-bold text-white flex items-center gap-2 truncate">
+                            <FiMail className="text-[#D6AE4D] shrink-0" /> {userEmailAddress}
+                          </p>
+                        )}
+                      </div>
 
-                  <div className="p-4 rounded-2xl bg-[#FAF6EE] dark:bg-[#121A15] border border-[#E5DDD0] dark:border-[#D6AE4D]/20">
-                    <span className="text-[10px] uppercase font-bold text-[#8B9B90] block mb-1">Membership Status</span>
-                    <p className="font-serif text-base font-bold text-[#D6AE4D] flex items-center gap-2">
-                      <FiCheckCircle className="text-emerald-500" /> Akole VIP Gold (Active)
-                    </p>
-                  </div>
+                      {/* Phone Number */}
+                      <div className="p-4 rounded-2xl bg-[#09170F]/90 border border-[#D6AE4D]/35 space-y-1.5 focus-within:border-[#D6AE4D] transition-colors">
+                        <label className="text-[10px] uppercase font-black tracking-wider text-[#D6AE4D] block">
+                          Phone Number
+                        </label>
+                        {isEditing ? (
+                          <input
+                            type="text"
+                            value={userPhone}
+                            onChange={(e) => setUserPhone(e.target.value)}
+                            className="w-full bg-transparent font-serif text-base font-bold text-white focus:outline-none border-b border-[#D6AE4D]/40 pb-1"
+                            required
+                          />
+                        ) : (
+                          <p className="font-serif text-base font-bold text-white flex items-center gap-2">
+                            <FiPhone className="text-[#D6AE4D]" /> {userPhone}
+                          </p>
+                        )}
+                      </div>
 
-                </div>
-
-                {/* ADDRESS SECTION WITH CHANGE ADDRESS MODAL TRIGGER */}
-                <div className="pt-4 border-t border-[#D6AE4D]/20">
-                  <h4 className="font-serif text-xl font-bold text-[#123524] dark:text-white mb-3 flex items-center gap-2">
-                    <FiMapPin className="text-[#D6AE4D]" />
-                    <span>Saved Primary Delivery Address</span>
-                  </h4>
-
-                  <div className="p-5 sm:p-6 rounded-2xl bg-[#FAF6EE] dark:bg-[#121A15] border-2 border-[#D6AE4D]/40 shadow-md space-y-2">
-                    <div className="flex flex-col sm:flex-row items-start justify-between gap-4">
-                      <div className="space-y-1.5">
-                        <span className="px-2.5 py-0.5 rounded-md bg-[#D6AE4D]/20 text-[#D6AE4D] text-[10px] uppercase font-extrabold tracking-wider border border-[#D6AE4D]/30 inline-block mb-1">
-                          HOME / PREFERRED ADDRESS
-                        </span>
-                        <p className="text-sm sm:text-base font-bold text-[#123524] dark:text-white leading-relaxed">
-                          {userAddress}
-                        </p>
-                        <p className="text-xs text-[#6B7C70] dark:text-[#A0B0A5] font-medium">
-                          Landmark: {userLandmark} • City: {userCity} • Pincode: {userPincode}
+                      {/* Membership Status */}
+                      <div className="p-4 rounded-2xl bg-[#09170F]/90 border border-[#D6AE4D]/35 space-y-1.5">
+                        <label className="text-[10px] uppercase font-black tracking-wider text-[#D6AE4D] block">
+                          Membership Tier
+                        </label>
+                        <p className="font-serif text-base font-bold text-[#D6AE4D] flex items-center gap-2">
+                          <FiCheckCircle className="text-emerald-400" /> Akole VIP Gold (Active)
                         </p>
                       </div>
 
-                      <button
-                        onClick={() => {
-                          setTempAddress(userAddress);
-                          setTempLandmark(userLandmark);
-                          setTempCity(userCity);
-                          setTempPincode(userPincode);
-                          setIsAddressModalOpen(true);
-                        }}
-                        className="px-4 py-2.5 rounded-xl bg-[#123524] dark:bg-[#D6AE4D] text-[#D6AE4D] dark:text-[#123524] text-xs font-black uppercase tracking-wider shrink-0 hover:scale-105 active:scale-95 transition-all shadow-lg border border-[#D6AE4D] cursor-pointer whitespace-nowrap"
-                      >
-                        CHANGE ADDRESS
-                      </button>
                     </div>
                   </div>
-                </div>
+
+                  {/* Delivery Address Section */}
+                  <div className="space-y-4 pt-4 border-t border-[#D6AE4D]/25">
+                    <div className="flex items-center justify-between">
+                      <h4 className="font-serif text-lg font-bold text-[#D6AE4D] uppercase tracking-wider flex items-center gap-2">
+                        <FiMapPin className="text-[#D6AE4D]" />
+                        <span>Saved Primary Delivery Address</span>
+                      </h4>
+                    </div>
+
+                    <div className="p-5 sm:p-6 rounded-2xl bg-[#09170F]/90 border-2 border-[#D6AE4D]/40 space-y-4">
+                      <div className="space-y-3">
+                        <div>
+                          <label className="text-[10px] uppercase font-extrabold text-[#D6AE4D] block mb-1">
+                            Street Address
+                          </label>
+                          {isEditing ? (
+                            <input
+                              type="text"
+                              value={userAddress}
+                              onChange={(e) => setUserAddress(e.target.value)}
+                              className="w-full px-4 py-2.5 rounded-xl bg-[#07140D] border border-[#D6AE4D]/40 text-white text-xs font-semibold focus:outline-none focus:border-[#D6AE4D]"
+                              required
+                            />
+                          ) : (
+                            <p className="text-sm sm:text-base font-bold text-white leading-relaxed">
+                              {userAddress}
+                            </p>
+                          )}
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                          <div>
+                            <label className="text-[10px] uppercase font-bold text-[#D6AE4D]/80 block mb-0.5">Landmark</label>
+                            {isEditing ? (
+                              <input
+                                type="text"
+                                value={userLandmark}
+                                onChange={(e) => setUserLandmark(e.target.value)}
+                                className="w-full px-3 py-2 rounded-lg bg-[#07140D] border border-[#D6AE4D]/30 text-white text-xs"
+                              />
+                            ) : (
+                              <span className="text-xs text-white/80 font-medium">{userLandmark}</span>
+                            )}
+                          </div>
+
+                          <div>
+                            <label className="text-[10px] uppercase font-bold text-[#D6AE4D]/80 block mb-0.5">City / Region</label>
+                            {isEditing ? (
+                              <input
+                                type="text"
+                                value={userCity}
+                                onChange={(e) => setUserCity(e.target.value)}
+                                className="w-full px-3 py-2 rounded-lg bg-[#07140D] border border-[#D6AE4D]/30 text-white text-xs"
+                              />
+                            ) : (
+                              <span className="text-xs text-white/80 font-medium">{userCity}</span>
+                            )}
+                          </div>
+
+                          <div>
+                            <label className="text-[10px] uppercase font-bold text-[#D6AE4D]/80 block mb-0.5">Pincode</label>
+                            {isEditing ? (
+                              <input
+                                type="text"
+                                value={userPincode}
+                                onChange={(e) => setUserPincode(e.target.value)}
+                                className="w-full px-3 py-2 rounded-lg bg-[#07140D] border border-[#D6AE4D]/30 text-white text-xs"
+                              />
+                            ) : (
+                              <span className="text-xs text-white/80 font-medium">{userPincode}</span>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* PROMINENT SAVE CHANGES BUTTON */}
+                  <div className="pt-4 border-t border-[#D6AE4D]/30 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <p className="text-xs text-[#D6AE4D]/90 font-medium flex items-center gap-1.5">
+                      <FiCheckCircle className="text-emerald-400" />
+                      <span>Changes are saved permanently to your account profile.</span>
+                    </p>
+
+                    <button
+                      type="submit"
+                      className="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-gradient-to-r from-[#C8A96A] via-[#E8CE8E] to-[#B08E48] hover:brightness-110 text-[#123524] font-montserrat font-black text-xs uppercase tracking-[2px] shadow-xl shadow-[#D6AE4D]/25 border border-[#FFF3C4] active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                    >
+                      <Sparkles className="w-4 h-4 text-[#123524] stroke-[2.5]" />
+                      <span>SAVE CHANGES</span>
+                    </button>
+                  </div>
+
+                </form>
 
               </div>
             </motion.div>

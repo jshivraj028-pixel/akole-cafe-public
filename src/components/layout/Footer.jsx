@@ -129,10 +129,10 @@ const Footer = () => {
               />
               <button 
                 type="submit" 
-                className="w-full rounded-full bg-gradient-to-r from-[#D6AE4D] via-[#F3E5AB] to-[#B89035] text-[#0C1A12] font-black text-xs py-3 uppercase tracking-[2px] shadow-lg shadow-[#D6AE4D]/30 hover:brightness-105 active:scale-95 transition-all flex items-center justify-center gap-1.5 border border-[#FFF5D6]"
+                className="w-full rounded-full bg-gradient-to-r from-[#C8A96A] via-[#E8CE8E] to-[#B08E48] text-[#123524] font-extrabold text-xs py-3 uppercase tracking-[2px] shadow-lg shadow-[#C8A96A]/25 hover:brightness-105 active:scale-95 transition-all flex items-center justify-center gap-2 border border-[#F0D89E]/60 cursor-pointer"
               >
-                <Sparkles className="w-4 h-4 text-[#0C1A12] stroke-[2.5]" /> 
-                <span className="font-extrabold text-[#0C1A12]">JOIN VIP CLUB</span>
+                <Sparkles className="w-4 h-4 text-[#123524] stroke-[2.2]" /> 
+                <span className="font-extrabold text-[#123524]">JOIN VIP CLUB</span>
               </button>
             </form>
           </div>

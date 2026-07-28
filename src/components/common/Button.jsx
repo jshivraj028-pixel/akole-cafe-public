@@ -17,10 +17,10 @@ const Button = ({
   const baseStyles = "relative inline-flex items-center justify-center font-medium tracking-wider transition-all duration-300 rounded-xl overflow-hidden focus:outline-none cursor-pointer";
   
   const variants = {
-    gold: "bg-gradient-to-r from-[#D6AE4D] via-[#F3E5AB] to-[#B89035] text-[#0C1A12] font-black shadow-gold hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] border border-[#FFF5D6]",
-    primary: "bg-primary text-secondary border border-accent-gold/30 hover:bg-primary-light hover:border-accent-gold shadow-luxury hover:scale-[1.02]",
-    outline: "border-2 border-accent-gold text-accent-gold hover:bg-accent-gold hover:text-primary transition-colors",
-    ghost: "text-secondary hover:text-accent-gold hover:bg-white/5",
+    gold: "bg-gradient-to-r from-[#C8A96A] via-[#E8CE8E] to-[#B08E48] text-[#123524] font-bold tracking-wider shadow-[0_4px_18px_rgba(200,169,106,0.3)] hover:shadow-[0_6px_25px_rgba(200,169,106,0.45)] hover:brightness-105 active:scale-[0.98] border border-[#F0D89E]/60",
+    primary: "bg-[#123524] text-[#D6AE4D] border border-[#D6AE4D]/40 hover:bg-[#1A4330] hover:border-[#D6AE4D] shadow-lg hover:scale-[1.02]",
+    outline: "border-2 border-[#D6AE4D] text-[#D6AE4D] hover:bg-[#D6AE4D] hover:text-[#123524] font-bold transition-all",
+    ghost: "text-[#EAE3D2] hover:text-[#D6AE4D] hover:bg-white/5",
   };
 
   const sizes = {
