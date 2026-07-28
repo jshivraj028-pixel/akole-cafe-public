@@ -139,23 +139,29 @@ const MenuCard = ({ item, index = 0, onQuickView }) => {
         </div>
 
         {/* Footer: Price & Add Button */}
-        <div className="flex items-center justify-between pt-3 border-t border-white/80 mt-auto">
+        <div className="flex items-center justify-between pt-3.5 border-t border-black/5 mt-auto">
           <div>
-            <span className="text-[9px] uppercase tracking-widest block font-bold text-[#88998C]">PRICE</span>
-            <span className="font-black text-xl inline-block text-[#1E2621]">
-              ₹{item.price}
+            <span className="text-[9px] uppercase tracking-widest font-extrabold text-[#6A7B6E] block mb-0.5">
+              PRICE
             </span>
+            <div className="flex items-baseline gap-1">
+              <span className="font-serif text-2xl font-black text-[#18201B]">
+                ₹{item.price}
+              </span>
+            </div>
           </div>
 
-          {/* Full Transparent White Glossy Glass Add Button with Black Text */}
-          <button
+          {/* Glassmorphic Luxury Action Button */}
+          <motion.button
+            whileHover={{ scale: 1.06, y: -1 }}
+            whileTap={{ scale: 0.92 }}
             onClick={handleAddToCart}
-            className="px-4.5 py-2.5 rounded-full bg-white/80 hover:bg-white backdrop-blur-2xl border-2 border-white shadow-md text-[#1E2621] font-montserrat font-black text-xs uppercase tracking-wider active:scale-95 transition-all flex items-center gap-1.5 cursor-pointer"
+            className="px-5 py-2.5 rounded-full bg-white/75 hover:bg-white backdrop-blur-xl border-2 border-white shadow-[0_8px_20px_rgba(0,0,0,0.07)] hover:shadow-[0_12px_25px_rgba(30,86,47,0.15)] text-[#18201B] font-montserrat font-black text-xs uppercase tracking-wider transition-all duration-300 flex items-center gap-1.5 cursor-pointer"
             title="Add to Cart"
           >
-            <ShoppingCart className="w-3.5 h-3.5 stroke-[2.5] text-[#1E2621]" />
+            <ShoppingCart className="w-3.5 h-3.5 text-[#1E562F] stroke-[2.5]" />
             <span>ADD</span>
-          </button>
+          </motion.button>
         </div>
       </div>
     </motion.div>

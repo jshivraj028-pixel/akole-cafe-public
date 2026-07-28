@@ -67,6 +67,28 @@ export const menuCategories = [
 
 export const menuItems = [
   {
+    "id": "vada-crispy-batata-bhaji",
+    "name": "Crispy Batata Bhaji (Potato Bhaji)",
+    "category": "vada-pav",
+    "description": "Authentic Maharashtrian thin slice potato fritters (गरमागरम बटाटा भजी) dipped in spiced chickpea batter & fried crisp golden, served with spicy garlic chutney & fried chillies.",
+    "price": 50,
+    "rating": 4.9,
+    "isVeg": true,
+    "isBestseller": true,
+    "isChefSpecial": true,
+    "spicyLevel": 1,
+    "prepTime": "8 mins",
+    "image": "/assets/crispy-batata-bhaji.png",
+    "tags": [
+      "Batata Bhaji",
+      "Potato Bhaji",
+      "Aloo Pakoda",
+      "Crispy Snacks",
+      "Traditional",
+      "Akole Special"
+    ]
+  },
+  {
     "id": "drk-slice-mango-drink-250ml",
     "name": "Slice Thick Mango Drink (250ml)",
     "category": "cold-drinks",
