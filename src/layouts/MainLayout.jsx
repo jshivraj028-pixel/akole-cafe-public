@@ -5,6 +5,7 @@ import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import ScrollToTop from '../components/common/ScrollToTop';
 import ToastContainer from '../components/common/ToastContainer';
+import PagePreloader from '../components/common/PagePreloader';
 import Lenis from 'lenis';
 
 const MainLayout = ({ children }) => {
@@ -64,6 +65,9 @@ const MainLayout = ({ children }) => {
 
   return (
     <div className="min-h-screen flex flex-col bg-secondary text-dark relative font-sans selection:bg-accent-gold selection:text-primary overflow-x-hidden">
+      {/* Page Preloader Overlay on Refresh */}
+      <PagePreloader />
+
       {/* Toast Notification Layer */}
       <ToastContainer />
 
