@@ -456,8 +456,11 @@ const Admin = () => {
     try {
       setUsers(prev => prev.filter(u => u._id !== id && u.id !== id && u.email !== email));
       await deleteUserAPI(id);
+      window.dispatchEvent(new CustomEvent('akole_user_banned', {
+        detail: { email: email, id: id, isDeleted: true }
+      }));
       showToast(`User account "${name}" deleted successfully.`);
-      logActivity('USER_ACTION', 'User Account Deleted', name, `Permanently deleted customer account (${email})`, 'bg-red-500/20 text-red-300 border-red-500/40');
+      logActivity('USER_ACTION', 'User Account Deleted', name, `Deleted customer account (${email})`, 'bg-red-500/20 text-red-300 border-red-500/40');
       loadData(true);
     } catch (err) {
       showToast('Delete user failed: ' + err.message, 'error');

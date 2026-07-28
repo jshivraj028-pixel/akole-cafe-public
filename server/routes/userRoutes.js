@@ -21,7 +21,7 @@ router.get('/', async (req, res) => {
       });
     }
 
-    const users = await User.find({}).select('-password').sort({ createdAt: -1 });
+    const users = await User.find({ isDeleted: { $ne: true } }).select('-password').sort({ createdAt: -1 });
     res.json(users);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching users', error: error.message });
@@ -31,8 +31,8 @@ router.get('/', async (req, res) => {
 // GET user counts & stats
 router.get('/stats', async (req, res) => {
   try {
-    const totalUsers = await User.countDocuments();
-    const adminCount = await User.countDocuments({ role: 'admin' });
+    const totalUsers = await User.countDocuments({ isDeleted: { $ne: true } });
+    const adminCount = await User.countDocuments({ role: 'admin', isDeleted: { $ne: true } });
     const regularUsers = totalUsers - adminCount;
     res.json({ totalUsers, adminCount, regularUsers });
   } catch (error) {
@@ -60,7 +60,11 @@ router.get('/status/:idOrEmail', async (req, res) => {
     }
 
     if (!user) {
-      return res.json({ exists: false, isBanned: false });
+      return res.json({ exists: false, isBanned: false, isDeleted: false });
+    }
+
+    if (user.isDeleted) {
+      return res.json({ exists: false, isBanned: false, isDeleted: true });
     }
 
     res.json({
@@ -69,6 +73,7 @@ router.get('/status/:idOrEmail', async (req, res) => {
       email: user.email,
       name: user.name,
       isBanned: Boolean(user.isBanned),
+      isDeleted: Boolean(user.isDeleted),
       role: user.role
     });
   } catch (error) {
@@ -93,7 +98,7 @@ router.put('/:id/ban', async (req, res) => {
       });
     }
 
-    if (!user) {
+    if (!user || user.isDeleted) {
       return res.status(404).json({ message: 'User not found in database' });
     }
 
@@ -102,18 +107,19 @@ router.put('/:id/ban', async (req, res) => {
     }
 
     user.isBanned = Boolean(isBanned);
+    user.bannedAt = user.isBanned ? new Date() : null;
     await user.save();
 
     res.json({
       message: `User ${user.name} is now ${user.isBanned ? 'Banned 🚫' : 'Active ✅'}`,
-      user: { id: user._id, name: user.name, email: user.email, isBanned: user.isBanned }
+      user: { id: user._id, name: user.name, email: user.email, isBanned: user.isBanned, bannedAt: user.bannedAt }
     });
   } catch (error) {
     res.status(500).json({ message: 'Error updating user ban status', error: error.message });
   }
 });
 
-// DELETE user account (Admin)
+// DELETE user account (Admin - Soft Delete)
 router.delete('/:id', async (req, res) => {
   try {
     const target = req.params.id;
@@ -129,7 +135,7 @@ router.delete('/:id', async (req, res) => {
       });
     }
 
-    if (!user) {
+    if (!user || user.isDeleted) {
       return res.status(404).json({ message: 'User not found in database' });
     }
 
@@ -137,8 +143,11 @@ router.delete('/:id', async (req, res) => {
       return res.status(400).json({ message: 'Main Administrator account cannot be deleted.' });
     }
 
-    await User.findByIdAndDelete(user._id);
-    res.json({ message: `User account ${user.name} deleted successfully`, id: user._id });
+    user.isDeleted = true;
+    user.deletedAt = new Date();
+    await user.save();
+
+    res.json({ message: `User account ${user.name} deleted successfully`, id: user._id, isDeleted: true });
   } catch (error) {
     res.status(500).json({ message: 'Error deleting user', error: error.message });
   }

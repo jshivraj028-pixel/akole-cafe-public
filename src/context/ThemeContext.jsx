@@ -87,21 +87,39 @@ export const ThemeProvider = ({ children }) => {
         }
 
         const res = await checkUserStatusAPI(identifier);
-        if (res && res.isBanned) {
-          // Banned by Admin! Clear all user sessions immediately
-          localStorage.removeItem('akole_user');
-          localStorage.removeItem('akole_token');
-          localStorage.removeItem('akole_is_authenticated');
-          localStorage.removeItem('akole_user_email');
-          localStorage.removeItem('akole_cart');
+        if (res) {
+          if (res.isBanned) {
+            // Banned by Admin! Clear session immediately
+            localStorage.removeItem('akole_user');
+            localStorage.removeItem('akole_token');
+            localStorage.removeItem('akole_is_authenticated');
+            localStorage.removeItem('akole_user_email');
+            localStorage.removeItem('akole_cart');
 
-          setIsAuthenticated(false);
-          setUserEmail('');
+            setIsAuthenticated(false);
+            setUserEmail('');
 
-          showToast('⛔ Your account has been suspended by Administrator.', 'error');
+            showToast('Your account has been banned.', 'error');
 
-          if (window.location.pathname !== '/login') {
-            window.location.href = '/login?reason=banned';
+            if (window.location.pathname !== '/login') {
+              window.location.href = '/login?reason=banned';
+            }
+          } else if (res.isDeleted) {
+            // Deleted by Admin! Clear session immediately
+            localStorage.removeItem('akole_user');
+            localStorage.removeItem('akole_token');
+            localStorage.removeItem('akole_is_authenticated');
+            localStorage.removeItem('akole_user_email');
+            localStorage.removeItem('akole_cart');
+
+            setIsAuthenticated(false);
+            setUserEmail('');
+
+            showToast('Your account has been deleted.', 'error');
+
+            if (window.location.pathname !== '/login') {
+              window.location.href = '/login?reason=deleted';
+            }
           }
         }
       } catch (e) {
@@ -120,15 +138,15 @@ export const ThemeProvider = ({ children }) => {
         try { userObj = JSON.parse(savedUserStr); } catch (e) {}
       }
 
-      const bannedEmail = e.detail?.email?.toLowerCase();
-      const bannedId = e.detail?.id;
+      const targetEmail = e.detail?.email?.toLowerCase();
+      const targetId = e.detail?.id;
 
       const currentEmail = (userObj?.email || savedEmailStr || '').toLowerCase();
       const currentId = userObj?.id || userObj?._id;
 
       if (
-        (bannedEmail && currentEmail === bannedEmail) ||
-        (bannedId && String(currentId) === String(bannedId))
+        (targetEmail && currentEmail === targetEmail) ||
+        (targetId && String(currentId) === String(targetId))
       ) {
         if (e.detail?.isBanned) {
           localStorage.removeItem('akole_user');
@@ -139,8 +157,19 @@ export const ThemeProvider = ({ children }) => {
 
           setIsAuthenticated(false);
           setUserEmail('');
-          showToast('⛔ Your account has been suspended by Administrator.', 'error');
+          showToast('Your account has been banned.', 'error');
           window.location.href = '/login?reason=banned';
+        } else if (e.detail?.isDeleted) {
+          localStorage.removeItem('akole_user');
+          localStorage.removeItem('akole_token');
+          localStorage.removeItem('akole_is_authenticated');
+          localStorage.removeItem('akole_user_email');
+          localStorage.removeItem('akole_cart');
+
+          setIsAuthenticated(false);
+          setUserEmail('');
+          showToast('Your account has been deleted.', 'error');
+          window.location.href = '/login?reason=deleted';
         }
       }
     };
