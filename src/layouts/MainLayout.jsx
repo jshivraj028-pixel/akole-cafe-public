@@ -11,7 +11,12 @@ const MainLayout = ({ children }) => {
   const { pathname } = useLocation();
   const lenisRef = useRef(null);
 
-  const isStandalonePage = pathname === '/login' || pathname === '/admin';
+  const isStandalonePage = 
+    pathname === '/login' || 
+    pathname === '/register' || 
+    pathname === '/signup' || 
+    pathname === '/forgot-password' || 
+    pathname === '/admin';
 
   useEffect(() => {
     // Reset scroll to top instantly on route change

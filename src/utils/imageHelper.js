@@ -34,6 +34,7 @@ import bhandardaraWildHoneyImg from '../assets/bhandardara-wild-honey.png';
 import kolhapuriMisalPavImg from '../assets/kolhapuri-misal-pav.png';
 import classicMumbaiVadaPavImg from '../assets/classic-mumbai-vada-pav.png';
 import butterLoadedPavBhajiImg from '../assets/butter-loaded-pav-bhaji.png';
+import nashikKalaRassaMisalImg from '../assets/nashik-kala-rassa-misal.png';
 
 export const getProductImage = (item) => {
   if (!item) return '';
@@ -42,6 +43,7 @@ export const getProductImage = (item) => {
   if (name.includes('surmai') || name.includes('fish rava')) return 'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=800&q=80';
   if (name.includes('pedha') || name.includes('rajur') || name.includes('kandi')) return rajurKandiPedhaImg;
   if (name.includes('honey') || name.includes('wild forest')) return bhandardaraWildHoneyImg;
+  if (name.includes('nashik') || name.includes('kala rassa') || name.includes('kala misal')) return nashikKalaRassaMisalImg;
   if (name.includes('misal')) return kolhapuriMisalPavImg;
   if (name.includes('vada pav') || name.includes('samosa pav')) return classicMumbaiVadaPavImg;
   if (name.includes('pav bhaji')) return butterLoadedPavBhajiImg;
