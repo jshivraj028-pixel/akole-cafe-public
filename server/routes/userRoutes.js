@@ -80,10 +80,21 @@ router.get('/status/:idOrEmail', async (req, res) => {
 router.put('/:id/ban', async (req, res) => {
   try {
     const { isBanned } = req.body;
-    const user = await User.findById(req.params.id);
+    const target = req.params.id;
+    let user = null;
+
+    if (target && target.match(/^[0-9a-fA-F]{24}$/)) {
+      user = await User.findById(target);
+    }
+    if (!user && target) {
+      const cleanInput = target.toLowerCase().trim();
+      user = await User.findOne({
+        $or: [{ email: cleanInput }, { name: cleanInput }]
+      });
+    }
 
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: 'User not found in database' });
     }
 
     if (user.email === 'akolecafe@gmail.com') {
@@ -105,18 +116,29 @@ router.put('/:id/ban', async (req, res) => {
 // DELETE user account (Admin)
 router.delete('/:id', async (req, res) => {
   try {
-    const user = await User.findById(req.params.id);
-    
+    const target = req.params.id;
+    let user = null;
+
+    if (target && target.match(/^[0-9a-fA-F]{24}$/)) {
+      user = await User.findById(target);
+    }
+    if (!user && target) {
+      const cleanInput = target.toLowerCase().trim();
+      user = await User.findOne({
+        $or: [{ email: cleanInput }, { name: cleanInput }]
+      });
+    }
+
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: 'User not found in database' });
     }
 
     if (user.email === 'akolecafe@gmail.com') {
       return res.status(400).json({ message: 'Main Administrator account cannot be deleted.' });
     }
 
-    await User.findByIdAndDelete(req.params.id);
-    res.json({ message: `User account ${user.name} deleted successfully`, id: req.params.id });
+    await User.findByIdAndDelete(user._id);
+    res.json({ message: `User account ${user.name} deleted successfully`, id: user._id });
   } catch (error) {
     res.status(500).json({ message: 'Error deleting user', error: error.message });
   }
