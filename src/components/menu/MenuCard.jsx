@@ -37,59 +37,60 @@ const MenuCard = ({ item, onQuickView }) => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 25 }}
+      initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
       whileHover={{ 
-        y: -8,
+        y: -6,
         scale: 1.015,
-        boxShadow: "0 20px 30px -10px rgba(214, 174, 77, 0.3), 0 10px 15px -5px rgba(0, 0, 0, 0.4)"
+        boxShadow: "0 15px 35px -10px rgba(0, 0, 0, 0.08)"
       }}
       transition={{ type: "spring", stiffness: 350, damping: 22 }}
       onClick={handleCardClick}
-      className="group relative rounded-[28px] bg-white/80 dark:bg-[#15241C]/90 backdrop-blur-xl border border-[#E5DDD0] dark:border-[#D6AE4D]/30 shadow-lg hover:border-[#D6AE4D] dark:hover:border-[#D6AE4D] dark:hover:bg-[#1B2F24] transition-all duration-300 overflow-hidden flex flex-col justify-between cursor-pointer w-full max-w-sm mx-auto h-full min-h-[380px]"
+      className="group relative rounded-[28px] bg-white/80 backdrop-blur-xl border border-white shadow-[0_6px_25px_rgba(0,0,0,0.03)] hover:border-white transition-all duration-300 overflow-hidden flex flex-col justify-between cursor-pointer w-full max-w-sm mx-auto h-full min-h-[380px]"
+      style={{ color: '#1E2621' }}
     >
       {/* Product Image Container */}
-      <div className="relative h-52 w-full overflow-hidden bg-[#F5F2EA] dark:bg-[#0E1A13]">
+      <div className="relative h-52 w-full overflow-hidden bg-white/60 p-2">
         <img
           src={imgSrc}
           alt={item.name}
-          className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 ease-out"
+          className="w-full h-full object-cover rounded-2xl group-hover:scale-108 transition-transform duration-700 ease-out"
+          onError={(e) => {
+            e.currentTarget.onerror = null;
+            e.currentTarget.src = getProductImage({ name: 'water' });
+          }}
         />
 
-        {/* Subtle Dark Gradient Bottom Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-70 pointer-events-none" />
-
-        {/* Top Left: Vertical Stacked Badges */}
-        <div className="absolute top-3 left-3 flex flex-col gap-1 items-start z-10">
+        {/* Top Left: Badges */}
+        <div className="absolute top-4 left-4 flex flex-col gap-1 items-start z-10">
           {(item.isBestseller || item.tag === 'BESTSELLER') && (
-            <span className="text-[9px] font-extrabold tracking-wider px-2.5 py-0.5 rounded-md bg-[#D6AE4D] text-[#123524] uppercase shadow-md font-sans">
+            <span className="text-[9px] font-black tracking-wider px-3 py-1 rounded-full bg-[#1E2621] text-white uppercase shadow-md font-sans">
               BESTSELLER
             </span>
           )}
 
           {item.isChefSpecial && (
-            <span className="text-[9px] font-extrabold tracking-wider px-2.5 py-0.5 rounded-md bg-[#123524]/90 text-[#D6AE4D] border border-[#D6AE4D]/50 uppercase shadow-md backdrop-blur-md font-sans">
+            <span className="text-[9px] font-black tracking-wider px-3 py-1 rounded-full bg-white text-[#1E2621] border border-white uppercase shadow-md backdrop-blur-md font-sans">
               CHEF SPECIAL
             </span>
           )}
         </div>
 
-        {/* Top Right: 100% Mathematically Perfect Round Circle Glass Heart Button */}
+        {/* Top Right: Pure White Circular Glass Heart Button */}
         <motion.button
           type="button"
-          whileTap={{ scale: 0.8 }}
-          whileHover={{ scale: 1.15 }}
+          whileTap={{ scale: 0.85 }}
+          whileHover={{ scale: 1.1 }}
           onClick={handleToggleLike}
-          style={{ borderRadius: '50%', width: '36px', height: '36px', minWidth: '36px', minHeight: '36px' }}
-          className="absolute top-3 right-3 z-10 bg-black/40 hover:bg-black/60 dark:bg-black/50 dark:hover:bg-black/80 backdrop-blur-md border border-white/30 dark:border-[#D6AE4D]/50 flex items-center justify-center transition-all duration-300 cursor-pointer shadow-lg p-0"
+          className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-white/90 border border-white shadow-md backdrop-blur-md flex items-center justify-center transition-all cursor-pointer"
           title={isLiked ? "Remove from Favorites" : "Add to Favorites"}
         >
           <FiHeart
             className={`w-4 h-4 transition-all duration-300 ${
               isLiked 
-                ? "text-rose-500 fill-rose-500 scale-110 drop-shadow-[0_2px_6px_rgba(244,63,94,0.6)]" 
-                : "text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]"
+                ? "text-rose-500 fill-rose-500 scale-110" 
+                : "text-[#1E2621]"
             }`}
           />
         </motion.button>
@@ -100,38 +101,42 @@ const MenuCard = ({ item, onQuickView }) => {
         <div className="space-y-1.5">
           {/* Header Title & Rating */}
           <div className="flex items-start justify-between gap-2">
-            <h3 className="font-serif font-bold text-base text-[#123524] dark:text-[#EAE3D2] leading-snug group-hover:text-[#D6AE4D] dark:group-hover:text-[#F3E5AB] transition-colors line-clamp-1">
+            <h3 
+              className="font-bold text-base leading-snug group-hover:opacity-80 transition-opacity line-clamp-1"
+              style={{ color: '#1E2621' }}
+            >
               {item.name}
             </h3>
             {item.rating && (
-              <div className="flex items-center gap-1 bg-[#FAF6EE] dark:bg-[#0E1A13] px-2 py-0.5 rounded-full border border-[#D6AE4D]/30 shrink-0 shadow-xs group-hover:border-[#D6AE4D]/60 transition-colors">
-                <FiStar className="w-3 h-3 text-[#D6AE4D] fill-[#D6AE4D]" />
-                <span className="text-[11px] font-bold text-[#123524] dark:text-[#EAE3D2]">{item.rating}</span>
+              <div className="flex items-center gap-1 bg-white px-2.5 py-0.5 rounded-full border border-white shrink-0 shadow-xs">
+                <FiStar className="w-3 h-3 text-amber-500 fill-amber-500" />
+                <span className="text-[11px] font-bold" style={{ color: '#1E2621' }}>{item.rating}</span>
               </div>
             )}
           </div>
 
           {/* Description */}
-          <p className="text-xs text-[#556B5D] dark:text-[#A0B0A5] line-clamp-2 font-light leading-relaxed group-hover:text-[#6E8577] dark:group-hover:text-[#C2D1C8] transition-colors">
+          <p className="text-xs line-clamp-2 font-normal leading-relaxed" style={{ color: '#556B5D' }}>
             {item.description}
           </p>
         </div>
 
         {/* Footer: Price & Add Button */}
-        <div className="flex items-center justify-between pt-3 border-t border-gray-100 dark:border-[#D6AE4D]/20 mt-auto">
+        <div className="flex items-center justify-between pt-3 border-t border-[#D8E3D2] mt-auto">
           <div>
-            <span className="text-[9px] text-gray-400 dark:text-gray-500 uppercase tracking-widest block font-bold">PRICE</span>
-            <span className="font-serif font-black text-lg text-[#123524] dark:text-[#D6AE4D] group-hover:scale-105 transition-transform inline-block">
+            <span className="text-[9px] uppercase tracking-widest block font-bold" style={{ color: '#88998C' }}>PRICE</span>
+            <span className="font-bold text-lg inline-block" style={{ color: '#1E2621' }}>
               ₹{item.price}
             </span>
           </div>
 
+          {/* Dark Charcoal Pill Add Button */}
           <button
             onClick={handleAddToCart}
-            className="px-3.5 py-2 rounded-xl bg-gradient-to-r from-[#D6AE4D] via-[#F3E5AB] to-[#B89035] text-[#0C1A12] font-black text-xs uppercase tracking-wider shadow-md hover:shadow-xl hover:brightness-110 active:scale-95 transition-all flex items-center gap-1.5 cursor-pointer border border-[#FFF5D6]/40"
+            className="px-4 py-2 rounded-full bg-[#1E2621] hover:bg-black text-white font-bold text-xs uppercase tracking-wider shadow-md hover:shadow-lg active:scale-95 transition-all flex items-center gap-1.5 cursor-pointer border border-[#1E2621]"
             title="Add to Cart"
           >
-            <ShoppingCart className="w-3.5 h-3.5 text-[#0C1A12] stroke-[2.5]" />
+            <ShoppingCart className="w-3.5 h-3.5 stroke-[2.2]" />
             <span>ADD</span>
           </button>
         </div>

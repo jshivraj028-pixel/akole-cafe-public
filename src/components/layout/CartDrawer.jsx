@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, X, Plus, Minus, Trash2, Tag, Check, Sparkles, ShoppingBag } from 'lucide-react';
+import { ChevronLeft, X, Plus, Minus, Trash2, Tag, Check, ShoppingBag } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
+import { getProductImage } from '../../utils/imageHelper';
 
 const CartDrawer = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
@@ -76,30 +77,35 @@ const CartDrawer = ({ isOpen, onClose }) => {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', stiffness: 350, damping: 32 }}
-              className="pointer-events-auto w-full max-w-full sm:max-w-md bg-gradient-to-b from-[#F2F6ED] via-[#EDF3E7] to-[#E6EFE0] text-[#1E2621] shadow-2xl flex flex-col justify-between overflow-hidden relative border-l border-white/60"
+              className="pointer-events-auto w-full max-w-full sm:max-w-md bg-gradient-to-b from-[#F2F6ED] via-[#EDF3E7] to-[#E6EFE0] shadow-2xl flex flex-col justify-between overflow-hidden relative border-l border-white/60"
+              style={{ color: '#1E2621' }}
             >
               {/* Glossy Ambient Glow Orbs */}
               <div className="absolute -top-16 -right-16 w-60 h-60 bg-white/60 rounded-full blur-2xl pointer-events-none" />
               <div className="absolute top-1/2 -left-20 w-72 h-72 bg-[#D5E4CE]/50 rounded-full blur-3xl pointer-events-none" />
 
-              {/* 1. TOP HEADER - EXACT MATCH TO IMAGE */}
+              {/* 1. TOP HEADER */}
               <div className="relative z-10 px-6 pt-6 pb-4 flex items-center justify-between shrink-0">
                 {/* Back / Close Circular Glossy Button */}
                 <button
                   onClick={onClose}
-                  className="w-10 h-10 rounded-full bg-white/90 backdrop-blur-md border border-white/80 shadow-[0_4px_15px_rgba(0,0,0,0.06)] hover:shadow-md flex items-center justify-center text-[#1E2621] hover:scale-105 active:scale-95 transition-all cursor-pointer"
+                  className="w-10 h-10 rounded-full bg-white/90 backdrop-blur-md border border-white/80 shadow-[0_4px_15px_rgba(0,0,0,0.06)] hover:shadow-md flex items-center justify-center hover:scale-105 active:scale-95 transition-all cursor-pointer"
+                  style={{ color: '#1E2621' }}
                   aria-label="Back to Shop"
                 >
                   <ChevronLeft className="w-5 h-5 stroke-[2.2]" />
                 </button>
 
-                {/* Center Title */}
-                <h2 className="text-xl font-semibold text-[#1E2621] tracking-tight">
+                {/* Center Title - Explicit Dark Color Override */}
+                <h2 
+                  className="text-xl font-semibold tracking-tight" 
+                  style={{ color: '#1E2621' }}
+                >
                   Cart
                 </h2>
 
                 {/* Right Item Counter */}
-                <span className="text-sm font-normal text-[#606E64]">
+                <span className="text-sm font-normal" style={{ color: '#606E64' }}>
                   {totalItemsCount} {totalItemsCount === 1 ? 'item' : 'items'}
                 </span>
               </div>
@@ -113,8 +119,8 @@ const CartDrawer = ({ isOpen, onClose }) => {
                       <ShoppingBag className="w-9 h-9 stroke-[1.5]" />
                     </div>
                     <div className="space-y-1">
-                      <h3 className="text-xl font-semibold text-[#1E2621]">Your Cart is Empty</h3>
-                      <p className="text-xs text-[#606E64] max-w-xs">
+                      <h3 className="text-xl font-semibold" style={{ color: '#1E2621' }}>Your Cart is Empty</h3>
+                      <p className="text-xs max-w-xs" style={{ color: '#606E64' }}>
                         Discover Akole Café delicacies, freshly brewed coffees & gourmet specialties.
                       </p>
                     </div>
@@ -132,82 +138,99 @@ const CartDrawer = ({ isOpen, onClose }) => {
                   /* Cart Items List */
                   <div className="space-y-5 pt-1">
                     <AnimatePresence mode="popLayout">
-                      {cartItems.map((item) => (
-                        <motion.div
-                          key={item.id}
-                          layout
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, x: -30 }}
-                          transition={{ duration: 0.2 }}
-                          className="flex items-center justify-between border-b border-[#D8E3D2]/70 pb-5 last:border-0"
-                        >
-                          {/* Left: Product Thumbnail & Details */}
-                          <div className="flex items-center gap-3.5 flex-1 min-w-0">
-                            <div className="w-16 h-16 rounded-2xl bg-white/90 p-1 border border-white/90 shadow-[0_4px_12px_rgba(0,0,0,0.04)] shrink-0 overflow-hidden flex items-center justify-center">
-                              <img
-                                src={item.image}
-                                alt={item.name}
-                                className="w-full h-full object-cover rounded-xl"
-                              />
-                            </div>
+                      {cartItems.map((item) => {
+                        // Dynamically resolve valid image asset using imageHelper
+                        const itemImage = getProductImage(item) || item.image || item.imageUrl;
 
-                            <div className="flex flex-col min-w-0 space-y-1">
-                              <h4 className="text-base font-semibold text-[#1E2621] leading-tight truncate pr-1">
-                                {item.name}
-                              </h4>
-
-                              {/* Size / Variant Pill Badge */}
-                              <div>
-                                <span className="inline-block px-3 py-0.5 rounded-full border border-[#B3C5B0] text-[11px] font-medium text-[#48594B] bg-white/40 backdrop-blur-xs">
-                                  {item.category || 'Standard'}
-                                </span>
+                        return (
+                          <motion.div
+                            key={item.id}
+                            layout
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, x: -30 }}
+                            transition={{ duration: 0.2 }}
+                            className="flex items-center justify-between border-b border-[#D8E3D2]/70 pb-5 last:border-0"
+                          >
+                            {/* Left: Product Thumbnail & Details */}
+                            <div className="flex items-center gap-3.5 flex-1 min-w-0">
+                              <div className="w-16 h-16 rounded-2xl bg-white p-1 border border-white shadow-[0_4px_12px_rgba(0,0,0,0.06)] shrink-0 overflow-hidden flex items-center justify-center">
+                                <img
+                                  src={itemImage}
+                                  alt={item.name}
+                                  className="w-full h-full object-cover rounded-xl"
+                                  onError={(e) => {
+                                    e.currentTarget.onerror = null;
+                                    e.currentTarget.src = getProductImage({ name: 'water' });
+                                  }}
+                                />
                               </div>
 
-                              {/* Unit Price */}
-                              <span className="text-base font-semibold text-[#1E2621]">
-                                ₹{(item.price * item.quantity).toFixed(item.price % 1 === 0 ? 0 : 2)}
-                              </span>
+                              <div className="flex flex-col min-w-0 space-y-1">
+                                <h4 
+                                  className="text-base font-semibold leading-tight truncate pr-1"
+                                  style={{ color: '#1E2621' }}
+                                >
+                                  {item.name}
+                                </h4>
+
+                                {/* Category / Portion Pill Badge */}
+                                <div>
+                                  <span 
+                                    className="inline-block px-3 py-0.5 rounded-full border border-[#B3C5B0] text-[11px] font-medium bg-white/50 backdrop-blur-xs"
+                                    style={{ color: '#48594B' }}
+                                  >
+                                    {item.category || 'Standard'}
+                                  </span>
+                                </div>
+
+                                {/* Unit Price */}
+                                <span className="text-base font-semibold" style={{ color: '#1E2621' }}>
+                                  ₹{(item.price * item.quantity).toFixed(item.price % 1 === 0 ? 0 : 2)}
+                                </span>
+                              </div>
                             </div>
-                          </div>
 
-                          {/* Right: Circular Stepper Controls (+ Qty -) */}
-                          <div className="flex items-center gap-2 shrink-0 ml-2">
-                            {/* Plus Circle Button */}
-                            <button
-                              onClick={() => updateQuantity(item.id, 1)}
-                              className="w-9 h-9 rounded-full bg-white/90 border border-white shadow-[0_3px_10px_rgba(0,0,0,0.06)] hover:shadow-md active:scale-90 text-[#1E2621] flex items-center justify-center transition-all cursor-pointer"
-                              aria-label="Increase quantity"
-                            >
-                              <Plus className="w-4 h-4 stroke-[2.2]" />
-                            </button>
+                            {/* Right: Circular Stepper Controls (+ Qty -) */}
+                            <div className="flex items-center gap-2 shrink-0 ml-2">
+                              {/* Plus Circle Button */}
+                              <button
+                                onClick={() => updateQuantity(item.id, 1)}
+                                className="w-9 h-9 rounded-full bg-white border border-white shadow-[0_3px_10px_rgba(0,0,0,0.08)] hover:shadow-md active:scale-90 flex items-center justify-center transition-all cursor-pointer"
+                                style={{ color: '#1E2621' }}
+                                aria-label="Increase quantity"
+                              >
+                                <Plus className="w-4 h-4 stroke-[2.2]" />
+                              </button>
 
-                            {/* Quantity Number */}
-                            <span className="w-5 text-center text-sm font-medium text-[#1E2621]">
-                              {item.quantity}
-                            </span>
+                              {/* Quantity Number */}
+                              <span className="w-5 text-center text-sm font-medium" style={{ color: '#1E2621' }}>
+                                {item.quantity}
+                              </span>
 
-                            {/* Minus Circle Button */}
-                            <button
-                              onClick={() => {
-                                if (item.quantity === 1) {
-                                  removeFromCart(item.id);
-                                } else {
-                                  updateQuantity(item.id, -1);
-                                }
-                              }}
-                              className="w-9 h-9 rounded-full bg-white/90 border border-white shadow-[0_3px_10px_rgba(0,0,0,0.06)] hover:shadow-md active:scale-90 text-[#1E2621] flex items-center justify-center transition-all cursor-pointer"
-                              aria-label="Decrease quantity"
-                            >
-                              {item.quantity === 1 ? (
-                                <Trash2 className="w-3.5 h-3.5 text-rose-500 stroke-[2]" />
-                              ) : (
-                                <Minus className="w-4 h-4 stroke-[2.2]" />
-                              )}
-                            </button>
-                          </div>
-                        </motion.div>
-                      ))}
+                              {/* Minus / Delete Circle Button */}
+                              <button
+                                onClick={() => {
+                                  if (item.quantity === 1) {
+                                    removeFromCart(item.id);
+                                  } else {
+                                    updateQuantity(item.id, -1);
+                                  }
+                                }}
+                                className="w-9 h-9 rounded-full bg-white border border-white shadow-[0_3px_10px_rgba(0,0,0,0.08)] hover:shadow-md active:scale-90 flex items-center justify-center transition-all cursor-pointer"
+                                style={{ color: '#1E2621' }}
+                                aria-label="Decrease quantity"
+                              >
+                                {item.quantity === 1 ? (
+                                  <Trash2 className="w-3.5 h-3.5 text-rose-500 stroke-[2]" />
+                                ) : (
+                                  <Minus className="w-4 h-4 stroke-[2.2]" />
+                                )}
+                              </button>
+                            </div>
+                          </motion.div>
+                        );
+                      })}
                     </AnimatePresence>
 
                     {/* Promo Offer Accordion Toggle */}
@@ -215,14 +238,15 @@ const CartDrawer = ({ isOpen, onClose }) => {
                       {!showPromoInput ? (
                         <button
                           onClick={() => setShowPromoInput(true)}
-                          className="flex items-center gap-1.5 text-xs font-medium text-[#48594B] hover:text-[#1E2621] cursor-pointer"
+                          className="flex items-center gap-1.5 text-xs font-medium cursor-pointer hover:opacity-80"
+                          style={{ color: '#48594B' }}
                         >
                           <Tag className="w-3.5 h-3.5 text-[#48594B]" />
                           <span>Have a promo coupon?</span>
                         </button>
                       ) : (
-                        <div className="p-3 rounded-2xl bg-white/60 border border-white/80 space-y-2 shadow-xs backdrop-blur-md">
-                          <div className="flex items-center justify-between text-xs font-semibold text-[#1E2621]">
+                        <div className="p-3 rounded-2xl bg-white/70 border border-white space-y-2 shadow-xs backdrop-blur-md">
+                          <div className="flex items-center justify-between text-xs font-semibold" style={{ color: '#1E2621' }}>
                             <span>Apply Promo Code</span>
                             <button onClick={() => setShowPromoInput(false)} className="text-gray-400 hover:text-gray-600">
                               <X className="w-4 h-4" />
@@ -240,7 +264,8 @@ const CartDrawer = ({ isOpen, onClose }) => {
                             ) : (
                               <button
                                 onClick={() => handleQuickCoupon('AKOLE20')}
-                                className="px-3 py-1 rounded-full bg-white border border-[#B3C5B0] text-xs font-medium text-[#1E2621] hover:bg-[#1E2621] hover:text-white transition-all cursor-pointer"
+                                className="px-3 py-1 rounded-full bg-white border border-[#B3C5B0] text-xs font-medium hover:bg-[#1E2621] hover:text-white transition-all cursor-pointer"
+                                style={{ color: '#1E2621' }}
                               >
                                 AKOLE20 (20% OFF)
                               </button>
@@ -256,7 +281,8 @@ const CartDrawer = ({ isOpen, onClose }) => {
                             ) : (
                               <button
                                 onClick={() => handleQuickCoupon('AKOLEVIP')}
-                                className="px-3 py-1 rounded-full bg-white border border-[#B3C5B0] text-xs font-medium text-[#1E2621] hover:bg-[#1E2621] hover:text-white transition-all cursor-pointer"
+                                className="px-3 py-1 rounded-full bg-white border border-[#B3C5B0] text-xs font-medium hover:bg-[#1E2621] hover:text-white transition-all cursor-pointer"
+                                style={{ color: '#1E2621' }}
                               >
                                 AKOLEVIP (15% OFF)
                               </button>
@@ -291,15 +317,15 @@ const CartDrawer = ({ isOpen, onClose }) => {
                 )}
               </div>
 
-              {/* 3. GLOSSY SUMMARY & BOTTOM CTA BUTTON - EXACT MATCH TO IMAGE */}
+              {/* 3. GLOSSY SUMMARY & BOTTOM CTA BUTTON */}
               {cartItems.length > 0 && (
                 <div className="relative z-10 px-6 pb-6 pt-3 space-y-4 shrink-0">
                   
                   {/* Glossy Glass Summary Container */}
-                  <div className="rounded-[28px] bg-[#E2E9DB]/90 backdrop-blur-xl border border-white/80 p-5 space-y-2.5 shadow-[0_8px_30px_rgba(0,0,0,0.03)]">
-                    <div className="flex justify-between items-center text-sm font-normal text-[#48594B]">
+                  <div className="rounded-[28px] bg-[#E2E9DB]/90 backdrop-blur-xl border border-white p-5 space-y-2.5 shadow-[0_8px_30px_rgba(0,0,0,0.03)]">
+                    <div className="flex justify-between items-center text-sm font-normal" style={{ color: '#48594B' }}>
                       <span>Subtotal</span>
-                      <span className="font-medium text-[#1E2621]">₹{subtotal.toFixed(subtotal % 1 === 0 ? 0 : 2)}</span>
+                      <span className="font-medium" style={{ color: '#1E2621' }}>₹{subtotal.toFixed(subtotal % 1 === 0 ? 0 : 2)}</span>
                     </div>
 
                     {discountAmount > 0 && (
@@ -309,7 +335,7 @@ const CartDrawer = ({ isOpen, onClose }) => {
                       </div>
                     )}
 
-                    <div className="flex justify-between items-center text-sm font-normal text-[#48594B]">
+                    <div className="flex justify-between items-center text-sm font-normal" style={{ color: '#48594B' }}>
                       <span>Delivery</span>
                       <span className="px-3 py-0.5 rounded-full bg-[#D4F4CE] text-[#20571C] font-semibold text-xs border border-white/60">
                         Free
@@ -317,15 +343,15 @@ const CartDrawer = ({ isOpen, onClose }) => {
                     </div>
 
                     {taxAmount > 0 && (
-                      <div className="flex justify-between items-center text-xs text-[#606E64]">
+                      <div className="flex justify-between items-center text-xs" style={{ color: '#606E64' }}>
                         <span>Taxes & GST (5%)</span>
                         <span>₹{taxAmount.toFixed(2)}</span>
                       </div>
                     )}
 
-                    <div className="flex justify-between items-center pt-2 text-lg font-bold text-[#1E2621]">
+                    <div className="flex justify-between items-center pt-2 text-lg font-bold" style={{ color: '#1E2621' }}>
                       <span>Total</span>
-                      <span>₹{grandTotal.toFixed(grandTotal % 1 === 0 ? 0 : 2)}</span>
+                      <span style={{ color: '#1E2621' }}>₹{grandTotal.toFixed(grandTotal % 1 === 0 ? 0 : 2)}</span>
                     </div>
                   </div>
 

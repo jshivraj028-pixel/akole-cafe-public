@@ -57,7 +57,7 @@ const Menu = () => {
   const filteredAndSortedItems = useMemo(() => {
     let result = [...items];
 
-    // 1. Instant Search Filter (Strictly matches item Name, Description, or Tags)
+    // 1. Instant Search Filter
     if (searchQuery && searchQuery.trim() !== '') {
       const q = searchQuery.toLowerCase().trim();
       const terms = q.split(/\s+/).filter(Boolean);
@@ -70,12 +70,10 @@ const Menu = () => {
           : String(item.tags || '').toLowerCase();
 
         const fullText = `${name} ${desc} ${tags}`;
-        
-        // Every search term must be matched in the item's name, description, or tags
         return terms.every(term => fullText.includes(term));
       });
     } else {
-      // 2. Category Filter (Applies when NOT searching)
+      // 2. Category Filter
       if (activeCategory && activeCategory !== 'all') {
         result = result.filter(item => {
           if (activeCategory === 'cold-drinks' || activeCategory === 'drinks') {
@@ -106,15 +104,20 @@ const Menu = () => {
   }, [items, activeCategory, searchQuery, vegFilter, sortBy]);
 
   return (
-    <div className="bg-[#F5F2EA] dark:bg-[#121A15] min-h-screen">
-      {/* Dark Coffee Header Banner */}
+    <div className="min-h-screen bg-gradient-to-b from-[#F2F6ED] via-[#EDF3E7] to-[#E6EFE0]" style={{ color: '#1E2621' }}>
+      {/* Header Banner */}
       <PageBanner
         title="Artisanal Digital Menu"
+        subtitle="Explore Handmade Delicacies, Cold Beverages & Royal Sweets"
         bgImage="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1920&q=80"
       />
 
-      <section className="py-12 bg-[#F5F2EA] dark:bg-[#121A15] relative">
-        <Container>
+      <section className="py-12 relative overflow-hidden">
+        {/* Ambient Light Orbs */}
+        <div className="absolute top-10 right-10 w-96 h-96 bg-white/60 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-10 left-10 w-96 h-96 bg-[#D5E4CE]/50 rounded-full blur-3xl pointer-events-none" />
+
+        <Container className="relative z-10">
           <MenuFilter
             activeCategory={activeCategory}
             setActiveCategory={setActiveCategory}
@@ -127,7 +130,7 @@ const Menu = () => {
           />
 
           {loading ? (
-            <div className="py-20 text-center text-[#123524] dark:text-[#D6AE4D] font-serif text-lg animate-pulse">
+            <div className="py-20 text-center font-bold text-lg animate-pulse" style={{ color: '#1E2621' }}>
               Loading fresh artisanal delicacies...
             </div>
           ) : (

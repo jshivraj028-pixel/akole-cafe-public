@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
+import MobileBottomNav from '../components/layout/MobileBottomNav';
 import ScrollToTop from '../components/common/ScrollToTop';
 import ToastContainer from '../components/common/ToastContainer';
 import Lenis from 'lenis';
@@ -76,7 +77,7 @@ const MainLayout = ({ children }) => {
       <Navbar />
 
       {/* Main Content Area with Smooth Route Transitions */}
-      <main className="flex-grow">
+      <main className="flex-grow pb-16 lg:pb-0">
         <AnimatePresence mode="wait">
           <motion.div
             key={pathname}
@@ -89,6 +90,9 @@ const MainLayout = ({ children }) => {
           </motion.div>
         </AnimatePresence>
       </main>
+
+      {/* Floating Glassmorphic Mobile Bottom Nav (Matches User Reference Image) */}
+      <MobileBottomNav />
 
       {/* Scroll To Top Button */}
       <ScrollToTop />

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, MapPin, ShoppingCart, Sun, Moon, Menu, X, User, ChevronDown, Settings, Package, ShoppingBag, Heart, ShieldCheck, LogOut, LogIn, ChevronRight, Sparkles } from 'lucide-react';
-import { FiPackage, FiInfo, FiBell } from 'react-icons/fi';
 import { useCart } from '../../context/CartContext';
 import { useTheme } from '../../context/ThemeContext';
 import MobileMenu from './MobileMenu';
@@ -23,7 +22,6 @@ const navLinks = [
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
   const [isCartDrawerOpen, setIsCartDrawerOpen] = useState(false);
@@ -68,21 +66,11 @@ const Navbar = () => {
     }
   };
 
-  // Poll notifications every 8 seconds for live updates
   useEffect(() => {
     loadNotifications();
     const interval = setInterval(loadNotifications, 8000);
     return () => clearInterval(interval);
   }, [loggedUser?.email, userEmail]);
-
-  const handleMarkAsRead = async (id) => {
-    try {
-      await markNotificationReadAPI(id);
-      setNotifications(prev => prev.map(n => (n._id === id || n.id === id) ? { ...n, isRead: true } : n));
-    } catch (err) {
-      console.error(err);
-    }
-  };
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
@@ -92,23 +80,17 @@ const Navbar = () => {
     }
   };
 
-  const unreadCount = notifications.filter(n => !n.isRead).length;
-  const isHome = pathname === '/' || pathname === '/home';
-
   return (
     <>
+      {/* FULL-WIDTH STICKY NAVBAR HEADER */}
       <header
-        className={`fixed top-0 left-0 right-0 z-50 h-[74px] sm:h-[82px] px-2.5 sm:px-8 transition-colors duration-300 shadow-md flex items-center ${
-          isHome
-            ? 'bg-[#445648] dark:bg-[#0F261A] border-b border-[#536958] dark:border-[#D6AE4D]/30'
-            : 'bg-[#EFE8D8] dark:bg-[#121A15] border-b border-[#D8CEB8] dark:border-[#D6AE4D]/30'
-        }`}
+        className="fixed top-0 left-0 right-0 z-50 h-[74px] sm:h-[82px] px-3 sm:px-8 transition-all duration-300 flex items-center bg-white/70 dark:bg-[#121F17]/80 backdrop-blur-xl border-b border-white/60 dark:border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.04)]"
       >
-        <div className="w-full max-w-[1400px] mx-auto flex items-center justify-between gap-1">
+        <div className="w-full max-w-[1400px] mx-auto flex items-center justify-between gap-2">
           
           {/* Logo: Circular Emblem Image + Cormorant Garamond Typography */}
-          <Link to="/" className="flex items-center gap-2 sm:gap-3 group shrink-0">
-            <div className="w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-[#2A1D17] border-2 border-[#D6AE4D]/45 shadow-xl shrink-0 flex items-center justify-center p-1 sm:p-1.5 overflow-hidden group-hover:border-[#D6AE4D] group-hover:shadow-[#D6AE4D]/25 transition-all duration-300">
+          <Link to="/" className="flex items-center gap-2.5 sm:gap-3 group shrink-0">
+            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#18201B] border-2 border-white shadow-md shrink-0 flex items-center justify-center p-1 overflow-hidden group-hover:scale-105 transition-all duration-300">
               <img
                 src={logoEmblem}
                 alt="Akole Café Emblem Logo"
@@ -116,45 +98,58 @@ const Navbar = () => {
               />
             </div>
 
-            {/* Brand Name Text: Akole (700 White) Café (500 Italic Gold #D6AE4D) */}
             <div className="flex items-baseline font-cormorant text-xl sm:text-3xl tracking-[-0.5px]">
-              <span
-                className={`font-bold transition-colors ${
-                  isHome ? 'text-white' : 'text-[#123524] dark:text-white'
-                }`}
-              >
+              <span className="font-bold text-[#1E2621] dark:text-white transition-colors">
                 Akole
               </span>
-              <span className="italic font-medium text-[#D6AE4D] ml-1">
+              <span className="italic font-medium text-[#48594B] dark:text-[#D6AE4D] ml-1">
                 Café
               </span>
             </div>
           </Link>
 
-          {/* Navigation Links + Action Icons Grouped with Compact Balanced Spacing */}
-          <div className="flex items-center gap-2 xl:gap-6 ml-auto justify-end">
-            {/* Desktop Navigation Links */}
-            <nav className="hidden lg:flex items-center gap-4 xl:gap-6 ml-auto">
+          {/* Navigation Links + Action Icons Grouped */}
+          <div className="flex items-center gap-2 xl:gap-5 ml-auto justify-end">
+            
+            {/* DESKTOP NAV LINKS - GLOSSY GLASS PILL APPLIES ONLY TO THE SELECTED ACTIVE ITEM */}
+            <nav className="hidden lg:flex items-center gap-1 xl:gap-2 ml-auto">
               {navLinks.map((link) => {
                 const isActive = pathname === link.path;
                 return (
                   <Link
                     key={link.name}
                     to={link.path}
-                    className={`relative font-montserrat text-[11px] xl:text-xs font-semibold tracking-widest uppercase transition-colors duration-200 py-1 ${
-                      isActive
-                        ? 'text-[#D6AE4D]'
-                        : isHome
-                        ? 'text-[#D6E0DA] hover:text-[#D6AE4D]'
-                        : 'text-[#4A5D50] hover:text-[#D6AE4D]'
-                    }`}
+                    className="relative font-montserrat text-[11px] xl:text-xs tracking-widest uppercase px-4 py-2 rounded-full flex flex-col items-center justify-center transition-colors group cursor-pointer"
                   >
-                    {link.name}
+                    {/* Animated Glossy White Glass Pill Background ONLY for Active Link */}
                     {isActive && (
                       <motion.div
-                        layoutId="activeNavUnderline"
-                        className="absolute -bottom-1 left-0 right-0 h-[2.5px] bg-[#D6AE4D]"
-                        transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                        layoutId="activeNavPill"
+                        className="absolute inset-0 rounded-full bg-gradient-to-r from-emerald-500/20 via-white/95 to-white backdrop-blur-2xl border-2 border-white shadow-md overflow-hidden"
+                        transition={{ type: 'spring', stiffness: 450, damping: 30 }}
+                      >
+                        {/* Green Ambient Glow Accent on Left of Active Pill */}
+                        <div className="absolute top-0 left-0 w-10 h-full bg-gradient-to-r from-emerald-400/35 to-transparent pointer-events-none" />
+                      </motion.div>
+                    )}
+
+                    {/* Nav Link Text Label */}
+                    <span
+                      className={`relative z-10 transition-colors ${
+                        isActive
+                          ? 'font-black text-[#1E2621]'
+                          : 'font-bold text-[#48594B] dark:text-[#D6E0DA] hover:text-[#1E2621]'
+                      }`}
+                    >
+                      {link.name}
+                    </span>
+
+                    {/* Coral/Orange Active Indicator Dot ONLY for Active Link */}
+                    {isActive && (
+                      <motion.div
+                        layoutId="topNavActiveDot"
+                        className="w-3.5 h-1.5 rounded-full bg-[#FF5722] shadow-xs absolute bottom-0.5 z-20"
+                        transition={{ type: 'spring', stiffness: 500, damping: 30 }}
                       />
                     )}
                   </Link>
@@ -162,28 +157,27 @@ const Navbar = () => {
               })}
             </nav>
 
-            {/* Right Action Icons & Gold Rounded ORDER NOW Button */}
-            <div className="flex items-center gap-1 sm:gap-2.5 shrink-0">
-              {/* 1. Ultra-Luxury Executive ORDER NOW Button */}
+            {/* Right Action Icons & ORDER NOW Button */}
+            <div className="flex items-center gap-2 sm:gap-2.5 shrink-0 ml-1">
+              
+              {/* 1. ORDER NOW White Translucent Glossy Pill Button */}
               <Link
                 to="/menu"
-                className="hidden lg:inline-flex items-center justify-center px-4.5 sm:px-5 py-2 rounded-xl bg-gradient-to-r from-[#D6AE4D] via-[#F0D588] to-[#B89035] text-[#0A1A12] font-montserrat font-extrabold text-[11px] xl:text-xs uppercase tracking-[2px] shadow-lg shadow-[#D6AE4D]/30 border border-[#FFF5D6]/70 hover:from-[#E5BC58] hover:via-[#FFF3C4] hover:to-[#C99D3B] hover:shadow-xl hover:shadow-[#D6AE4D]/50 transition-all duration-300 transform hover:scale-105 active:scale-95 group"
+                className="hidden lg:inline-flex items-center justify-center h-10 px-5 rounded-full bg-white/90 hover:bg-white border-2 border-white shadow-md hover:shadow-lg backdrop-blur-md text-[#1E2621] font-montserrat font-black text-[11px] xl:text-xs uppercase tracking-[1.5px] transition-all duration-300 transform hover:scale-105 active:scale-95 group cursor-pointer"
               >
-                <Sparkles className="w-3.5 h-3.5 mr-1.5 stroke-[2.5] text-[#0A1A12] group-hover:scale-110 transition-transform" />
-                <span className="font-extrabold tracking-[2px]">ORDER NOW</span>
+                <Sparkles className="w-4 h-4 mr-1.5 stroke-[2.2] text-amber-500 group-hover:scale-110 transition-transform" />
+                <span>ORDER NOW</span>
               </Link>
 
-              {/* 2. Search Icon & Popover */}
+              {/* 2. Search Circle Icon */}
               <div className="relative hidden lg:block">
                 <button
                   onClick={() => setIsSearchOpen(!isSearchOpen)}
-                  className={`p-1.5 transition-colors ${
-                    isHome ? 'text-white hover:text-[#D6AE4D]' : 'text-[#354F42] hover:text-[#D6AE4D]'
-                  }`}
+                  className="w-10 h-10 rounded-full bg-white/90 hover:bg-white border-2 border-white shadow-md hover:shadow-lg backdrop-blur-md text-[#1E2621] hover:scale-105 active:scale-95 transition-all flex items-center justify-center cursor-pointer"
                   title="Search Menu Items"
                   aria-label="Search"
                 >
-                  <Search className="w-5 h-5 stroke-[2]" />
+                  <Search className="w-5 h-5 stroke-[2.2]" />
                 </button>
 
                 {/* Search Input Popover */}
@@ -196,21 +190,21 @@ const Navbar = () => {
                       className="absolute top-12 right-0 w-80 z-50"
                     >
                       <form onSubmit={handleSearchSubmit}>
-                        <div className="w-full bg-[#FAF6EE] dark:bg-[#122219] border-2 border-[#D6AE4D] rounded-2xl py-3 px-4 flex items-center gap-3 shadow-2xl backdrop-blur-2xl">
-                          <Search className="w-4 h-4 text-[#D6AE4D] shrink-0 stroke-[2.5]" />
+                        <div className="w-full bg-white/95 border-2 border-white rounded-2xl py-2.5 px-4 flex items-center gap-3 shadow-2xl backdrop-blur-2xl">
+                          <Search className="w-4 h-4 text-[#1E2621] shrink-0 stroke-[2.5]" />
                           <input
                             type="text"
                             autoFocus
                             placeholder="Search delicacies, coffee, misal..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full bg-transparent text-sm font-medium text-[#123524] dark:text-white placeholder:text-[#6B7C70]/80 dark:placeholder:text-[#A0B0A5]/75 focus:outline-none border-none outline-none ring-0 font-sans shadow-none truncate pr-1"
+                            className="w-full bg-transparent text-xs font-semibold text-[#1E2621] placeholder:text-gray-400 focus:outline-none border-none outline-none ring-0 truncate pr-1"
                           />
                           {searchTerm ? (
                             <button
                               type="button"
                               onClick={() => setSearchTerm('')}
-                              className="text-gray-400 dark:text-white/70 hover:text-[#D6AE4D] p-1 cursor-pointer"
+                              className="text-gray-400 hover:text-black p-1 cursor-pointer"
                             >
                               <X className="w-4 h-4" />
                             </button>
@@ -218,7 +212,7 @@ const Navbar = () => {
                             <button
                               type="button"
                               onClick={() => setIsSearchOpen(false)}
-                              className="text-xs font-extrabold text-[#D6AE4D] hover:underline uppercase tracking-wider cursor-pointer whitespace-nowrap"
+                              className="text-xs font-bold text-gray-500 hover:text-black uppercase tracking-wider cursor-pointer whitespace-nowrap"
                             >
                               Close
                             </button>
@@ -230,52 +224,46 @@ const Navbar = () => {
                 </AnimatePresence>
               </div>
 
-              {/* 3. Location Pin Icon & Satellite Map Modal Trigger */}
+              {/* 3. Location Map Pin Circle Icon */}
               <button
                 onClick={() => setIsLocationModalOpen(true)}
-                className={`p-1.5 transition-colors hidden lg:flex items-center justify-center ${
-                  isHome ? 'text-white hover:text-[#D6AE4D]' : 'text-[#354F42] hover:text-[#D6AE4D]'
-                }`}
-                title="Our Location & Satellite Earth Map"
+                className="w-10 h-10 rounded-full bg-white/90 hover:bg-white border-2 border-white shadow-md hover:shadow-lg backdrop-blur-md text-[#1E2621] hover:scale-105 active:scale-95 transition-all hidden lg:flex items-center justify-center cursor-pointer"
+                title="Our Location & Map"
                 aria-label="Location Map"
               >
-                <MapPin className="w-5 h-5 stroke-[2]" />
+                <MapPin className="w-5 h-5 stroke-[2.2]" />
               </button>
 
-              {/* 4. Shopping Cart Icon & Slide-Over Cart Drawer Trigger */}
+              {/* 4. Shopping Cart Drawer Circle Trigger with Dark Badge */}
               <button
                 onClick={() => setIsCartDrawerOpen(true)}
-                className={`p-1.5 transition-colors hidden lg:flex items-center justify-center relative ${
-                  isHome ? 'text-white hover:text-[#D6AE4D]' : 'text-[#354F42] hover:text-[#D6AE4D]'
-                }`}
+                className="w-10 h-10 rounded-full bg-white/90 hover:bg-white border-2 border-white shadow-md hover:shadow-lg backdrop-blur-md text-[#1E2621] hover:scale-105 active:scale-95 transition-all flex items-center justify-center relative cursor-pointer"
                 title="Shopping Cart & Quick Order"
                 aria-label="Shopping Cart"
               >
                 <ShoppingCart className="w-5 h-5 stroke-[2.2]" />
                 {totalItemsCount > 0 && (
-                  <span className="absolute -top-1.5 -right-1.5 min-w-[17px] h-[17px] px-1 bg-[#D6AE4D] text-[#123524] font-black text-[10px] rounded-full flex items-center justify-center shadow-md border border-[#123524]/20 leading-none">
+                  <span className="absolute -top-1 -right-1 min-w-[20px] h-[20px] px-1 bg-[#18201B] text-white font-black text-[10px] rounded-full flex items-center justify-center shadow-md border-2 border-white leading-none">
                     {totalItemsCount}
                   </span>
                 )}
               </button>
 
-              {/* 5. Theme Mode Toggle (Sun/Moon) */}
+              {/* 5. Theme Mode Toggle (Sun/Moon) Circle Icon */}
               <button
                 onClick={toggleDarkMode}
-                className={`p-1.5 transition-colors hidden lg:flex items-center justify-center relative ${
-                  isHome ? 'text-white hover:text-[#D6AE4D]' : 'text-[#354F42] hover:text-[#D6AE4D]'
-                }`}
+                className="w-10 h-10 rounded-full bg-white/90 hover:bg-white border-2 border-white shadow-md hover:shadow-lg backdrop-blur-md text-[#1E2621] hover:scale-105 active:scale-95 transition-all hidden lg:flex items-center justify-center cursor-pointer"
                 title={isDarkMode ? 'Switch to Light Mode ☀️' : 'Switch to Dark Mode 🌙'}
-                aria-label="Toggle Light Dark Theme"
+                aria-label="Toggle Theme"
               >
                 {isDarkMode ? (
-                  <Sun className="w-5 h-5 stroke-[2] text-[#D6AE4D]" />
+                  <Sun className="w-5 h-5 stroke-[2.2] text-[#E6C364]" />
                 ) : (
-                  <Moon className="w-5 h-5 stroke-[2]" />
+                  <Moon className="w-5 h-5 stroke-[2.2]" />
                 )}
               </button>
 
-              {/* 6. User Profile Avatar Circle */}
+              {/* 6. User Profile Circle Avatar */}
               <div
                 className="relative hidden lg:block"
                 onMouseEnter={() => setIsUserMenuOpen(true)}
@@ -284,23 +272,19 @@ const Navbar = () => {
                 <Link
                   to="/profile"
                   onClick={() => setIsUserMenuOpen(false)}
-                  className="flex items-center gap-0.5 group p-1 focus:outline-none"
-                  title={loggedUser?.name || userEmail || 'Profile / Account Settings'}
+                  className="flex items-center gap-1 group p-0.5 focus:outline-none"
                   aria-label="User Profile"
                 >
-                  <div className="w-8 h-8 rounded-full border border-[#D6AE4D]/80 bg-[#D6AE4D]/10 flex items-center justify-center font-bold text-xs text-[#D6AE4D] shadow-inner group-hover:bg-[#D6AE4D]/20 transition-all overflow-hidden shrink-0">
+                  <div className="w-10 h-10 rounded-full border-2 border-white bg-[#18201B] flex items-center justify-center font-bold text-xs text-white shadow-md overflow-hidden shrink-0 group-hover:scale-105 transition-all">
                     {loggedUser?.avatar ? (
                       <img src={loggedUser.avatar} alt={loggedUser?.name || 'User'} className="w-full h-full object-cover" />
                     ) : (
                       userInitial
                     )}
                   </div>
-                  <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${
-                    isUserMenuOpen ? 'rotate-180 text-[#D6AE4D]' : isHome ? 'text-white/80' : 'text-[#354F42]'
-                  }`} />
                 </Link>
 
-                {/* Compact Sleek Dropdown Menu Card */}
+                {/* Dropdown Menu Card */}
                 <AnimatePresence>
                   {isUserMenuOpen && (
                     <motion.div
@@ -308,169 +292,83 @@ const Navbar = () => {
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: 8, scale: 0.95 }}
                       transition={{ duration: 0.18, ease: "easeOut" }}
-                      className="absolute right-0 top-10 w-56 bg-[#10291C]/95 border border-[#D6AE4D]/35 rounded-2xl shadow-xl p-2 text-white z-50 backdrop-blur-2xl ring-1 ring-[#D6AE4D]/15"
+                      className="absolute right-0 top-12 w-56 bg-white/95 border-2 border-white rounded-2xl shadow-2xl p-2.5 text-[#1E2621] z-50 backdrop-blur-2xl"
                     >
-                      {/* Golden Top Accent Line */}
-                      <div className="h-[2px] w-1/3 mx-auto bg-gradient-to-r from-transparent via-[#D6AE4D] to-transparent rounded-full mb-1.5 opacity-80" />
-
-                      {/* Compact User Header Card */}
-                      <div className="p-2 bg-gradient-to-br from-[#1B3E2D] to-[#0A1A12] border border-[#D6AE4D]/25 rounded-xl mb-1.5 flex items-center gap-2 relative shadow-inner">
-                        <div className="relative shrink-0">
-                          <div className="w-8 h-8 rounded-full border border-[#D6AE4D] bg-gradient-to-tr from-[#D6AE4D] to-[#F3E5AB] flex items-center justify-center font-bold font-serif text-xs text-[#123524] overflow-hidden">
-                            {loggedUser?.avatar ? (
-                              <img src={loggedUser.avatar} alt={loggedUser?.name || 'User'} className="w-full h-full object-cover" />
-                            ) : (
-                              userInitial
-                            )}
-                          </div>
-                          <span className="absolute bottom-0 right-0 w-2 h-2 bg-emerald-400 border border-[#10291C] rounded-full" />
+                      <div className="p-2.5 bg-[#F2F6ED] border border-white rounded-xl mb-1.5 flex items-center gap-2 shadow-inner">
+                        <div className="w-8 h-8 rounded-full bg-[#18201B] text-white flex items-center justify-center font-bold text-xs shrink-0 overflow-hidden">
+                          {loggedUser?.avatar ? (
+                            <img src={loggedUser.avatar} alt={loggedUser?.name || 'User'} className="w-full h-full object-cover" />
+                          ) : (
+                            userInitial
+                          )}
                         </div>
                         <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-1 text-[8px] uppercase font-extrabold tracking-wider text-[#D6AE4D]">
-                            <Sparkles className="w-2.5 h-2.5 text-[#D6AE4D]" />
-                            <span>Akole Member</span>
-                          </div>
-                          <p className="font-serif font-bold text-xs text-white truncate">
+                          <span className="text-[9px] uppercase font-bold tracking-wider text-gray-500 block">
+                            Akole Member
+                          </span>
+                          <p className="font-bold text-xs truncate" style={{ color: '#1E2621' }}>
                             {loggedUser?.name || userEmail || 'Guest Explorer'}
                           </p>
                         </div>
                       </div>
 
-                      {/* Compact Options List */}
-                      <div className="space-y-0.5">
-                        {/* Item 1: My Profile */}
+                      <div className="space-y-0.5 text-xs font-semibold">
                         <Link
                           to="/profile"
                           onClick={() => setIsUserMenuOpen(false)}
-                          className="flex items-center justify-between px-2 py-1.5 rounded-lg text-[11px] font-semibold text-white/90 hover:text-white hover:bg-[#D6AE4D]/15 transition-all group"
+                          className="flex items-center justify-between px-2.5 py-2 rounded-xl hover:bg-black/5 transition-colors"
                         >
                           <div className="flex items-center gap-2">
-                            <div className="w-5 h-5 rounded-md bg-[#D6AE4D]/10 border border-[#D6AE4D]/20 flex items-center justify-center text-[#D6AE4D] group-hover:bg-[#D6AE4D] group-hover:text-[#123524] transition-all">
-                              <User className="w-3 h-3 stroke-[2.5]" />
-                            </div>
+                            <User className="w-3.5 h-3.5 text-gray-600" />
                             <span>My Profile</span>
                           </div>
-                          <ChevronRight className="w-3 h-3 text-white/30 group-hover:text-[#D6AE4D] group-hover:translate-x-0.5 transition-all" />
                         </Link>
 
-                        {/* Item 2: My Orders */}
                         <Link
                           to="/orders"
                           onClick={() => setIsUserMenuOpen(false)}
-                          className="flex items-center justify-between px-2 py-1.5 rounded-lg text-[11px] font-semibold text-white/90 hover:text-white hover:bg-[#D6AE4D]/15 transition-all group"
+                          className="flex items-center justify-between px-2.5 py-2 rounded-xl hover:bg-black/5 transition-colors"
                         >
                           <div className="flex items-center gap-2">
-                            <div className="w-5 h-5 rounded-md bg-[#D6AE4D]/10 border border-[#D6AE4D]/20 flex items-center justify-center text-[#D6AE4D] group-hover:bg-[#D6AE4D] group-hover:text-[#123524] transition-all">
-                              <Package className="w-3 h-3 stroke-[2.5]" />
-                            </div>
-                            <span>My Orders & Status</span>
+                            <Package className="w-3.5 h-3.5 text-gray-600" />
+                            <span>My Orders</span>
                           </div>
-                          <ChevronRight className="w-3 h-3 text-white/30 group-hover:text-[#D6AE4D] group-hover:translate-x-0.5 transition-all" />
                         </Link>
 
-                        {/* Item 3: Cart */}
                         <Link
                           to="/cart"
                           onClick={() => setIsUserMenuOpen(false)}
-                          className="flex items-center justify-between px-2 py-1.5 rounded-lg text-[11px] font-semibold text-white/90 hover:text-white hover:bg-[#D6AE4D]/15 transition-all group"
+                          className="flex items-center justify-between px-2.5 py-2 rounded-xl hover:bg-black/5 transition-colors"
                         >
                           <div className="flex items-center gap-2">
-                            <div className="w-5 h-5 rounded-md bg-[#D6AE4D]/10 border border-[#D6AE4D]/20 flex items-center justify-center text-[#D6AE4D] group-hover:bg-[#D6AE4D] group-hover:text-[#123524] transition-all">
-                              <ShoppingBag className="w-3 h-3 stroke-[2.5]" />
-                            </div>
+                            <ShoppingBag className="w-3.5 h-3.5 text-gray-600" />
                             <span>View Cart</span>
                           </div>
-                          <div className="flex items-center gap-1.5">
-                            <span className="px-1.5 py-0.2 text-[9px] font-bold rounded-full bg-[#D6AE4D]/20 text-[#D6AE4D] border border-[#D6AE4D]/30">
-                              {totalItemsCount}
-                            </span>
-                            <ChevronRight className="w-3 h-3 text-white/30 group-hover:text-[#D6AE4D] group-hover:translate-x-0.5 transition-all" />
-                          </div>
                         </Link>
-
-                        {/* Item 4: Wishlist */}
-                        <Link
-                          to="/wishlist"
-                          onClick={() => setIsUserMenuOpen(false)}
-                          className="flex items-center justify-between px-2 py-1.5 rounded-lg text-[11px] font-semibold text-white/90 hover:text-white hover:bg-[#D6AE4D]/15 transition-all group"
-                        >
-                          <div className="flex items-center gap-2">
-                            <div className="w-5 h-5 rounded-md bg-[#D6AE4D]/10 border border-[#D6AE4D]/20 flex items-center justify-center text-[#D6AE4D] group-hover:bg-[#D6AE4D] group-hover:text-[#123524] transition-all">
-                              <Heart className="w-3 h-3 stroke-[2.5]" />
-                            </div>
-                            <span>Wishlist</span>
-                          </div>
-                          <div className="flex items-center gap-1.5">
-                            {wishlistItems?.length > 0 && (
-                              <span className="px-1.5 py-0.2 text-[9px] font-bold rounded-full bg-[#D6AE4D]/20 text-[#D6AE4D] border border-[#D6AE4D]/30">
-                                {wishlistItems.length}
-                              </span>
-                            )}
-                            <ChevronRight className="w-3 h-3 text-white/30 group-hover:text-[#D6AE4D] group-hover:translate-x-0.5 transition-all" />
-                          </div>
-                        </Link>
-
-                        {/* Item 5: Settings */}
-                        <Link
-                          to="/settings"
-                          onClick={() => setIsUserMenuOpen(false)}
-                          className="flex items-center justify-between px-2 py-1.5 rounded-lg text-[11px] font-semibold text-white/90 hover:text-white hover:bg-[#D6AE4D]/15 transition-all group"
-                        >
-                          <div className="flex items-center gap-2">
-                            <div className="w-5 h-5 rounded-md bg-[#D6AE4D]/10 border border-[#D6AE4D]/20 flex items-center justify-center text-[#D6AE4D] group-hover:bg-[#D6AE4D] group-hover:text-[#123524] transition-all">
-                              <Settings className="w-3 h-3 stroke-[2.5]" />
-                            </div>
-                            <span>Settings & Preferences</span>
-                          </div>
-                          <ChevronRight className="w-3 h-3 text-white/30 group-hover:text-[#D6AE4D] group-hover:translate-x-0.5 transition-all" />
-                        </Link>
-
-                        {/* Item 6: Admin Dashboard (Only visible for Admin accounts) */}
-                        {(loggedUser?.role === 'admin' || loggedUser?.email === 'akolecafe@gmail.com' || userEmail === 'akolecafe@gmail.com') && (
-                          <Link
-                            to="/admin"
-                            onClick={() => setIsUserMenuOpen(false)}
-                            className="flex items-center justify-between px-2 py-1.5 rounded-lg text-[11px] font-semibold text-amber-300 hover:text-white hover:bg-[#D6AE4D]/15 transition-all group"
-                          >
-                            <div className="flex items-center gap-2">
-                              <div className="w-5 h-5 rounded-md bg-[#D6AE4D]/10 border border-[#D6AE4D]/20 flex items-center justify-center text-[#D6AE4D] group-hover:bg-[#D6AE4D] group-hover:text-[#123524] transition-all">
-                                <ShieldCheck className="w-3 h-3 stroke-[2.5]" />
-                              </div>
-                              <span>Admin Dashboard</span>
-                            </div>
-                            <ChevronRight className="w-3 h-3 text-white/30 group-hover:text-[#D6AE4D] group-hover:translate-x-0.5 transition-all" />
-                          </Link>
-                        )}
                       </div>
 
-                      {/* Divider */}
-                      <div className="h-[1px] bg-[#D6AE4D]/20 my-1" />
+                      <div className="h-[1px] bg-gray-200 my-1" />
 
-                      {/* Action Footer */}
                       {isAuthenticated || loggedUser ? (
                         <button
                           onClick={handleLogout}
-                          className="w-full flex items-center justify-between px-2.5 py-2 rounded-lg text-[11px] font-extrabold text-[#D6AE4D] hover:text-[#123524] bg-[#D6AE4D]/10 hover:bg-gradient-to-r hover:from-[#D6AE4D] hover:via-[#F3E5AB] hover:to-[#B89035] border border-[#D6AE4D]/40 shadow-sm transition-all group"
+                          className="w-full flex items-center justify-between px-2.5 py-2 rounded-xl text-xs font-bold text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer"
                         >
                           <div className="flex items-center gap-2">
-                            <div className="w-5 h-5 rounded-md bg-[#D6AE4D]/20 border border-[#D6AE4D]/30 flex items-center justify-center text-[#D6AE4D] group-hover:bg-[#123524] group-hover:text-[#D6AE4D] transition-all">
-                              <LogOut className="w-3 h-3 stroke-[2.5]" />
-                            </div>
-                            <span className="uppercase tracking-wider">Log Out</span>
+                            <LogOut className="w-3.5 h-3.5" />
+                            <span>Log Out</span>
                           </div>
-                          <ChevronRight className="w-3.5 h-3.5 text-[#D6AE4D] group-hover:text-[#123524] group-hover:translate-x-0.5 transition-all" />
                         </button>
                       ) : (
                         <Link
                           to="/login"
                           onClick={() => setIsUserMenuOpen(false)}
-                          className="w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-[11px] font-extrabold text-[#123524] bg-gradient-to-r from-[#D6AE4D] via-[#F3E5AB] to-[#B89035] hover:from-[#E5BC58] hover:via-[#FFF3C4] hover:to-[#C99D3B] shadow-sm transition-all group"
+                          className="w-full flex items-center justify-between px-2.5 py-2 rounded-xl text-xs font-bold text-[#1E2621] hover:bg-black/5 transition-colors"
                         >
                           <div className="flex items-center gap-2">
-                            <LogIn className="w-3.5 h-3.5 text-[#123524]" />
+                            <LogIn className="w-3.5 h-3.5" />
                             <span>Sign In / Register</span>
                           </div>
-                          <ChevronRight className="w-3.5 h-3.5 text-[#123524] group-hover:translate-x-0.5 transition-all" />
                         </Link>
                       )}
                     </motion.div>
@@ -478,15 +376,13 @@ const Navbar = () => {
                 </AnimatePresence>
               </div>
 
-              {/* Mobile Toggle Button */}
+              {/* Mobile Menu Toggle Button */}
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className={`p-1.5 lg:hidden ${
-                  isHome ? 'text-white hover:text-[#D6AE4D]' : 'text-[#354F42] hover:text-[#D6AE4D]'
-                }`}
+                className="w-10 h-10 rounded-full bg-white/90 border-2 border-white shadow-md backdrop-blur-md text-[#1E2621] flex lg:hidden items-center justify-center cursor-pointer ml-1"
                 aria-label="Toggle Menu"
               >
-                {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                {isMobileMenuOpen ? <X className="w-5 h-5 stroke-[2.2]" /> : <Menu className="w-5 h-5 stroke-[2.2]" />}
               </button>
             </div>
           </div>
@@ -502,13 +398,13 @@ const Navbar = () => {
         onLogout={handleLogout}
       />
 
-      {/* Interactive Satellite & Location Map Modal */}
+      {/* Location Map Modal */}
       <LocationModal
         isOpen={isLocationModalOpen}
         onClose={() => setIsLocationModalOpen(false)}
       />
 
-      {/* Right Slide-Over Cart Drawer */}
+      {/* Slide-Over Cart Drawer */}
       <CartDrawer
         isOpen={isCartDrawerOpen}
         onClose={() => setIsCartDrawerOpen(false)}
