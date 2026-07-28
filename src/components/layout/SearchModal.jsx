@@ -28,12 +28,13 @@ const SearchModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   const filteredItems = searchTerm.trim()
-    ? menuItems.filter(
-        item =>
-          item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          item.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          item.category.toLowerCase().includes(searchTerm.toLowerCase())
-      )
+    ? menuItems.filter(item => {
+        const q = searchTerm.toLowerCase().trim();
+        const name = (item.name || '').toLowerCase();
+        const desc = (item.description || '').toLowerCase();
+        const tags = Array.isArray(item.tags) ? item.tags.join(' ').toLowerCase() : String(item.tags || '').toLowerCase();
+        return name.includes(q) || desc.includes(q) || tags.includes(q);
+      })
     : [];
 
   const handleAddToCart = (item) => {

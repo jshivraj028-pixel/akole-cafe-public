@@ -57,22 +57,28 @@ const Menu = () => {
   const filteredAndSortedItems = useMemo(() => {
     let result = [...items];
 
-    // 1. Category Filter
-    if (activeCategory && activeCategory !== 'all') {
-      result = result.filter(item => item.category === activeCategory);
-    }
-
-    // 2. Instant Search Filter (name, description, category, tags, price)
+    // 1. Instant Search Filter (Strictly matches item Name, Description, or Tags)
     if (searchQuery && searchQuery.trim() !== '') {
       const q = searchQuery.toLowerCase().trim();
+      const terms = q.split(/\s+/).filter(Boolean);
+
       result = result.filter(item => {
-        const nameMatch = item.name && item.name.toLowerCase().includes(q);
-        const descMatch = item.description && item.description.toLowerCase().includes(q);
-        const catMatch = item.category && item.category.toLowerCase().includes(q);
-        const tagMatch = Array.isArray(item.tags) && item.tags.some(t => t.toLowerCase().includes(q));
-        const priceMatch = String(item.price).includes(q);
-        return nameMatch || descMatch || catMatch || tagMatch || priceMatch;
+        const name = (item.name || '').toLowerCase();
+        const desc = (item.description || '').toLowerCase();
+        const tags = Array.isArray(item.tags) 
+          ? item.tags.join(' ').toLowerCase() 
+          : String(item.tags || '').toLowerCase();
+
+        const fullText = `${name} ${desc} ${tags}`;
+        
+        // Every search term must be matched in the item's name, description, or tags
+        return terms.every(term => fullText.includes(term));
       });
+    } else {
+      // 2. Category Filter (Applies when NOT searching)
+      if (activeCategory && activeCategory !== 'all') {
+        result = result.filter(item => item.category === activeCategory);
+      }
     }
 
     // 3. Pure Veg / Non-Veg Filter
