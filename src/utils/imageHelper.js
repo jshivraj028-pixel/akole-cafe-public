@@ -103,7 +103,7 @@ export const getProductImage = (item) => {
   if (name.includes('mattha') || name.includes('buttermilk')) return spicedVillageMatthaImg;
   if (name.includes('cappuccino')) return hotCappuccinoCoffeeImg;
   if (name.includes('cold coffee') || name.includes('vanilla ice cream')) return coldCoffeeVanillaImg;
-  if (name.includes('water') || name.includes('mineral water')) return akolePremiumWaterImg;
+  if (item.category === 'water-bottle' || name.includes('water') || name.includes('mineral water') || name.includes('bottle')) return akolePremiumWaterImg;
   if (name.includes('falooda') || name.includes('royal falooda')) return shahiRoyalFaloodaImg;
   if (name.includes('irani') || name.includes('dum tea')) return specialIraniDumTeaImg;
   if (name.includes('kulhad') || name.includes('masala chai') || name.includes('chai') || name.includes('tea')) return kulhadMasalaChaiImg;

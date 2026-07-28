@@ -56,6 +56,10 @@ export const menuCategories = [
     "name": "Tea, Coffee & Drinks"
   },
   {
+    "id": "water-bottle",
+    "name": "Mineral Water & Hydration"
+  },
+  {
     "id": "desserts",
     "name": "Sweets & Ice Creams"
   }
@@ -65,7 +69,7 @@ export const menuItems = [
   {
     "id": "drk-water-bottle",
     "name": "Akole Premium Mineral Water (500ml)",
-    "category": "akole-special",
+    "category": "water-bottle",
     "description": "Pure premium natural mineral water sourced from pristine natural springs, packaged in our custom eco-friendly Akole Café designer glass bottle.",
     "price": 40,
     "rating": 5,
@@ -80,6 +84,43 @@ export const menuItems = [
       "Premium Bottle",
       "Akole Branded",
       "Bestseller"
+    ]
+  },
+  {
+    "id": "drk-water-bottle-1L",
+    "name": "Akole Premium Mineral Water (1 Litre)",
+    "category": "water-bottle",
+    "description": "Pure premium natural mineral water sourced from pristine natural springs, packaged in 1 Litre eco-friendly Akole Café designer bottle.",
+    "price": 60,
+    "rating": 5,
+    "isVeg": true,
+    "isBestseller": true,
+    "isChefSpecial": true,
+    "spicyLevel": 0,
+    "prepTime": "1 min",
+    "image": "/assets/akole-premium-water.png",
+    "tags": [
+      "Mineral Water",
+      "1 Litre Bottle",
+      "Hydration"
+    ]
+  },
+  {
+    "id": "drk-sparkling-water",
+    "name": "Akole Artisanal Sparkling Water (500ml)",
+    "category": "water-bottle",
+    "description": "Crisp, bubbly carbonated natural mineral water infused with subtle natural minerals.",
+    "price": 70,
+    "rating": 4.9,
+    "isVeg": true,
+    "isBestseller": false,
+    "spicyLevel": 0,
+    "prepTime": "1 min",
+    "image": "/assets/akole-premium-water.png",
+    "tags": [
+      "Sparkling Water",
+      "Bubbly",
+      "Hydration"
     ]
   },
   {

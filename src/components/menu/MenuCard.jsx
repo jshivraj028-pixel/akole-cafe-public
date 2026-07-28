@@ -47,7 +47,7 @@ const MenuCard = ({ item, onQuickView }) => {
       }}
       transition={{ type: "spring", stiffness: 350, damping: 22 }}
       onClick={handleCardClick}
-      className="group relative rounded-[28px] bg-white/80 dark:bg-[#15241C]/90 backdrop-blur-xl border border-[#E5DDD0] dark:border-[#D6AE4D]/30 shadow-lg hover:border-[#D6AE4D] dark:hover:border-[#D6AE4D] dark:hover:bg-[#1B2F24] transition-all duration-300 overflow-hidden flex flex-col justify-between cursor-pointer"
+      className="group relative rounded-[28px] bg-white/80 dark:bg-[#15241C]/90 backdrop-blur-xl border border-[#E5DDD0] dark:border-[#D6AE4D]/30 shadow-lg hover:border-[#D6AE4D] dark:hover:border-[#D6AE4D] dark:hover:bg-[#1B2F24] transition-all duration-300 overflow-hidden flex flex-col justify-between cursor-pointer h-full min-h-[380px]"
     >
       {/* Product Image Container */}
       <div className="relative h-52 w-full overflow-hidden bg-[#F5F2EA] dark:bg-[#0E1A13]">

@@ -25,41 +25,27 @@ const itemVariants = {
 };
 
 const MenuGrid = ({ items }) => {
-  if (items.length === 0) {
+  if (!items || items.length === 0) {
     return (
-      <motion.div 
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        className="text-center py-20 bg-white dark:bg-[#16231B] rounded-3xl border border-gray-200 dark:border-[#D6AE4D]/30 shadow-xl flex flex-col items-center"
-      >
+      <div className="w-full text-center py-16 px-6 bg-white/80 dark:bg-[#16231B]/90 backdrop-blur-xl rounded-3xl border border-gray-200/80 dark:border-[#D6AE4D]/30 shadow-xl flex flex-col items-center justify-center my-6">
         <FiCoffee className="w-12 h-12 text-[#D6AE4D] mb-4 stroke-[1.5] animate-bounce" />
         <h3 className="font-serif text-2xl font-bold text-[#123524] dark:text-[#D6AE4D] mb-2">No Delicacies Found</h3>
         <p className="text-xs text-gray-500 dark:text-[#A0B0A5] max-w-md mx-auto font-medium">
           We couldn't find any dishes matching your search query. Try typing another name like Misal, Dosa, Biryani, Vada Pav, or Ice Cream.
         </p>
-      </motion.div>
+      </div>
     );
   }
 
   return (
-    <motion.div 
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
-    >
-      <AnimatePresence mode="popLayout">
-        {items.map((item) => (
-          <motion.div key={item._id || item.id} variants={itemVariants} layout>
-            <MenuCard item={item} />
-          </motion.div>
-        ))}
-      </AnimatePresence>
-    </motion.div>
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 items-stretch w-full my-6">
+      {items.map((item) => (
+        <div key={item._id || item.id} className="h-full w-full flex flex-col">
+          <MenuCard item={item} />
+        </div>
+      ))}
+    </div>
   );
 };
 
 export default MenuGrid;
-
-
-//Hot Cappuccino Coffee Cold Coffee with Vanilla Ice Cream //
