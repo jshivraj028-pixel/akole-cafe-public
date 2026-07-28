@@ -1,122 +1,97 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, Link, useSearchParams, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  FiHeart, FiAward, FiShoppingBag, FiUser, FiMapPin, FiClock, 
-  FiStar, FiCheck, FiTrash2, FiCoffee, FiTag, FiEdit3, FiLock, 
-  FiPhone, FiMail, FiRefreshCw, FiCopy, FiLogOut, FiArrowRight,
-  FiCamera, FiShield, FiHome, FiCheckCircle
-} from 'react-icons/fi';
-import { Crown, Sparkles, ShieldCheck } from 'lucide-react';
-import PageBanner from '../components/common/PageBanner';
 import Container from '../components/common/Container';
+import PageBanner from '../components/common/PageBanner';
 import Button from '../components/common/Button';
 import { useTheme } from '../context/ThemeContext';
-import { useCart } from '../context/CartContext';
 import { fetchOrdersAPI } from '../services/api';
+import { 
+  FiUser, 
+  FiMail, 
+  FiPhone, 
+  FiMapPin, 
+  FiEdit3, 
+  FiClock, 
+  FiHeart, 
+  FiAward, 
+  FiCheckCircle, 
+  FiCamera,
+  FiShoppingBag,
+  FiChevronRight,
+  FiLogOut,
+  FiX
+} from 'react-icons/fi';
+import { Sparkles } from 'lucide-react';
 
 const Profile = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const [searchParams] = useSearchParams();
-  const tabQuery = searchParams.get('tab');
-  const pathname = location.pathname;
+  const { currentUser, setCurrentUser, wishlist, showToast, logout } = useTheme();
 
-  const { wishlistItems, toggleWishlist, showToast, logoutUser, userEmail } = useTheme();
-  const { addToCart } = useCart();
-
-  const [activeTab, setActiveTab] = useState(() => {
-    if (pathname === '/orders') return 'orders';
-    if (pathname === '/wishlist') return 'wishlist';
-    if (pathname === '/settings') return 'settings';
-    return tabQuery || 'details';
-  });
-
-  const [userOrders, setUserOrders] = useState([]);
-  const [loadingOrders, setLoadingOrders] = useState(false);
-
-  useEffect(() => {
-    if (pathname === '/orders') {
-      setActiveTab('orders');
-    } else if (pathname === '/wishlist') {
-      setActiveTab('wishlist');
-    } else if (pathname === '/settings') {
-      setActiveTab('settings');
-    } else if (tabQuery) {
-      setActiveTab(tabQuery);
-    }
-  }, [pathname, tabQuery]);
-
-  // Load Logged-in user from localStorage
-  const [currentUser, setCurrentUser] = useState(() => {
-    try {
-      const saved = localStorage.getItem('akole_user');
-      if (!saved) return null;
-      const parsed = JSON.parse(saved);
-      return parsed;
-    } catch (e) {
-      return null;
-    }
-  });
-
-  // User Profile Fields
-  const [userName, setUserName] = useState(currentUser?.name || 'Yuvraj Jadhav');
-  const [userPhone, setUserPhone] = useState(currentUser?.phone || '+91 84323 87670');
-  const [userEmailAddress, setUserEmailAddress] = useState(currentUser?.email || userEmail || 'jsivraj028@gmail.com');
+  // Redirect or default user info
+  const [userName, setUserName] = useState(currentUser?.name || 'Vipul Gambhire');
+  const [userPhone, setUserPhone] = useState(currentUser?.phone || '+91 98765 43210');
+  const [userEmailAddress, setUserEmailAddress] = useState(currentUser?.email || 'akolecafe@gmail.com');
   const [userAddress, setUserAddress] = useState(currentUser?.address || 'Akole Bypass Road, Near Central Bus Stand, Akole, Maharashtra 422601');
+  const [userLandmark, setUserLandmark] = useState(currentUser?.landmark || 'Near Central Bus Stand');
   const [userCity, setUserCity] = useState(currentUser?.city || 'Akole, Ahmednagar');
   const [userPincode, setUserPincode] = useState(currentUser?.pincode || '422601');
-  const [userAvatar, setUserAvatar] = useState(
-    currentUser?.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80'
-  );
+  const [userAvatar, setUserAvatar] = useState(currentUser?.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80');
 
+  const [activeTab, setActiveTab] = useState('details'); // 'details' | 'orders' | 'wishlist' | 'rewards'
   const [isEditing, setIsEditing] = useState(false);
-  const [copiedCoupon, setCopiedCoupon] = useState('');
+  const [userOrders, setUserOrders] = useState([]);
+  const [loadingOrders, setLoadingOrders] = useState(true);
+
+  // Address Edit Modal State
+  const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
+  const [tempAddress, setTempAddress] = useState(userAddress);
+  const [tempLandmark, setTempLandmark] = useState(userLandmark);
+  const [tempCity, setTempCity] = useState(userCity);
+  const [tempPincode, setTempPincode] = useState(userPincode);
+
+  // Sync state when currentUser updates
+  useEffect(() => {
+    if (currentUser) {
+      setUserName(currentUser.name || 'Vipul Gambhire');
+      setUserPhone(currentUser.phone || '+91 98765 43210');
+      setUserEmailAddress(currentUser.email || 'akolecafe@gmail.com');
+      setUserAddress(currentUser.address || 'Akole Bypass Road, Near Central Bus Stand, Akole, Maharashtra 422601');
+      setUserLandmark(currentUser.landmark || 'Near Central Bus Stand');
+      setUserCity(currentUser.city || 'Akole, Ahmednagar');
+      setUserPincode(currentUser.pincode || '422601');
+      if (currentUser.avatar) setUserAvatar(currentUser.avatar);
+    }
+  }, [currentUser]);
+
+  // Load User Orders from API
+  useEffect(() => {
+    let isMounted = true;
+    const loadOrders = async () => {
+      try {
+        setLoadingOrders(true);
+        const ordersData = await fetchOrdersAPI();
+        if (isMounted) {
+          const emailFilter = currentUser?.email?.toLowerCase();
+          const myOrders = ordersData.filter(o => 
+            !emailFilter || o.email?.toLowerCase() === emailFilter || o.userEmail?.toLowerCase() === emailFilter
+          );
+          setUserOrders(myOrders.length > 0 ? myOrders : ordersData.slice(0, 5));
+        }
+      } catch (err) {
+        console.error('Failed to load user orders:', err);
+      } finally {
+        if (isMounted) setLoadingOrders(false);
+      }
+    };
+    loadOrders();
+    return () => { isMounted = false; };
+  }, [currentUser]);
+
+  const wishlistItems = wishlist || [];
 
   // Handle Logout
   const handleLogout = () => {
-    localStorage.removeItem('akole_token');
-    localStorage.removeItem('akole_user');
-    localStorage.removeItem('akole_admin_token');
-    logoutUser();
-    setCurrentUser(null);
+    logout();
     showToast('Logged out successfully', 'info');
-    navigate('/login');
-  };
-
-  // Fetch orders for current user
-  useEffect(() => {
-    const emailToUse = currentUser?.email || userEmailAddress;
-    if (emailToUse) {
-      let isMounted = true;
-      setLoadingOrders(true);
-      fetchOrdersAPI()
-        .then((orders) => {
-          if (isMounted && Array.isArray(orders)) {
-            const filtered = orders.filter(
-              (o) => o.customerEmail?.toLowerCase() === emailToUse.toLowerCase()
-            );
-            setUserOrders(filtered.length > 0 ? filtered : orders);
-          }
-        })
-        .catch((err) => console.error('Error fetching user orders:', err))
-        .finally(() => {
-          if (isMounted) setLoadingOrders(false);
-        });
-      return () => { isMounted = false; };
-    }
-  }, [currentUser, userEmailAddress]);
-
-  const handleMoveToCart = (item) => {
-    addToCart(item);
-    showToast(`Added ${item.name} to Cart!`, 'success');
-  };
-
-  const handleCopyCoupon = (code) => {
-    navigator.clipboard.writeText(code);
-    setCopiedCoupon(code);
-    showToast(`Coupon ${code} copied to clipboard!`, 'success');
-    setTimeout(() => setCopiedCoupon(''), 3000);
   };
 
   // Handle Image Upload / Change Photo
@@ -143,19 +118,41 @@ const Profile = () => {
   const handleSaveProfile = (e) => {
     e.preventDefault();
     const updated = { 
-      ...currentUser, 
+      ...(currentUser || {}), 
       name: userName, 
       phone: userPhone,
       email: userEmailAddress,
       address: userAddress,
       city: userCity,
+      landmark: userLandmark,
       pincode: userPincode,
       avatar: userAvatar
     };
     setCurrentUser(updated);
     localStorage.setItem('akole_user', JSON.stringify(updated));
+    localStorage.setItem('akole_user_email', userEmailAddress);
     setIsEditing(false);
     showToast('Profile & delivery address updated successfully!', 'success');
+  };
+
+  // Handle Save Address Modal
+  const handleSaveAddressModal = (e) => {
+    e.preventDefault();
+    setUserAddress(tempAddress);
+    setUserLandmark(tempLandmark);
+    setUserCity(tempCity);
+    setUserPincode(tempPincode);
+    const updated = { 
+      ...(currentUser || {}), 
+      address: tempAddress,
+      landmark: tempLandmark,
+      city: tempCity,
+      pincode: tempPincode
+    };
+    setCurrentUser(updated);
+    localStorage.setItem('akole_user', JSON.stringify(updated));
+    setIsAddressModalOpen(false);
+    showToast('Primary delivery address updated successfully!', 'success');
   };
 
   return (
@@ -221,27 +218,28 @@ const Profile = () => {
                       <FiPhone className="text-[#D6AE4D] shrink-0" />
                       <span>{userPhone}</span>
                     </p>
-                    <p className="flex items-center justify-center sm:justify-start gap-2 text-white/80">
+                    <p className="flex items-center justify-center sm:justify-start gap-2 text-white/70">
                       <FiMapPin className="text-[#D6AE4D] shrink-0" />
-                      <span className="truncate max-w-xs sm:max-w-md">{userAddress}</span>
+                      <span className="line-clamp-1">{userAddress}</span>
                     </p>
                   </div>
                 </div>
+
               </div>
 
-              {/* Action Buttons: Edit Profile & Logout */}
-              <div className="flex flex-row items-center gap-3 shrink-0">
+              {/* Header Action Buttons */}
+              <div className="flex items-center gap-3 shrink-0">
                 <button
                   onClick={() => setIsEditing(!isEditing)}
-                  className="px-5 py-2.5 rounded-full bg-[#D6AE4D] hover:bg-[#c59d3c] text-[#123524] font-montserrat font-bold text-xs uppercase tracking-wider shadow-lg transition-all flex items-center gap-2"
+                  className="px-5 py-2.5 rounded-full bg-[#D6AE4D] text-[#123524] font-montserrat font-bold text-xs uppercase tracking-wider hover:bg-white transition-all shadow-lg flex items-center gap-2 cursor-pointer"
                 >
                   <FiEdit3 className="w-4 h-4" />
-                  <span>{isEditing ? 'Close Form' : 'Edit Details'}</span>
+                  <span>{isEditing ? 'Close Form' : 'Edit Profile'}</span>
                 </button>
 
                 <button
                   onClick={handleLogout}
-                  className="px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white font-montserrat font-bold text-xs uppercase tracking-wider border border-white/20 transition-all flex items-center gap-2"
+                  className="px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white font-montserrat font-bold text-xs uppercase tracking-wider border border-white/20 transition-all flex items-center gap-2 cursor-pointer"
                 >
                   <FiLogOut className="w-4 h-4" />
                   <span>Log Out</span>
@@ -329,13 +327,13 @@ const Profile = () => {
                     <button
                       type="button"
                       onClick={() => setIsEditing(false)}
-                      className="px-5 py-2 rounded-full bg-white/10 text-white text-xs font-semibold"
+                      className="px-5 py-2 rounded-full bg-white/10 text-white text-xs font-semibold cursor-pointer"
                     >
                       Cancel
                     </button>
                     <button
                       type="submit"
-                      className="px-6 py-2 rounded-full bg-[#D6AE4D] text-[#123524] text-xs font-bold uppercase tracking-wider shadow-md hover:bg-[#c59d3c]"
+                      className="px-6 py-2 rounded-full bg-[#D6AE4D] text-[#123524] text-xs font-bold uppercase tracking-wider shadow-md hover:bg-[#c59d3c] cursor-pointer"
                     >
                       Save Profile & Address
                     </button>
@@ -350,7 +348,7 @@ const Profile = () => {
           <div className="flex items-center justify-start sm:justify-center gap-3 border-b border-[#D6AE4D]/20 pb-4 mb-8 overflow-x-auto">
             <button
               onClick={() => setActiveTab('details')}
-              className={`px-5 py-2.5 rounded-full text-xs uppercase font-bold tracking-wider transition-all shrink-0 flex items-center gap-2 ${
+              className={`px-5 py-2.5 rounded-full text-xs uppercase font-bold tracking-wider transition-all shrink-0 flex items-center gap-2 cursor-pointer ${
                 activeTab === 'details'
                   ? 'bg-[#D6AE4D] text-[#123524] shadow-md'
                   : 'bg-white/70 dark:bg-[#1D2C22] text-[#123524] dark:text-[#EAE3D2] hover:text-[#D6AE4D]'
@@ -361,7 +359,7 @@ const Profile = () => {
 
             <button
               onClick={() => setActiveTab('orders')}
-              className={`px-5 py-2.5 rounded-full text-xs uppercase font-bold tracking-wider transition-all shrink-0 flex items-center gap-2 ${
+              className={`px-5 py-2.5 rounded-full text-xs uppercase font-bold tracking-wider transition-all shrink-0 flex items-center gap-2 cursor-pointer ${
                 activeTab === 'orders'
                   ? 'bg-[#D6AE4D] text-[#123524] shadow-md'
                   : 'bg-white/70 dark:bg-[#1D2C22] text-[#123524] dark:text-[#EAE3D2] hover:text-[#D6AE4D]'
@@ -372,7 +370,7 @@ const Profile = () => {
 
             <button
               onClick={() => setActiveTab('wishlist')}
-              className={`px-5 py-2.5 rounded-full text-xs uppercase font-bold tracking-wider transition-all shrink-0 flex items-center gap-2 ${
+              className={`px-5 py-2.5 rounded-full text-xs uppercase font-bold tracking-wider transition-all shrink-0 flex items-center gap-2 cursor-pointer ${
                 activeTab === 'wishlist'
                   ? 'bg-[#D6AE4D] text-[#123524] shadow-md'
                   : 'bg-white/70 dark:bg-[#1D2C22] text-[#123524] dark:text-[#EAE3D2] hover:text-[#D6AE4D]'
@@ -383,7 +381,7 @@ const Profile = () => {
 
             <button
               onClick={() => setActiveTab('rewards')}
-              className={`px-5 py-2.5 rounded-full text-xs uppercase font-bold tracking-wider transition-all shrink-0 flex items-center gap-2 ${
+              className={`px-5 py-2.5 rounded-full text-xs uppercase font-bold tracking-wider transition-all shrink-0 flex items-center gap-2 cursor-pointer ${
                 activeTab === 'rewards'
                   ? 'bg-[#D6AE4D] text-[#123524] shadow-md'
                   : 'bg-white/70 dark:bg-[#1D2C22] text-[#123524] dark:text-[#EAE3D2] hover:text-[#D6AE4D]'
@@ -411,7 +409,7 @@ const Profile = () => {
 
                   <button
                     onClick={() => setIsEditing(true)}
-                    className="text-xs text-[#D6AE4D] font-bold uppercase tracking-wider hover:underline flex items-center gap-1"
+                    className="text-xs text-[#D6AE4D] font-bold uppercase tracking-wider hover:underline flex items-center gap-1 cursor-pointer"
                   >
                     <FiEdit3 /> Edit Info
                   </button>
@@ -449,32 +447,38 @@ const Profile = () => {
 
                 </div>
 
-                {/* ADDRESS SECTION */}
+                {/* ADDRESS SECTION WITH CHANGE ADDRESS MODAL TRIGGER */}
                 <div className="pt-4 border-t border-[#D6AE4D]/20">
                   <h4 className="font-serif text-xl font-bold text-[#123524] dark:text-white mb-3 flex items-center gap-2">
                     <FiMapPin className="text-[#D6AE4D]" />
                     <span>Saved Primary Delivery Address</span>
                   </h4>
 
-                  <div className="p-5 rounded-2xl bg-[#FAF6EE] dark:bg-[#121A15] border border-[#D6AE4D]/30 space-y-2">
-                    <div className="flex items-start justify-between">
-                      <div className="space-y-1">
+                  <div className="p-5 sm:p-6 rounded-2xl bg-[#FAF6EE] dark:bg-[#121A15] border-2 border-[#D6AE4D]/40 shadow-md space-y-2">
+                    <div className="flex flex-col sm:flex-row items-start justify-between gap-4">
+                      <div className="space-y-1.5">
                         <span className="px-2.5 py-0.5 rounded-md bg-[#D6AE4D]/20 text-[#D6AE4D] text-[10px] uppercase font-extrabold tracking-wider border border-[#D6AE4D]/30 inline-block mb-1">
-                          Home / Preferred Address
+                          HOME / PREFERRED ADDRESS
                         </span>
-                        <p className="text-sm font-semibold text-[#123524] dark:text-white">
+                        <p className="text-sm sm:text-base font-bold text-[#123524] dark:text-white leading-relaxed">
                           {userAddress}
                         </p>
-                        <p className="text-xs text-[#6B7C70] dark:text-[#A0B0A5]">
-                          Landmark: Near Central Bus Stand • Pincode: {userPincode}
+                        <p className="text-xs text-[#6B7C70] dark:text-[#A0B0A5] font-medium">
+                          Landmark: {userLandmark} • City: {userCity} • Pincode: {userPincode}
                         </p>
                       </div>
 
                       <button
-                        onClick={() => setIsEditing(true)}
-                        className="px-3 py-1 rounded-lg bg-[#123524] dark:bg-[#D6AE4D] text-white dark:text-[#123524] text-[10px] font-bold uppercase tracking-wider shrink-0"
+                        onClick={() => {
+                          setTempAddress(userAddress);
+                          setTempLandmark(userLandmark);
+                          setTempCity(userCity);
+                          setTempPincode(userPincode);
+                          setIsAddressModalOpen(true);
+                        }}
+                        className="px-4 py-2.5 rounded-xl bg-[#123524] dark:bg-[#D6AE4D] text-[#D6AE4D] dark:text-[#123524] text-xs font-black uppercase tracking-wider shrink-0 hover:scale-105 active:scale-95 transition-all shadow-lg border border-[#D6AE4D] cursor-pointer whitespace-nowrap"
                       >
-                        Change Address
+                        CHANGE ADDRESS
                       </button>
                     </div>
                   </div>
@@ -519,25 +523,14 @@ const Profile = () => {
                           {ord.status || 'Confirmed'}
                         </span>
                       </div>
-
-                      <div className="text-xs text-[#6B7C70] dark:text-[#A0B0A5] font-light">
-                        {ord.items && ord.items.map((i) => `${i.name} (x${i.quantity || i.qty})`).join(', ')}
-                      </div>
-                      <span className="text-[11px] text-[#8B9B90] block">
-                        Ordered on {ord.createdAt ? new Date(ord.createdAt).toLocaleDateString() : 'Recent'}
-                      </span>
+                      <p className="text-xs text-[#6B7C70] dark:text-[#A0B0A5]">
+                        {ord.createdAt ? new Date(ord.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : 'Recent Order'}
+                      </p>
                     </div>
-
-                    <div className="flex items-center sm:flex-col items-end justify-between sm:justify-center gap-2">
-                      <span className="font-serif text-xl font-bold text-[#123524] dark:text-white">
-                        ₹{ord.totalAmount || ord.total}
+                    <div className="flex items-center gap-4">
+                      <span className="font-serif text-lg font-bold text-[#123524] dark:text-white">
+                        ₹{ord.totalAmount || ord.total || 250}
                       </span>
-                      <button
-                        onClick={() => showToast(`Re-ordered items from ${ord.orderId || ord.id}!`, 'success')}
-                        className="px-3 py-1 rounded-full bg-[#123524] dark:bg-[#D6AE4D] text-white dark:text-[#123524] text-[11px] font-bold uppercase tracking-wider flex items-center gap-1 shadow-sm"
-                      >
-                        <FiRefreshCw className="w-3 h-3" /> Re-Order
-                      </button>
                     </div>
                   </div>
                 ))
@@ -545,52 +538,30 @@ const Profile = () => {
             </div>
           )}
 
-          {/* TAB 3: SAVED FAVORITES */}
+          {/* TAB 3: WISHLIST */}
           {activeTab === 'wishlist' && (
-            <div>
+            <div className="max-w-4xl mx-auto">
               {wishlistItems.length === 0 ? (
                 <div className="text-center py-16 p-8 rounded-3xl bg-white/80 dark:bg-[#1D2C22] border border-[#D6AE4D]/20 max-w-lg mx-auto shadow-sm">
                   <FiHeart className="w-12 h-12 text-[#D6AE4D] mx-auto mb-3 opacity-60" />
-                  <h3 className="font-serif text-2xl font-bold text-[#123524] dark:text-white mb-1">
-                    Your Wishlist is Empty
+                  <h3 className="font-serif text-2xl font-bold text-[#123524] dark:text-[#D6AE4D] mb-1">
+                    Your Favorites List is Empty
                   </h3>
                   <p className="text-xs text-[#6B7C70] dark:text-[#A0B0A5] font-light mb-6">
-                    Save your favorite artisanal coffee brews and wood-fired pizzas to order anytime.
+                    Tap the heart icon on any coffee or dish card to save your favorites.
                   </p>
                   <Button to="/menu" variant="gold" size="md">
-                    Explore Menu
+                    Explore Cafe Menu
                   </Button>
                 </div>
               ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {wishlistItems.map((item) => (
-                    <div
-                      key={item.id}
-                      className="rounded-2xl bg-white dark:bg-[#1D2C22] border border-[#D6AE4D]/20 p-4 flex gap-4 items-center justify-between shadow-sm hover:shadow-md transition-shadow"
-                    >
-                      <img src={item.image} alt={item.name} className="w-20 h-20 object-cover rounded-xl shrink-0" />
+                    <div key={item.id} className="p-4 rounded-2xl bg-white dark:bg-[#1D2C22] border border-[#D6AE4D]/30 shadow-md flex items-center gap-4">
+                      <img src={item.image} alt={item.name} className="w-16 h-16 rounded-xl object-cover" />
                       <div className="flex-1 min-w-0">
-                        <h4 className="font-serif text-base font-bold text-[#123524] dark:text-white truncate">
-                          {item.name}
-                        </h4>
-                        <span className="font-semibold text-[#D6AE4D] text-sm block mt-0.5">
-                          ₹{item.price}
-                        </span>
-                        <div className="flex items-center gap-2 mt-3">
-                          <button
-                            onClick={() => handleMoveToCart(item)}
-                            className="py-1 px-3 rounded-lg bg-[#D6AE4D] hover:bg-[#c59d3c] text-[#123524] font-bold text-[11px] uppercase tracking-wider flex items-center gap-1 shadow-sm"
-                          >
-                            <FiShoppingBag /> Add to Cart
-                          </button>
-                          <button
-                            onClick={() => toggleWishlist(item)}
-                            className="p-1.5 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-lg transition-colors"
-                            title="Remove"
-                          >
-                            <FiTrash2 className="w-4 h-4" />
-                          </button>
-                        </div>
+                        <h4 className="font-serif font-bold text-[#123524] dark:text-white truncate">{item.name}</h4>
+                        <p className="text-xs text-[#D6AE4D] font-bold">₹{item.price}</p>
                       </div>
                     </div>
                   ))}
@@ -599,66 +570,116 @@ const Profile = () => {
             </div>
           )}
 
-          {/* TAB 4: VIP PERKS & OFFERS */}
+          {/* TAB 4: REWARDS */}
           {activeTab === 'rewards' && (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-              
-              <div className="rounded-2xl bg-white dark:bg-[#1D2C22] p-6 border border-[#D6AE4D]/30 text-center flex flex-col items-center shadow-sm">
-                <div className="w-12 h-12 rounded-full bg-[#D6AE4D]/15 flex items-center justify-center text-[#D6AE4D] mb-4">
-                  <FiCoffee className="w-6 h-6" />
-                </div>
-                <h4 className="font-serif text-xl font-bold text-[#123524] dark:text-white">
-                  Free Birthday Brew
-                </h4>
-                <p className="text-xs text-[#6B7C70] dark:text-[#A0B0A5] font-light mt-2 mb-4">
-                  Enjoy any handcrafted signature gold latte on your birthday month.
-                </p>
-                <button
-                  onClick={() => handleCopyCoupon('BIRTHDAY2026')}
-                  className="w-full py-2 rounded-xl bg-[#F5EFE3] dark:bg-[#121A15] text-[#123524] dark:text-[#D6AE4D] font-mono text-xs font-bold flex items-center justify-center gap-2 border border-[#D6AE4D]/40"
-                >
-                  <FiCopy /> {copiedCoupon === 'BIRTHDAY2026' ? 'COPIED!' : 'BIRTHDAY2026'}
-                </button>
-              </div>
-
-              <div className="rounded-2xl bg-white dark:bg-[#1D2C22] p-6 border border-[#D6AE4D]/30 text-center flex flex-col items-center shadow-sm">
-                <div className="w-12 h-12 rounded-full bg-[#D6AE4D]/15 flex items-center justify-center text-[#D6AE4D] mb-4">
-                  <FiTag className="w-6 h-6" />
-                </div>
-                <h4 className="font-serif text-xl font-bold text-[#123524] dark:text-white">
-                  15% Member Discount
-                </h4>
-                <p className="text-xs text-[#6B7C70] dark:text-[#A0B0A5] font-light mt-2 mb-4">
-                  Get 15% discount on all online orders above ₹500.
-                </p>
-                <button
-                  onClick={() => handleCopyCoupon('AKOLE20')}
-                  className="w-full py-2 rounded-xl bg-[#F5EFE3] dark:bg-[#121A15] text-[#123524] dark:text-[#D6AE4D] font-mono text-xs font-bold flex items-center justify-center gap-2 border border-[#D6AE4D]/40"
-                >
-                  <FiCopy /> {copiedCoupon === 'AKOLE20' ? 'COPIED!' : 'AKOLE20'}
-                </button>
-              </div>
-
-              <div className="rounded-2xl bg-white dark:bg-[#1D2C22] p-6 border border-[#D6AE4D]/30 text-center flex flex-col items-center shadow-sm">
-                <div className="w-12 h-12 rounded-full bg-[#D6AE4D]/15 flex items-center justify-center text-[#D6AE4D] mb-4">
-                  <FiStar className="w-6 h-6" />
-                </div>
-                <h4 className="font-serif text-xl font-bold text-[#123524] dark:text-white">
-                  Priority Table Reserve
-                </h4>
-                <p className="text-xs text-[#6B7C70] dark:text-[#A0B0A5] font-light mt-2 mb-4">
-                  Skip waiting lists on weekend live acoustic music evenings.
-                </p>
-                <Button to="/reserve" variant="gold" size="sm" className="w-full text-xs">
-                  Reserve Table
-                </Button>
-              </div>
-
+            <div className="max-w-3xl mx-auto p-8 rounded-3xl bg-white/90 dark:bg-[#1D2C22] border border-[#D6AE4D]/30 shadow-xl space-y-6 text-center">
+              <Sparkles className="w-12 h-12 text-[#D6AE4D] mx-auto" />
+              <h3 className="font-serif text-3xl font-bold text-[#123524] dark:text-white">
+                Akole Cafe VIP Gold Member Benefits
+              </h3>
+              <p className="text-xs text-[#6B7C70] dark:text-[#A0B0A5] max-w-md mx-auto">
+                As a Gold Member, enjoy 10% instant discount on every order, priority table reservations, and exclusive birthday gifts!
+              </p>
             </div>
           )}
 
         </Container>
       </section>
+
+      {/* EDIT PRIMARY DELIVERY ADDRESS MODAL */}
+      <AnimatePresence>
+        {isAddressModalOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsAddressModalOpen(false)}
+              className="fixed inset-0 bg-black/80 backdrop-blur-md"
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 10 }}
+              className="relative z-10 max-w-lg w-full bg-[#122219] border-2 border-[#D6AE4D] rounded-3xl p-6 sm:p-8 shadow-2xl text-white space-y-6"
+            >
+              <div className="flex items-center justify-between border-b border-[#D6AE4D]/30 pb-4">
+                <h3 className="font-serif text-2xl font-bold text-[#D6AE4D] flex items-center gap-2">
+                  <FiMapPin className="w-5 h-5 text-[#D6AE4D]" />
+                  <span>Update Delivery Address</span>
+                </h3>
+                <button
+                  onClick={() => setIsAddressModalOpen(false)}
+                  className="text-white/70 hover:text-[#D6AE4D] p-1 cursor-pointer"
+                >
+                  <FiX className="w-5 h-5" />
+                </button>
+              </div>
+
+              <form onSubmit={handleSaveAddressModal} className="space-y-4">
+                <div>
+                  <label className="text-[11px] uppercase tracking-wider font-extrabold text-[#D6AE4D] block mb-1">
+                    Full Street / Building / House Address
+                  </label>
+                  <textarea
+                    rows={3}
+                    value={tempAddress}
+                    onChange={(e) => setTempAddress(e.target.value)}
+                    placeholder="Enter complete street address..."
+                    className="w-full px-4 py-3 rounded-2xl bg-[#0E1A13] border border-[#D6AE4D]/40 text-white text-xs font-semibold focus:outline-none focus:border-[#D6AE4D] resize-none"
+                    required
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-[11px] uppercase tracking-wider font-extrabold text-[#D6AE4D] block mb-1">
+                      Landmark / Area
+                    </label>
+                    <input
+                      type="text"
+                      value={tempLandmark}
+                      onChange={(e) => setTempLandmark(e.target.value)}
+                      placeholder="e.g. Near Bus Stand"
+                      className="w-full px-4 py-2.5 rounded-xl bg-[#0E1A13] border border-[#D6AE4D]/40 text-white text-xs font-semibold focus:outline-none focus:border-[#D6AE4D]"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="text-[11px] uppercase tracking-wider font-extrabold text-[#D6AE4D] block mb-1">
+                      City / Pincode
+                    </label>
+                    <input
+                      type="text"
+                      value={tempCity}
+                      onChange={(e) => setTempCity(e.target.value)}
+                      placeholder="e.g. Akole, Ahmednagar 422601"
+                      className="w-full px-4 py-2.5 rounded-xl bg-[#0E1A13] border border-[#D6AE4D]/40 text-white text-xs font-semibold focus:outline-none focus:border-[#D6AE4D]"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-end gap-3 pt-4 border-t border-[#D6AE4D]/20">
+                  <button
+                    type="button"
+                    onClick={() => setIsAddressModalOpen(false)}
+                    className="px-5 py-2.5 rounded-xl bg-white/10 text-white text-xs font-extrabold uppercase tracking-wider hover:bg-white/20 cursor-pointer"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="px-6 py-2.5 rounded-xl bg-[#D6AE4D] text-[#123524] text-xs font-black uppercase tracking-wider shadow-lg hover:bg-[#F3E5AB] cursor-pointer"
+                  >
+                    Save New Address
+                  </button>
+                </div>
+              </form>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </>
   );
 };

@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import Container from '../common/Container';
 import ProductCard from './ProductCard';
 import Button from '../common/Button';
 import { fetchMenuItems } from '../../services/api';
 import { menuItems as staticFallbackItems } from '../../data/menu';
-import { FiArrowRight } from 'react-icons/fi';
+import { FiArrowRight, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import icedCaramelMacchiatoImg from '../../assets/iced-caramel-macchiato.png';
 
 const categories = [
@@ -60,50 +60,6 @@ const staticBestsellers = [
     image: 'https://images.unsplash.com/photo-1536256263959-770b48d82b0a?auto=format&fit=crop&w=800&q=80',
     tag: 'BESTSELLER',
     isBestseller: true
-  },
-  {
-    id: 'bs-5',
-    name: 'Belgian Chocolate Croissant',
-    category: 'bakery',
-    description: 'Flaky butter croissant filled with melted rich Belgian dark chocolate.',
-    price: 150,
-    rating: 4.9,
-    image: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=800&q=80',
-    tag: 'FRESH BAKED',
-    isBestseller: true
-  },
-  {
-    id: 'bs-6',
-    name: 'Artisanal Blueberry Cheesecake',
-    category: 'bakery',
-    description: 'Creamy New York cheesecake topped with fresh blueberry compote.',
-    price: 220,
-    rating: 5.0,
-    image: 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=800&q=80',
-    tag: 'BESTSELLER',
-    isBestseller: true
-  },
-  {
-    id: 'bs-7',
-    name: 'Paneer Tikka Grilled Sandwich',
-    category: 'bites',
-    description: 'Smoky grilled paneer tikka layered with mint chutney in sourdough.',
-    price: 180,
-    rating: 4.8,
-    image: 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=800&q=80',
-    tag: 'POPULAR',
-    isBestseller: true
-  },
-  {
-    id: 'bs-8',
-    name: 'Akole Special Misal Pav',
-    category: 'bites',
-    description: 'Authentic spicy sprout curry served with butter toasted pav & farsan.',
-    price: 140,
-    rating: 4.9,
-    image: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=800&q=80',
-    tag: 'LOCAL SPECIAL',
-    isBestseller: true
   }
 ];
 
@@ -111,22 +67,48 @@ const BestSeller = ({ onQuickView }) => {
   const [activeCategory, setActiveCategory] = useState('all');
   const [allProducts, setAllProducts] = useState(staticBestsellers);
 
+  const scrollContainerRef = useRef(null);
+  const [isMouseDown, setIsMouseDown] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+
+  const handleMouseDown = (e) => {
+    setIsMouseDown(true);
+    setStartX(e.pageX - scrollContainerRef.current.offsetLeft);
+    setScrollLeft(scrollContainerRef.current.scrollLeft);
+  };
+
+  const handleMouseLeaveOrUp = () => {
+    setIsMouseDown(false);
+  };
+
+  const handleMouseMove = (e) => {
+    if (!isMouseDown) return;
+    e.preventDefault();
+    const x = e.pageX - scrollContainerRef.current.offsetLeft;
+    const walk = (x - startX) * 2.2;
+    scrollContainerRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  const handleScroll = (direction) => {
+    if (scrollContainerRef.current) {
+      const amount = direction === 'left' ? -260 : 260;
+      scrollContainerRef.current.scrollBy({ left: amount, behavior: 'smooth' });
+    }
+  };
+
   useEffect(() => {
     let isMounted = true;
     const loadItems = async () => {
       try {
-        const items = await fetchMenuItems('all');
-        if (isMounted && Array.isArray(items) && items.length > 0) {
-          // Merge API items with fallback items to guarantee category availability
-          setAllProducts(prev => {
-            const combined = [...items];
-            staticBestsellers.forEach(staticItem => {
-              if (!combined.some(i => i.name.toLowerCase() === staticItem.name.toLowerCase())) {
-                combined.push(staticItem);
-              }
-            });
-            return combined;
-          });
+        const fetched = await fetchMenuItems();
+        if (isMounted && fetched && fetched.length > 0) {
+          const apiBestsellers = fetched.filter(item => item.isBestseller || item.tag === 'BESTSELLER');
+          if (apiBestsellers.length > 0) {
+            setAllProducts(apiBestsellers);
+          } else {
+            setAllProducts(fetched.slice(0, 8));
+          }
         }
       } catch (err) {
         console.error('Failed to load menu items for bestsellers:', err);
@@ -176,21 +158,52 @@ const BestSeller = ({ onQuickView }) => {
             Handcrafted coffee, artisanal teas, and gourmet treats made with love.
           </p>
 
-          {/* Category Tabs */}
-          <div className="flex flex-wrap items-center justify-center gap-3 pt-6">
-            {categories.map((cat) => (
-              <button
-                key={cat.id}
-                onClick={() => setActiveCategory(cat.id)}
-                className={`px-5 py-2 rounded-xl text-xs font-semibold tracking-wider transition-all cursor-pointer ${
-                  activeCategory === cat.id
-                    ? 'bg-[#2F4436] dark:bg-[#D6AE4D] text-white dark:text-[#123524] shadow-md border border-transparent'
-                    : 'bg-white/80 dark:bg-[#16231B]/80 text-[#4A5D50] dark:text-[#A0B0A5] hover:bg-white dark:hover:bg-[#16231B] hover:text-primary dark:hover:text-white border border-[#C8A96A]/20 dark:border-[#D6AE4D]/15'
-                }`}
-              >
-                {cat.name}
-              </button>
-            ))}
+          {/* Responsive Category Tabs with Mouse Drag + Arrow Controls */}
+          <div className="relative flex items-center justify-center max-w-4xl mx-auto w-full pt-4">
+            <button
+              type="button"
+              onClick={() => handleScroll('left')}
+              style={{ borderRadius: '50%', width: '38px', height: '38px', minWidth: '38px', minHeight: '38px' }}
+              className="hidden sm:flex bg-[#122219]/80 dark:bg-[#0E1A13]/85 hover:bg-[#123524]/95 dark:hover:bg-[#182C20]/95 backdrop-blur-2xl border-2 border-[#D6AE4D] hover:border-[#FFF3C4] text-[#D6AE4D] hover:text-[#F3E5AB] shadow-xl hover:shadow-[0_0_20px_rgba(214,174,77,0.4)] items-center justify-center shrink-0 hover:scale-115 active:scale-95 transition-all duration-300 cursor-pointer z-10 p-0 mr-2 group"
+              aria-label="Scroll left"
+              title="Scroll Left"
+            >
+              <FiChevronLeft className="w-4.5 h-4.5 stroke-[3] group-hover:-translate-x-0.5 transition-transform text-[#D6AE4D] group-hover:text-[#F3E5AB]" />
+            </button>
+
+            <div
+              ref={scrollContainerRef}
+              onMouseDown={handleMouseDown}
+              onMouseLeave={handleMouseLeaveOrUp}
+              onMouseUp={handleMouseLeaveOrUp}
+              onMouseMove={handleMouseMove}
+              className="flex items-center justify-start sm:justify-center gap-2.5 overflow-x-auto no-scrollbar scroll-smooth py-2.5 px-1 w-full max-w-4xl mx-auto select-none cursor-grab active:cursor-grabbing"
+            >
+              {categories.map((cat) => (
+                <button
+                  key={cat.id}
+                  onClick={() => setActiveCategory(cat.id)}
+                  className={`px-5 py-2.5 rounded-xl text-xs font-extrabold tracking-wider transition-all duration-300 shrink-0 whitespace-nowrap backdrop-blur-md cursor-pointer ${
+                    activeCategory === cat.id
+                      ? 'bg-[#2F4436] dark:bg-[#D6AE4D] text-[#D6AE4D] dark:text-[#123524] shadow-md border border-[#D6AE4D] scale-105'
+                      : 'bg-white/80 dark:bg-[#16231B]/80 text-[#4A5D50] dark:text-[#A0B0A5] hover:bg-white dark:hover:bg-[#16231B] border border-[#C8A96A]/20 dark:border-[#D6AE4D]/25 hover:shadow-[0_0_15px_rgba(214,174,77,0.3)]'
+                  }`}
+                >
+                  {cat.name}
+                </button>
+              ))}
+            </div>
+
+            <button
+              type="button"
+              onClick={() => handleScroll('right')}
+              style={{ borderRadius: '50%', width: '38px', height: '38px', minWidth: '38px', minHeight: '38px' }}
+              className="hidden sm:flex bg-[#122219]/80 dark:bg-[#0E1A13]/85 hover:bg-[#123524]/95 dark:hover:bg-[#182C20]/95 backdrop-blur-2xl border-2 border-[#D6AE4D] hover:border-[#FFF3C4] text-[#D6AE4D] hover:text-[#F3E5AB] shadow-xl hover:shadow-[0_0_20px_rgba(214,174,77,0.4)] items-center justify-center shrink-0 hover:scale-115 active:scale-95 transition-all duration-300 cursor-pointer z-10 p-0 ml-2 group"
+              aria-label="Scroll right"
+              title="Scroll Right"
+            >
+              <FiChevronRight className="w-4.5 h-4.5 stroke-[3] group-hover:translate-x-0.5 transition-transform text-[#D6AE4D] group-hover:text-[#F3E5AB]" />
+            </button>
           </div>
         </div>
 

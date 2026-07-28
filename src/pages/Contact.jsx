@@ -216,10 +216,10 @@ const Contact = () => {
                     <input
                       type="text"
                       required
-                      placeholder="e.g. Mayur Gambhire"
+                      placeholder="Enter your full name"
                       value={form.name}
                       onChange={(e) => setForm({ ...form, name: e.target.value })}
-                      className="w-full bg-white dark:bg-[#121A15] border border-gray-200 dark:border-[#D6AE4D]/30 rounded-xl py-3 px-4 text-xs text-[#123524] dark:text-white placeholder-gray-400 dark:placeholder-[#7A8E81] focus:outline-none focus:ring-2 focus:ring-[#D6AE4D]/50 transition-all shadow-sm font-medium"
+                      className="w-full bg-white dark:bg-[#121A15] border border-gray-200 dark:border-[#D6AE4D]/30 rounded-xl py-3 px-4 text-xs text-[#123524] dark:text-white placeholder-[#8B9B90] focus:outline-none focus:ring-2 focus:ring-[#D6AE4D]/50 transition-all shadow-sm font-medium"
                     />
                   </div>
 
@@ -230,10 +230,10 @@ const Contact = () => {
                     <input
                       type="email"
                       required
-                      placeholder="e.g. user@example.com"
+                      placeholder="Enter your email address"
                       value={form.email}
                       onChange={(e) => setForm({ ...form, email: e.target.value })}
-                      className="w-full bg-white dark:bg-[#121A15] border border-gray-200 dark:border-[#D6AE4D]/30 rounded-xl py-3 px-4 text-xs text-[#123524] dark:text-white placeholder-gray-400 dark:placeholder-[#7A8E81] focus:outline-none focus:ring-2 focus:ring-[#D6AE4D]/50 transition-all shadow-sm font-medium"
+                      className="w-full bg-white dark:bg-[#121A15] border border-gray-200 dark:border-[#D6AE4D]/30 rounded-xl py-3 px-4 text-xs text-[#123524] dark:text-white placeholder-[#8B9B90] focus:outline-none focus:ring-2 focus:ring-[#D6AE4D]/50 transition-all shadow-sm font-medium"
                     />
                   </div>
                 </div>
@@ -246,7 +246,7 @@ const Contact = () => {
                     <input
                       type="text"
                       required
-                      placeholder="+91 84323 87670"
+                      placeholder="Enter 10-digit mobile number"
                       value={form.phone}
                       onChange={(e) => setForm({ ...form, phone: e.target.value })}
                       className="w-full bg-white dark:bg-[#121A15] border border-gray-200 dark:border-[#D6AE4D]/30 rounded-xl py-3 px-4 text-xs text-[#123524] dark:text-white placeholder-gray-400 dark:placeholder-[#7A8E81] focus:outline-none focus:ring-2 focus:ring-[#D6AE4D]/50 transition-all shadow-sm font-medium"

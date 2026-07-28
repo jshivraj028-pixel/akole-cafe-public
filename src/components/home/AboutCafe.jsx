@@ -3,6 +3,8 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Sparkles } from 'lucide-react';
 import Container from '../common/Container';
+import aboutInteriorImg from '../../assets/about-interior.png';
+import aboutLatteArtImg from '../../assets/about-latte-art.png';
 
 const AboutCafe = () => {
   return (
@@ -26,7 +28,7 @@ const AboutCafe = () => {
             {/* Main Cafe Interior Photo */}
             <div className="relative z-10 w-full max-w-md h-[400px] sm:h-[440px] rounded-[32px] overflow-hidden shadow-2xl border border-[#D6AE4D]/35 bg-[#123524]/40 backdrop-blur-sm">
               <img
-                src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1000&q=80"
+                src={aboutInteriorImg}
                 alt="Akole Cafe Warm Interior Ambience"
                 className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
               />
@@ -35,7 +37,7 @@ const AboutCafe = () => {
             {/* Overlapping Inset Coffee Pouring Thumbnail */}
             <div className="absolute -bottom-6 right-4 sm:right-8 z-20 w-44 sm:w-52 h-44 sm:h-52 rounded-[24px] overflow-hidden border-4 border-[#0B150F] shadow-2xl transition-all duration-300 hover:scale-105">
               <img
-                src="https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=600&q=80"
+                src={aboutLatteArtImg}
                 alt="Latte Art Detail"
                 className="w-full h-full object-cover"
               />

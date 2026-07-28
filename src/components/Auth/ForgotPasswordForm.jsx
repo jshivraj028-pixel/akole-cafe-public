@@ -1,98 +1,164 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Mail, ArrowLeft, CheckCircle2, AlertCircle, Check, Send } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { 
+  Mail, 
+  Phone, 
+  ArrowLeft, 
+  CheckCircle2, 
+  AlertCircle, 
+  Check, 
+  Send, 
+  Lock, 
+  Eye, 
+  EyeOff, 
+  ShieldCheck, 
+  RefreshCw 
+} from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
 
 const ForgotPasswordForm = () => {
+  const navigate = useNavigate();
   const { showToast } = useTheme();
-  const [email, setEmail] = useState('');
+
+  // Step: 1 = Enter Identifier, 2 = Enter OTP, 3 = Reset Password, 4 = Success
+  const [step, setStep] = useState(1);
+
+  // Form Fields
+  const [identifier, setIdentifier] = useState('');
+  const [otp, setOtp] = useState(['', '', '', '']);
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+
+  // Validation & UI state
   const [touched, setTouched] = useState(false);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [isSent, setIsSent] = useState(false);
+  const [resendTimer, setResendTimer] = useState(30);
 
-  const validateEmail = (val) => {
-    if (!val.trim()) return 'Email address is required';
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) return 'Please enter a valid email (e.g. vikram@example.com)';
+  // Timer countdown for OTP resend
+  React.useEffect(() => {
+    let timer;
+    if (step === 2 && resendTimer > 0) {
+      timer = setInterval(() => setResendTimer((prev) => prev - 1), 1000);
+    }
+    return () => clearInterval(timer);
+  }, [step, resendTimer]);
+
+  const isPhone = (val) => /^[6-9]\d{9}$/.test(val.trim());
+  const isEmail = (val) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val.trim());
+
+  const validateIdentifier = (val) => {
+    const clean = val.trim();
+    if (!clean) return 'Email or mobile number is required';
+    if (!isPhone(clean) && !isEmail(clean)) {
+      return 'Enter a valid email or 10-digit mobile number';
+    }
     return '';
   };
 
-  const handleEmailChange = (e) => {
-    const val = e.target.value;
-    setEmail(val);
-    if (touched) {
-      setError(validateEmail(val));
-    }
-  };
-
-  const handleBlur = () => {
-    setTouched(true);
-    setError(validateEmail(email));
-  };
-
-  const handleSubmit = (e) => {
+  const handleIdentifierSubmit = (e) => {
     e.preventDefault();
     setTouched(true);
-    const err = validateEmail(email);
+    const err = validateIdentifier(identifier);
     if (err) {
       setError(err);
-      showToast('Please enter a valid registered email.', 'error');
+      showToast(err, 'error');
       return;
     }
 
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
-      setIsSent(true);
-      showToast(`Password reset link sent to ${email}`, 'success');
-    }, 1200);
+      setStep(2);
+      setResendTimer(30);
+      showToast(`Verification code sent to ${identifier}`, 'success');
+    }, 1000);
+  };
+
+  const handleOtpChange = (index, value) => {
+    if (!/^\d*$/.test(value)) return;
+    const newOtp = [...otp];
+    newOtp[index] = value.slice(-1);
+    setOtp(newOtp);
+
+    // Auto-focus next input
+    if (value && index < 3) {
+      const nextInput = document.getElementById(`otp-input-${index + 1}`);
+      if (nextInput) nextInput.focus();
+    }
+  };
+
+  const handleOtpKeyDown = (index, e) => {
+    if (e.key === 'Backspace' && !otp[index] && index > 0) {
+      const prevInput = document.getElementById(`otp-input-${index - 1}`);
+      if (prevInput) prevInput.focus();
+    }
+  };
+
+  const handleOtpSubmit = (e) => {
+    e.preventDefault();
+    const enteredOtp = otp.join('');
+    if (enteredOtp.length < 4) {
+      showToast('Please enter the 4-digit code sent to you.', 'error');
+      return;
+    }
+
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      setStep(3);
+      showToast('OTP verified! Create your new password.', 'success');
+    }, 800);
+  };
+
+  const handlePasswordSubmit = (e) => {
+    e.preventDefault();
+    if (newPassword.length < 6) {
+      showToast('Password must be at least 6 characters.', 'error');
+      return;
+    }
+    if (newPassword !== confirmPassword) {
+      showToast('Passwords do not match.', 'error');
+      return;
+    }
+
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      setStep(4);
+      showToast('Password reset successfully!', 'success');
+    }, 1000);
   };
 
   return (
-    <div className="w-full text-left">
-      {isSent ? (
-        <div className="space-y-4 text-center py-4">
-          <div className="w-14 h-14 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 mx-auto flex items-center justify-center">
-            <CheckCircle2 className="w-8 h-8" />
-          </div>
-          <h3 className="font-serif text-2xl font-bold text-[#123524] dark:text-white">
-            Reset Link Sent!
-          </h3>
-          <p className="text-xs text-[#6B7C70] dark:text-[#A0B0A5] font-light leading-relaxed">
-            We have sent a secure password reset link to <strong className="text-[#123524] dark:text-[#D6AE4D]">{email}</strong>. Please check your inbox or spam folder.
-          </p>
-
-          <div className="pt-4 flex flex-col gap-2">
-            <button
-              onClick={() => setIsSent(false)}
-              className="w-full py-2.5 rounded-xl bg-[#D6AE4D]/15 text-[#123524] dark:text-[#D6AE4D] font-bold text-xs uppercase tracking-wider border border-[#D6AE4D]/30"
-            >
-              Resend Email
-            </button>
-
-            <Link
-              to="/login"
-              className="inline-flex items-center justify-center gap-2 py-2.5 text-xs font-bold text-[#123524] dark:text-white hover:text-[#D6AE4D]"
-            >
-              <ArrowLeft className="w-4 h-4" /> Back to Sign In
-            </Link>
-          </div>
-        </div>
-      ) : (
-        <form onSubmit={handleSubmit} className="space-y-5" noValidate>
+    <div className="w-full text-left font-montserrat">
+      {/* STEP 1: Enter Email / Phone */}
+      {step === 1 && (
+        <form onSubmit={handleIdentifierSubmit} className="space-y-5" noValidate>
           <div>
-            <label className="block text-[11px] uppercase tracking-widest font-semibold text-[#123524] dark:text-[#EAE3D2] mb-1">
-              Registered Email Address <span className="text-red-500">*</span>
+            <label className="block text-[11px] uppercase tracking-widest font-semibold text-[#123524] dark:text-[#EAE3D2] mb-1.5">
+              Registered Email or Phone Number <span className="text-red-500">*</span>
             </label>
             <div className="relative">
-              <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#D6AE4D]" />
+              {isPhone(identifier) ? (
+                <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#D6AE4D]" />
+              ) : (
+                <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#D6AE4D]" />
+              )}
               <input
-                type="email"
-                value={email}
-                onChange={handleEmailChange}
-                onBlur={handleBlur}
-                placeholder="vikram@example.com"
-                className={`w-full pl-10 pr-10 py-2.5 rounded-xl bg-white/80 dark:bg-[#16231B] border text-xs text-[#123524] dark:text-[#EAE3D2] placeholder-[#8B9B90] focus:outline-none focus:ring-2 focus:ring-[#D6AE4D]/50 transition-all ${
+                type="text"
+                value={identifier}
+                onChange={(e) => {
+                  setIdentifier(e.target.value);
+                  if (touched) setError(validateIdentifier(e.target.value));
+                }}
+                onBlur={() => {
+                  setTouched(true);
+                  setError(validateIdentifier(identifier));
+                }}
+                placeholder="Enter email or 10-digit phone"
+                className={`w-full pl-10 pr-10 py-3 rounded-xl bg-white/80 dark:bg-[#16231B] border text-xs text-[#123524] dark:text-[#EAE3D2] placeholder-[#8B9B90] focus:outline-none focus:ring-2 focus:ring-[#D6AE4D]/50 transition-all ${
                   touched && error ? 'border-red-500 bg-red-50/20' : touched && !error ? 'border-emerald-500' : 'border-[#D6AE4D]/30'
                 }`}
               />
@@ -104,21 +170,21 @@ const ForgotPasswordForm = () => {
               )}
             </div>
             {touched && error && (
-              <p className="text-[10px] text-red-500 font-medium mt-1">{error}</p>
+              <p className="text-[10px] text-red-500 font-medium mt-1 pl-1">{error}</p>
             )}
           </div>
 
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full py-3 rounded-xl bg-[#123524] hover:bg-[#D6AE4D] hover:text-[#123524] text-white font-montserrat font-bold text-xs uppercase tracking-[2px] transition-all shadow-md transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2"
+            className="w-full py-3 rounded-xl bg-[#123524] hover:bg-[#D6AE4D] hover:text-[#123524] text-white font-montserrat font-bold text-xs uppercase tracking-[2px] transition-all shadow-md transform hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center gap-2 cursor-pointer"
           >
             {isLoading ? (
               <span className="inline-block w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
             ) : (
               <>
                 <Send className="w-4 h-4" />
-                <span>SEND RESET LINK</span>
+                <span>SEND VERIFICATION CODE</span>
               </>
             )}
           </button>
@@ -133,6 +199,157 @@ const ForgotPasswordForm = () => {
             </Link>
           </div>
         </form>
+      )}
+
+      {/* STEP 2: Enter 4-Digit Verification OTP */}
+      {step === 2 && (
+        <form onSubmit={handleOtpSubmit} className="space-y-5">
+          <div className="text-center space-y-1.5">
+            <div className="w-12 h-12 rounded-full bg-[#D6AE4D]/15 text-[#D6AE4D] mx-auto flex items-center justify-center">
+              <ShieldCheck className="w-6 h-6" />
+            </div>
+            <h3 className="font-serif text-xl font-bold text-[#123524] dark:text-white">
+              Verify Code
+            </h3>
+            <p className="text-xs text-[#6B7C70] dark:text-[#A0B0A5]">
+              We sent a 4-digit code to <strong className="text-[#123524] dark:text-[#D6AE4D]">{identifier}</strong>
+            </p>
+          </div>
+
+          {/* OTP Inputs */}
+          <div className="flex justify-center gap-3 py-2">
+            {otp.map((digit, idx) => (
+              <input
+                key={idx}
+                id={`otp-input-${idx}`}
+                type="text"
+                maxLength={1}
+                value={digit}
+                onChange={(e) => handleOtpChange(idx, e.target.value)}
+                onKeyDown={(e) => handleOtpKeyDown(idx, e)}
+                className="w-12 h-13 text-center text-lg font-bold rounded-xl bg-white/90 dark:bg-[#16231B] border border-[#D6AE4D]/40 text-[#123524] dark:text-[#EAE3D2] focus:border-[#D6AE4D] focus:ring-2 focus:ring-[#D6AE4D]/30 focus:outline-none transition-all shadow-sm"
+              />
+            ))}
+          </div>
+
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="w-full py-3 rounded-xl bg-[#123524] hover:bg-[#D6AE4D] hover:text-[#123524] text-white font-bold text-xs uppercase tracking-[2px] transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
+          >
+            {isLoading ? (
+              <span className="inline-block w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+            ) : (
+              <span>VERIFY & CONTINUE</span>
+            )}
+          </button>
+
+          <div className="flex items-center justify-between text-xs pt-1">
+            <button
+              type="button"
+              onClick={() => setStep(1)}
+              className="text-[#6B7C70] dark:text-[#A0B0A5] hover:text-[#D6AE4D] flex items-center gap-1"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+              <span>Change Contact</span>
+            </button>
+
+            <button
+              type="button"
+              disabled={resendTimer > 0}
+              onClick={() => {
+                setResendTimer(30);
+                showToast('A new OTP has been sent!', 'info');
+              }}
+              className={`flex items-center gap-1 font-semibold ${
+                resendTimer > 0 ? 'text-gray-400 cursor-not-allowed' : 'text-[#D6AE4D] hover:underline'
+              }`}
+            >
+              <RefreshCw className="w-3.5 h-3.5" />
+              <span>{resendTimer > 0 ? `Resend in ${resendTimer}s` : 'Resend Code'}</span>
+            </button>
+          </div>
+        </form>
+      )}
+
+      {/* STEP 3: Set New Password */}
+      {step === 3 && (
+        <form onSubmit={handlePasswordSubmit} className="space-y-4">
+          <div>
+            <label className="block text-[11px] uppercase tracking-widest font-semibold text-[#123524] dark:text-[#EAE3D2] mb-1">
+              New Password <span className="text-red-500">*</span>
+            </label>
+            <div className="relative">
+              <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#D6AE4D]" />
+              <input
+                type={showPassword ? 'text' : 'password'}
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                placeholder="Enter new password (min 6 chars)"
+                className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-white/80 dark:bg-[#16231B] border border-[#D6AE4D]/30 text-xs text-[#123524] dark:text-[#EAE3D2] focus:outline-none focus:ring-2 focus:ring-[#D6AE4D]/50"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+              >
+                {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+              </button>
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-[11px] uppercase tracking-widest font-semibold text-[#123524] dark:text-[#EAE3D2] mb-1">
+              Confirm New Password <span className="text-red-500">*</span>
+            </label>
+            <div className="relative">
+              <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#D6AE4D]" />
+              <input
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="Re-enter new password"
+                className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-white/80 dark:bg-[#16231B] border border-[#D6AE4D]/30 text-xs text-[#123524] dark:text-[#EAE3D2] focus:outline-none focus:ring-2 focus:ring-[#D6AE4D]/50"
+              />
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="w-full py-3 rounded-xl bg-gradient-to-r from-[#D6AE4D] to-[#B89035] text-[#0A1A12] font-bold text-xs uppercase tracking-[2px] shadow-lg hover:brightness-110 transition-all flex items-center justify-center gap-2 cursor-pointer mt-2"
+          >
+            {isLoading ? (
+              <span className="inline-block w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+            ) : (
+              <span>UPDATE PASSWORD</span>
+            )}
+          </button>
+        </form>
+      )}
+
+      {/* STEP 4: Success Message */}
+      {step === 4 && (
+        <div className="space-y-4 text-center py-4">
+          <div className="w-14 h-14 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 mx-auto flex items-center justify-center shadow-lg">
+            <CheckCircle2 className="w-8 h-8" />
+          </div>
+          <h3 className="font-serif text-2xl font-bold text-[#123524] dark:text-white">
+            Password Reset Successful!
+          </h3>
+          <p className="text-xs text-[#6B7C70] dark:text-[#A0B0A5] leading-relaxed">
+            Your Akole Café password has been successfully updated. You can now log in with your new credentials.
+          </p>
+
+          <div className="pt-3">
+            <button
+              onClick={() => navigate('/login')}
+              className="w-full py-3 rounded-xl bg-[#123524] text-white hover:bg-[#D6AE4D] hover:text-[#123524] font-bold text-xs uppercase tracking-[2px] transition-all shadow-md cursor-pointer"
+            >
+              PROCEED TO SIGN IN
+            </button>
+          </div>
+        </div>
       )}
     </div>
   );

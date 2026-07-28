@@ -247,6 +247,7 @@ export const userLoginAPI = async (email, password) => {
 
 // User Registration - Direct MongoDB Atlas Registration
 export const userRegisterAPI = async (userData) => {
+  const cleanEmail = (userData.email || '').toLowerCase().trim();
   try {
     const res = await fetch(`${API_BASE_URL}/auth/register`, {
       method: 'POST',
@@ -254,10 +255,20 @@ export const userRegisterAPI = async (userData) => {
       body: JSON.stringify(userData)
     });
 
+    if (res.ok) {
+      const data = await res.json();
+      // Track in local registered list
+      const registered = JSON.parse(localStorage.getItem('akole_registered_users') || '[]');
+      if (!registered.some(u => u.email.toLowerCase() === cleanEmail)) {
+        registered.push({ id: data.user?.id || Date.now(), name: userData.name, email: cleanEmail });
+        localStorage.setItem('akole_registered_users', JSON.stringify(registered));
+      }
+      return data;
+    }
     const data = await res.json().catch(() => ({}));
 
-    if (res.status === 409) {
-      throw new Error(data.message || 'Email already exists.');
+    if (res.status === 409 || res.status === 400) {
+      throw new Error(data.message || 'An account with this email address already exists.');
     }
     if (!res.ok) {
       throw new Error(data.message || 'Registration failed');
@@ -266,21 +277,35 @@ export const userRegisterAPI = async (userData) => {
     return data;
   } catch (err) {
     if (
-      err.message.includes('Email already exists') ||
-      err.message.includes('already exists') ||
-      err.message.includes('password') ||
-      err.message === 'Registration failed'
+      err.message.includes('exists') || 
+      err.message.includes('already') || 
+      err.message.includes('email') || 
+      err.message.includes('password')
     ) {
       throw err;
     }
-    console.warn("[API Warning] Backend server offline. Falling back to local mock registration.", err.message);
+    console.warn("[API Warning] Backend server offline. Falling back to local registration check.", err.message);
+    
+    // Check local registered list
+    const registered = JSON.parse(localStorage.getItem('akole_registered_users') || '[]');
+    if (registered.some(u => u.email.toLowerCase() === cleanEmail)) {
+      throw new Error('An account with this email address already exists. Please sign in or use a different email.');
+    }
+
+    const newUser = {
+      id: 'user-' + Date.now(),
+      name: userData.name || 'Valued Guest',
+      email: cleanEmail,
+      phone: userData.phone || ''
+    };
+    registered.push(newUser);
+    localStorage.setItem('akole_registered_users', JSON.stringify(registered));
+
     return {
-      token: 'mock-jwt-user-token-12345',
+      token: 'mock-jwt-user-token-' + Date.now(),
       user: {
-        id: 'mock-user-id-' + Date.now(),
-        name: userData.name || 'Valued Guest',
-        email: (userData.email || '').toLowerCase().trim(),
-        role: (userData.email || '').toLowerCase().trim() === 'akolecafe@gmail.com' ? 'admin' : 'user'
+        ...newUser,
+        role: cleanEmail === 'akolecafe@gmail.com' ? 'admin' : 'user'
       }
     };
   }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FiCalendar, FiSend, FiStar } from 'react-icons/fi';
+import { Sparkles } from 'lucide-react';
 import PageBanner from '../components/common/PageBanner';
 import Container from '../components/common/Container';
 import SectionTitle from '../components/common/SectionTitle';
@@ -8,6 +9,8 @@ import EventCard from '../components/events/EventCard';
 import { eventsData } from '../data/events';
 import Button from '../components/common/Button';
 import { useTheme } from '../context/ThemeContext';
+import eventMusicImg from '../assets/event-music.png';
+import seatingMezzanineImg from '../assets/seating-mezzanine.png';
 
 const Events = () => {
   const { showToast } = useTheme();
@@ -24,10 +27,10 @@ const Events = () => {
       <PageBanner
         title="Live Events & Gatherings"
         subtitle="Acoustic Jazz Nights • Barista Workshops • Private Celebrations"
-        bgImage="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=1920&q=80"
+        bgImage={eventMusicImg}
       />
 
-      <section className="py-20 bg-secondary">
+      <section className="py-20 bg-[#FAF6EE] dark:bg-[#0A160F] text-[#123524] dark:text-[#EAE3D2] transition-colors">
         <Container>
           <SectionTitle
             subtitle="WHAT'S HAPPENING AT AKOLE CAFE"
@@ -42,89 +45,124 @@ const Events = () => {
             ))}
           </div>
 
-          {/* Private Host Section */}
-          <div className="mt-20 glass-panel p-8 sm:p-12 rounded-3xl border border-accent-gold/40 shadow-2xl relative overflow-hidden bg-primary text-secondary">
-            <div className="botanical-glow -top-20 -right-20 opacity-30" />
-            
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-              <div className="lg:col-span-6 space-y-4">
-                <span className="text-xs uppercase tracking-widest text-accent-gold font-bold">
-                  Bespoke Host Services
+          {/* Private Host Section - Ultra Luxury Ambient Card */}
+          <div className="mt-20 rounded-[32px] p-8 sm:p-12 border border-[#D6AE4D]/40 shadow-2xl relative overflow-hidden bg-gradient-to-br from-[#0F291B] via-[#123524] to-[#0A1A12] text-white">
+            {/* Ambient Background Image Overlay with Fade Mask */}
+            <div 
+              className="absolute inset-0 opacity-20 pointer-events-none z-0"
+              style={{
+                backgroundImage: `url(${seatingMezzanineImg})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                maskImage: 'linear-gradient(to right, rgba(0,0,0,0.8) 30%, rgba(0,0,0,0) 100%)',
+                WebkitMaskImage: 'linear-gradient(to right, rgba(0,0,0,0.8) 30%, rgba(0,0,0,0) 100%)'
+              }}
+            />
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center relative z-10">
+              <div className="lg:col-span-6 space-y-5 text-left">
+                <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#D6AE4D]/15 border border-[#D6AE4D]/40 text-[#D6AE4D] text-[10px] font-extrabold uppercase tracking-widest">
+                  <Sparkles className="w-3.5 h-3.5 text-[#D6AE4D]" /> BESPOKE HOST SERVICES
                 </span>
-                <h3 className="font-serif text-3xl sm:text-4xl font-extrabold text-secondary leading-tight">
+                <h3 className="font-serif text-3xl sm:text-5xl font-extrabold text-white leading-tight">
                   Host Your Private Party <br />
-                  <span className="text-gold-gradient italic font-normal">at Akole Cafe</span>
+                  <span className="bg-gradient-to-r from-[#D6AE4D] via-[#F3E5AB] to-[#B89035] bg-clip-text text-transparent italic font-normal">at Akole Café</span>
                 </h3>
-                <p className="text-xs sm:text-sm text-secondary/80 font-light leading-relaxed">
+                <p className="text-xs sm:text-sm text-white/90 font-light leading-relaxed max-w-lg">
                   Whether planning an intimate birthday dinner, corporate team lounge, or engagement celebration, our dedicated event captain will customize floral decor, lighting, and tasting menus.
                 </p>
 
-                <div className="flex flex-wrap gap-4 text-xs font-medium text-accent-gold pt-2">
-                  <span>✓ Up to 100 Guests Capacity</span>
-                  <span>✓ Custom Celebration Cakes</span>
-                  <span>✓ Dedicated Butler Captain</span>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+                  <div className="p-3 rounded-xl bg-white/10 backdrop-blur-sm border border-[#D6AE4D]/30 text-center">
+                    <span className="text-xs font-bold text-[#D6AE4D] block">100 Guests</span>
+                    <span className="text-[10px] text-white/70">Max Capacity</span>
+                  </div>
+                  <div className="p-3 rounded-xl bg-white/10 backdrop-blur-sm border border-[#D6AE4D]/30 text-center">
+                    <span className="text-xs font-bold text-[#D6AE4D] block">Custom Cakes</span>
+                    <span className="text-[10px] text-white/70">Artisanal Bakery</span>
+                  </div>
+                  <div className="p-3 rounded-xl bg-white/10 backdrop-blur-sm border border-[#D6AE4D]/30 text-center">
+                    <span className="text-xs font-bold text-[#D6AE4D] block">VIP Captain</span>
+                    <span className="text-[10px] text-white/70">Dedicated Host</span>
+                  </div>
                 </div>
               </div>
 
-              {/* Private Enquiry Form */}
-              <form onSubmit={handlePrivateSubmit} className="lg:col-span-6 bg-primary-dark/90 p-6 rounded-2xl border border-accent-gold/30 space-y-3">
-                <h4 className="font-serif text-lg font-bold text-accent-gold mb-2">Request Private Event Consultation</h4>
+              {/* Private Enquiry Form - Crisp High-Contrast Inputs */}
+              <form onSubmit={handlePrivateSubmit} className="lg:col-span-6 bg-white/95 dark:bg-[#122219] p-7 sm:p-8 rounded-[28px] border-2 border-[#D6AE4D] shadow-2xl space-y-4 text-left">
+                <div className="space-y-1">
+                  <h4 className="font-serif text-xl font-bold text-[#123524] dark:text-[#D6AE4D]">Request Private Event Consultation</h4>
+                  <p className="text-xs text-gray-600 dark:text-white/70">Fill out your details to receive a custom quote & menu package.</p>
+                </div>
                 
                 <div>
+                  <label className="block text-[11px] uppercase font-bold text-[#123524] dark:text-white/80 mb-1">Your Full Name *</label>
                   <input
                     type="text"
                     required
-                    placeholder="Your Name"
+                    placeholder="e.g. Mayur Gambhire"
                     value={privateForm.name}
                     onChange={(e) => setPrivateForm({ ...privateForm, name: e.target.value })}
-                    className="w-full bg-primary/80 border border-accent-gold/30 rounded-xl py-2.5 px-4 text-xs text-secondary placeholder-secondary/50 focus:outline-none focus:border-accent-gold"
+                    className="w-full bg-gray-50 dark:bg-[#1C2D23] border border-gray-300 dark:border-[#D6AE4D]/40 rounded-xl py-3 px-4 text-xs font-medium text-[#123524] dark:text-white placeholder-gray-400 dark:placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-[#D6AE4D] transition-all"
                   />
                 </div>
 
-                <div className="grid grid-cols-2 gap-3">
-                  <input
-                    type="tel"
-                    required
-                    placeholder="Mobile Number"
-                    value={privateForm.phone}
-                    onChange={(e) => setPrivateForm({ ...privateForm, phone: e.target.value })}
-                    className="w-full bg-primary/80 border border-accent-gold/30 rounded-xl py-2.5 px-4 text-xs text-secondary placeholder-secondary/50 focus:outline-none focus:border-accent-gold"
-                  />
-                  <select
-                    value={privateForm.eventType}
-                    onChange={(e) => setPrivateForm({ ...privateForm, eventType: e.target.value })}
-                    className="w-full bg-primary/90 border border-accent-gold/30 rounded-xl py-2.5 px-3 text-xs text-secondary focus:outline-none focus:border-accent-gold"
-                  >
-                    <option value="Birthday Party">Birthday Party</option>
-                    <option value="Anniversary">Anniversary Dinner</option>
-                    <option value="Corporate Meet">Corporate Meetup</option>
-                    <option value="Coffee Workshop">Custom Coffee Tasting</option>
-                  </select>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-[11px] uppercase font-bold text-[#123524] dark:text-white/80 mb-1">Mobile Number *</label>
+                    <input
+                      type="tel"
+                      required
+                      placeholder="e.g. 98765 43210"
+                      value={privateForm.phone}
+                      onChange={(e) => setPrivateForm({ ...privateForm, phone: e.target.value })}
+                      className="w-full bg-gray-50 dark:bg-[#1C2D23] border border-gray-300 dark:border-[#D6AE4D]/40 rounded-xl py-3 px-4 text-xs font-medium text-[#123524] dark:text-white placeholder-gray-400 dark:placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-[#D6AE4D] transition-all"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] uppercase font-bold text-[#123524] dark:text-white/80 mb-1">Event Type</label>
+                    <select
+                      value={privateForm.eventType}
+                      onChange={(e) => setPrivateForm({ ...privateForm, eventType: e.target.value })}
+                      className="w-full bg-gray-50 dark:bg-[#1C2D23] border border-gray-300 dark:border-[#D6AE4D]/40 rounded-xl py-3 px-3 text-xs font-medium text-[#123524] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#D6AE4D] transition-all cursor-pointer"
+                    >
+                      <option value="Birthday Party">Birthday Party</option>
+                      <option value="Anniversary">Anniversary Dinner</option>
+                      <option value="Corporate Meet">Corporate Meetup</option>
+                      <option value="Coffee Workshop">Custom Coffee Tasting</option>
+                    </select>
+                  </div>
                 </div>
 
                 <div>
+                  <label className="block text-[11px] uppercase font-bold text-[#123524] dark:text-white/80 mb-1">Event Date *</label>
                   <input
                     type="date"
                     required
                     value={privateForm.date}
                     onChange={(e) => setPrivateForm({ ...privateForm, date: e.target.value })}
-                    className="w-full bg-primary/80 border border-accent-gold/30 rounded-xl py-2.5 px-4 text-xs text-secondary focus:outline-none focus:border-accent-gold"
+                    className="w-full bg-gray-50 dark:bg-[#1C2D23] border border-gray-300 dark:border-[#D6AE4D]/40 rounded-xl py-3 px-4 text-xs font-medium text-[#123524] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#D6AE4D] transition-all"
                   />
                 </div>
 
                 <div>
+                  <label className="block text-[11px] uppercase font-bold text-[#123524] dark:text-white/80 mb-1">Special Requests</label>
                   <textarea
                     rows="2"
-                    placeholder="Additional requests (guest count, decor theme)..."
+                    placeholder="Guest count, decor preferences, dietary requirements..."
                     value={privateForm.notes}
                     onChange={(e) => setPrivateForm({ ...privateForm, notes: e.target.value })}
-                    className="w-full bg-primary/80 border border-accent-gold/30 rounded-xl py-2.5 px-4 text-xs text-secondary placeholder-secondary/50 focus:outline-none focus:border-accent-gold"
+                    className="w-full bg-gray-50 dark:bg-[#1C2D23] border border-gray-300 dark:border-[#D6AE4D]/40 rounded-xl py-3 px-4 text-xs font-medium text-[#123524] dark:text-white placeholder-gray-400 dark:placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-[#D6AE4D] transition-all"
                   />
                 </div>
 
-                <Button type="submit" variant="gold" size="md" className="w-full" icon={FiSend}>
-                  Submit Event Enquiry
-                </Button>
+                <button
+                  type="submit"
+                  className="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#D6AE4D] via-[#F3E5AB] to-[#B89035] text-[#0C1A12] font-black text-xs uppercase tracking-widest shadow-lg hover:brightness-110 transition-all cursor-pointer flex items-center justify-center gap-2 border border-[#FFF5D6]"
+                >
+                  <FiSend className="w-4 h-4 text-[#0C1A12]" />
+                  <span>SUBMIT EVENT ENQUIRY</span>
+                </button>
               </form>
             </div>
           </div>

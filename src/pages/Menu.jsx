@@ -99,7 +99,7 @@ const Menu = () => {
       {/* Dark Coffee Header Banner */}
       <PageBanner
         title="Artisanal Digital Menu"
-        bgImage="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=1920&q=80"
+        bgImage="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1920&q=80"
       />
 
       <section className="py-12 bg-[#F5F2EA] dark:bg-[#121A15] relative">

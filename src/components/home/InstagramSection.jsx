@@ -39,29 +39,31 @@ const instagramPosts = [
 
 const InstagramSection = () => {
   return (
-    <section className="py-24 bg-white dark:bg-[#121A15] relative overflow-hidden border-t border-gray-200/80 dark:border-[#D6AE4D]/20 transition-colors duration-300">
+    <section className="py-20 bg-[#F5F2EA] dark:bg-[#121A15] relative overflow-hidden border-t border-gray-200/80 dark:border-[#D6AE4D]/20 transition-colors duration-300">
       <Container>
         
         {/* Section Header */}
-        <div className="text-center space-y-3 mb-14 max-w-xl mx-auto">
+        <div className="text-center space-y-3 mb-12 max-w-xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#123524]/10 dark:bg-[#D6AE4D]/15 border border-[#D6AE4D]/30 text-[#D6AE4D] text-[10px] font-extrabold uppercase tracking-widest">
             <FiInstagram className="w-3.5 h-3.5" /> INSTAGRAM SHOWCASE
           </div>
-          <a
-            href="https://instagram.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 font-serif text-3xl sm:text-4xl font-extrabold italic text-[#D6AE4D] hover:text-[#123524] dark:hover:text-white transition-colors"
-          >
-            <span>@akolecafe</span>
-          </a>
+          <div>
+            <a
+              href="https://instagram.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 font-serif text-3xl sm:text-4xl font-extrabold italic text-[#D6AE4D] hover:text-[#123524] dark:hover:text-white transition-colors"
+            >
+              <span>@akolecafe</span>
+            </a>
+          </div>
           <p className="text-xs text-[#6B7C70] dark:text-[#A0B0A5] font-light">
             Tag us in your stories and posts to get featured on our official VIP feed.
           </p>
         </div>
 
-        {/* 6 Square Photos Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
+        {/* 6 Uniform Square Photos Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3.5 sm:gap-4">
           {instagramPosts.map((post, idx) => (
             <motion.a
               key={post.id}
@@ -71,18 +73,20 @@ const InstagramSection = () => {
               initial={{ opacity: 0, scale: 0.93 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: idx * 0.06 }}
+              transition={{ duration: 0.5, delay: idx * 0.05 }}
               whileHover={{ y: -6, scale: 1.03 }}
-              className="group relative h-44 sm:h-48 rounded-2xl overflow-hidden shadow-lg border border-gray-200/80 dark:border-[#D6AE4D]/25"
+              className="group relative aspect-square sm:aspect-square rounded-3xl overflow-hidden shadow-xl border border-gray-200/80 dark:border-[#D6AE4D]/30 bg-[#0C1A12]"
             >
               <img
                 src={post.image}
                 alt={post.alt}
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-out"
               />
-              <div className="absolute inset-0 bg-[#123524]/70 backdrop-blur-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center text-white">
-                <div className="w-10 h-10 rounded-full bg-white/20 border border-white/30 flex items-center justify-center text-[#D6AE4D] shadow-md">
-                  <FiInstagram className="w-5 h-5" />
+              
+              {/* Permanent Gradient Overlay + Instagram Hover Badge */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-full bg-black/50 backdrop-blur-md border border-[#D6AE4D]/50 flex items-center justify-center text-[#D6AE4D] shadow-lg opacity-0 group-hover:opacity-100 transform group-hover:scale-110 transition-all duration-300">
+                  <FiInstagram className="w-5 h-5 text-[#D6AE4D]" />
                 </div>
               </div>
             </motion.a>
