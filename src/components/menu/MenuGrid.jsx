@@ -27,7 +27,7 @@ const itemVariants = {
 const MenuGrid = ({ items }) => {
   if (!items || items.length === 0) {
     return (
-      <div className="w-full text-center py-16 px-6 bg-white/80 dark:bg-[#16231B]/90 backdrop-blur-xl rounded-3xl border border-gray-200/80 dark:border-[#D6AE4D]/30 shadow-xl flex flex-col items-center justify-center my-6">
+      <div className="w-full text-center py-16 px-6 bg-white/80 dark:bg-[#16231B]/90 backdrop-blur-xl rounded-3xl border border-gray-200/80 dark:border-[#D6AE4D]/30 shadow-xl flex flex-col items-center justify-center my-6 min-h-[250px] overflow-hidden">
         <FiCoffee className="w-12 h-12 text-[#D6AE4D] mb-4 stroke-[1.5] animate-bounce" />
         <h3 className="font-serif text-2xl font-bold text-[#123524] dark:text-[#D6AE4D] mb-2">No Delicacies Found</h3>
         <p className="text-xs text-gray-500 dark:text-[#A0B0A5] max-w-md mx-auto font-medium">
@@ -38,9 +38,9 @@ const MenuGrid = ({ items }) => {
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 items-stretch w-full my-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8 items-stretch justify-items-center sm:justify-items-stretch w-full my-6">
       {items.map((item) => (
-        <div key={item._id || item.id} className="h-full w-full flex flex-col">
+        <div key={item._id || item.id} className="h-full w-full max-w-sm sm:max-w-none flex flex-col">
           <MenuCard item={item} />
         </div>
       ))}
