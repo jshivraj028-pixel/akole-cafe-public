@@ -246,17 +246,17 @@ html, body {
 /* 1. Mobile Extra Small & Small Devices (up to 640px) */
 @media screen and (max-width: 640px) {
   h1 {
-    font-size: clamp(2rem, 8vw, 3rem) !important;
-    line-height: 1.15 !important;
+    font-size: clamp(2rem, 8vw, 3rem);
+    line-height: 1.15;
   }
   
   h2 {
-    font-size: clamp(1.6rem, 6.5vw, 2.3rem) !important;
-    line-height: 1.2 !important;
+    font-size: clamp(1.6rem, 6.5vw, 2.3rem);
+    line-height: 1.2;
   }
   
   h3 {
-    font-size: clamp(1.3rem, 5vw, 1.8rem) !important;
+    font-size: clamp(1.3rem, 5vw, 1.8rem);
   }
 
   p, span, label {
