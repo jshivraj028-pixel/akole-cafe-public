@@ -1,6 +1,24 @@
 import React, { useRef, useState } from 'react';
+import { motion } from 'framer-motion';
 import { FiSearch, FiSliders, FiChevronDown, FiX, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import { menuCategories } from '../../data/menu';
+
+// Custom Pastel Glossy Glass Gradient for each category filter pill
+const categoryGradients = {
+  all: 'from-[#E2F0D9]/90 via-[#F3F9EF]/95 to-white/95',
+  'hot-coffee': 'from-[#FEF3C7]/90 via-[#FFFBEB]/95 to-white/95',
+  'cold-coffee': 'from-[#FEF3C7]/90 via-[#FFFBEB]/95 to-white/95',
+  teas: 'from-[#E0F2FE]/90 via-[#F0F9FF]/95 to-white/95',
+  'misal-special': 'from-[#FFEDD5]/90 via-[#FFF7ED]/95 to-white/95',
+  'vada-pav': 'from-[#FFEDD5]/90 via-[#FFF7ED]/95 to-white/95',
+  breakfast: 'from-[#E2F0D9]/90 via-[#F3F9EF]/95 to-white/95',
+  'bakery-desserts': 'from-[#EDE9FE]/90 via-[#F5F3FF]/95 to-white/95',
+  'ice-cream': 'from-[#FFE4E6]/90 via-[#FFF1F2]/95 to-white/95',
+  'fast-food': 'from-[#FFE4E6]/90 via-[#FFF1F2]/95 to-white/95',
+  chinese: 'from-[#E0E7FF]/90 via-[#EEF2FF]/95 to-white/95',
+  beverages: 'from-[#CCFBF1]/90 via-[#F0FDFA]/95 to-white/95',
+  default: 'from-white/90 via-white/95 to-white/95'
+};
 
 const MenuFilter = ({
   activeCategory,
@@ -49,18 +67,18 @@ const MenuFilter = ({
         
         {/* 1. Glass Search Bar */}
         <div className="relative flex-1 min-w-[240px]">
-          <FiSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#1E2621] stroke-[2.5]" />
+          <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#1E2621] stroke-[2.5]" />
           <input
             type="text"
             placeholder="Search delicacies, coffee, misal..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-white/90 backdrop-blur-xl border border-white rounded-2xl py-3 pl-10 pr-9 text-xs font-semibold text-[#1E2621] placeholder:text-gray-400 shadow-sm focus:outline-none focus:border-[#1E2621] transition-all truncate"
+            className="w-full bg-white/90 backdrop-blur-xl border-2 border-white rounded-full py-3.5 pl-11 pr-10 text-xs font-bold text-[#1E2621] placeholder:text-gray-400 shadow-sm focus:outline-none focus:ring-4 focus:ring-[#1E2621]/15 transition-all truncate"
           />
           {searchQuery && (
             <button
               onClick={() => setSearchQuery('')}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-black p-1 cursor-pointer"
+              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-black p-1 cursor-pointer"
               title="Clear search"
             >
               <FiX className="w-4 h-4" />
@@ -69,12 +87,12 @@ const MenuFilter = ({
         </div>
 
         {/* 2. Veg / Non-Veg Toggle Pills */}
-        <div className="flex items-center gap-1.5 bg-white/90 backdrop-blur-xl p-1.5 rounded-2xl border border-white shadow-sm shrink-0">
+        <div className="flex items-center gap-1.5 bg-white/90 backdrop-blur-xl p-1.5 rounded-full border-2 border-white shadow-sm shrink-0">
           <button
             onClick={() => setVegFilter && setVegFilter('all')}
-            className={`py-2 px-4 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300 cursor-pointer ${
+            className={`py-2 px-4 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 cursor-pointer ${
               vegFilter === 'all' || !vegFilter
-                ? 'bg-[#1E2621] text-white shadow-sm'
+                ? 'bg-[#18201B] text-white shadow-sm'
                 : 'text-gray-600 hover:text-[#1E2621]'
             }`}
           >
@@ -83,7 +101,7 @@ const MenuFilter = ({
 
           <button
             onClick={() => setVegFilter && setVegFilter('veg')}
-            className={`flex items-center gap-1.5 py-2 px-4 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300 cursor-pointer ${
+            className={`flex items-center gap-1.5 py-2 px-4 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 cursor-pointer ${
               vegFilter === 'veg'
                 ? 'bg-emerald-700 text-white shadow-sm'
                 : 'text-emerald-700 hover:bg-emerald-50'
@@ -95,7 +113,7 @@ const MenuFilter = ({
 
           <button
             onClick={() => setVegFilter && setVegFilter('nonveg')}
-            className={`flex items-center gap-1.5 py-2 px-4 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300 cursor-pointer ${
+            className={`flex items-center gap-1.5 py-2 px-4 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 cursor-pointer ${
               vegFilter === 'nonveg'
                 ? 'bg-rose-700 text-white shadow-sm'
                 : 'text-rose-700 hover:bg-rose-50'
@@ -108,29 +126,29 @@ const MenuFilter = ({
 
         {/* 3. Glass Sort Dropdown */}
         <div className="relative shrink-0 min-w-[180px]">
-          <FiSliders className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#1E2621] pointer-events-none" />
+          <FiSliders className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#1E2621] pointer-events-none" />
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
-            className="w-full bg-white/90 backdrop-blur-xl border border-white rounded-2xl py-3 pl-10 pr-8 text-xs font-bold text-[#1E2621] appearance-none shadow-sm focus:outline-none cursor-pointer hover:bg-white transition-all"
+            className="w-full bg-white/90 backdrop-blur-xl border-2 border-white rounded-full py-3.5 pl-11 pr-8 text-xs font-bold text-[#1E2621] appearance-none shadow-sm focus:outline-none cursor-pointer hover:bg-white transition-all"
           >
             <option value="featured">Sort by: Featured</option>
             <option value="rating">Sort by: Rating</option>
             <option value="price-low">Price: Low to High</option>
             <option value="price-high">Price: High to Low</option>
           </select>
-          <FiChevronDown className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+          <FiChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
         </div>
 
       </div>
 
-      {/* Bottom Row: Glossy Category Pills */}
+      {/* Bottom Row: Unique Pastel Glossy Category Pills */}
       <div className="relative flex items-center w-full">
         {/* Scroll Left Button */}
         <button
           type="button"
           onClick={() => handleScroll('left')}
-          className="hidden sm:flex w-9.5 h-9.5 rounded-full bg-white border border-white shadow-md text-[#1E2621] hover:scale-105 active:scale-95 transition-all items-center justify-center shrink-0 cursor-pointer z-10 mr-2"
+          className="hidden sm:flex w-9.5 h-9.5 rounded-full bg-white border-2 border-white shadow-md text-[#1E2621] hover:scale-105 active:scale-95 transition-all items-center justify-center shrink-0 cursor-pointer z-10 mr-2"
           aria-label="Scroll category left"
         >
           <FiChevronLeft className="w-4.5 h-4.5 stroke-[2.5]" />
@@ -143,22 +161,39 @@ const MenuFilter = ({
           onMouseLeave={handleMouseLeaveOrUp}
           onMouseUp={handleMouseLeaveOrUp}
           onMouseMove={handleMouseMove}
-          className="flex items-center gap-2.5 overflow-x-auto py-2 px-1 scroll-smooth w-full no-scrollbar select-none cursor-grab active:cursor-grabbing"
+          className="flex items-center gap-3 overflow-x-auto py-2 px-1 scroll-smooth w-full no-scrollbar select-none cursor-grab active:cursor-grabbing"
         >
           {menuCategories.map((cat) => {
             const isActive = activeCategory === cat.id;
+            const gradient = categoryGradients[cat.id] || categoryGradients.default;
+
             return (
-              <button
+              <motion.button
                 key={cat.id}
+                whileTap={{ scale: 0.95 }}
                 onClick={() => setActiveCategory(cat.id)}
-                className={`px-5 py-2.5 rounded-full text-xs font-bold tracking-wide uppercase transition-all duration-300 shrink-0 whitespace-nowrap backdrop-blur-xl cursor-pointer shadow-sm ${
+                className={`relative px-5 py-3 rounded-full text-xs font-black tracking-wider uppercase transition-all duration-300 shrink-0 whitespace-nowrap backdrop-blur-2xl cursor-pointer border-2 ${
                   isActive
-                    ? 'bg-[#1E2621] text-white border border-[#1E2621] shadow-md scale-105'
-                    : 'bg-white/80 text-[#48594B] hover:bg-white hover:text-[#1E2621] border border-white'
+                    ? 'bg-gradient-to-r from-[#18261E] via-[#2A3B30] to-[#18261E] text-white border-white/90 shadow-[0_8px_25px_rgba(0,0,0,0.22)] scale-[1.06]'
+                    : `bg-gradient-to-r ${gradient} text-[#1E2621] border-white/90 shadow-sm hover:scale-105 hover:shadow-md`
                 }`}
               >
-                {cat.name}
-              </button>
+                <div className="flex items-center gap-2 relative z-10">
+                  {isActive && (
+                    <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse shadow-xs" />
+                  )}
+                  <span>{cat.name}</span>
+                </div>
+
+                {/* Animated Glass Highlight Glow for Active Selection */}
+                {isActive && (
+                  <motion.div
+                    layoutId="activeCategoryPillGlow"
+                    className="absolute inset-0 rounded-full bg-white/10 pointer-events-none"
+                    transition={{ type: "spring", stiffness: 380, damping: 26 }}
+                  />
+                )}
+              </motion.button>
             );
           })}
         </div>
@@ -167,7 +202,7 @@ const MenuFilter = ({
         <button
           type="button"
           onClick={() => handleScroll('right')}
-          className="hidden sm:flex w-9.5 h-9.5 rounded-full bg-white border border-white shadow-md text-[#1E2621] hover:scale-105 active:scale-95 transition-all items-center justify-center shrink-0 cursor-pointer z-10 ml-2"
+          className="hidden sm:flex w-9.5 h-9.5 rounded-full bg-white border-2 border-white shadow-md text-[#1E2621] hover:scale-105 active:scale-95 transition-all items-center justify-center shrink-0 cursor-pointer z-10 ml-2"
           aria-label="Scroll category right"
         >
           <FiChevronRight className="w-4.5 h-4.5 stroke-[2.5]" />

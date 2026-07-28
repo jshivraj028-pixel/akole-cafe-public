@@ -162,11 +162,11 @@ const RegisterForm = () => {
       
       {/* Full Name Input */}
       <div>
-        <label className="block text-[11px] uppercase tracking-widest font-semibold text-[#123524] dark:text-[#EAE3D2] mb-1">
-          Full Name <span className="text-red-500">*</span>
+        <label className="block text-[11px] uppercase tracking-[1.5px] font-black text-[#1E2621] mb-1.5">
+          FULL NAME <span className="text-red-500">*</span>
         </label>
         <div className="relative">
-          <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#D6AE4D]" />
+          <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-[#1E2621] stroke-[2.2]" />
           <input
             type="text"
             name="fullName"
@@ -174,31 +174,29 @@ const RegisterForm = () => {
             onChange={handleChange}
             onBlur={handleBlur}
             placeholder="Enter your full name"
-            className={`w-full pl-10 pr-10 py-2.5 rounded-xl bg-white/40 dark:bg-[#0F1712]/40 backdrop-blur-xs border text-xs text-[#123524] dark:text-[#EAE3D2] placeholder-[#8B9B90] focus:outline-none focus:bg-white/95 dark:focus:bg-[#16231B]/95 focus:ring-4 focus:ring-[#D6AE4D]/15 transition-all duration-300 ${
-              touched.fullName && errors.fullName ? 'border-red-500 bg-red-50/20' : touched.fullName && !errors.fullName ? 'border-emerald-500' : 'border-[#D6AE4D]/35 dark:border-[#D6AE4D]/25 hover:border-[#D6AE4D]/60'
+            className={`w-full pl-11 pr-10 py-3.5 rounded-full bg-white/90 border-2 text-xs font-bold text-[#1E2621] placeholder:text-gray-400 focus:outline-none focus:bg-white focus:ring-4 focus:ring-[#1E2621]/15 transition-all duration-300 shadow-sm ${
+              touched.fullName && errors.fullName ? 'border-red-500 bg-red-50' : touched.fullName && !errors.fullName ? 'border-emerald-500' : 'border-white hover:border-[#1E2621]/30'
             }`}
           />
           {touched.fullName && !errors.fullName && (
-            <Check className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-emerald-500" />
+            <Check className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-emerald-600" />
           )}
           {touched.fullName && errors.fullName && (
-            <AlertCircle className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-red-500" />
+            <AlertCircle className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-red-500" />
           )}
         </div>
         {touched.fullName && errors.fullName && (
-          <p className="text-[10px] text-red-500 font-medium mt-1 flex items-center gap-1">
-            <span>{errors.fullName}</span>
-          </p>
+          <p className="text-[10px] text-red-500 font-bold mt-1 pl-3">{errors.fullName}</p>
         )}
       </div>
 
       {/* Email Input */}
       <div>
-        <label className="block text-[11px] uppercase tracking-widest font-semibold text-[#123524] dark:text-[#EAE3D2] mb-1">
-          Email Address <span className="text-red-500">*</span>
+        <label className="block text-[11px] uppercase tracking-[1.5px] font-black text-[#1E2621] mb-1.5">
+          EMAIL ADDRESS <span className="text-red-500">*</span>
         </label>
         <div className="relative">
-          <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#D6AE4D]" />
+          <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-[#1E2621] stroke-[2.2]" />
           <input
             type="email"
             name="email"
@@ -206,29 +204,29 @@ const RegisterForm = () => {
             onChange={handleChange}
             onBlur={handleBlur}
             placeholder="Enter your email address"
-            className={`w-full pl-10 pr-10 py-2.5 rounded-xl bg-white/40 dark:bg-[#0F1712]/40 backdrop-blur-xs border text-xs text-[#123524] dark:text-[#EAE3D2] placeholder-[#8B9B90] focus:outline-none focus:bg-white/95 dark:focus:bg-[#16231B]/95 focus:ring-4 focus:ring-[#D6AE4D]/15 transition-all duration-300 ${
-              touched.email && errors.email ? 'border-red-500 bg-red-50/20' : touched.email && !errors.email ? 'border-emerald-500' : 'border-[#D6AE4D]/35 dark:border-[#D6AE4D]/25 hover:border-[#D6AE4D]/60'
+            className={`w-full pl-11 pr-10 py-3.5 rounded-full bg-white/90 border-2 text-xs font-bold text-[#1E2621] placeholder:text-gray-400 focus:outline-none focus:bg-white focus:ring-4 focus:ring-[#1E2621]/15 transition-all duration-300 shadow-sm ${
+              touched.email && errors.email ? 'border-red-500 bg-red-50' : touched.email && !errors.email ? 'border-emerald-500' : 'border-white hover:border-[#1E2621]/30'
             }`}
           />
           {touched.email && !errors.email && (
-            <Check className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-emerald-500" />
+            <Check className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-emerald-600" />
           )}
           {touched.email && errors.email && (
-            <AlertCircle className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-red-500" />
+            <AlertCircle className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-red-500" />
           )}
         </div>
         {touched.email && errors.email && (
-          <p className="text-[10px] text-red-500 font-medium mt-1">{errors.email}</p>
+          <p className="text-[10px] text-red-500 font-bold mt-1 pl-3">{errors.email}</p>
         )}
       </div>
 
       {/* Phone Number Input (Optional) */}
       <div>
-        <label className="block text-[11px] uppercase tracking-widest font-semibold text-[#123524] dark:text-[#EAE3D2] mb-1">
-          Phone Number <span className="text-gray-400 font-normal lowercase tracking-normal text-[10px]">(optional)</span>
+        <label className="block text-[11px] uppercase tracking-[1.5px] font-black text-[#1E2621] mb-1.5">
+          PHONE NUMBER <span className="text-gray-400 font-normal lowercase tracking-normal text-[10px]">(optional)</span>
         </label>
         <div className="relative">
-          <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#D6AE4D]" />
+          <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-[#1E2621] stroke-[2.2]" />
           <input
             type="tel"
             name="phone"
@@ -236,29 +234,29 @@ const RegisterForm = () => {
             onChange={handleChange}
             onBlur={handleBlur}
             placeholder="Enter 10-digit mobile number"
-            className={`w-full pl-10 pr-10 py-2.5 rounded-xl bg-white/40 dark:bg-[#0F1712]/40 backdrop-blur-xs border text-xs text-[#123524] dark:text-[#EAE3D2] placeholder-[#8B9B90] focus:outline-none focus:bg-white/95 dark:focus:bg-[#16231B]/95 focus:ring-4 focus:ring-[#D6AE4D]/15 transition-all duration-300 ${
-              touched.phone && errors.phone ? 'border-red-500 bg-red-50/20' : touched.phone && !errors.phone ? 'border-emerald-500' : 'border-[#D6AE4D]/35 dark:border-[#D6AE4D]/25 hover:border-[#D6AE4D]/60'
+            className={`w-full pl-11 pr-10 py-3.5 rounded-full bg-white/90 border-2 text-xs font-bold text-[#1E2621] placeholder:text-gray-400 focus:outline-none focus:bg-white focus:ring-4 focus:ring-[#1E2621]/15 transition-all duration-300 shadow-sm ${
+              touched.phone && errors.phone ? 'border-red-500 bg-red-50' : touched.phone && !errors.phone ? 'border-emerald-500' : 'border-white hover:border-[#1E2621]/30'
             }`}
           />
           {touched.phone && !errors.phone && (
-            <Check className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-emerald-500" />
+            <Check className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-emerald-600" />
           )}
           {touched.phone && errors.phone && (
-            <AlertCircle className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-red-500" />
+            <AlertCircle className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-red-500" />
           )}
         </div>
         {touched.phone && errors.phone && (
-          <p className="text-[10px] text-red-500 font-medium mt-1">{errors.phone}</p>
+          <p className="text-[10px] text-red-500 font-bold mt-1 pl-3">{errors.phone}</p>
         )}
       </div>
 
       {/* Password Input & Strength Bar */}
       <div>
-        <label className="block text-[11px] uppercase tracking-widest font-semibold text-[#123524] dark:text-[#EAE3D2] mb-1">
-          Password <span className="text-red-500">*</span>
+        <label className="block text-[11px] uppercase tracking-[1.5px] font-black text-[#1E2621] mb-1.5">
+          PASSWORD <span className="text-red-500">*</span>
         </label>
         <div className="relative">
-          <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#D6AE4D]" />
+          <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-[#1E2621] stroke-[2.2]" />
           <input
             type={showPassword ? 'text' : 'password'}
             name="password"
@@ -266,14 +264,14 @@ const RegisterForm = () => {
             onChange={handleChange}
             onBlur={handleBlur}
             placeholder="Create a password (min 8 chars)"
-            className={`w-full pl-10 pr-10 py-2.5 rounded-xl bg-white/40 dark:bg-[#0F1712]/40 backdrop-blur-xs border text-xs text-[#123524] dark:text-[#EAE3D2] placeholder-[#8B9B90] focus:outline-none focus:bg-white/95 dark:focus:bg-[#16231B]/95 focus:ring-4 focus:ring-[#D6AE4D]/15 transition-all duration-300 ${
-              touched.password && errors.password ? 'border-red-500 bg-red-50/20' : touched.password && !errors.password ? 'border-emerald-500' : 'border-[#D6AE4D]/35 dark:border-[#D6AE4D]/25 hover:border-[#D6AE4D]/60'
+            className={`w-full pl-11 pr-10 py-3.5 rounded-full bg-white/90 border-2 text-xs font-bold text-[#1E2621] placeholder:text-gray-400 focus:outline-none focus:bg-white focus:ring-4 focus:ring-[#1E2621]/15 transition-all duration-300 shadow-sm ${
+              touched.password && errors.password ? 'border-red-500 bg-red-50' : touched.password && !errors.password ? 'border-emerald-500' : 'border-white hover:border-[#1E2621]/30'
             }`}
           />
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#8B9B90] hover:text-[#D6AE4D]"
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-black cursor-pointer p-0.5"
           >
             {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
           </button>
@@ -281,13 +279,13 @@ const RegisterForm = () => {
 
         {/* Live Password Strength Meter */}
         {formData.password && (
-          <div className="mt-1.5 space-y-1">
-            <div className="flex gap-1 h-1 w-full bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+          <div className="mt-1.5 space-y-1 pl-2">
+            <div className="flex gap-1 h-1.5 w-full bg-gray-200 rounded-full overflow-hidden">
               <div className={`h-full flex-1 transition-all ${pwdStrength >= 1 ? (pwdStrength === 1 ? 'bg-red-500' : pwdStrength === 2 ? 'bg-amber-500' : 'bg-emerald-500') : 'bg-transparent'}`} />
               <div className={`h-full flex-1 transition-all ${pwdStrength >= 2 ? (pwdStrength === 2 ? 'bg-amber-500' : 'bg-emerald-500') : 'bg-transparent'}`} />
               <div className={`h-full flex-1 transition-all ${pwdStrength >= 3 ? 'bg-emerald-500' : 'bg-transparent'}`} />
             </div>
-            <p className="text-[10px] text-[#8B9B90] font-medium flex justify-between">
+            <p className="text-[10px] text-[#556B5D] font-bold flex justify-between">
               <span>Strength: {pwdStrength === 1 ? 'Weak' : pwdStrength === 2 ? 'Medium' : pwdStrength === 3 ? 'Strong 🔒' : ''}</span>
               <span>(Min 8 chars, 1 number, 1 symbol)</span>
             </p>
@@ -295,17 +293,17 @@ const RegisterForm = () => {
         )}
 
         {touched.password && errors.password && (
-          <p className="text-[10px] text-red-500 font-medium mt-1">{errors.password}</p>
+          <p className="text-[10px] text-red-500 font-bold mt-1 pl-3">{errors.password}</p>
         )}
       </div>
 
       {/* Confirm Password Input */}
       <div>
-        <label className="block text-[11px] uppercase tracking-widest font-semibold text-[#123524] dark:text-[#EAE3D2] mb-1">
-          Confirm Password <span className="text-red-500">*</span>
+        <label className="block text-[11px] uppercase tracking-[1.5px] font-black text-[#1E2621] mb-1.5">
+          CONFIRM PASSWORD <span className="text-red-500">*</span>
         </label>
         <div className="relative">
-          <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#D6AE4D]" />
+          <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-[#1E2621] stroke-[2.2]" />
           <input
             type={showConfirmPassword ? 'text' : 'password'}
             name="confirmPassword"
@@ -313,30 +311,30 @@ const RegisterForm = () => {
             onChange={handleChange}
             onBlur={handleBlur}
             placeholder="Re-enter your password"
-            className={`w-full pl-10 pr-10 py-2.5 rounded-xl bg-white/40 dark:bg-[#0F1712]/40 backdrop-blur-xs border text-xs text-[#123524] dark:text-[#EAE3D2] placeholder-[#8B9B90] focus:outline-none focus:bg-white/95 dark:focus:bg-[#16231B]/95 focus:ring-4 focus:ring-[#D6AE4D]/15 transition-all duration-300 ${
-              touched.confirmPassword && errors.confirmPassword ? 'border-red-500 bg-red-50/20' : touched.confirmPassword && !errors.confirmPassword && formData.confirmPassword ? 'border-emerald-500' : 'border-[#D6AE4D]/35 dark:border-[#D6AE4D]/25 hover:border-[#D6AE4D]/60'
+            className={`w-full pl-11 pr-10 py-3.5 rounded-full bg-white/90 border-2 text-xs font-bold text-[#1E2621] placeholder:text-gray-400 focus:outline-none focus:bg-white focus:ring-4 focus:ring-[#1E2621]/15 transition-all duration-300 shadow-sm ${
+              touched.confirmPassword && errors.confirmPassword ? 'border-red-500 bg-red-50' : touched.confirmPassword && !errors.confirmPassword && formData.confirmPassword ? 'border-emerald-500' : 'border-white hover:border-[#1E2621]/30'
             }`}
           />
           <button
             type="button"
             onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-            className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#8B9B90] hover:text-[#D6AE4D]"
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-black cursor-pointer p-0.5"
           >
             {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
           </button>
         </div>
         {touched.confirmPassword && errors.confirmPassword && (
-          <p className="text-[10px] text-red-500 font-medium mt-1">{errors.confirmPassword}</p>
+          <p className="text-[10px] text-red-500 font-bold mt-1 pl-3">{errors.confirmPassword}</p>
         )}
         {touched.confirmPassword && !errors.confirmPassword && formData.confirmPassword && (
-          <p className="text-[10px] text-emerald-600 dark:text-emerald-400 font-medium mt-1 flex items-center gap-1">
+          <p className="text-[10px] text-emerald-600 font-bold mt-1 pl-3 flex items-center gap-1">
             <Check className="w-3 h-3" /> Passwords match
           </p>
         )}
       </div>
 
       {/* Terms & Privacy Custom Checkbox Box */}
-      <div className="p-3 rounded-xl bg-[#FAF6EE] dark:bg-[#121F17] border border-[#E5DDD0] dark:border-[#C8A96A]/20 shadow-xs">
+      <div className="p-3.5 rounded-2xl bg-white/60 backdrop-blur-md border-2 border-white shadow-xs">
         <label className="flex items-start gap-3 cursor-pointer select-none group">
           <input
             type="checkbox"
@@ -349,10 +347,10 @@ const RegisterForm = () => {
           <div
             className={`w-5 h-5 rounded-md mt-0.5 border-2 transition-all duration-200 flex items-center justify-center shrink-0 transform group-hover:scale-105 ${
               formData.agreeTerms
-                ? 'bg-gradient-to-br from-[#D6AE4D] to-[#B89035] border-[#D6AE4D] shadow-sm ring-2 ring-[#D6AE4D]/20'
+                ? 'bg-[#18201B] border-[#18201B] shadow-sm'
                 : touched.agreeTerms && errors.agreeTerms
-                ? 'border-red-500 bg-red-50/20'
-                : 'bg-white dark:bg-[#16231B] border-[#D6AE4D]/60 group-hover:border-[#D6AE4D]'
+                ? 'border-red-500 bg-red-50'
+                : 'bg-white border-gray-300 group-hover:border-[#1E2621]'
             }`}
           >
             {formData.agreeTerms && (
@@ -361,11 +359,11 @@ const RegisterForm = () => {
                 animate={{ scale: 1, rotate: 0 }}
                 transition={{ type: 'spring', stiffness: 600, damping: 22 }}
               >
-                <Check className="w-3.5 h-3.5 stroke-[3.5] text-[#123524]" />
+                <Check className="w-3.5 h-3.5 stroke-[3.5] text-white" />
               </motion.div>
             )}
           </div>
-          <span className="text-xs text-[#4A5D50] dark:text-[#C5D0C8] leading-relaxed">
+          <span className="text-xs text-[#1E2621] font-medium leading-relaxed">
             I agree to the{' '}
             <span
               role="button"
@@ -381,7 +379,7 @@ const RegisterForm = () => {
                   setLegalModal({ isOpen: true, type: 'terms' });
                 }
               }}
-              className="font-semibold text-[#D6AE4D] hover:text-[#B89035] underline underline-offset-2 transition-colors cursor-pointer"
+              className="font-bold text-[#1E2621] underline underline-offset-2 transition-colors cursor-pointer"
             >
               Terms of Service
             </span>{' '}
@@ -400,41 +398,43 @@ const RegisterForm = () => {
                   setLegalModal({ isOpen: true, type: 'privacy' });
                 }
               }}
-              className="font-semibold text-[#D6AE4D] hover:text-[#B89035] underline underline-offset-2 transition-colors cursor-pointer"
+              className="font-bold text-[#1E2621] underline underline-offset-2 transition-colors cursor-pointer"
             >
               Privacy Policy
             </span>
           </span>
         </label>
         {touched.agreeTerms && errors.agreeTerms && (
-          <p className="text-[10px] text-red-500 font-medium mt-1.5 pl-8">{errors.agreeTerms}</p>
+          <p className="text-[10px] text-red-500 font-bold mt-1.5 pl-8">{errors.agreeTerms}</p>
         )}
       </div>
 
-      {/* Submit Button */}
-      <button
+      {/* FULL TRANSPARENT WHITE GLOSSY GLASS CREATE ACCOUNT BUTTON */}
+      <motion.button
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
         type="submit"
         disabled={isLoading}
-        className="w-full py-3 rounded-xl bg-gradient-to-r from-[#D6AE4D] via-[#F0D588] to-[#B89035] hover:from-[#E5BC58] hover:via-[#FFF3C4] hover:to-[#C99D3B] text-[#0A1A12] font-montserrat font-extrabold text-xs uppercase tracking-[2px] shadow-lg shadow-[#D6AE4D]/25 border border-[#FFF5D6]/35 transition-all duration-300 flex items-center justify-center gap-2 mt-2 cursor-pointer"
+        className="w-full py-4 px-6 rounded-full bg-white/80 hover:bg-white border-2 border-white shadow-md backdrop-blur-2xl text-[#1E2621] font-montserrat font-black text-xs uppercase tracking-[2.5px] transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer active:scale-[0.98]"
       >
         {isLoading ? (
-          <span className="inline-block w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+          <span className="inline-block w-4.5 h-4.5 border-2 border-current border-t-transparent rounded-full animate-spin text-[#1E2621]" />
         ) : (
           <>
-            <CheckCircle2 className="w-4 h-4 text-[#0A1A12] stroke-[2.5]" />
+            <CheckCircle2 className="w-4.5 h-4.5 text-[#1E2621] stroke-[2.5]" />
             <span>CREATE ACCOUNT</span>
           </>
         )}
-      </button>
+      </motion.button>
 
       {/* Divider & Social Login */}
       <Divider />
       <SocialLogin />
 
       {/* Already Have Account Redirect */}
-      <p className="text-center text-xs text-[#6B7C70] dark:text-[#A0B0A5] font-light pt-2">
+      <p className="text-center text-xs text-[#556B5D] font-medium pt-2">
         Already have an account?{' '}
-        <Link to="/login" className="font-bold text-[#D6AE4D] hover:underline">
+        <Link to="/login" className="font-bold text-[#1E2621] hover:underline">
           Sign In
         </Link>
       </p>

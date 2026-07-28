@@ -147,13 +147,13 @@ const MenuCard = ({ item, index = 0, onQuickView }) => {
             </span>
           </div>
 
-          {/* Dark Charcoal Pill Add Button */}
+          {/* Full Transparent White Glossy Glass Add Button with Black Text */}
           <button
             onClick={handleAddToCart}
-            className="px-4 py-2.5 rounded-full bg-[#18201B] hover:bg-black text-white font-black text-xs uppercase tracking-wider shadow-md hover:shadow-lg active:scale-95 transition-all flex items-center gap-1.5 cursor-pointer border border-[#18201B]"
+            className="px-4.5 py-2.5 rounded-full bg-white/80 hover:bg-white backdrop-blur-2xl border-2 border-white shadow-md text-[#1E2621] font-montserrat font-black text-xs uppercase tracking-wider active:scale-95 transition-all flex items-center gap-1.5 cursor-pointer"
             title="Add to Cart"
           >
-            <ShoppingCart className="w-3.5 h-3.5 stroke-[2.2] text-amber-400" />
+            <ShoppingCart className="w-3.5 h-3.5 stroke-[2.5] text-[#1E2621]" />
             <span>ADD</span>
           </button>
         </div>

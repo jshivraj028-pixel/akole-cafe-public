@@ -137,14 +137,14 @@ const ForgotPasswordForm = () => {
       {step === 1 && (
         <form onSubmit={handleIdentifierSubmit} className="space-y-5" noValidate>
           <div>
-            <label className="block text-[11px] uppercase tracking-widest font-semibold text-[#123524] dark:text-[#EAE3D2] mb-1.5">
-              Registered Email or Phone Number <span className="text-red-500">*</span>
+            <label className="block text-[11px] uppercase tracking-[1.5px] font-black text-[#1E2621] mb-1.5">
+              REGISTERED EMAIL OR PHONE NUMBER <span className="text-red-500">*</span>
             </label>
             <div className="relative">
               {isPhone(identifier) ? (
-                <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#D6AE4D]" />
+                <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-[#1E2621] stroke-[2.2]" />
               ) : (
-                <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#D6AE4D]" />
+                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-[#1E2621] stroke-[2.2]" />
               )}
               <input
                 type="text"
@@ -158,32 +158,32 @@ const ForgotPasswordForm = () => {
                   setError(validateIdentifier(identifier));
                 }}
                 placeholder="Enter email or 10-digit phone"
-                className={`w-full pl-10 pr-10 py-3 rounded-xl bg-white/80 dark:bg-[#16231B] border text-xs text-[#123524] dark:text-[#EAE3D2] placeholder-[#8B9B90] focus:outline-none focus:ring-2 focus:ring-[#D6AE4D]/50 transition-all ${
-                  touched && error ? 'border-red-500 bg-red-50/20' : touched && !error ? 'border-emerald-500' : 'border-[#D6AE4D]/30'
+                className={`w-full pl-11 pr-10 py-3.5 rounded-full bg-white/90 border-2 text-xs font-bold text-[#1E2621] placeholder:text-gray-400 focus:outline-none focus:bg-white focus:ring-4 focus:ring-[#1E2621]/15 transition-all duration-300 shadow-sm ${
+                  touched && error ? 'border-red-500 bg-red-50' : touched && !error ? 'border-emerald-500' : 'border-white hover:border-[#1E2621]/30'
                 }`}
               />
               {touched && !error && (
-                <Check className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-emerald-500" />
+                <Check className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-emerald-600" />
               )}
               {touched && error && (
-                <AlertCircle className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-red-500" />
+                <AlertCircle className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-red-500" />
               )}
             </div>
             {touched && error && (
-              <p className="text-[10px] text-red-500 font-medium mt-1 pl-1">{error}</p>
+              <p className="text-[10px] text-red-500 font-bold mt-1 pl-3">{error}</p>
             )}
           </div>
 
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full py-3 rounded-xl bg-[#123524] hover:bg-[#D6AE4D] hover:text-[#123524] text-white font-montserrat font-bold text-xs uppercase tracking-[2px] transition-all shadow-md transform hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center gap-2 cursor-pointer"
+            className="w-full py-4 px-6 rounded-full bg-white/80 hover:bg-white border-2 border-white shadow-md backdrop-blur-2xl text-[#1E2621] font-montserrat font-black text-xs uppercase tracking-[2.5px] transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer active:scale-[0.98]"
           >
             {isLoading ? (
-              <span className="inline-block w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+              <span className="inline-block w-4.5 h-4.5 border-2 border-current border-t-transparent rounded-full animate-spin text-[#1E2621]" />
             ) : (
               <>
-                <Send className="w-4 h-4" />
+                <Send className="w-4.5 h-4.5 text-[#1E2621]" />
                 <span>SEND VERIFICATION CODE</span>
               </>
             )}
@@ -192,7 +192,7 @@ const ForgotPasswordForm = () => {
           <div className="text-center pt-2">
             <Link
               to="/login"
-              className="inline-flex items-center gap-1.5 text-xs text-[#6B7C70] dark:text-[#A0B0A5] hover:text-[#D6AE4D] font-medium"
+              className="inline-flex items-center gap-1.5 text-xs text-[#556B5D] hover:text-[#1E2621] font-bold"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
               <span>Back to Sign In</span>
@@ -205,14 +205,14 @@ const ForgotPasswordForm = () => {
       {step === 2 && (
         <form onSubmit={handleOtpSubmit} className="space-y-5">
           <div className="text-center space-y-1.5">
-            <div className="w-12 h-12 rounded-full bg-[#D6AE4D]/15 text-[#D6AE4D] mx-auto flex items-center justify-center">
-              <ShieldCheck className="w-6 h-6" />
+            <div className="w-12 h-12 rounded-full bg-white border-2 border-white text-[#1E2621] mx-auto flex items-center justify-center shadow-md">
+              <ShieldCheck className="w-6 h-6 text-[#1E2621]" />
             </div>
-            <h3 className="font-serif text-xl font-bold text-[#123524] dark:text-white">
+            <h3 className="font-serif text-2xl font-bold text-[#1E2621]">
               Verify Code
             </h3>
-            <p className="text-xs text-[#6B7C70] dark:text-[#A0B0A5]">
-              We sent a 4-digit code to <strong className="text-[#123524] dark:text-[#D6AE4D]">{identifier}</strong>
+            <p className="text-xs text-[#556B5D] font-medium">
+              We sent a 4-digit code to <strong className="text-[#1E2621]">{identifier}</strong>
             </p>
           </div>
 
@@ -227,7 +227,7 @@ const ForgotPasswordForm = () => {
                 value={digit}
                 onChange={(e) => handleOtpChange(idx, e.target.value)}
                 onKeyDown={(e) => handleOtpKeyDown(idx, e)}
-                className="w-12 h-13 text-center text-lg font-bold rounded-xl bg-white/90 dark:bg-[#16231B] border border-[#D6AE4D]/40 text-[#123524] dark:text-[#EAE3D2] focus:border-[#D6AE4D] focus:ring-2 focus:ring-[#D6AE4D]/30 focus:outline-none transition-all shadow-sm"
+                className="w-12 h-13 text-center text-lg font-black rounded-2xl bg-white border-2 border-white text-[#1E2621] focus:ring-4 focus:ring-[#1E2621]/15 focus:outline-none transition-all shadow-md"
               />
             ))}
           </div>
@@ -235,10 +235,10 @@ const ForgotPasswordForm = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full py-3 rounded-xl bg-[#123524] hover:bg-[#D6AE4D] hover:text-[#123524] text-white font-bold text-xs uppercase tracking-[2px] transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
+            className="w-full py-4 px-6 rounded-full bg-white/80 hover:bg-white border-2 border-white shadow-md backdrop-blur-2xl text-[#1E2621] font-montserrat font-black text-xs uppercase tracking-[2.5px] transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer active:scale-[0.98]"
           >
             {isLoading ? (
-              <span className="inline-block w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+              <span className="inline-block w-4.5 h-4.5 border-2 border-current border-t-transparent rounded-full animate-spin text-[#1E2621]" />
             ) : (
               <span>VERIFY & CONTINUE</span>
             )}
@@ -248,7 +248,7 @@ const ForgotPasswordForm = () => {
             <button
               type="button"
               onClick={() => setStep(1)}
-              className="text-[#6B7C70] dark:text-[#A0B0A5] hover:text-[#D6AE4D] flex items-center gap-1"
+              className="text-[#556B5D] hover:text-[#1E2621] font-bold flex items-center gap-1 cursor-pointer"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
               <span>Change Contact</span>
@@ -261,8 +261,8 @@ const ForgotPasswordForm = () => {
                 setResendTimer(30);
                 showToast('A new OTP has been sent!', 'info');
               }}
-              className={`flex items-center gap-1 font-semibold ${
-                resendTimer > 0 ? 'text-gray-400 cursor-not-allowed' : 'text-[#D6AE4D] hover:underline'
+              className={`flex items-center gap-1 font-bold ${
+                resendTimer > 0 ? 'text-gray-400 cursor-not-allowed' : 'text-[#1E2621] hover:underline cursor-pointer'
               }`}
             >
               <RefreshCw className="w-3.5 h-3.5" />
@@ -276,22 +276,22 @@ const ForgotPasswordForm = () => {
       {step === 3 && (
         <form onSubmit={handlePasswordSubmit} className="space-y-4">
           <div>
-            <label className="block text-[11px] uppercase tracking-widest font-semibold text-[#123524] dark:text-[#EAE3D2] mb-1">
-              New Password <span className="text-red-500">*</span>
+            <label className="block text-[11px] uppercase tracking-[1.5px] font-black text-[#1E2621] mb-1.5">
+              NEW PASSWORD <span className="text-red-500">*</span>
             </label>
             <div className="relative">
-              <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#D6AE4D]" />
+              <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-[#1E2621] stroke-[2.2]" />
               <input
                 type={showPassword ? 'text' : 'password'}
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
                 placeholder="Enter new password (min 6 chars)"
-                className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-white/80 dark:bg-[#16231B] border border-[#D6AE4D]/30 text-xs text-[#123524] dark:text-[#EAE3D2] focus:outline-none focus:ring-2 focus:ring-[#D6AE4D]/50"
+                className="w-full pl-11 pr-10 py-3.5 rounded-full bg-white border-2 border-white text-xs font-bold text-[#1E2621] focus:outline-none focus:ring-4 focus:ring-[#1E2621]/15 shadow-sm"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-black cursor-pointer"
               >
                 {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
               </button>
@@ -299,17 +299,17 @@ const ForgotPasswordForm = () => {
           </div>
 
           <div>
-            <label className="block text-[11px] uppercase tracking-widest font-semibold text-[#123524] dark:text-[#EAE3D2] mb-1">
-              Confirm New Password <span className="text-red-500">*</span>
+            <label className="block text-[11px] uppercase tracking-[1.5px] font-black text-[#1E2621] mb-1.5">
+              CONFIRM NEW PASSWORD <span className="text-red-500">*</span>
             </label>
             <div className="relative">
-              <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#D6AE4D]" />
+              <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-[#1E2621] stroke-[2.2]" />
               <input
                 type="password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="Re-enter new password"
-                className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-white/80 dark:bg-[#16231B] border border-[#D6AE4D]/30 text-xs text-[#123524] dark:text-[#EAE3D2] focus:outline-none focus:ring-2 focus:ring-[#D6AE4D]/50"
+                className="w-full pl-11 pr-10 py-3.5 rounded-full bg-white border-2 border-white text-xs font-bold text-[#1E2621] focus:outline-none focus:ring-4 focus:ring-[#1E2621]/15 shadow-sm"
               />
             </div>
           </div>
@@ -317,10 +317,10 @@ const ForgotPasswordForm = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full py-3 rounded-xl bg-gradient-to-r from-[#D6AE4D] to-[#B89035] text-[#0A1A12] font-bold text-xs uppercase tracking-[2px] shadow-lg hover:brightness-110 transition-all flex items-center justify-center gap-2 cursor-pointer mt-2"
+            className="w-full py-4 px-6 rounded-full bg-white/80 hover:bg-white border-2 border-white shadow-md backdrop-blur-2xl text-[#1E2621] font-montserrat font-black text-xs uppercase tracking-[2.5px] transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer active:scale-[0.98] mt-2"
           >
             {isLoading ? (
-              <span className="inline-block w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+              <span className="inline-block w-4.5 h-4.5 border-2 border-current border-t-transparent rounded-full animate-spin text-[#1E2621]" />
             ) : (
               <span>UPDATE PASSWORD</span>
             )}
@@ -331,20 +331,20 @@ const ForgotPasswordForm = () => {
       {/* STEP 4: Success Message */}
       {step === 4 && (
         <div className="space-y-4 text-center py-4">
-          <div className="w-14 h-14 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 mx-auto flex items-center justify-center shadow-lg">
+          <div className="w-14 h-14 rounded-full bg-emerald-100 text-emerald-800 border-2 border-white mx-auto flex items-center justify-center shadow-md">
             <CheckCircle2 className="w-8 h-8" />
           </div>
-          <h3 className="font-serif text-2xl font-bold text-[#123524] dark:text-white">
+          <h3 className="font-serif text-2xl font-bold text-[#1E2621]">
             Password Reset Successful!
           </h3>
-          <p className="text-xs text-[#6B7C70] dark:text-[#A0B0A5] leading-relaxed">
+          <p className="text-xs text-[#556B5D] font-medium leading-relaxed">
             Your Akole Café password has been successfully updated. You can now log in with your new credentials.
           </p>
 
           <div className="pt-3">
             <button
               onClick={() => navigate('/login')}
-              className="w-full py-3 rounded-xl bg-[#123524] text-white hover:bg-[#D6AE4D] hover:text-[#123524] font-bold text-xs uppercase tracking-[2px] transition-all shadow-md cursor-pointer"
+              className="w-full py-4 px-6 rounded-full bg-[#18201B] text-white hover:bg-black font-black text-xs uppercase tracking-[2.5px] transition-all shadow-md cursor-pointer"
             >
               PROCEED TO SIGN IN
             </button>
