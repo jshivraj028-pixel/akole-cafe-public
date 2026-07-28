@@ -7,18 +7,18 @@ const AuthCard = ({ children, title = "Welcome Back", subtitle = "Sign in to con
       initial={{ opacity: 0, y: 25, scale: 0.97 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      className="w-full max-w-md bg-white/95 dark:bg-[#16241B]/95 backdrop-blur-2xl border border-[#D6AE4D]/35 dark:border-[#D6AE4D]/40 rounded-[32px] p-8 sm:p-10 shadow-2xl shadow-[#123524]/10 text-[#123524] dark:text-[#EAE3D2] relative overflow-hidden"
+      className="w-full max-w-md bg-white/80 backdrop-blur-3xl border-2 border-white rounded-[36px] sm:rounded-[44px] p-8 sm:p-11 shadow-[0_20px_50px_rgba(0,0,0,0.06)] text-[#1E2621] relative overflow-hidden"
     >
-      {/* Subtle Golden Ambient Top Light Glow */}
-      <div className="absolute -top-16 -right-16 w-40 h-40 bg-[#D6AE4D]/15 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute -bottom-16 -left-16 w-40 h-40 bg-[#123524]/10 dark:bg-[#D6AE4D]/10 rounded-full blur-3xl pointer-events-none" />
+      {/* Glowing Light Ambient Orbs */}
+      <div className="absolute -top-20 -right-20 w-48 h-48 bg-white/90 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute -bottom-20 -left-20 w-48 h-48 bg-[#D5E4CE]/50 rounded-full blur-3xl pointer-events-none" />
 
       {/* Header Section */}
       <div className="text-center mb-8 space-y-2 relative z-10">
-        <h2 className="font-cormorant text-3xl sm:text-4xl font-bold text-[#123524] dark:text-white tracking-tight leading-tight">
+        <h2 className="font-serif text-4xl sm:text-5xl font-bold text-[#1E2621] tracking-tight leading-tight">
           {title}
         </h2>
-        <p className="text-xs sm:text-sm font-montserrat text-[#6B7C70] dark:text-[#A0B0A5] font-light max-w-xs mx-auto leading-relaxed">
+        <p className="text-xs sm:text-sm font-montserrat text-[#556B5D] font-medium max-w-xs mx-auto leading-relaxed">
           {subtitle}
         </p>
       </div>

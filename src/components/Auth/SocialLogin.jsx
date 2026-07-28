@@ -8,18 +8,18 @@ const SocialLogin = ({ onGoogleLogin, onAppleLogin }) => {
       <button
         type="button"
         onClick={onGoogleLogin}
-        className="flex items-center justify-center gap-2.5 py-3 px-4 rounded-xl border border-[#E5DDD0] dark:border-[#C8A96A]/30 bg-white dark:bg-[#16231B] text-[#1F3A2B] dark:text-[#EAE3D2] text-xs font-semibold hover:bg-[#FAF6EE] dark:hover:bg-[#1E2D23] transition-all shadow-sm"
+        className="flex items-center justify-center gap-2.5 py-3.5 px-4 rounded-full border-2 border-white bg-white/80 hover:bg-white backdrop-blur-2xl text-[#1E2621] text-xs font-bold transition-all shadow-md cursor-pointer"
       >
-        <FcGoogle className="w-4 h-4" />
+        <FcGoogle className="w-4.5 h-4.5" />
         <span>Google</span>
       </button>
 
       <button
         type="button"
         onClick={onAppleLogin}
-        className="flex items-center justify-center gap-2.5 py-3 px-4 rounded-xl border border-[#E5DDD0] dark:border-[#C8A96A]/30 bg-white dark:bg-[#16231B] text-[#1F3A2B] dark:text-[#EAE3D2] text-xs font-semibold hover:bg-[#FAF6EE] dark:hover:bg-[#1E2D23] transition-all shadow-sm"
+        className="flex items-center justify-center gap-2.5 py-3.5 px-4 rounded-full border-2 border-white bg-white/80 hover:bg-white backdrop-blur-2xl text-[#1E2621] text-xs font-bold transition-all shadow-md cursor-pointer"
       >
-        <FaApple className="w-4 h-4 text-black dark:text-white" />
+        <FaApple className="w-4.5 h-4.5 text-[#1E2621]" />
         <span>Apple</span>
       </button>
     </div>

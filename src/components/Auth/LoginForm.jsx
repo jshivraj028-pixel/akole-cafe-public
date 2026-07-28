@@ -99,20 +99,16 @@ const LoginForm = () => {
     showToast(`Redirecting to ${provider} Authentication...`, 'info');
   };
 
-  const handleForgotPassword = () => {
-    showToast('Password reset link sent to your registered email.', 'info');
-  };
-
   return (
     <form onSubmit={handleSubmit} className="space-y-4 text-left w-full" noValidate>
       
-      {/* Email Input */}
+      {/* Email Address Pill Input */}
       <div>
-        <label className="block text-[11px] uppercase tracking-widest font-semibold text-[#123524] dark:text-[#EAE3D2] mb-1">
-          Email Address <span className="text-red-500">*</span>
+        <label className="block text-[11px] uppercase tracking-[1.5px] font-black text-[#1E2621] mb-1.5">
+          EMAIL ADDRESS <span className="text-red-500">*</span>
         </label>
         <div className="relative">
-          <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#D6AE4D]" />
+          <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-[#1E2621] stroke-[2.2]" />
           <input
             type="email"
             id="login-email"
@@ -120,29 +116,29 @@ const LoginForm = () => {
             onChange={handleEmailChange}
             onBlur={() => handleBlur('email', email)}
             placeholder="Enter your email address"
-            className={`w-full pl-10 pr-10 py-2.5 rounded-xl bg-white/40 dark:bg-[#0F1712]/40 backdrop-blur-xs border text-xs text-[#123524] dark:text-[#EAE3D2] placeholder-[#8B9B90] focus:outline-none focus:bg-white/95 dark:focus:bg-[#16231B]/95 focus:ring-4 focus:ring-[#D6AE4D]/15 transition-all duration-300 ${
-              touched.email && errors.email ? 'border-red-500 bg-red-50/20' : touched.email && !errors.email ? 'border-emerald-500' : 'border-[#D6AE4D]/35 dark:border-[#D6AE4D]/25 hover:border-[#D6AE4D]/60'
+            className={`w-full pl-11 pr-10 py-3.5 rounded-full bg-white/90 border-2 text-xs font-bold text-[#1E2621] placeholder:text-gray-400 focus:outline-none focus:bg-white focus:ring-4 focus:ring-[#1E2621]/15 transition-all duration-300 shadow-sm ${
+              touched.email && errors.email ? 'border-red-500 bg-red-50' : touched.email && !errors.email ? 'border-emerald-500' : 'border-white hover:border-[#1E2621]/30'
             }`}
           />
           {touched.email && !errors.email && (
-            <Check className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-emerald-500" />
+            <Check className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-emerald-600" />
           )}
           {touched.email && errors.email && (
-            <AlertCircle className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-red-500" />
+            <AlertCircle className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-red-500" />
           )}
         </div>
         {touched.email && errors.email && (
-          <p className="text-[10px] text-red-500 font-medium mt-1">{errors.email}</p>
+          <p className="text-[10px] text-red-500 font-bold mt-1 pl-3">{errors.email}</p>
         )}
       </div>
 
-      {/* Password Input */}
+      {/* Password Pill Input */}
       <div>
-        <label className="block text-[11px] uppercase tracking-widest font-semibold text-[#123524] dark:text-[#EAE3D2] mb-1">
-          Password <span className="text-red-500">*</span>
+        <label className="block text-[11px] uppercase tracking-[1.5px] font-black text-[#1E2621] mb-1.5">
+          PASSWORD <span className="text-red-500">*</span>
         </label>
         <div className="relative">
-          <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#D6AE4D]" />
+          <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-[#1E2621] stroke-[2.2]" />
           <input
             type={showPassword ? 'text' : 'password'}
             id="login-password"
@@ -150,20 +146,20 @@ const LoginForm = () => {
             onChange={handlePasswordChange}
             onBlur={() => handleBlur('password', password)}
             placeholder="Enter your password"
-            className={`w-full pl-10 pr-10 py-2.5 rounded-xl bg-white/40 dark:bg-[#0F1712]/40 backdrop-blur-xs border text-xs text-[#123524] dark:text-[#EAE3D2] placeholder-[#8B9B90] focus:outline-none focus:bg-white/95 dark:focus:bg-[#16231B]/95 focus:ring-4 focus:ring-[#D6AE4D]/15 transition-all duration-300 ${
-              touched.password && errors.password ? 'border-red-500 bg-red-50/20' : touched.password && !errors.password ? 'border-emerald-500' : 'border-[#D6AE4D]/35 dark:border-[#D6AE4D]/25 hover:border-[#D6AE4D]/60'
+            className={`w-full pl-11 pr-10 py-3.5 rounded-full bg-white/90 border-2 text-xs font-bold text-[#1E2621] placeholder:text-gray-400 focus:outline-none focus:bg-white focus:ring-4 focus:ring-[#1E2621]/15 transition-all duration-300 shadow-sm ${
+              touched.password && errors.password ? 'border-red-500 bg-red-50' : touched.password && !errors.password ? 'border-emerald-500' : 'border-white hover:border-[#1E2621]/30'
             }`}
           />
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#8B9B90] hover:text-[#D6AE4D]"
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-black cursor-pointer p-0.5"
           >
             {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
           </button>
         </div>
         {touched.password && errors.password && (
-          <p className="text-[10px] text-red-500 font-medium mt-1">{errors.password}</p>
+          <p className="text-[10px] text-red-500 font-bold mt-1 pl-3">{errors.password}</p>
         )}
       </div>
 
@@ -171,24 +167,23 @@ const LoginForm = () => {
       <RememberMe
         rememberMe={rememberMe}
         setRememberMe={setRememberMe}
-        onForgotPassword={handleForgotPassword}
       />
 
-      {/* Primary Sign In Button */}
+      {/* FULL TRANSPARENT WHITE GLOSSY GLASS SIGN IN BUTTON WITH BLACK TEXT */}
       <motion.button
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
         type="submit"
         disabled={isLoading}
-        className="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-[#D6AE4D] via-[#F0D588] to-[#B89035] hover:from-[#E5BC58] hover:via-[#FFF3C4] hover:to-[#C99D3B] text-[#0A1A12] font-montserrat font-extrabold text-xs uppercase tracking-[2px] shadow-lg shadow-[#D6AE4D]/25 border border-[#FFF5D6]/35 transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
+        className="w-full py-4 px-6 rounded-full bg-white/80 hover:bg-white border-2 border-white shadow-md backdrop-blur-2xl text-[#1E2621] font-montserrat font-black text-xs uppercase tracking-[2.5px] transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer active:scale-[0.98]"
       >
         {isLoading ? (
           <>
-            <Loader2 className="w-4 h-4 animate-spin text-[#0A1A12]" />
-            <span>Signing In...</span>
+            <Loader2 className="w-4.5 h-4.5 animate-spin text-[#1E2621]" />
+            <span>SIGNING IN...</span>
           </>
         ) : (
-          <span>Sign In</span>
+          <span>SIGN IN</span>
         )}
       </motion.button>
 
@@ -202,9 +197,9 @@ const LoginForm = () => {
       />
 
       {/* Create Account Link */}
-      <div className="text-center pt-2 text-xs font-montserrat text-[#6B7C70] dark:text-[#A0B0A5]">
+      <div className="text-center pt-2 text-xs font-montserrat text-[#556B5D]">
         <span>Don't have an account? </span>
-        <Link to="/register" className="font-bold text-[#D6AE4D] hover:underline ml-1">
+        <Link to="/register" className="font-bold text-[#1E2621] hover:underline ml-1">
           Create Account
         </Link>
       </div>
