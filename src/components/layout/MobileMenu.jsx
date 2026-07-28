@@ -1,11 +1,31 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiX, FiPhone, FiMapPin, FiMail } from 'react-icons/fi';
+import { FiX, FiPhone, FiMapPin, FiMail, FiLogOut } from 'react-icons/fi';
 import logoEmblem from '../../assets/logo-emblem.png';
+import { useTheme } from '../../context/ThemeContext';
 
-const MobileMenu = ({ isOpen, onClose, links = [] }) => {
+const MobileMenu = ({ isOpen, onClose, links = [], isAuthenticated: propIsAuth, onLogout }) => {
   const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const { isAuthenticated: contextIsAuth, logoutUser, showToast } = useTheme();
+
+  const isUserLoggedIn = propIsAuth || contextIsAuth || Boolean(localStorage.getItem('akole_user')) || Boolean(localStorage.getItem('akole_token'));
+
+  const handleLogoutClick = () => {
+    onClose();
+    if (onLogout) {
+      onLogout();
+    } else {
+      if (logoutUser) logoutUser();
+      localStorage.removeItem('akole_user');
+      localStorage.removeItem('akole_token');
+      localStorage.removeItem('akole_is_authenticated');
+      localStorage.removeItem('akole_user_email');
+      if (showToast) showToast('Successfully logged out!', 'info');
+    }
+    navigate('/login');
+  };
 
   return (
     <AnimatePresence>
@@ -81,22 +101,31 @@ const MobileMenu = ({ isOpen, onClose, links = [] }) => {
 
             {/* Bottom Actions */}
             <div className="pt-5 border-t border-[#D6AE4D]/30 space-y-4">
-              <div className="flex items-center gap-2">
-                <Link
-                  to="/login"
-                  onClick={onClose}
-                  className="flex-1 py-2.5 rounded-full border border-[#D6AE4D] text-[#D6AE4D] font-serif font-bold text-xs uppercase tracking-wider text-center block hover:bg-[#D6AE4D]/15 transition-all"
+              {isUserLoggedIn ? (
+                <button
+                  onClick={handleLogoutClick}
+                  className="w-full py-3 rounded-full border border-red-500/50 bg-red-500/20 text-red-300 hover:bg-red-500 hover:text-white font-serif font-bold text-xs uppercase tracking-wider text-center flex items-center justify-center gap-2 transition-all shadow-md cursor-pointer"
                 >
-                  LOG IN
-                </Link>
-                <Link
-                  to="/register"
-                  onClick={onClose}
-                  className="flex-1 py-2.5 rounded-full bg-white/10 text-white font-serif font-bold text-xs uppercase tracking-wider text-center block hover:bg-white/20 transition-all"
-                >
-                  SIGN UP
-                </Link>
-              </div>
+                  <FiLogOut className="w-4 h-4" /> LOG OUT
+                </button>
+              ) : (
+                <div className="flex items-center gap-2">
+                  <Link
+                    to="/login"
+                    onClick={onClose}
+                    className="flex-1 py-2.5 rounded-full border border-[#D6AE4D] text-[#D6AE4D] font-serif font-bold text-xs uppercase tracking-wider text-center block hover:bg-[#D6AE4D]/15 transition-all"
+                  >
+                    LOG IN
+                  </Link>
+                  <Link
+                    to="/register"
+                    onClick={onClose}
+                    className="flex-1 py-2.5 rounded-full bg-white/10 text-white font-serif font-bold text-xs uppercase tracking-wider text-center block hover:bg-white/20 transition-all"
+                  >
+                    SIGN UP
+                  </Link>
+                </div>
+              )}
 
               <Link
                 to="/menu"

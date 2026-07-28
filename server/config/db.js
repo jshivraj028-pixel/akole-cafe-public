@@ -15,7 +15,7 @@ const SHARED_ATLAS_URI = 'mongodb+srv://jshivraj028_db_user:5d1ym0d0dVseIwLJ@clu
 const connectDB = async () => {
   try {
     const connStr = process.env.MONGODB_URI || SHARED_ATLAS_URI;
-    
+
     // Explicitly connect ONLY to the shared MongoDB Atlas Cloud Cluster
     const conn = await mongoose.connect(connStr, {
       serverSelectionTimeoutMS: 8000
