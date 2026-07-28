@@ -49,12 +49,42 @@ import cheeseLavaVadaPavImg from '../assets/cheese-lava-vada-pav.png';
 import schezwanCrispyVadaPavImg from '../assets/schezwan-crispy-vada-pav.png';
 import crispyPunjabiSamosaPavImg from '../assets/crispy-punjabi-samosa-pav.png';
 import kesarDryFruitPedhaImg from '../assets/kesar-dry-fruit-pedha.png';
+import cocaColaImg from '../assets/coca-cola-glass-bottle.png';
+import thumsUpImg from '../assets/thums-up-chilled.png';
+import spriteImg from '../assets/sprite-can-chilled.png';
+import fantaImg from '../assets/fanta-orange-can.png';
+import redBullImg from '../assets/red-bull-energy-drink.png';
+import freshLimeSodaImg from '../assets/fresh-lime-soda.png';
+import jeeraSodaImg from '../assets/jeera-masala-soda.png';
+import chilledMangoJuiceImg from '../assets/chilled-mango-juice.png';
+import blueLagoonMocktailImg from '../assets/blue-lagoon-mocktail.png';
+import dietCokeCanImg from '../assets/diet-coke-can.png';
+import cokeZeroCanImg from '../assets/coke-zero-can.png';
+import pepsiCanImg from '../assets/pepsi-can-chilled.png';
+import pepsiBlackCanImg from '../assets/pepsi-black-can.png';
+import sevenUpBottleImg from '../assets/sevenup-bottle.png';
+import mirindaOrangeCanImg from '../assets/mirinda-orange-can.png';
+import limcaBottleImg from '../assets/limca-bottle-chilled.png';
+import mountainDewBottleImg from '../assets/mountain-dew-bottle.png';
+import schweppesSodaBottleImg from '../assets/schweppes-soda-bottle.png';
+import kandaBhajiImg from '../assets/kanda-bhaji.png';
+import batataBhajiImg from '../assets/batata-bhaji.png';
+import mirchiBhajiImg from '../assets/mirchi-bhaji.png';
+import mixVegBhajiImg from '../assets/mix-veg-bhaji.png';
 
 export const getProductImage = (item) => {
   if (!item) return '';
   const name = (item.name || '').toLowerCase();
 
   // 1. Keyword matching for high-res cafe assets (ALWAYS PREVAILS FOR KNOWN ITEMS)
+  // Bhaji / Pakoda Varieties
+  if (name.includes('kanda bhaji') || name.includes('khekda bhaji')) return kandaBhajiImg;
+  if (name.includes('palak bhaji') || name.includes('spinach bhaji') || name.includes('palak')) return 'https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80';
+  if (name.includes('raw banana') || name.includes('kachha kela') || name.includes('kela bhaji')) return 'https://images.unsplash.com/photo-1601050690117-94f5f6fa8bd7?auto=format&fit=crop&w=800&q=80';
+  if (name.includes('batata bhaji')) return batataBhajiImg;
+  if (name.includes('mirchi bhaji') || name.includes('chili bhaji')) return mirchiBhajiImg;
+  if (name.includes('mix veg bhaji') || name.includes('methi bhaji') || name.includes('cabbage bhaji') || name.includes('cauliflower bhaji') || name.includes('brinjal bhaji') || name.includes('bhaji')) return mixVegBhajiImg;
+
   // Samosa (All varieties)
   if (name.includes('samosa')) return crispyPunjabiSamosaPavImg;
 
@@ -103,7 +133,52 @@ export const getProductImage = (item) => {
   if (name.includes('mattha') || name.includes('buttermilk')) return spicedVillageMatthaImg;
   if (name.includes('cappuccino')) return hotCappuccinoCoffeeImg;
   if (name.includes('cold coffee') || name.includes('vanilla ice cream')) return coldCoffeeVanillaImg;
-  if (item.category === 'water-bottle' || name.includes('water') || name.includes('mineral water') || name.includes('bottle')) return akolePremiumWaterImg;
+  // Cold Drinks, Sodas, Mocktails & Beverages (Distinct High-Res Images)
+  if (name.includes('green apple mojito') || name.includes('green apple')) return 'https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=800&q=80';
+  if (name.includes('watermelon mojito') || name.includes('watermelon')) return 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=800&q=80';
+  if (name.includes('virgin mojito') || (name.includes('mojito') && !name.includes('blue'))) return 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=800&q=80';
+  if (name.includes('blue lagoon') || name.includes('curacao')) return blueLagoonMocktailImg;
+
+  if (name.includes('mango lassi')) return 'https://images.unsplash.com/photo-1546173159-315724a31696?auto=format&fit=crop&w=800&q=80';
+  if (name.includes('sweet lassi') || (name.includes('lassi') && !name.includes('mango'))) return 'https://images.unsplash.com/photo-1571006682858-a458b8d234a5?auto=format&fit=crop&w=800&q=80';
+  if (name.includes('sol kadhi')) return 'https://images.unsplash.com/photo-1623065422902-30a2d299bcc4?auto=format&fit=crop&w=800&q=80';
+  if (name.includes('kokum')) return 'https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=800&q=80';
+  if (name.includes('badam milk') || name.includes('kesar badam')) return 'https://images.unsplash.com/photo-1556881286-fc6915169721?auto=format&fit=crop&w=800&q=80';
+
+  if (name.includes('appy fizz') || name.includes('appy')) return 'https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=800&q=80';
+  if (name.includes('diet coke')) return dietCokeCanImg;
+  if (name.includes('coke zero') || name.includes('zero sugar')) return cokeZeroCanImg;
+  if (name.includes('pepsi black')) return pepsiBlackCanImg;
+  if (name.includes('pepsi')) return pepsiCanImg;
+  if (name.includes('coca') || name.includes('cola')) return cocaColaImg;
+  if (name.includes('thums up') || name.includes('thums')) return thumsUpImg;
+  if (name.includes('sprite')) return spriteImg;
+  if (name.includes('7up') || name.includes('seven up')) return sevenUpBottleImg;
+  if (name.includes('mountain dew') || name.includes('dew')) return mountainDewBottleImg;
+  if (name.includes('fanta')) return fantaImg;
+  if (name.includes('mirinda')) return mirindaOrangeCanImg;
+  if (name.includes('limca')) return limcaBottleImg;
+  if (name.includes('schweppes')) return schweppesSodaBottleImg;
+
+  if (name.includes('monster')) return 'https://images.unsplash.com/photo-1622543925917-763c34d1a86e?auto=format&fit=crop&w=800&q=80';
+  if (name.includes('sting')) return 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=800&q=80';
+  if (name.includes('gatorade')) return 'https://images.unsplash.com/photo-1527661591475-527312dd65f5?auto=format&fit=crop&w=800&q=80';
+  if (name.includes('electral') || name.includes('ors')) return 'https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=800&q=80';
+  if (name.includes('red bull') || name.includes('energy')) return redBullImg;
+
+  if (name.includes('himalayan')) return 'https://images.unsplash.com/photo-1560023907-5f310c82388c?auto=format&fit=crop&w=800&q=80';
+  if (name.includes('bisleri') || name.includes('kinley') || name.includes('aquafina') || name.includes('bailey')) return 'https://images.unsplash.com/photo-1548839140-29a749e1bc4e?auto=format&fit=crop&w=800&q=80';
+  if (name.includes('water') || name.includes('mineral')) return akolePremiumWaterImg;
+
+  if (name.includes('lemon infused') || name.includes('detox water')) return 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=800&q=80';
+  if (name.includes('cucumber infused') || name.includes('mint infused')) return 'https://images.unsplash.com/photo-1603569283847-be29b8b3bf1d?auto=format&fit=crop&w=800&q=80';
+  if (name.includes('orange infused')) return 'https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=800&q=80';
+
+  if (name.includes('real orange') || name.includes('real apple') || name.includes('real mixed') || name.includes('juice')) return 'https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=800&q=80';
+  if (name.includes('maaza') || name.includes('slice') || name.includes('frooti') || name.includes('aamras') || name.includes('aam panna')) return chilledMangoJuiceImg;
+  if (name.includes('jeera') || name.includes('schweppes') || (name.includes('soda') && !name.includes('lime'))) return jeeraSodaImg;
+  if (name.includes('lime') || name.includes('lemon') || name.includes('electral')) return freshLimeSodaImg;
+  if (name.includes('chaas') || name.includes('mattha')) return spicedVillageMatthaImg;
   if (name.includes('falooda') || name.includes('royal falooda')) return shahiRoyalFaloodaImg;
   if (name.includes('irani') || name.includes('dum tea')) return specialIraniDumTeaImg;
   if (name.includes('kulhad') || name.includes('masala chai') || name.includes('chai') || name.includes('tea')) return kulhadMasalaChaiImg;

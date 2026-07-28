@@ -167,23 +167,23 @@ const Navbar = () => {
               {/* 1. Ultra-Luxury Executive ORDER NOW Button */}
               <Link
                 to="/menu"
-                className="hidden sm:inline-flex items-center justify-center px-4.5 sm:px-5 py-2 rounded-xl bg-gradient-to-r from-[#D6AE4D] via-[#F0D588] to-[#B89035] text-[#0A1A12] font-montserrat font-extrabold text-[11px] xl:text-xs uppercase tracking-[2px] shadow-lg shadow-[#D6AE4D]/30 border border-[#FFF5D6]/70 hover:from-[#E5BC58] hover:via-[#FFF3C4] hover:to-[#C99D3B] hover:shadow-xl hover:shadow-[#D6AE4D]/50 transition-all duration-300 transform hover:scale-105 active:scale-95 group"
+                className="hidden lg:inline-flex items-center justify-center px-4.5 sm:px-5 py-2 rounded-xl bg-gradient-to-r from-[#D6AE4D] via-[#F0D588] to-[#B89035] text-[#0A1A12] font-montserrat font-extrabold text-[11px] xl:text-xs uppercase tracking-[2px] shadow-lg shadow-[#D6AE4D]/30 border border-[#FFF5D6]/70 hover:from-[#E5BC58] hover:via-[#FFF3C4] hover:to-[#C99D3B] hover:shadow-xl hover:shadow-[#D6AE4D]/50 transition-all duration-300 transform hover:scale-105 active:scale-95 group"
               >
                 <Sparkles className="w-3.5 h-3.5 mr-1.5 stroke-[2.5] text-[#0A1A12] group-hover:scale-110 transition-transform" />
                 <span className="font-extrabold tracking-[2px]">ORDER NOW</span>
               </Link>
 
               {/* 2. Search Icon & Popover */}
-              <div className="relative">
+              <div className="relative hidden lg:block">
                 <button
                   onClick={() => setIsSearchOpen(!isSearchOpen)}
-                  className={`p-1 sm:p-1.5 transition-colors ${
+                  className={`p-1.5 transition-colors ${
                     isHome ? 'text-white hover:text-[#D6AE4D]' : 'text-[#354F42] hover:text-[#D6AE4D]'
                   }`}
                   title="Search Menu Items"
                   aria-label="Search"
                 >
-                  <Search className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2]" />
+                  <Search className="w-5 h-5 stroke-[2]" />
                 </button>
 
                 {/* Search Input Popover */}
@@ -193,7 +193,7 @@ const Navbar = () => {
                       initial={{ opacity: 0, y: -10, scale: 0.96 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: -10, scale: 0.96 }}
-                      className="fixed sm:absolute top-16 sm:top-12 left-3 right-3 sm:left-auto sm:right-0 sm:w-80 z-50"
+                      className="absolute top-12 right-0 w-80 z-50"
                     >
                       <form onSubmit={handleSearchSubmit}>
                         <div className="w-full bg-[#FAF6EE] dark:bg-[#122219] border-2 border-[#D6AE4D] rounded-2xl py-3 px-4 flex items-center gap-3 shadow-2xl backdrop-blur-2xl">
@@ -204,7 +204,7 @@ const Navbar = () => {
                             placeholder="Search delicacies, coffee, misal..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full bg-transparent text-xs sm:text-sm font-medium text-[#123524] dark:text-white placeholder:text-[#6B7C70]/80 dark:placeholder:text-[#A0B0A5]/75 focus:outline-none border-none outline-none ring-0 font-sans shadow-none truncate pr-1"
+                            className="w-full bg-transparent text-sm font-medium text-[#123524] dark:text-white placeholder:text-[#6B7C70]/80 dark:placeholder:text-[#A0B0A5]/75 focus:outline-none border-none outline-none ring-0 font-sans shadow-none truncate pr-1"
                           />
                           {searchTerm ? (
                             <button
@@ -233,25 +233,25 @@ const Navbar = () => {
               {/* 3. Location Pin Icon & Satellite Map Modal Trigger */}
               <button
                 onClick={() => setIsLocationModalOpen(true)}
-                className={`p-1 sm:p-1.5 transition-colors ${
+                className={`p-1.5 transition-colors hidden lg:flex items-center justify-center ${
                   isHome ? 'text-white hover:text-[#D6AE4D]' : 'text-[#354F42] hover:text-[#D6AE4D]'
                 }`}
                 title="Our Location & Satellite Earth Map"
                 aria-label="Location Map"
               >
-                <MapPin className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2]" />
+                <MapPin className="w-5 h-5 stroke-[2]" />
               </button>
 
               {/* 4. Shopping Cart Icon & Slide-Over Cart Drawer Trigger */}
               <button
                 onClick={() => setIsCartDrawerOpen(true)}
-                className={`p-1 sm:p-1.5 transition-colors relative flex items-center justify-center ${
+                className={`p-1.5 transition-colors hidden lg:flex items-center justify-center relative ${
                   isHome ? 'text-white hover:text-[#D6AE4D]' : 'text-[#354F42] hover:text-[#D6AE4D]'
                 }`}
                 title="Shopping Cart & Quick Order"
                 aria-label="Shopping Cart"
               >
-                <ShoppingCart className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.2]" />
+                <ShoppingCart className="w-5 h-5 stroke-[2.2]" />
                 {totalItemsCount > 0 && (
                   <span className="absolute -top-1.5 -right-1.5 min-w-[17px] h-[17px] px-1 bg-[#D6AE4D] text-[#123524] font-black text-[10px] rounded-full flex items-center justify-center shadow-md border border-[#123524]/20 leading-none">
                     {totalItemsCount}
@@ -262,40 +262,40 @@ const Navbar = () => {
               {/* 5. Theme Mode Toggle (Sun/Moon) */}
               <button
                 onClick={toggleDarkMode}
-                className={`p-1 sm:p-1.5 transition-colors relative ${
+                className={`p-1.5 transition-colors hidden lg:flex items-center justify-center relative ${
                   isHome ? 'text-white hover:text-[#D6AE4D]' : 'text-[#354F42] hover:text-[#D6AE4D]'
                 }`}
                 title={isDarkMode ? 'Switch to Light Mode ☀️' : 'Switch to Dark Mode 🌙'}
                 aria-label="Toggle Light Dark Theme"
               >
                 {isDarkMode ? (
-                  <Sun className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2] text-[#D6AE4D]" />
+                  <Sun className="w-5 h-5 stroke-[2] text-[#D6AE4D]" />
                 ) : (
-                  <Moon className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2]" />
+                  <Moon className="w-5 h-5 stroke-[2]" />
                 )}
               </button>
 
-              {/* 6. User Profile Avatar Circle + Direct Profile Link + Interactive Hover Dropdown */}
+              {/* 6. User Profile Avatar Circle */}
               <div
-                className="relative"
+                className="relative hidden lg:block"
                 onMouseEnter={() => setIsUserMenuOpen(true)}
                 onMouseLeave={() => setIsUserMenuOpen(false)}
               >
                 <Link
                   to="/profile"
                   onClick={() => setIsUserMenuOpen(false)}
-                  className="flex items-center gap-0.5 group p-0.5 sm:p-1 focus:outline-none"
+                  className="flex items-center gap-0.5 group p-1 focus:outline-none"
                   title={loggedUser?.name || userEmail || 'Profile / Account Settings'}
                   aria-label="User Profile"
                 >
-                  <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full border border-[#D6AE4D]/80 bg-[#D6AE4D]/10 flex items-center justify-center font-bold text-[10px] sm:text-xs text-[#D6AE4D] shadow-inner group-hover:bg-[#D6AE4D]/20 transition-all overflow-hidden shrink-0">
+                  <div className="w-8 h-8 rounded-full border border-[#D6AE4D]/80 bg-[#D6AE4D]/10 flex items-center justify-center font-bold text-xs text-[#D6AE4D] shadow-inner group-hover:bg-[#D6AE4D]/20 transition-all overflow-hidden shrink-0">
                     {loggedUser?.avatar ? (
                       <img src={loggedUser.avatar} alt={loggedUser?.name || 'User'} className="w-full h-full object-cover" />
                     ) : (
                       userInitial
                     )}
                   </div>
-                  <ChevronDown className={`w-3 h-3 sm:w-3.5 sm:h-3.5 transition-transform duration-200 ${
+                  <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${
                     isUserMenuOpen ? 'rotate-180 text-[#D6AE4D]' : isHome ? 'text-white/80' : 'text-[#354F42]'
                   }`} />
                 </Link>

@@ -77,7 +77,12 @@ const Menu = () => {
     } else {
       // 2. Category Filter (Applies when NOT searching)
       if (activeCategory && activeCategory !== 'all') {
-        result = result.filter(item => item.category === activeCategory);
+        result = result.filter(item => {
+          if (activeCategory === 'cold-drinks' || activeCategory === 'drinks') {
+            return item.category === 'cold-drinks' || item.category === 'drinks' || item.category === 'cold_drinks';
+          }
+          return item.category === activeCategory;
+        });
       }
     }
 

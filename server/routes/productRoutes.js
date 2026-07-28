@@ -1,12 +1,70 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import Product from '../models/Product.js';
+import { menuItems } from '../../src/data/menu.js';
 
 const router = express.Router();
+
+let hasSynced = false;
+const syncProductsFromDataset = async () => {
+  try {
+    const validNames = new Set(menuItems.map(item => item.name.toLowerCase().trim()));
+    
+    // Remove any items in DB that are no longer in menu dataset (old size duplicates etc)
+    await Product.deleteMany({
+      name: {
+        $not: {
+          $in: menuItems.map(item => new RegExp('^' + item.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '$', 'i'))
+        }
+      }
+    });
+
+    const existingProducts = await Product.find({});
+    const existingNames = new Set(existingProducts.map(p => p.name.toLowerCase().trim()));
+
+    // Update images/prices for existing products
+    for (const item of menuItems) {
+      await Product.updateOne(
+        { name: new RegExp('^' + item.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '$', 'i') },
+        { $set: { image: item.image, price: item.price, category: item.category } }
+      );
+    }
+
+    const missingItems = menuItems.filter(item => !existingNames.has(item.name.toLowerCase().trim()));
+
+    if (missingItems.length > 0) {
+      const formatted = missingItems.map(item => ({
+        name: item.name,
+        category: item.category,
+        description: item.description,
+        price: item.price,
+        rating: item.rating || 4.8,
+        isVeg: item.isVeg !== undefined ? item.isVeg : true,
+        spicyLevel: item.spicyLevel !== undefined ? item.spicyLevel : 0,
+        isBestseller: Boolean(item.isBestseller),
+        isChefSpecial: Boolean(item.isChefSpecial),
+        image: item.image,
+        tags: item.tags || [],
+        isActive: true,
+        prepTime: item.prepTime || '10 mins',
+        calories: item.calories || '200 kcal'
+      }));
+      await Product.insertMany(formatted);
+      console.log(`✅ [Auto-Sync] Added ${formatted.length} new menu items to MongoDB Atlas database!`);
+    }
+  } catch (err) {
+    console.error('⚠️ [Auto-Sync Error]:', err.message);
+  }
+};
 
 // GET all products with optional category and search filters
 router.get('/', async (req, res) => {
   try {
+    if (!hasSynced) {
+      hasSynced = true;
+      syncProductsFromDataset().catch(e => console.error('[Async Sync Error]:', e.message));
+    }
+
     const { category, search } = req.query;
     let query = { isActive: true };
 
@@ -28,7 +86,17 @@ router.get('/', async (req, res) => {
       }
     }
 
-    const products = await Product.find(query).sort({ createdAt: -1 });
+    let products = await Product.find(query).sort({ createdAt: -1 });
+
+    // Fallback merge with menu.js items if DB products are empty
+    if (!products || products.length === 0) {
+      let items = [...menuItems];
+      if (category && category !== 'all') {
+        items = items.filter(i => i.category === category);
+      }
+      products = items;
+    }
+
     res.json(products);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching products', error: error.message });

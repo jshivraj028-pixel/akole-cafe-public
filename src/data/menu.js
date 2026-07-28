@@ -56,8 +56,8 @@ export const menuCategories = [
     "name": "Tea, Coffee & Drinks"
   },
   {
-    "id": "water-bottle",
-    "name": "Mineral Water & Hydration"
+    "id": "cold-drinks",
+    "name": "Cold Drinks & Mineral Water"
   },
   {
     "id": "desserts",
@@ -68,8 +68,8 @@ export const menuCategories = [
 export const menuItems = [
   {
     "id": "drk-water-bottle",
-    "name": "Akole Premium Mineral Water (500ml)",
-    "category": "water-bottle",
+    "name": "Akole Premium Mineral Water (1 Litre)",
+    "category": "cold-drinks",
     "description": "Pure premium natural mineral water sourced from pristine natural springs, packaged in our custom eco-friendly Akole Café designer glass bottle.",
     "price": 40,
     "rating": 5,
@@ -83,44 +83,921 @@ export const menuItems = [
       "Mineral Water",
       "Premium Bottle",
       "Akole Branded",
-      "Bestseller"
+      "Cold Drink"
     ]
   },
   {
-    "id": "drk-water-bottle-1L",
-    "name": "Akole Premium Mineral Water (1 Litre)",
-    "category": "water-bottle",
-    "description": "Pure premium natural mineral water sourced from pristine natural springs, packaged in 1 Litre eco-friendly Akole Café designer bottle.",
-    "price": 60,
+    "id": "drk-bisleri-1L",
+    "name": "Bisleri Mineral Water (1 Litre)",
+    "category": "cold-drinks",
+    "description": "Clean, safe, mineral-rich packaged drinking water 1L bottle.",
+    "price": 20,
+    "rating": 5,
+    "isVeg": true,
+    "isBestseller": true,
+    "prepTime": "1 min",
+    "image": "/assets/akole-premium-water.png",
+    "tags": [
+      "Bisleri",
+      "Mineral Water",
+      "1 Litre"
+    ]
+  },
+  {
+    "id": "drk-kinley-1L",
+    "name": "Kinley Packaged Water (1 Litre)",
+    "category": "cold-drinks",
+    "description": "Coca-Cola trusted Kinley purified drinking water 1L bottle.",
+    "price": 20,
+    "rating": 4.8,
+    "isVeg": true,
+    "isBestseller": true,
+    "prepTime": "1 min",
+    "image": "/assets/akole-premium-water.png",
+    "tags": [
+      "Kinley",
+      "Packaged Water",
+      "1 Litre"
+    ]
+  },
+  {
+    "id": "drk-aquafina-1L",
+    "name": "Aquafina Purified Water (1 Litre)",
+    "category": "cold-drinks",
+    "description": "PepsiCo purified drinking water 1L bottle.",
+    "price": 20,
+    "rating": 4.8,
+    "isVeg": true,
+    "isBestseller": true,
+    "prepTime": "1 min",
+    "image": "/assets/akole-premium-water.png",
+    "tags": [
+      "Aquafina",
+      "Purified Water",
+      "1 Litre"
+    ]
+  },
+  {
+    "id": "drk-bailey-1L",
+    "name": "Bailey Mineral Water (1 Litre)",
+    "category": "cold-drinks",
+    "description": "Parle Agro trusted Bailey packaged drinking water 1L.",
+    "price": 20,
+    "rating": 4.7,
+    "isVeg": true,
+    "isBestseller": false,
+    "prepTime": "1 min",
+    "image": "/assets/akole-premium-water.png",
+    "tags": [
+      "Bailey",
+      "Mineral Water",
+      "1 Litre"
+    ]
+  },
+  {
+    "id": "drk-himalayan-1L",
+    "name": "Himalayan Natural Mineral Water (1 Litre)",
+    "category": "cold-drinks",
+    "description": "Sourced directly from pristine Himalayan natural underground aquifers 1L glass bottle.",
+    "price": 80,
     "rating": 5,
     "isVeg": true,
     "isBestseller": true,
     "isChefSpecial": true,
-    "spicyLevel": 0,
     "prepTime": "1 min",
     "image": "/assets/akole-premium-water.png",
     "tags": [
-      "Mineral Water",
-      "1 Litre Bottle",
-      "Hydration"
+      "Himalayan",
+      "Natural Mineral",
+      "1 Litre"
     ]
   },
   {
-    "id": "drk-sparkling-water",
-    "name": "Akole Artisanal Sparkling Water (500ml)",
-    "category": "water-bottle",
-    "description": "Crisp, bubbly carbonated natural mineral water infused with subtle natural minerals.",
-    "price": 70,
+    "id": "drk-chilled-water-1L",
+    "name": "Ice Chilled Mineral Water (1 Litre)",
+    "category": "cold-drinks",
+    "description": "Refreshing ice-chilled mineral water 1L bottle.",
+    "price": 20,
     "rating": 4.9,
+    "isVeg": true,
+    "isBestseller": true,
+    "prepTime": "1 min",
+    "image": "/assets/akole-premium-water.png",
+    "tags": [
+      "Chilled Water",
+      "Ice Cold",
+      "1 Litre"
+    ]
+  },
+  {
+    "id": "drk-lemon-infused-water",
+    "name": "Lemon Infused Detox Water",
+    "category": "cold-drinks",
+    "description": "Fresh citrus lemon slices infused in chilled mineral spring water.",
+    "price": 30,
+    "rating": 4.8,
+    "isVeg": true,
+    "isBestseller": true,
+    "prepTime": "2 mins",
+    "image": "/assets/fresh-lime-soda.png",
+    "tags": [
+      "Lemon Infused",
+      "Detox Water",
+      "Flavoured Water"
+    ]
+  },
+  {
+    "id": "drk-mint-infused-water",
+    "name": "Mint Infused Refreshing Water",
+    "category": "cold-drinks",
+    "description": "Fresh garden mint leaves infused in ice-chilled mineral water.",
+    "price": 30,
+    "rating": 4.8,
+    "isVeg": true,
+    "isBestseller": false,
+    "prepTime": "2 mins",
+    "image": "/assets/fresh-lime-soda.png",
+    "tags": [
+      "Mint Infused",
+      "Detox Water",
+      "Flavoured Water"
+    ]
+  },
+  {
+    "id": "drk-cucumber-infused-water",
+    "name": "Cucumber Infused Hydration Water",
+    "category": "cold-drinks",
+    "description": "Crisp cucumber slices infused in chilled alkaline spring water.",
+    "price": 30,
+    "rating": 4.8,
+    "isVeg": true,
+    "isBestseller": false,
+    "prepTime": "2 mins",
+    "image": "/assets/fresh-lime-soda.png",
+    "tags": [
+      "Cucumber Infused",
+      "Hydration",
+      "Flavoured Water"
+    ]
+  },
+  {
+    "id": "drk-orange-infused-water",
+    "name": "Orange Infused Citrus Water",
+    "category": "cold-drinks",
+    "description": "Sweet orange slices and mint infused in cold spring water.",
+    "price": 35,
+    "rating": 4.9,
+    "isVeg": true,
+    "isBestseller": true,
+    "prepTime": "2 mins",
+    "image": "/assets/fanta-orange-can.png",
+    "tags": [
+      "Orange Infused",
+      "Citrus Water",
+      "Flavoured Water"
+    ]
+  },
+  {
+    "id": "drk-detox-water",
+    "name": "Ultimate Herbal Detox Water",
+    "category": "cold-drinks",
+    "description": "Master blend of cucumber, lemon, mint, ginger & chia seeds in chilled water.",
+    "price": 40,
+    "rating": 5,
+    "isVeg": true,
+    "isBestseller": true,
+    "isChefSpecial": true,
+    "prepTime": "2 mins",
+    "image": "/assets/fresh-lime-soda.png",
+    "tags": [
+      "Detox Water",
+      "Herbal",
+      "Healthy Hydration"
+    ]
+  },
+  {
+    "id": "drk-appy-fizz",
+    "name": "Appy Fizz Sparkling Apple Juice (250ml)",
+    "category": "cold-drinks",
+    "description": "Crisp sparkling apple juice drink with rich golden amber fizz.",
+    "price": 35,
+    "rating": 4.9,
+    "isVeg": true,
+    "isBestseller": true,
+    "prepTime": "1 min",
+    "image": "https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=800&q=80",
+    "tags": [
+      "Appy Fizz",
+      "Sparkling Apple",
+      "Cold Drink"
+    ]
+  },
+  {
+    "id": "drk-badam-milk",
+    "name": "Chilled Kesar Badam Milk (200ml)",
+    "category": "cold-drinks",
+    "description": "Rich creamy milk infused with Kashmiri saffron, crushed almonds & cardamom.",
+    "price": 50,
+    "rating": 5,
+    "isVeg": true,
+    "isBestseller": true,
+    "isChefSpecial": true,
+    "prepTime": "2 mins",
+    "image": "https://images.unsplash.com/photo-1556881286-fc6915169721?auto=format&fit=crop&w=800&q=80",
+    "tags": [
+      "Badam Milk",
+      "Kesar Milk",
+      "Desi Drink",
+      "Cold Drink"
+    ]
+  },
+  {
+    "id": "drk-jaljeera-soda",
+    "name": "Chilled Jaljeera Masala Soda (300ml)",
+    "category": "cold-drinks",
+    "description": "Tangy digestive roasted cumin, mint & black salt soda served ice cold.",
+    "price": 40,
+    "rating": 4.9,
+    "isVeg": true,
+    "isBestseller": true,
+    "prepTime": "2 mins",
+    "image": "/assets/jeera-masala-soda.png",
+    "tags": [
+      "Jaljeera",
+      "Desi Soda",
+      "Cold Drink"
+    ]
+  },
+  {
+    "id": "drk-coca-cola",
+    "name": "Coca-Cola Classic Chilled (300ml)",
+    "category": "cold-drinks",
+    "description": "Classic crisp, refreshing sparkling cola served ice-chilled in a classic glass bottle.",
+    "price": 45,
+    "rating": 4.9,
+    "isVeg": true,
+    "isBestseller": true,
+    "spicyLevel": 0,
+    "prepTime": "1 min",
+    "image": "/assets/coca-cola-glass-bottle.png",
+    "tags": [
+      "Coca-Cola",
+      "Cold Drink",
+      "Chilled Cola"
+    ]
+  },
+  {
+    "id": "drk-thums-up",
+    "name": "Thums Up Fiery Chilled Bottle (750ml)",
+    "category": "cold-drinks",
+    "description": "Strong, fizzy, spicy taste of Toofani Thums Up served ice-chilled.",
+    "price": 55,
+    "rating": 5,
+    "isVeg": true,
+    "isBestseller": true,
+    "spicyLevel": 0,
+    "prepTime": "1 min",
+    "image": "/assets/thums-up-chilled.png",
+    "tags": [
+      "Thums Up",
+      "Cold Drink",
+      "Toofani"
+    ]
+  },
+  {
+    "id": "drk-sprite",
+    "name": "Sprite Lemon Lime Chilled Can (300ml)",
+    "category": "cold-drinks",
+    "description": "Clear, crisp, refreshing lemon-lime flavor soft drink, served ice-chilled.",
+    "price": 50,
+    "rating": 4.8,
+    "isVeg": true,
+    "isBestseller": true,
+    "spicyLevel": 0,
+    "prepTime": "1 min",
+    "image": "/assets/sprite-can-chilled.png",
+    "tags": [
+      "Sprite",
+      "Cold Drink",
+      "Lemon Lime"
+    ]
+  },
+  {
+    "id": "drk-fanta",
+    "name": "Fanta Orange Fizz Can (300ml)",
+    "category": "cold-drinks",
+    "description": "Bright, fruity, tingling orange flavor bubbly soft drink served ice-chilled.",
+    "price": 50,
+    "rating": 4.8,
     "isVeg": true,
     "isBestseller": false,
     "spicyLevel": 0,
     "prepTime": "1 min",
-    "image": "/assets/akole-premium-water.png",
+    "image": "/assets/fanta-orange-can.png",
     "tags": [
-      "Sparkling Water",
-      "Bubbly",
+      "Fanta",
+      "Cold Drink",
+      "Orange Fizz"
+    ]
+  },
+  {
+    "id": "drk-red-bull",
+    "name": "Red Bull Energy Drink (250ml)",
+    "category": "cold-drinks",
+    "description": "Vitalizes body and mind with premium taurine & B-group vitamins, served ice-chilled.",
+    "price": 125,
+    "rating": 4.9,
+    "isVeg": true,
+    "isBestseller": true,
+    "spicyLevel": 0,
+    "prepTime": "1 min",
+    "image": "/assets/red-bull-energy-drink.png",
+    "tags": [
+      "Red Bull",
+      "Energy Drink",
+      "Cold Drink"
+    ]
+  },
+  {
+    "id": "drk-jeera-soda",
+    "name": "Desi Chilled Jeera Masala Soda",
+    "category": "cold-drinks",
+    "description": "Tangy, digestive, spicy roasted cumin and black salt soda, served ice-cold.",
+    "price": 40,
+    "rating": 4.9,
+    "isVeg": true,
+    "isBestseller": true,
+    "spicyLevel": 0,
+    "prepTime": "2 mins",
+    "image": "/assets/jeera-masala-soda.png",
+    "tags": [
+      "Jeera Soda",
+      "Desi Soda",
+      "Cold Drink"
+    ]
+  },
+  {
+    "id": "drk-diet-coke",
+    "name": "Diet Coke Sugar Free Can (300ml)",
+    "category": "cold-drinks",
+    "description": "Zero calorie crisp refreshing cola taste, served ice chilled.",
+    "price": 50,
+    "rating": 4.7,
+    "isVeg": true,
+    "isBestseller": false,
+    "prepTime": "1 min",
+    "image": "/assets/diet-coke-can.png",
+    "tags": [
+      "Diet Coke",
+      "Sugar Free",
+      "Cold Drink"
+    ]
+  },
+  {
+    "id": "drk-coke-zero",
+    "name": "Coca-Cola Zero Sugar (300ml)",
+    "category": "cold-drinks",
+    "description": "Real Coca-Cola taste with zero sugar and zero calories.",
+    "price": 50,
+    "rating": 4.8,
+    "isVeg": true,
+    "isBestseller": false,
+    "prepTime": "1 min",
+    "image": "/assets/coke-zero-can.png",
+    "tags": [
+      "Coke Zero",
+      "Zero Sugar",
+      "Cold Drink"
+    ]
+  },
+  {
+    "id": "drk-pepsi",
+    "name": "Pepsi Chilled Soft Drink (300ml)",
+    "category": "cold-drinks",
+    "description": "Bold, crisp, refreshing cola drink served ice-chilled.",
+    "price": 45,
+    "rating": 4.8,
+    "isVeg": true,
+    "isBestseller": true,
+    "prepTime": "1 min",
+    "image": "/assets/pepsi-can-chilled.png",
+    "tags": [
+      "Pepsi",
+      "Cold Drink",
+      "Cola"
+    ]
+  },
+  {
+    "id": "drk-pepsi-black",
+    "name": "Pepsi Black Zero Sugar (300ml)",
+    "category": "cold-drinks",
+    "description": "Max taste zero sugar crisp cola, ice-chilled.",
+    "price": 50,
+    "rating": 4.7,
+    "isVeg": true,
+    "isBestseller": false,
+    "prepTime": "1 min",
+    "image": "/assets/pepsi-black-can.png",
+    "tags": [
+      "Pepsi Black",
+      "Zero Sugar",
+      "Cold Drink"
+    ]
+  },
+  {
+    "id": "drk-7up",
+    "name": "7UP Lemon Lime Chilled Bottle (500ml)",
+    "category": "cold-drinks",
+    "description": "Refreshing lemon lime crisp soda drink.",
+    "price": 45,
+    "rating": 4.8,
+    "isVeg": true,
+    "isBestseller": false,
+    "prepTime": "1 min",
+    "image": "/assets/sevenup-bottle.png",
+    "tags": [
+      "7UP",
+      "Lemon Lime",
+      "Cold Drink"
+    ]
+  },
+  {
+    "id": "drk-mirinda",
+    "name": "Mirinda Orange Fizz (500ml)",
+    "category": "cold-drinks",
+    "description": "Tingly orangey fizzy soft drink served ice-cold.",
+    "price": 45,
+    "rating": 4.7,
+    "isVeg": true,
+    "isBestseller": false,
+    "prepTime": "1 min",
+    "image": "/assets/mirinda-orange-can.png",
+    "tags": [
+      "Mirinda",
+      "Orange",
+      "Cold Drink"
+    ]
+  },
+  {
+    "id": "drk-limca",
+    "name": "Limca Fresh Lemon Fizz (500ml)",
+    "category": "cold-drinks",
+    "description": "Lemony fizzy drink with fresh citrus kick.",
+    "price": 45,
+    "rating": 4.8,
+    "isVeg": true,
+    "isBestseller": true,
+    "prepTime": "1 min",
+    "image": "/assets/limca-bottle-chilled.png",
+    "tags": [
+      "Limca",
+      "Lemon Fizz",
+      "Cold Drink"
+    ]
+  },
+  {
+    "id": "drk-mountain-dew",
+    "name": "Mountain Dew Darr Ke Aage Jeet Hai (500ml)",
+    "category": "cold-drinks",
+    "description": "High-octane citrus punch soft drink.",
+    "price": 50,
+    "rating": 4.9,
+    "isVeg": true,
+    "isBestseller": true,
+    "prepTime": "1 min",
+    "image": "/assets/mountain-dew-bottle.png",
+    "tags": [
+      "Mountain Dew",
+      "Citrus Punch",
+      "Cold Drink"
+    ]
+  },
+  {
+    "id": "drk-schweppes",
+    "name": "Schweppes Club Soda / Tonic (300ml)",
+    "category": "cold-drinks",
+    "description": "Crisp sparkling club soda infused with delicate bubbles.",
+    "price": 40,
+    "rating": 4.8,
+    "isVeg": true,
+    "isBestseller": false,
+    "prepTime": "1 min",
+    "image": "/assets/schweppes-soda-bottle.png",
+    "tags": [
+      "Schweppes",
+      "Club Soda",
+      "Sparkling"
+    ]
+  },
+  {
+    "id": "drk-maaza",
+    "name": "Maaza Mango Fruit Drink (250ml)",
+    "category": "cold-drinks",
+    "description": "Rich Alphonso mango juice pulp experience.",
+    "price": 40,
+    "rating": 4.9,
+    "isVeg": true,
+    "isBestseller": true,
+    "prepTime": "1 min",
+    "image": "/assets/fanta-orange-can.png",
+    "tags": [
+      "Maaza",
+      "Mango Juice",
+      "Fruit Drink"
+    ]
+  },
+  {
+    "id": "drk-slice",
+    "name": "Slice Thick Mango Drink (250ml)",
+    "category": "cold-drinks",
+    "description": "Thick, sweet, indulgent mango nectar drink.",
+    "price": 40,
+    "rating": 4.8,
+    "isVeg": true,
+    "isBestseller": false,
+    "prepTime": "1 min",
+    "image": "/assets/fanta-orange-can.png",
+    "tags": [
+      "Slice",
+      "Mango",
+      "Fruit Drink"
+    ]
+  },
+  {
+    "id": "drk-frooti",
+    "name": "Frooti Fresh Mango Juice (200ml)",
+    "category": "cold-drinks",
+    "description": "Classic mango juice box drink served ice-chilled.",
+    "price": 35,
+    "rating": 4.8,
+    "isVeg": true,
+    "isBestseller": true,
+    "prepTime": "1 min",
+    "image": "/assets/fanta-orange-can.png",
+    "tags": [
+      "Frooti",
+      "Mango",
+      "Fruit Drink"
+    ]
+  },
+  {
+    "id": "drk-real-mixed",
+    "name": "Real Mixed Fruit Juice (200ml)",
+    "category": "cold-drinks",
+    "description": "Nourishing blend of 9 natural orchard fruits.",
+    "price": 60,
+    "rating": 4.8,
+    "isVeg": true,
+    "isBestseller": true,
+    "prepTime": "1 min",
+    "image": "/assets/fanta-orange-can.png",
+    "tags": [
+      "Real Juice",
+      "Mixed Fruit",
+      "Fruit Drink"
+    ]
+  },
+  {
+    "id": "drk-real-orange",
+    "name": "Real Orange Juice Nectar (200ml)",
+    "category": "cold-drinks",
+    "description": "Pure vitamin C rich Valencia orange juice.",
+    "price": 60,
+    "rating": 4.8,
+    "isVeg": true,
+    "isBestseller": false,
+    "prepTime": "1 min",
+    "image": "/assets/fanta-orange-can.png",
+    "tags": [
+      "Real Orange",
+      "Juice",
+      "Fruit Drink"
+    ]
+  },
+  {
+    "id": "drk-real-apple",
+    "name": "Real Apple Juice Nectar (200ml)",
+    "category": "cold-drinks",
+    "description": "Crisp Himalayan apple juice blend.",
+    "price": 60,
+    "rating": 4.7,
+    "isVeg": true,
+    "isBestseller": false,
+    "prepTime": "1 min",
+    "image": "/assets/fanta-orange-can.png",
+    "tags": [
+      "Real Apple",
+      "Apple Juice",
+      "Fruit Drink"
+    ]
+  },
+  {
+    "id": "drk-paperboat-aamras",
+    "name": "Paper Boat Mango Aamras (200ml)",
+    "category": "cold-drinks",
+    "description": "Authentic nostalgic Alphonso mango pulp blend.",
+    "price": 50,
+    "rating": 4.9,
+    "isVeg": true,
+    "isBestseller": true,
+    "prepTime": "1 min",
+    "image": "/assets/fanta-orange-can.png",
+    "tags": [
+      "Paper Boat",
+      "Aamras",
+      "Mango"
+    ]
+  },
+  {
+    "id": "drk-paperboat-panna",
+    "name": "Paper Boat Raw Mango Aam Panna (200ml)",
+    "category": "cold-drinks",
+    "description": "Tangy raw mango cooler infused with roasted cumin & mint.",
+    "price": 50,
+    "rating": 4.9,
+    "isVeg": true,
+    "isBestseller": true,
+    "prepTime": "1 min",
+    "image": "/assets/jeera-masala-soda.png",
+    "tags": [
+      "Paper Boat",
+      "Aam Panna",
+      "Raw Mango"
+    ]
+  },
+  {
+    "id": "drk-lemon-soda-sweet",
+    "name": "Chilled Sweet Lemon Soda",
+    "category": "cold-drinks",
+    "description": "Sweet freshly squeezed lime juice with sparkling club soda.",
+    "price": 50,
+    "rating": 4.9,
+    "isVeg": true,
+    "isBestseller": true,
+    "prepTime": "2 mins",
+    "image": "/assets/fresh-lime-soda.png",
+    "tags": [
+      "Lemon Soda",
+      "Sweet Soda",
+      "Refreshing"
+    ]
+  },
+  {
+    "id": "drk-lemon-soda-salted",
+    "name": "Chilled Salted Lemon Soda",
+    "category": "cold-drinks",
+    "description": "Crisp freshly squeezed lime juice with rock salt & sparkling soda.",
+    "price": 50,
+    "rating": 4.9,
+    "isVeg": true,
+    "isBestseller": true,
+    "prepTime": "2 mins",
+    "image": "/assets/fresh-lime-soda.png",
+    "tags": [
+      "Lemon Soda",
+      "Salted Soda",
+      "Refreshing"
+    ]
+  },
+  {
+    "id": "drk-virgin-mojito",
+    "name": "Signature Virgin Mojito",
+    "category": "cold-drinks",
+    "description": "Muddled fresh garden mint, lime chunks, cane sugar & crushed ice topped with soda.",
+    "price": 99,
+    "rating": 5,
+    "isVeg": true,
+    "isBestseller": true,
+    "isChefSpecial": true,
+    "prepTime": "3 mins",
+    "image": "/assets/fresh-lime-soda.png",
+    "tags": [
+      "Virgin Mojito",
+      "Mocktail",
+      "Bestseller"
+    ]
+  },
+  {
+    "id": "drk-blue-lagoon",
+    "name": "Electric Blue Lagoon Mocktail",
+    "category": "cold-drinks",
+    "description": "Vibrant Blue Curacao syrup, citrus lime juice, Sprite & crushed ice.",
+    "price": 120,
+    "rating": 4.9,
+    "isVeg": true,
+    "isBestseller": true,
+    "prepTime": "3 mins",
+    "image": "/assets/fresh-lime-soda.png",
+    "tags": [
+      "Blue Lagoon",
+      "Mocktail",
+      "Cooler"
+    ]
+  },
+  {
+    "id": "drk-green-apple-mojito",
+    "name": "Green Apple Crisp Mojito",
+    "category": "cold-drinks",
+    "description": "Tangy green apple reduction, fresh mint, lime & bubbly soda.",
+    "price": 110,
+    "rating": 4.8,
+    "isVeg": true,
+    "isBestseller": true,
+    "prepTime": "3 mins",
+    "image": "/assets/fresh-lime-soda.png",
+    "tags": [
+      "Green Apple",
+      "Mojito",
+      "Mocktail"
+    ]
+  },
+  {
+    "id": "drk-watermelon-mojito",
+    "name": "Fresh Watermelon Mojito",
+    "category": "cold-drinks",
+    "description": "Crushed juicy red watermelon chunks, fresh mint leaves & soda.",
+    "price": 110,
+    "rating": 4.9,
+    "isVeg": true,
+    "isBestseller": true,
+    "prepTime": "3 mins",
+    "image": "/assets/fresh-lime-soda.png",
+    "tags": [
+      "Watermelon",
+      "Mojito",
+      "Mocktail"
+    ]
+  },
+  {
+    "id": "drk-kokum-sharbat",
+    "name": "Authentic Kokum Sharbat",
+    "category": "cold-drinks",
+    "description": "Traditional Konkan red kokum extract with roasted cumin & chilled water.",
+    "price": 45,
+    "rating": 4.9,
+    "isVeg": true,
+    "isBestseller": true,
+    "prepTime": "2 mins",
+    "image": "/assets/jeera-masala-soda.png",
+    "tags": [
+      "Kokum Sharbat",
+      "Maharashtrian",
+      "Desi Drink"
+    ]
+  },
+  {
+    "id": "drk-sol-kadhi",
+    "name": "Traditional Spicy Sol Kadhi",
+    "category": "cold-drinks",
+    "description": "Creamy fresh coconut milk blended with wild kokum, garlic & green chilli.",
+    "price": 50,
+    "rating": 5,
+    "isVeg": true,
+    "isBestseller": true,
+    "isChefSpecial": true,
+    "prepTime": "2 mins",
+    "image": "https://images.unsplash.com/photo-1623065422902-30a2d299bcc4?auto=format&fit=crop&w=800&q=80",
+    "tags": [
+      "Sol Kadhi",
+      "Konkani Special",
+      "Desi Drink"
+    ]
+  },
+  {
+    "id": "drk-masala-chaas",
+    "name": "Spiced Village Masala Chaas",
+    "category": "cold-drinks",
+    "description": "Traditional earthen pot churned buttermilk with coriander, ginger & cumin.",
+    "price": 40,
+    "rating": 4.9,
+    "isVeg": true,
+    "isBestseller": true,
+    "prepTime": "2 mins",
+    "image": "/assets/spiced-village-mattha.png",
+    "tags": [
+      "Masala Chaas",
+      "Mattha",
+      "Buttermilk"
+    ]
+  },
+  {
+    "id": "drk-sweet-lassi",
+    "name": "Punjabi Creamy Sweet Lassi",
+    "category": "cold-drinks",
+    "description": "Thick hand-churned fresh curd lassi topped with malai & cardamom.",
+    "price": 60,
+    "rating": 5,
+    "isVeg": true,
+    "isBestseller": true,
+    "prepTime": "3 mins",
+    "image": "/assets/spiced-village-mattha.png",
+    "tags": [
+      "Sweet Lassi",
+      "Punjabi Lassi",
+      "Thick Drink"
+    ]
+  },
+  {
+    "id": "drk-mango-lassi",
+    "name": "Royal Alphonso Mango Lassi",
+    "category": "cold-drinks",
+    "description": "Rich Alphonso mango pulp blended with thick yogurt & pistachios.",
+    "price": 80,
+    "rating": 5,
+    "isVeg": true,
+    "isBestseller": true,
+    "prepTime": "3 mins",
+    "image": "/assets/spiced-village-mattha.png",
+    "tags": [
+      "Mango Lassi",
+      "Royal Lassi",
+      "Bestseller"
+    ]
+  },
+  {
+    "id": "drk-monster",
+    "name": "Monster Energy Original (350ml)",
+    "category": "cold-drinks",
+    "description": "Unleash the beast with smooth, powerful energy drink blend.",
+    "price": 130,
+    "rating": 4.9,
+    "isVeg": true,
+    "isBestseller": true,
+    "prepTime": "1 min",
+    "image": "/assets/red-bull-energy-drink.png",
+    "tags": [
+      "Monster Energy",
+      "Energy Drink",
+      "Cold Drink"
+    ]
+  },
+  {
+    "id": "drk-sting",
+    "name": "Sting Energy Red Rush (250ml)",
+    "category": "cold-drinks",
+    "description": "Electrifying red energy drink with caffeine & ginseng kick.",
+    "price": 30,
+    "rating": 4.9,
+    "isVeg": true,
+    "isBestseller": true,
+    "prepTime": "1 min",
+    "image": "/assets/red-bull-energy-drink.png",
+    "tags": [
+      "Sting",
+      "Energy Drink",
+      "Cold Drink"
+    ]
+  },
+  {
+    "id": "drk-gatorade",
+    "name": "Gatorade Blue Bolt Sports Drink (500ml)",
+    "category": "cold-drinks",
+    "description": "Rehydrates, replenishes electrolytes and refuels active bodies.",
+    "price": 75,
+    "rating": 4.8,
+    "isVeg": true,
+    "isBestseller": false,
+    "prepTime": "1 min",
+    "image": "/assets/red-bull-energy-drink.png",
+    "tags": [
+      "Gatorade",
+      "Sports Drink",
       "Hydration"
+    ]
+  },
+  {
+    "id": "drk-electral",
+    "name": "Electral ORS Apple Drink (200ml)",
+    "category": "cold-drinks",
+    "description": "WHO recommended instant oral rehydration solution drink.",
+    "price": 40,
+    "rating": 4.9,
+    "isVeg": true,
+    "isBestseller": true,
+    "prepTime": "1 min",
+    "image": "https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=800&q=80",
+    "tags": [
+      "Electral ORS",
+      "Hydration",
+      "Healthy"
+    ]
+  },
+  {
+    "id": "drk-fresh-lime-soda",
+    "name": "Fresh Lime Soda (Sweet & Salted)",
+    "category": "cold-drinks",
+    "description": "Freshly squeezed green lemons with sparkling soda, mint leaves & rock salt.",
+    "price": 60,
+    "rating": 4.9,
+    "isVeg": true,
+    "isBestseller": true,
+    "spicyLevel": 0,
+    "prepTime": "3 mins",
+    "image": "/assets/fresh-lime-soda.png",
+    "tags": [
+      "Fresh Lime Soda",
+      "Cold Drink",
+      "Refreshing"
     ]
   },
   {
@@ -262,245 +1139,6 @@ export const menuItems = [
     ]
   },
   {
-    "id": "mah-new-1",
-    "name": "Authentic Rajur Kandi Pedha (250g)",
-    "category": "traditional",
-    "description": "Famous Rajur heritage caramelized milk sweet prepared using pure cow milk, slow-cooked in traditional iron kadhai.",
-    "price": 180,
-    "rating": 5.0,
-    "isVeg": true,
-    "isBestseller": true,
-    "prepTime": "Ready",
-    "tags": ["Rajur Special", "Pedha", "Sweets"]
-  },
-  {
-    "id": "mah-surmai-1",
-    "name": "Surmai Fish Rava Fry",
-    "category": "traditional",
-    "description": "Fresh king fish steak marinated in Malvani spicy kokum masala, coated with crispy semolina (rava) & shallow fried to golden perfection.",
-    "price": 320,
-    "rating": 4.9,
-    "isVeg": false,
-    "isChefSpecial": true,
-    "spicyLevel": 2,
-    "prepTime": "15 mins",
-    "image": "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=800&q=80",
-    "tags": ["Surmai Fry", "Konkani Special", "Seafood"]
-  },
-  {
-    "id": "mah-new-2",
-    "name": "Shuddha Milk Pedha Box (250g)",
-    "category": "traditional",
-    "description": "Pure rich mawa pedha box crafted from Akole village dairy milk and cardamoms.",
-    "price": 160,
-    "rating": 4.9,
-    "isVeg": true,
-    "prepTime": "Ready",
-    "tags": ["Milk Pedha", "Pure Dairy"]
-  },
-  {
-    "id": "mah-new-3",
-    "name": "Kesar Dry Fruit Pedha (250g)",
-    "category": "traditional",
-    "description": "Rich saffron infused mawa pedha studded with chopped almonds, pistachios and cashews.",
-    "price": 220,
-    "rating": 4.9,
-    "isVeg": true,
-    "isChefSpecial": true,
-    "prepTime": "Ready",
-    "tags": ["Kesar Pedha", "Dry Fruits"]
-  },
-  {
-    "id": "mah-new-4",
-    "name": "Bhandardara Pure Wild Forest Honey (300g)",
-    "category": "traditional",
-    "description": "100% natural raw wild forest honey harvested from the pristine Kalsubai & Bhandardara Western Ghats.",
-    "price": 290,
-    "rating": 5.0,
-    "isVeg": true,
-    "isBestseller": true,
-    "prepTime": "Ready",
-    "tags": ["Organic Honey", "Bhandardara Special"]
-  },
-  {
-    "id": "mah-new-5",
-    "name": "Bhandardara Seasonal Hurda Platter",
-    "category": "traditional",
-    "description": "Coal-roasted tender green sorghum (Hurda) served with spicy garlic chutney, dry til chutney & organic jaggery.",
-    "price": 210,
-    "rating": 4.9,
-    "isVeg": true,
-    "isChefSpecial": true,
-    "prepTime": "12 mins",
-    "tags": ["Hurda Party", "Seasonal Special"]
-  },
-  {
-    "id": "mah-new-6",
-    "name": "Coal Roasted Butter Bhutta (Corn)",
-    "category": "traditional",
-    "description": "Charcoal roasted sweet corn cob slathered with village butter, red chili & lemon juice.",
-    "price": 80,
-    "rating": 4.8,
-    "isVeg": true,
-    "prepTime": "8 mins",
-    "tags": ["Roasted Corn", "Bhutta"]
-  },
-  {
-    "id": "mah-new-7",
-    "name": "Fresh Village White Butter (Loni 100g)",
-    "category": "traditional",
-    "description": "Freshly churned un-salted pure white butter made daily from farm fresh milk.",
-    "price": 70,
-    "rating": 4.9,
-    "isVeg": true,
-    "prepTime": "Ready",
-    "tags": ["White Butter", "Fresh Loni"]
-  },
-  {
-    "id": "mah-new-8",
-    "name": "Kolhapuri Misal Pav",
-    "category": "traditional",
-    "description": "Spicy sprouted moth bean curry topped with spicy Kolhapuri farsan, raw onions & lemon, served with fiery red kat rassa & 2 pavs.",
-    "price": 120,
-    "rating": 5.0,
-    "isVeg": true,
-    "isBestseller": true,
-    "spicyLevel": 3,
-    "prepTime": "10 mins",
-    "tags": ["Kolhapuri Misal", "Spicy Kat"]
-  },
-  {
-    "id": "mah-new-9",
-    "name": "Puneri Misal Pav",
-    "category": "traditional",
-    "description": "Authentic Puneri misal with light sweet-tangy poha layer, crisp chivda farsan & mild rassa.",
-    "price": 110,
-    "rating": 4.8,
-    "isVeg": true,
-    "spicyLevel": 1,
-    "prepTime": "10 mins",
-    "tags": ["Puneri Misal", "Classic"]
-  },
-  {
-    "id": "mah-new-10",
-    "name": "Nashik Kala Rassa Misal",
-    "category": "traditional",
-    "description": "Famous Nashik style roasted black spice masala curry topped with crispy farsan & lemon.",
-    "price": 130,
-    "rating": 4.9,
-    "isVeg": true,
-    "isChefSpecial": true,
-    "spicyLevel": 3,
-    "prepTime": "10 mins",
-    "tags": ["Kala Rassa", "Nashik Special"]
-  },
-  {
-    "id": "mah-new-11",
-    "name": "Cheese Butter Misal",
-    "category": "traditional",
-    "description": "Signature misal topped with melting yellow butter slab and grated processed cheddar cheese.",
-    "price": 150,
-    "rating": 4.9,
-    "isVeg": true,
-    "spicyLevel": 2,
-    "prepTime": "10 mins",
-    "tags": ["Cheese Misal", "Butter Misal"]
-  },
-  {
-    "id": "mah-new-12",
-    "name": "Tandoori Smoked Misal",
-    "category": "traditional",
-    "description": "Clay oven charcoal smoked misal rassa served in a sizzling kulhad pot with pav.",
-    "price": 160,
-    "rating": 5.0,
-    "isVeg": true,
-    "isChefSpecial": true,
-    "spicyLevel": 3,
-    "prepTime": "12 mins",
-    "tags": ["Tandoori Misal", "Smoked Flavor"]
-  },
-  {
-    "id": "mah-new-13",
-    "name": "Dahi Misal Pav",
-    "category": "traditional",
-    "description": "Cooling sweet fresh curd layered over spicy misal farsan for the perfect balance of heat and creamy sweetness.",
-    "price": 140,
-    "rating": 4.8,
-    "isVeg": true,
-    "spicyLevel": 1,
-    "prepTime": "10 mins",
-    "tags": ["Dahi Misal", "Mild"]
-  },
-  {
-    "id": "mah-new-14",
-    "name": "Classic Mumbai Vada Pav",
-    "category": "bites",
-    "description": "Golden fried spiced potato batata vada inside soft pav with spicy garlic chutney & fried green chili.",
-    "price": 40,
-    "rating": 4.9,
-    "isVeg": true,
-    "isBestseller": true,
-    "prepTime": "5 mins",
-    "tags": ["Vada Pav", "Mumbai Street Food"]
-  },
-  {
-    "id": "mah-new-15",
-    "name": "Butter Tossed Vada Pav",
-    "category": "bites",
-    "description": "Iconic vada pav tossed generously in hot melted butter on a tawa gridle.",
-    "price": 55,
-    "rating": 4.9,
-    "isVeg": true,
-    "prepTime": "5 mins",
-    "tags": ["Butter Vada Pav", "Tawa Special"]
-  },
-  {
-    "id": "mah-new-16",
-    "name": "Cheese Lava Vada Pav",
-    "category": "bites",
-    "description": "Mozzarella cheese stuffed batata vada that oozes molten cheese with every single bite.",
-    "price": 75,
-    "rating": 5.0,
-    "isVeg": true,
-    "isChefSpecial": true,
-    "prepTime": "7 mins",
-    "tags": ["Cheese Vada Pav", "Cheese Lava"]
-  },
-  {
-    "id": "mah-new-17",
-    "name": "Schezwan Crispy Vada Pav",
-    "category": "bites",
-    "description": "Crispy fried vada pav smothered with fiery spicy Indo-Chinese schezwan sauce.",
-    "price": 65,
-    "rating": 4.8,
-    "isVeg": true,
-    "prepTime": "6 mins",
-    "tags": ["Schezwan Vada Pav", "Spicy"]
-  },
-  {
-    "id": "mah-new-18",
-    "name": "Crispy Punjabi Samosa Pav",
-    "category": "bites",
-    "description": "Crispy spiced potato samosa stuffed in fresh pav bun with mint & tamarind chutney.",
-    "price": 50,
-    "rating": 4.8,
-    "isVeg": true,
-    "prepTime": "5 mins",
-    "tags": ["Samosa Pav", "Classic Snack"]
-  },
-  {
-    "id": "mah-new-19",
-    "name": "Butter Loaded Pav Bhaji",
-    "category": "bites",
-    "description": "Classic Mumbai style mashed vegetable bhaji topped with a generous slab of butter, served with 2 buttered pavs.",
-    "price": 160,
-    "rating": 5.0,
-    "isVeg": true,
-    "isBestseller": true,
-    "prepTime": "10 mins",
-    "tags": ["Pav Bhaji", "Butter Loaded"]
-  },
-  {
     "id": "mah-add-9",
     "name": "Solapur Shenga Chutney with Bajra Bhakri",
     "category": "traditional",
@@ -578,7 +1216,7 @@ export const menuItems = [
     "isBestseller": true,
     "spicyLevel": 0,
     "prepTime": "8 mins",
-    "image": "/assets/sol-kadhi-rice.png",
+    "image": "https://images.unsplash.com/photo-1623065422902-30a2d299bcc4?auto=format&fit=crop&w=800&q=80",
     "tags": [
       "Sol Kadhi",
       "Konkani Classic"
@@ -929,6 +1567,183 @@ export const menuItems = [
     "tags": [
       "Pav Bhaji",
       "Bestseller"
+    ]
+  },
+  {
+    "id": "vp-kanda-bhaji",
+    "name": "Crispy Kanda Bhaji (Onion Bhaji)",
+    "category": "vada-pav",
+    "description": "Authentic Maharashtrian khekda style crispy onion pakoda made with thinly sliced onions, spiced besan batter, fried green chilies & garlic chutney.",
+    "price": 60,
+    "rating": 5,
+    "isVeg": true,
+    "isBestseller": true,
+    "isChefSpecial": true,
+    "spicyLevel": 2,
+    "prepTime": "8 mins",
+    "image": "/assets/kanda-bhaji.png",
+    "tags": [
+      "Kanda Bhaji",
+      "Khekda Bhaji",
+      "Onion Pakoda",
+      "Maharashtrian Snack"
+    ]
+  },
+  {
+    "id": "vp-batata-bhaji",
+    "name": "Crispy Batata Bhaji (Potato Bhaji)",
+    "category": "vada-pav",
+    "description": "Thinly sliced potato discs coated in seasoned chickpea flour batter with carom seeds & coriander, deep-fried till golden crunchy.",
+    "price": 50,
+    "rating": 4.9,
+    "isVeg": true,
+    "isBestseller": true,
+    "spicyLevel": 1,
+    "prepTime": "6 mins",
+    "image": "/assets/batata-bhaji.png",
+    "tags": [
+      "Batata Bhaji",
+      "Potato Pakoda",
+      "Crispy Snack"
+    ]
+  },
+  {
+    "id": "vp-mirchi-bhaji",
+    "name": "Spicy Mirchi Bhaji (Chili Bhaji)",
+    "category": "vada-pav",
+    "description": "Whole large mild green chilies stuffed with tangy spices, wrapped in crispy spiced besan batter.",
+    "price": 50,
+    "rating": 4.8,
+    "isVeg": true,
+    "isBestseller": true,
+    "spicyLevel": 3,
+    "prepTime": "6 mins",
+    "image": "/assets/mirchi-bhaji.png",
+    "tags": [
+      "Mirchi Bhaji",
+      "Chili Pakoda",
+      "Spicy Snack"
+    ]
+  },
+  {
+    "id": "vp-mix-veg-bhaji",
+    "name": "Special Mix Veg Bhaji Platter",
+    "category": "vada-pav",
+    "description": "Delicious combination platter featuring onion, potato, capsicum, spinach & brinjal crispy fritters served with mint chutney.",
+    "price": 80,
+    "rating": 4.9,
+    "isVeg": true,
+    "isBestseller": true,
+    "isChefSpecial": true,
+    "spicyLevel": 1,
+    "prepTime": "10 mins",
+    "image": "/assets/mix-veg-bhaji.png",
+    "tags": [
+      "Mix Veg Bhaji",
+      "Assorted Pakoda",
+      "Crispy Platter"
+    ]
+  },
+  {
+    "id": "vp-palak-bhaji",
+    "name": "Crispy Palak Bhaji (Spinach Bhaji)",
+    "category": "vada-pav",
+    "description": "Fresh garden spinach leaves coated in lightweight spiced chickpea batter and fried till ultra-crispy, sprinkled with chaat masala.",
+    "price": 60,
+    "rating": 4.8,
+    "isVeg": true,
+    "spicyLevel": 1,
+    "prepTime": "7 mins",
+    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80",
+    "tags": [
+      "Palak Bhaji",
+      "Spinach Pakoda",
+      "Crispy Snack"
+    ]
+  },
+  {
+    "id": "vp-methi-bhaji",
+    "name": "Special Methi Bhaji (Fenugreek Bhaji)",
+    "category": "vada-pav",
+    "description": "Fragrant fresh fenugreek leaves folded into spiced besan batter, fried into aromatic golden fritters.",
+    "price": 60,
+    "rating": 4.8,
+    "isVeg": true,
+    "spicyLevel": 1,
+    "prepTime": "7 mins",
+    "image": "/assets/mix-veg-bhaji.png",
+    "tags": [
+      "Methi Bhaji",
+      "Fenugreek Pakoda",
+      "Traditional Snack"
+    ]
+  },
+  {
+    "id": "vp-cabbage-bhaji",
+    "name": "Crispy Cabbage Bhaji (Kobi Bhaji)",
+    "category": "vada-pav",
+    "description": "Fine shredded cabbage tossed with carom seeds, ginger & besan, fried into golden crunchy bhaji fritters.",
+    "price": 50,
+    "rating": 4.7,
+    "isVeg": true,
+    "spicyLevel": 1,
+    "prepTime": "7 mins",
+    "image": "/assets/mix-veg-bhaji.png",
+    "tags": [
+      "Cabbage Bhaji",
+      "Kobi Pakoda",
+      "Crunchy Snack"
+    ]
+  },
+  {
+    "id": "vp-cauliflower-bhaji",
+    "name": "Gobi Cauliflower Bhaji",
+    "category": "vada-pav",
+    "description": "Tender cauliflower florets marinated in spiced batter, fried golden crisp and served with green chutney.",
+    "price": 60,
+    "rating": 4.8,
+    "isVeg": true,
+    "spicyLevel": 1,
+    "prepTime": "8 mins",
+    "image": "/assets/mix-veg-bhaji.png",
+    "tags": [
+      "Cauliflower Bhaji",
+      "Gobi Pakoda",
+      "Crispy Snack"
+    ]
+  },
+  {
+    "id": "vp-brinjal-bhaji",
+    "name": "Vangi Brinjal Bhaji (Eggplant Bhaji)",
+    "category": "vada-pav",
+    "description": "Sliced brinjal discs layered with spicy masala coating, dipped in besan batter and fried till golden.",
+    "price": 50,
+    "rating": 4.7,
+    "isVeg": true,
+    "spicyLevel": 1,
+    "prepTime": "7 mins",
+    "image": "/assets/mix-veg-bhaji.png",
+    "tags": [
+      "Brinjal Bhaji",
+      "Vangi Pakoda",
+      "Eggplant Fritters"
+    ]
+  },
+  {
+    "id": "vp-raw-banana-bhaji",
+    "name": "Kachha Kela Raw Banana Bhaji",
+    "category": "vada-pav",
+    "description": "Crispy sliced raw banana fritters seasoned with roasted cumin, black salt & spiced besan batter.",
+    "price": 60,
+    "rating": 4.8,
+    "isVeg": true,
+    "spicyLevel": 1,
+    "prepTime": "7 mins",
+    "image": "https://images.unsplash.com/photo-1601050690117-94f5f6fa8bd7?auto=format&fit=crop&w=800&q=80",
+    "tags": [
+      "Raw Banana Bhaji",
+      "Kela Pakoda",
+      "Special Snack"
     ]
   },
   {
@@ -1682,7 +2497,7 @@ export const menuItems = [
     "isBestseller": true,
     "spicyLevel": 0,
     "prepTime": "2 mins",
-    "image": "/assets/sol-kadhi-rice.png",
+    "image": "https://images.unsplash.com/photo-1623065422902-30a2d299bcc4?auto=format&fit=crop&w=800&q=80",
     "tags": [
       "Sol Kadhi"
     ]
@@ -1872,24 +2687,6 @@ export const menuItems = [
     "image": "/assets/shahi-royal-falooda.png",
     "tags": [
       "Royal Falooda"
-    ]
-  },
-  {
-    "id": "drk-water-bottle",
-    "name": "Akole Premium Mineral Water (500ml)",
-    "category": "drinks",
-    "description": "Pure premium natural mineral water sourced from pristine natural springs, packaged in our custom eco-friendly Akole Café designer glass bottle.",
-    "price": 40,
-    "rating": 5,
-    "isVeg": true,
-    "isBestseller": true,
-    "spicyLevel": 0,
-    "prepTime": "1 min",
-    "image": "/assets/akole-premium-water.png",
-    "tags": [
-      "Mineral Water",
-      "Premium Bottle",
-      "Akole Branded"
     ]
   }
 ];
