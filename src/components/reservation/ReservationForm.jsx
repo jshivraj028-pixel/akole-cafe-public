@@ -124,10 +124,10 @@ const ReservationForm = () => {
                   <input
                     type="text"
                     required
-                    placeholder="e.g. Mayur Gambhire"
+                    placeholder="Enter your full name"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full bg-white dark:bg-[#16231B] border border-gray-200/80 dark:border-[#D6AE4D]/30 rounded-xl py-3 px-4 text-xs text-[#123524] dark:text-white placeholder-gray-400 dark:placeholder-[#7A8E81] focus:outline-none focus:ring-2 focus:ring-[#D6AE4D]/50 transition-all shadow-sm font-medium"
+                    className="w-full bg-white dark:bg-[#16231B] border border-gray-200/80 dark:border-[#D6AE4D]/30 rounded-xl py-3 px-4 text-xs text-[#123524] dark:text-[#EAE3D2] placeholder-[#8B9B90] focus:outline-none focus:ring-2 focus:ring-[#D6AE4D]/50 transition-all shadow-sm font-medium"
                   />
                 </div>
 
@@ -136,10 +136,10 @@ const ReservationForm = () => {
                   <input
                     type="email"
                     required
-                    placeholder="e.g. user@example.com"
+                    placeholder="Enter your email address"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full bg-white dark:bg-[#16231B] border border-gray-200/80 dark:border-[#D6AE4D]/30 rounded-xl py-3 px-4 text-xs text-[#123524] dark:text-white placeholder-gray-400 dark:placeholder-[#7A8E81] focus:outline-none focus:ring-2 focus:ring-[#D6AE4D]/50 transition-all shadow-sm font-medium"
+                    className="w-full bg-white dark:bg-[#16231B] border border-gray-200/80 dark:border-[#D6AE4D]/30 rounded-xl py-3 px-4 text-xs text-[#123524] dark:text-[#EAE3D2] placeholder-[#8B9B90] focus:outline-none focus:ring-2 focus:ring-[#D6AE4D]/50 transition-all shadow-sm font-medium"
                   />
                 </div>
               </div>
@@ -149,10 +149,10 @@ const ReservationForm = () => {
                 <input
                   type="tel"
                   required
-                  placeholder="+91 84323 87670"
+                  placeholder="Enter 10-digit mobile number"
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  className="w-full bg-white dark:bg-[#16231B] border border-gray-200/80 dark:border-[#D6AE4D]/30 rounded-xl py-3 px-4 text-xs text-[#123524] dark:text-white placeholder-gray-400 dark:placeholder-[#7A8E81] focus:outline-none focus:ring-2 focus:ring-[#D6AE4D]/50 transition-all shadow-sm font-medium"
+                  className="w-full bg-white dark:bg-[#16231B] border border-gray-200/80 dark:border-[#D6AE4D]/30 rounded-xl py-3 px-4 text-xs text-[#123524] dark:text-[#EAE3D2] placeholder-[#8B9B90] focus:outline-none focus:ring-2 focus:ring-[#D6AE4D]/50 transition-all shadow-sm font-medium"
                 />
               </div>
             </div>

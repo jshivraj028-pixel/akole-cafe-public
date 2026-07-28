@@ -142,8 +142,8 @@ const Footer = () => {
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-white/50 font-light relative z-10">
           <p>© {new Date().getFullYear()} Akole Cafe. All Rights Reserved. Crafted with passion in Maharashtra.</p>
           <div className="flex gap-6">
-            <Link to="/contact" className="hover:text-[#D6AE4D] transition-colors">Privacy Policy</Link>
-            <Link to="/contact" className="hover:text-[#D6AE4D] transition-colors">Terms of Service</Link>
+            <Link to="/privacy" className="hover:text-[#D6AE4D] transition-colors">Privacy Policy</Link>
+            <Link to="/terms" className="hover:text-[#D6AE4D] transition-colors">Terms of Service</Link>
           </div>
         </div>
       </Container>

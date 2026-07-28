@@ -5,6 +5,7 @@ import { User, Mail, Phone, Lock, Eye, EyeOff, CheckCircle2, AlertCircle, Check 
 import { useTheme } from '../../context/ThemeContext';
 import SocialLogin from './SocialLogin';
 import Divider from './Divider';
+import LegalModal from '../common/LegalModal';
 import { userRegisterAPI } from '../../services/api';
 
 const RegisterForm = () => {
@@ -25,6 +26,7 @@ const RegisterForm = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [legalModal, setLegalModal] = useState({ isOpen: false, type: 'terms' });
 
   // Password strength logic (0-3)
   const getPasswordStrength = (pwd) => {
@@ -144,14 +146,19 @@ const RegisterForm = () => {
         navigate('/');
       }
     } catch (err) {
-      showToast(err.message || 'Registration failed. Try a different email.', 'error');
+      const msg = err.message || 'Registration failed. Try a different email.';
+      if (msg.includes('exists') || msg.includes('already')) {
+        setErrors((prev) => ({ ...prev, email: 'An account with this email address already exists. Please sign in.' }));
+        setTouched((prev) => ({ ...prev, email: true }));
+      }
+      showToast(msg, 'error');
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 text-left w-full" noValidate>
+    <form onSubmit={handleSubmit} className="space-y-4 text-left w-full font-montserrat" noValidate>
       
       {/* Full Name Input */}
       <div>
@@ -166,7 +173,7 @@ const RegisterForm = () => {
             value={formData.fullName}
             onChange={handleChange}
             onBlur={handleBlur}
-            placeholder="e.g. Vikramaditya Shinde"
+            placeholder="Enter your full name"
             className={`w-full pl-10 pr-10 py-2.5 rounded-xl bg-white/40 dark:bg-[#0F1712]/40 backdrop-blur-xs border text-xs text-[#123524] dark:text-[#EAE3D2] placeholder-[#8B9B90] focus:outline-none focus:bg-white/95 dark:focus:bg-[#16231B]/95 focus:ring-4 focus:ring-[#D6AE4D]/15 transition-all duration-300 ${
               touched.fullName && errors.fullName ? 'border-red-500 bg-red-50/20' : touched.fullName && !errors.fullName ? 'border-emerald-500' : 'border-[#D6AE4D]/35 dark:border-[#D6AE4D]/25 hover:border-[#D6AE4D]/60'
             }`}
@@ -198,7 +205,7 @@ const RegisterForm = () => {
             value={formData.email}
             onChange={handleChange}
             onBlur={handleBlur}
-            placeholder="vikram@example.com"
+            placeholder="Enter your email address"
             className={`w-full pl-10 pr-10 py-2.5 rounded-xl bg-white/40 dark:bg-[#0F1712]/40 backdrop-blur-xs border text-xs text-[#123524] dark:text-[#EAE3D2] placeholder-[#8B9B90] focus:outline-none focus:bg-white/95 dark:focus:bg-[#16231B]/95 focus:ring-4 focus:ring-[#D6AE4D]/15 transition-all duration-300 ${
               touched.email && errors.email ? 'border-red-500 bg-red-50/20' : touched.email && !errors.email ? 'border-emerald-500' : 'border-[#D6AE4D]/35 dark:border-[#D6AE4D]/25 hover:border-[#D6AE4D]/60'
             }`}
@@ -228,7 +235,7 @@ const RegisterForm = () => {
             value={formData.phone}
             onChange={handleChange}
             onBlur={handleBlur}
-            placeholder="+91 98765 43210"
+            placeholder="Enter 10-digit mobile number"
             className={`w-full pl-10 pr-10 py-2.5 rounded-xl bg-white/40 dark:bg-[#0F1712]/40 backdrop-blur-xs border text-xs text-[#123524] dark:text-[#EAE3D2] placeholder-[#8B9B90] focus:outline-none focus:bg-white/95 dark:focus:bg-[#16231B]/95 focus:ring-4 focus:ring-[#D6AE4D]/15 transition-all duration-300 ${
               touched.phone && errors.phone ? 'border-red-500 bg-red-50/20' : touched.phone && !errors.phone ? 'border-emerald-500' : 'border-[#D6AE4D]/35 dark:border-[#D6AE4D]/25 hover:border-[#D6AE4D]/60'
             }`}
@@ -258,7 +265,7 @@ const RegisterForm = () => {
             value={formData.password}
             onChange={handleChange}
             onBlur={handleBlur}
-            placeholder="••••••••"
+            placeholder="Create a password (min 8 chars)"
             className={`w-full pl-10 pr-10 py-2.5 rounded-xl bg-white/40 dark:bg-[#0F1712]/40 backdrop-blur-xs border text-xs text-[#123524] dark:text-[#EAE3D2] placeholder-[#8B9B90] focus:outline-none focus:bg-white/95 dark:focus:bg-[#16231B]/95 focus:ring-4 focus:ring-[#D6AE4D]/15 transition-all duration-300 ${
               touched.password && errors.password ? 'border-red-500 bg-red-50/20' : touched.password && !errors.password ? 'border-emerald-500' : 'border-[#D6AE4D]/35 dark:border-[#D6AE4D]/25 hover:border-[#D6AE4D]/60'
             }`}
@@ -305,7 +312,7 @@ const RegisterForm = () => {
             value={formData.confirmPassword}
             onChange={handleChange}
             onBlur={handleBlur}
-            placeholder="••••••••"
+            placeholder="Re-enter your password"
             className={`w-full pl-10 pr-10 py-2.5 rounded-xl bg-white/40 dark:bg-[#0F1712]/40 backdrop-blur-xs border text-xs text-[#123524] dark:text-[#EAE3D2] placeholder-[#8B9B90] focus:outline-none focus:bg-white/95 dark:focus:bg-[#16231B]/95 focus:ring-4 focus:ring-[#D6AE4D]/15 transition-all duration-300 ${
               touched.confirmPassword && errors.confirmPassword ? 'border-red-500 bg-red-50/20' : touched.confirmPassword && !errors.confirmPassword && formData.confirmPassword ? 'border-emerald-500' : 'border-[#D6AE4D]/35 dark:border-[#D6AE4D]/25 hover:border-[#D6AE4D]/60'
             }`}
@@ -328,9 +335,9 @@ const RegisterForm = () => {
         )}
       </div>
 
-      {/* Terms Custom Checkbox */}
-      <div className="pt-1">
-        <label className="flex items-center gap-2.5 cursor-pointer select-none text-[#6B7C70] dark:text-[#A0B0A5] hover:text-[#123524] dark:hover:text-white transition-colors group">
+      {/* Terms & Privacy Custom Checkbox Box */}
+      <div className="p-3 rounded-xl bg-[#FAF6EE] dark:bg-[#121F17] border border-[#E5DDD0] dark:border-[#C8A96A]/20 shadow-xs">
+        <label className="flex items-start gap-3 cursor-pointer select-none group">
           <input
             type="checkbox"
             name="agreeTerms"
@@ -340,12 +347,12 @@ const RegisterForm = () => {
             className="sr-only"
           />
           <div
-            className={`w-5 h-5 rounded-md border-2 transition-all duration-200 flex items-center justify-center shrink-0 transform group-hover:scale-105 ${
+            className={`w-5 h-5 rounded-md mt-0.5 border-2 transition-all duration-200 flex items-center justify-center shrink-0 transform group-hover:scale-105 ${
               formData.agreeTerms
-                ? 'bg-gradient-to-br from-[#D6AE4D] to-[#B89035] border-[#D6AE4D] shadow-md shadow-[#D6AE4D]/25 ring-2 ring-[#D6AE4D]/20'
+                ? 'bg-gradient-to-br from-[#D6AE4D] to-[#B89035] border-[#D6AE4D] shadow-sm ring-2 ring-[#D6AE4D]/20'
                 : touched.agreeTerms && errors.agreeTerms
                 ? 'border-red-500 bg-red-50/20'
-                : 'bg-white/90 dark:bg-[#16231B] border-[#D6AE4D]/50 group-hover:border-[#D6AE4D]'
+                : 'bg-white dark:bg-[#16231B] border-[#D6AE4D]/60 group-hover:border-[#D6AE4D]'
             }`}
           >
             {formData.agreeTerms && (
@@ -358,29 +365,49 @@ const RegisterForm = () => {
               </motion.div>
             )}
           </div>
-          <span className="text-[11px] text-[#123524] dark:text-[#EAE3D2] select-none">
+          <span className="text-xs text-[#4A5D50] dark:text-[#C5D0C8] leading-relaxed">
             I agree to the{' '}
-            <a
-              href="https://www.google.com/policies/terms/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[#D6AE4D] font-semibold underline hover:text-[#B89035] transition-colors"
+            <span
+              role="button"
+              tabIndex={0}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setLegalModal({ isOpen: true, type: 'terms' });
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  setLegalModal({ isOpen: true, type: 'terms' });
+                }
+              }}
+              className="font-semibold text-[#D6AE4D] hover:text-[#B89035] underline underline-offset-2 transition-colors cursor-pointer"
             >
               Terms of Service
-            </a>{' '}
+            </span>{' '}
             &{' '}
-            <a
-              href="https://www.google.com/policies/privacy/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[#D6AE4D] font-semibold underline hover:text-[#B89035] transition-colors"
+            <span
+              role="button"
+              tabIndex={0}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setLegalModal({ isOpen: true, type: 'privacy' });
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  setLegalModal({ isOpen: true, type: 'privacy' });
+                }
+              }}
+              className="font-semibold text-[#D6AE4D] hover:text-[#B89035] underline underline-offset-2 transition-colors cursor-pointer"
             >
               Privacy Policy
-            </a>
+            </span>
           </span>
         </label>
         {touched.agreeTerms && errors.agreeTerms && (
-          <p className="text-[10px] text-red-500 font-medium mt-1 pl-7.5">{errors.agreeTerms}</p>
+          <p className="text-[10px] text-red-500 font-medium mt-1.5 pl-8">{errors.agreeTerms}</p>
         )}
       </div>
 
@@ -394,7 +421,7 @@ const RegisterForm = () => {
           <span className="inline-block w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
         ) : (
           <>
-            <CheckCircle2 className="w-4 h-4" />
+            <CheckCircle2 className="w-4 h-4 text-[#0A1A12] stroke-[2.5]" />
             <span>CREATE ACCOUNT</span>
           </>
         )}
@@ -411,6 +438,13 @@ const RegisterForm = () => {
           Sign In
         </Link>
       </p>
+
+      {/* Legal Modal */}
+      <LegalModal
+        isOpen={legalModal.isOpen}
+        onClose={() => setLegalModal({ ...legalModal, isOpen: false })}
+        initialType={legalModal.type}
+      />
     </form>
   );
 };

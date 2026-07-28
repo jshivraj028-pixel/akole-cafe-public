@@ -19,6 +19,8 @@ import Cart from '../pages/Cart';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
 import ForgotPassword from '../pages/ForgotPassword';
+import TermsOfService from '../pages/TermsOfService';
+import PrivacyPolicy from '../pages/PrivacyPolicy';
 import Admin from '../pages/Admin';
 import NotFound from '../pages/NotFound';
 
@@ -110,6 +112,10 @@ const AppRoutes = () => {
                 <Route path="/wishlist" element={<Profile />} />
                 <Route path="/settings" element={<Settings />} />
                 <Route path="/cart" element={<Cart />} />
+                <Route path="/terms" element={<TermsOfService />} />
+                <Route path="/terms-of-service" element={<TermsOfService />} />
+                <Route path="/privacy" element={<PrivacyPolicy />} />
+                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                 <Route path="/admin" element={<Admin />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>

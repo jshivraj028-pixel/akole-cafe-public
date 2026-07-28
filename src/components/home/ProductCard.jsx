@@ -28,6 +28,9 @@ const ProductCard = ({ product, onQuickView }) => {
 
   return (
     <motion.div
+      initial={{ opacity: 0, y: 25 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
       whileHover={{ 
         y: -10,
         scale: 1.02,

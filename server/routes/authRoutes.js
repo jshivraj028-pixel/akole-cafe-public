@@ -24,9 +24,9 @@ router.post('/register', async (req, res) => {
 
     const cleanEmail = email.toLowerCase().trim();
 
-    const existingUser = await User.findOne({ $or: [{ email: cleanEmail }, { name: name.trim() }] });
+    const existingUser = await User.findOne({ email: cleanEmail });
     if (existingUser) {
-      return res.status(400).json({ message: 'User with this email/username already exists.' });
+      return res.status(400).json({ message: 'An account with this email address already exists. Please sign in or use a different email.' });
     }
 
     const salt = await bcrypt.genSalt(10);
