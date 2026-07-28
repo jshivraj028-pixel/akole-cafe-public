@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -7,15 +7,19 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    color: #2A2A2A;
+    color: #1E2621;
     -webkit-tap-highlight-color: transparent;
     -webkit-text-size-adjust: 100%;
     -ms-overflow-style: none;
     scrollbar-width: none;
+    box-sizing: border-box;
   }
 
+  *, ::before, ::after {
+    box-sizing: inherit;
+  }
 
-  /* Hide scrollbars globally across browsers */
+  /* Global Scrollbar Hiding while retaining smooth touch scrolling */
   html::-webkit-scrollbar,
   body::-webkit-scrollbar,
   *::-webkit-scrollbar {
@@ -30,8 +34,8 @@
   }
 
   body {
-    background-color: #F5EFE3;
-    overflow-x: hidden;
+    background-color: #F2F6ED;
+    overflow-x: hidden !important;
     max-width: 100vw;
     width: 100%;
     margin: 0;
@@ -55,336 +59,162 @@
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Cormorant Garamond', serif;
     font-weight: 700;
+    word-break: break-word;
+    overflow-wrap: break-word;
   }
+
+  /* Fluid Responsive Typography Base */
+  h1 { font-size: clamp(2rem, 5vw + 1rem, 4.5rem); }
+  h2 { font-size: clamp(1.6rem, 4vw + 0.8rem, 3.2rem); }
+  h3 { font-size: clamp(1.3rem, 3vw + 0.5rem, 2.2rem); }
+  h4 { font-size: clamp(1.1rem, 2vw + 0.4rem, 1.6rem); }
 
   nav, nav a {
     font-family: 'Montserrat', sans-serif;
     font-weight: 600;
-    font-size: 14px;
-    letter-spacing: 2px;
+    font-size: 13px;
+    letter-spacing: 1.5px;
     text-transform: uppercase;
   }
 
-  button {
+  button, input, select, textarea {
     font-family: inherit;
+    touch-action: manipulation;
   }
 
-  img {
+  img, video, iframe, canvas, svg {
     max-width: 100%;
     height: auto;
+    display: block;
   }
 }
 
+/* ==========================================================================
+   ENTERPRISE RESPONSIVE UTILITIES & CONTAINER SYSTEM
+   ========================================================================== */
 
-
-/* Hide scrollbar for category pills on touch devices */
+/* No Scrollbar Utility */
+.no-scrollbar::-webkit-scrollbar,
 .scrollbar-none::-webkit-scrollbar {
   display: none;
 }
+.no-scrollbar,
 .scrollbar-none {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
 
-/* Safe Area Insets for iOS Notch & Mobile Devices */
-.pt-safe {
-  padding-top: env(safe-area-inset-top, 1.25rem);
-}
-.pb-safe {
-  padding-bottom: env(safe-area-inset-bottom, 1.25rem);
-}
-
-/* Gold Text Gradient */
-.text-gold-gradient {
-  background: linear-gradient(135deg, #D6AE4D 0%, #F3E5AB 50%, #B89035 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+/* Responsive Table Wrapper - Guarantees zero overflow on small viewports */
+.responsive-table-container,
+.table-responsive {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 1rem;
 }
 
-.bg-gold-gradient {
-  background: linear-gradient(135deg, #D6AE4D 0%, #E5C989 50%, #B89035 100%);
+.responsive-table-container table,
+.table-responsive table {
+  width: 100%;
+  min-width: 600px;
+  border-collapse: collapse;
 }
 
-/* Luxury Glassmorphism Design System */
+/* Safe Area Insets for iPhone Notch & Foldables */
+.pt-safe { padding-top: env(safe-area-inset-top, 1.25rem); }
+.pb-safe { padding-bottom: env(safe-area-inset-bottom, 1.25rem); }
+.pl-safe { padding-left: env(safe-area-inset-left, 1rem); }
+.pr-safe { padding-right: env(safe-area-inset-right, 1rem); }
+
+/* Auto-Fit & Auto-Fill Grid Utilities */
+.grid-auto-fit-sm {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+}
+
+.grid-auto-fit-md {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Luxury Glassmorphism Utilities */
 .glass-panel {
-  background: rgba(18, 53, 36, 0.75);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(214, 174, 77, 0.3);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
+  background: rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(16px) saturate(120%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(120%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.9) !important;
 }
 
 .glass-card {
-  background: rgba(255, 255, 255, 0.82);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(214, 174, 77, 0.25);
-  box-shadow: 0 10px 30px -10px rgba(18, 53, 36, 0.15);
-  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(12px) saturate(110%) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(110%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.8) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.glass-card:hover {
-  background: rgba(255, 255, 255, 0.92);
-  border-color: rgba(214, 174, 77, 0.6);
-  box-shadow: 0 14px 40px -10px rgba(214, 174, 77, 0.25);
-}
-
-.glass-dark {
-  background: rgba(18, 26, 21, 0.85);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(214, 174, 77, 0.35);
-  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.4);
-}
-
-.glass-gold {
-  background: linear-gradient(135deg, rgba(214, 174, 77, 0.15) 0%, rgba(18, 53, 36, 0.85) 100%);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(214, 174, 77, 0.4);
-}
-
-/* Global Dark Mode Luxury Overrides & High-Contrast Readability */
+/* Dark Mode Overrides */
 html.dark body {
   background-color: #121A15 !important;
   color: #EAE3D2 !important;
 }
 
-html.dark header {
-  background-color: #18261E !important;
-  border-color: rgba(214, 174, 77, 0.25) !important;
+html.dark .glass-panel {
+  background: rgba(18, 31, 23, 0.85) !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
 }
 
-html.dark section,
-html.dark main,
-html.dark div.bg-\[\#F5EFE3\],
-html.dark div.bg-\[\#FAF6EE\],
-html.dark div.bg-gray-50 {
-  background-color: #121A15 !important;
-}
-
-/* Text Color Fixes for Dark Mode */
-html.dark h1, 
-html.dark h2, 
-html.dark h3, 
-html.dark h4, 
-html.dark h5, 
-html.dark h6 {
-  color: #FFFFFF !important;
-}
-
-html.dark .text-\[\#123524\],
-html.dark .text-\[\#1F3A2B\],
-html.dark .text-\[\#2F4436\],
-html.dark .text-\[\#351E13\],
-html.dark .text-gray-900,
-html.dark .text-gray-800,
-html.dark .text-gray-700 {
-  color: #EAE3D2 !important;
-}
-
-html.dark .text-\[\#6B7C70\],
-html.dark .text-\[\#8B9B90\],
-html.dark .text-\[\#4A5D50\],
-html.dark .text-gray-600,
-html.dark .text-gray-500 {
-  color: #A0B0A5 !important;
-}
-
-/* Card & Background Fixes for Dark Mode */
-html.dark .bg-white,
-html.dark .bg-white\/80,
-html.dark .bg-white\/90,
-html.dark .bg-gray-50,
-html.dark .bg-gray-100,
-html.dark .bg-\[\#FAF6EE\],
-html.dark .bg-\[\#F5EFE3\],
-html.dark .bg-\[\#EFE8D8\] {
-  background-color: #1D2C22 !important;
-  border-color: rgba(214, 174, 77, 0.3) !important;
-  color: #EAE3D2 !important;
-}
-
-html.dark input.bg-transparent,
-input.bg-transparent,
-input[style*="background-color: transparent"] {
-  background-color: transparent !important;
-  background: transparent !important;
-}
-html.dark .border-gray-100,
-html.dark .border-gray-200,
-html.dark .border-gray-300,
-html.dark .border-\[\#E5DDD0\] {
-  border-color: rgba(214, 174, 77, 0.25) !important;
-}
-
-/* Form Input & Textarea Fixes for Dark Mode */
-html.dark input,
-html.dark select,
-html.dark textarea {
-  background-color: #16231B !important;
-  color: #FFFFFF !important;
-  border-color: rgba(214, 174, 77, 0.4) !important;
-}
-
-html.dark input::placeholder,
-html.dark textarea::placeholder {
-  color: #7A8E81 !important;
+html.dark .glass-card {
+  background: rgba(18, 31, 23, 0.8) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
 }
 
 /* ==========================================================================
-   COMPREHENSIVE RESPONSIVE MEDIA QUERIES FOR ALL DEVICES
-   (Mobile 320px+, Tablet 641px+, Laptop 1025px+, Mac/Retina/Desktop 1441px+)
+   BREAKPOINT SPECIFIC ADAPTABILITY RULES (280px to 3840px)
    ========================================================================== */
 
-/* Prevent horizontal overflow globally */
-html, body {
-  max-width: 100vw;
-  overflow-x: hidden !important;
-}
-
-/* 1. Mobile Extra Small & Small Devices (up to 640px) */
-@media screen and (max-width: 640px) {
-  h1 {
-    font-size: clamp(2rem, 8vw, 3rem);
-    line-height: 1.15;
-  }
+/* 1. Ultra-Small Devices & Foldable Phones (up to 380px) */
+@media screen and (max-width: 380px) {
+  html { font-size: 13px; }
   
-  h2 {
-    font-size: clamp(1.6rem, 6.5vw, 2.3rem);
-    line-height: 1.2;
-  }
-  
-  h3 {
-    font-size: clamp(1.3rem, 5vw, 1.8rem);
+  .container, [class*="max-w-"] {
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
   }
 
-  p, span, label {
-    word-break: break-word;
-  }
-
-  /* Responsive padding for sections */
-  section {
-    padding-left: 0.75rem !important;
-    padding-right: 0.75rem !important;
-  }
-
-  /* Buttons & Inputs touch friendly */
   button, input, select, textarea {
-    min-height: 42px;
-    font-size: 13px !important;
-  }
-
-  /* Grid containers adjust to 1 col */
-  .responsive-grid {
-    grid-template-columns: 1fr !important;
-    gap: 1rem !important;
-  }
-
-  /* Image fluidity */
-  img, iframe, video {
-    max-width: 100% !important;
-    height: auto !important;
-  }
-
-  /* Table responsive scroll */
-  .table-responsive {
-    display: block;
-    width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+    min-height: 40px;
   }
 }
 
-/* 2. Tablets & Medium Screens (641px to 1024px) */
+/* 2. Standard Mobile Devices (381px to 640px) */
+@media screen and (max-width: 640px) {
+  body {
+    font-size: 14px;
+  }
+
+  .hide-on-mobile {
+    display: none !important;
+  }
+}
+
+/* 3. Tablets & Small Laptops (641px to 1024px) */
 @media screen and (min-width: 641px) and (max-width: 1024px) {
-  h1 {
-    font-size: clamp(2.8rem, 6vw, 4rem) !important;
-  }
-  
-  h2 {
-    font-size: clamp(2.2rem, 5vw, 3rem) !important;
-  }
-
-  .responsive-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 1.5rem !important;
-  }
-
-  section {
-    padding-left: 1.5rem !important;
-    padding-right: 1.5rem !important;
-  }
-}
-
-/* 3. Laptops & Desktop Computers (1025px to 1440px) */
-@media screen and (min-width: 1025px) and (max-width: 1440px) {
-  h1 {
-    font-size: clamp(3.5rem, 5vw, 4.8rem) !important;
-  }
-
-  .responsive-container {
-    max-width: 1200px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
-
-/* 4. Large Screens & Mac / 4K Displays (1441px+) */
-@media screen and (min-width: 1441px) {
   body {
-    font-size: 16px;
-  }
-
-  .responsive-container {
-    max-width: 1400px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  h1 {
-    font-size: 5rem !important;
-  }
-
-  h2 {
-    font-size: 3.5rem !important;
+    font-size: 15px;
   }
 }
 
-/* High DPI / Retina Displays (MacBook, iPhone, High-Res Android) */
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+/* 4. Ultrawide Monitors & 4K Displays (1920px+) */
+@media screen and (min-width: 1920px) {
   body {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    font-size: 17px;
   }
-}
 
-/* Glassmorphism Utility Classes */
-.glass-panel {
-  background: rgba(255, 255, 255, 0.7) !important;
-  backdrop-filter: blur(12px) saturate(120%) !important;
-  -webkit-backdrop-filter: blur(12px) saturate(120%) !important;
-  border: 1px solid rgba(214, 174, 77, 0.25) !important;
-}
-
-.dark .glass-panel {
-  background: rgba(22, 35, 27, 0.8) !important;
-  backdrop-filter: blur(12px) saturate(120%) !important;
-  -webkit-backdrop-filter: blur(12px) saturate(120%) !important;
-  border: 1px solid rgba(214, 174, 77, 0.3) !important;
-}
-
-.glass-card {
-  background: rgba(255, 255, 255, 0.6) !important;
-  backdrop-filter: blur(8px) saturate(110%) !important;
-  -webkit-backdrop-filter: blur(8px) saturate(110%) !important;
-  border: 1px solid rgba(255, 255, 255, 0.3) !important;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.dark .glass-card {
-  background: rgba(22, 35, 27, 0.7) !important;
-  backdrop-filter: blur(8px) saturate(110%) !important;
-  -webkit-backdrop-filter: blur(8px) saturate(110%) !important;
-  border: 1px solid rgba(214, 174, 77, 0.15) !important;
+  .max-w-7xl, .max-w-\[1400px\] {
+    max-width: 1680px !important;
+  }
 }
