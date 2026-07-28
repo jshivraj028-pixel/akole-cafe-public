@@ -22,6 +22,15 @@ export const ThemeProvider = ({ children }) => {
     }
   });
 
+  const [currentUser, setCurrentUser] = useState(() => {
+    try {
+      const saved = localStorage.getItem('akole_user');
+      return saved ? JSON.parse(saved) : null;
+    } catch (e) {
+      return null;
+    }
+  });
+
   const [wishlistItems, setWishlistItems] = useState(() => {
     try {
       const saved = localStorage.getItem('akole_wishlist');
@@ -182,21 +191,31 @@ export const ThemeProvider = ({ children }) => {
     };
   }, []);
 
-  const loginUser = (email) => {
+  const loginUser = (email, userObj = null) => {
     setIsAuthenticated(true);
     setUserEmail(email);
+    if (userObj) {
+      setCurrentUser(userObj);
+    }
     try {
       localStorage.setItem('akole_is_authenticated', JSON.stringify(true));
       localStorage.setItem('akole_user_email', email);
+      if (userObj) {
+        localStorage.setItem('akole_user', JSON.stringify(userObj));
+      }
     } catch (e) {}
   };
 
   const logoutUser = () => {
     setIsAuthenticated(false);
     setUserEmail('');
+    setCurrentUser(null);
     try {
       localStorage.removeItem('akole_is_authenticated');
       localStorage.removeItem('akole_user_email');
+      localStorage.removeItem('akole_user');
+      localStorage.removeItem('akole_token');
+      localStorage.removeItem('akole_admin_token');
     } catch (e) {}
   };
 
@@ -266,6 +285,8 @@ export const ThemeProvider = ({ children }) => {
       value={{
         isAuthenticated,
         userEmail,
+        currentUser,
+        setCurrentUser,
         loginUser,
         logoutUser,
         wishlistItems,

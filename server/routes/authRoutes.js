@@ -52,9 +52,13 @@ router.post('/register', async (req, res) => {
         id: newUser._id,
         name: newUser.name,
         email: newUser.email,
-        phone: newUser.phone,
+        phone: newUser.phone || '',
+        address: newUser.address || '',
+        landmark: newUser.landmark || '',
+        city: newUser.city || '',
+        pincode: newUser.pincode || '',
         role: newUser.role,
-        avatar: newUser.avatar
+        avatar: newUser.avatar || ''
       },
       token,
       isAdmin: newUser.role === 'admin'
@@ -136,9 +140,13 @@ router.post('/login', async (req, res) => {
         id: user._id,
         name: user.name,
         email: user.email,
-        phone: user.phone,
+        phone: user.phone || '',
+        address: user.address || '',
+        landmark: user.landmark || '',
+        city: user.city || '',
+        pincode: user.pincode || '',
         role: user.role,
-        avatar: user.avatar
+        avatar: user.avatar || ''
       },
       token,
       isAdmin

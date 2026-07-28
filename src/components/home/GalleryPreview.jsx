@@ -39,25 +39,25 @@ const GalleryPreview = () => {
               {/* Permanent dark gradient bottom overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-[#0C1A12]/95 via-[#0C1A12]/40 to-transparent" />
               
-              <div className="absolute top-4 left-4 z-10">
+              <div className="absolute top-4 left-4 right-4 z-10 flex items-center justify-between pointer-events-none">
                 <span className="px-3 py-1 bg-[#123524]/90 backdrop-blur-md text-[#D6AE4D] text-[10px] uppercase font-bold tracking-widest rounded-full border border-[#D6AE4D]/40 shadow-md">
                   {item.category}
                 </span>
+
+                {/* Top Right Eye Button: Hidden by default, appears ONLY on hover */}
+                <span
+                  style={{ borderRadius: '50%', width: '36px', height: '36px', minWidth: '36px', minHeight: '36px' }}
+                  className="opacity-0 group-hover:opacity-100 scale-90 group-hover:scale-100 bg-black/50 hover:bg-[#D6AE4D] text-[#D6AE4D] hover:text-[#0C1E14] backdrop-blur-md border border-[#D6AE4D]/50 flex items-center justify-center shadow-lg transition-all duration-300 p-0"
+                >
+                  <FiMaximize2 className="w-4 h-4" />
+                </span>
               </div>
 
-              <div className="absolute bottom-4 left-4 right-4 text-white z-10 flex items-end justify-between">
-                <div>
-                  <h4 className="font-serif text-lg font-bold group-hover:text-[#D6AE4D] transition-colors leading-tight">
-                    {item.title}
-                  </h4>
-                  <p className="text-xs text-white/80 line-clamp-1 font-light mt-0.5">{item.description}</p>
-                </div>
-                <div 
-                  style={{ borderRadius: '50%', width: '36px', height: '36px', minWidth: '36px', minHeight: '36px' }}
-                  className="bg-black/40 hover:bg-black/60 dark:bg-black/50 dark:hover:bg-black/80 backdrop-blur-md border border-white/30 text-[#D6AE4D] flex items-center justify-center shrink-0 ml-2 group-hover:scale-110 transition-all p-0 shadow-lg"
-                >
-                  <FiMaximize2 className="w-4 h-4 text-[#D6AE4D]" />
-                </div>
+              <div className="absolute bottom-4 left-4 right-4 text-white z-10">
+                <h4 className="font-serif text-lg font-bold group-hover:text-[#D6AE4D] transition-colors leading-tight">
+                  {item.title}
+                </h4>
+                <p className="text-xs text-white/80 line-clamp-1 font-light mt-0.5">{item.description}</p>
               </div>
             </motion.div>
           ))}

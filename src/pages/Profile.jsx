@@ -26,15 +26,21 @@ import { Sparkles } from 'lucide-react';
 const Profile = () => {
   const { currentUser, setCurrentUser, wishlist, showToast, logout } = useTheme();
 
-  // Redirect or default user info
-  const [userName, setUserName] = useState(currentUser?.name || 'Vipul Gambhire');
-  const [userPhone, setUserPhone] = useState(currentUser?.phone || '+91 98765 43210');
-  const [userEmailAddress, setUserEmailAddress] = useState(currentUser?.email || 'akolecafe@gmail.com');
-  const [userAddress, setUserAddress] = useState(currentUser?.address || 'Akole Bypass Road, Near Central Bus Stand, Akole, Maharashtra 422601');
-  const [userLandmark, setUserLandmark] = useState(currentUser?.landmark || 'Near Central Bus Stand');
-  const [userCity, setUserCity] = useState(currentUser?.city || 'Akole, Ahmednagar');
-  const [userPincode, setUserPincode] = useState(currentUser?.pincode || '422601');
-  const [userAvatar, setUserAvatar] = useState(currentUser?.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80');
+  // Redirect or default user info dynamically from logged in account
+  const savedUserStr = typeof window !== 'undefined' ? localStorage.getItem('akole_user') : null;
+  const savedUserObj = savedUserStr ? JSON.parse(savedUserStr) : null;
+  const activeUser = currentUser || savedUserObj;
+  const initialEmail = activeUser?.email || (typeof window !== 'undefined' ? localStorage.getItem('akole_user_email') : '') || 'guest@akolecafe.com';
+  const initialName = activeUser?.name || activeUser?.username || (initialEmail && initialEmail.includes('@') ? initialEmail.split('@')[0] : 'Akole VIP Member');
+
+  const [userName, setUserName] = useState(initialName);
+  const [userPhone, setUserPhone] = useState(activeUser?.phone || '+91 98765 43210');
+  const [userEmailAddress, setUserEmailAddress] = useState(initialEmail);
+  const [userAddress, setUserAddress] = useState(activeUser?.address || 'Akole Bypass Road, Near Central Bus Stand, Akole, Maharashtra 422601');
+  const [userLandmark, setUserLandmark] = useState(activeUser?.landmark || 'Near Central Bus Stand');
+  const [userCity, setUserCity] = useState(activeUser?.city || 'Akole, Ahmednagar');
+  const [userPincode, setUserPincode] = useState(activeUser?.pincode || '422601');
+  const [userAvatar, setUserAvatar] = useState(activeUser?.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80');
 
   const [activeTab, setActiveTab] = useState('details'); // 'details' | 'orders' | 'wishlist' | 'rewards'
   const [isEditing, setIsEditing] = useState(false);
@@ -48,17 +54,20 @@ const Profile = () => {
   const [tempCity, setTempCity] = useState(userCity);
   const [tempPincode, setTempPincode] = useState(userPincode);
 
-  // Sync state when currentUser updates
+  // Sync state dynamically when currentUser or login session updates
   useEffect(() => {
-    if (currentUser) {
-      setUserName(currentUser.name || 'Vipul Gambhire');
-      setUserPhone(currentUser.phone || '+91 98765 43210');
-      setUserEmailAddress(currentUser.email || 'akolecafe@gmail.com');
-      setUserAddress(currentUser.address || 'Akole Bypass Road, Near Central Bus Stand, Akole, Maharashtra 422601');
-      setUserLandmark(currentUser.landmark || 'Near Central Bus Stand');
-      setUserCity(currentUser.city || 'Akole, Ahmednagar');
-      setUserPincode(currentUser.pincode || '422601');
-      if (currentUser.avatar) setUserAvatar(currentUser.avatar);
+    const userToSync = currentUser || (localStorage.getItem('akole_user') ? JSON.parse(localStorage.getItem('akole_user')) : null);
+    if (userToSync) {
+      const email = userToSync.email || localStorage.getItem('akole_user_email') || 'guest@akolecafe.com';
+      const name = userToSync.name || userToSync.username || (email && email.includes('@') ? email.split('@')[0] : 'Akole VIP Member');
+      setUserName(name);
+      setUserEmailAddress(email);
+      if (userToSync.phone) setUserPhone(userToSync.phone);
+      if (userToSync.address) setUserAddress(userToSync.address);
+      if (userToSync.landmark) setUserLandmark(userToSync.landmark);
+      if (userToSync.city) setUserCity(userToSync.city);
+      if (userToSync.pincode) setUserPincode(userToSync.pincode);
+      if (userToSync.avatar) setUserAvatar(userToSync.avatar);
     }
   }, [currentUser]);
 

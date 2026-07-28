@@ -98,45 +98,56 @@ const GalleryGrid = () => {
         </button>
       </div>
 
-      {/* High-Definition Photo Showcase Grid */}
+      {/* High-Definition Photo Showcase Grid with Luxury Animations */}
       <motion.div
         layout
         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
       >
-        <AnimatePresence>
+        <AnimatePresence mode="popLayout">
           {filteredItems.map((item, idx) => (
             <motion.div
               layout
               key={item.id}
-              initial={{ opacity: 0, y: 20, scale: 0.96 }}
+              initial={{ opacity: 0, y: 30, scale: 0.92 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.96 }}
-              transition={{ duration: 0.4, delay: idx * 0.03 }}
+              exit={{ opacity: 0, scale: 0.88, y: 20 }}
+              whileHover={{
+                y: -10,
+                scale: 1.025,
+                boxShadow: "0 25px 40px -12px rgba(214, 174, 77, 0.4), 0 12px 20px -8px rgba(0, 0, 0, 0.5)"
+              }}
+              transition={{ 
+                type: "spring", 
+                stiffness: 350, 
+                damping: 24,
+                delay: idx * 0.04 
+              }}
               onClick={() => setActiveLightboxItem(item)}
-              className="relative h-72 sm:h-80 md:h-84 rounded-3xl overflow-hidden group shadow-xl border border-gray-200/80 dark:border-[#D6AE4D]/30 cursor-pointer bg-[#0E1511]"
+              className="group relative h-72 sm:h-80 md:h-84 rounded-3xl overflow-hidden shadow-xl border border-gray-200/80 dark:border-[#D6AE4D]/35 hover:border-[#D6AE4D] cursor-pointer bg-[#0E1511] transition-colors duration-300"
             >
               <img
                 src={item.image}
                 alt={item.title}
-                className="w-full h-full object-cover transform group-hover:scale-108 transition-transform duration-700 ease-out"
+                className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-out"
               />
               
-              {/* Always-Visible Gradient Overlay & Info for Mobile & Desktop */}
+              {/* Always-Visible Gradient Overlay & Info + Hover Eye Button */}
               <div className="absolute inset-0 bg-gradient-to-t from-[#0E1511]/95 via-[#0E1511]/40 to-transparent flex flex-col justify-between p-5 sm:p-6">
+                {/* Top Right Eye Button: Hidden by default, appears ONLY on hover */}
                 <div className="flex justify-end">
                   <span
-                    style={{ borderRadius: '50%', width: '36px', height: '36px', minWidth: '36px', minHeight: '36px' }}
-                    className="bg-black/40 hover:bg-black/60 dark:bg-black/50 dark:hover:bg-black/80 backdrop-blur-md border border-white/30 dark:border-[#D6AE4D]/50 flex items-center justify-center text-[#D6AE4D] shadow-lg group-hover:scale-110 transition-all p-0"
+                    style={{ borderRadius: '50%', width: '38px', height: '38px', minWidth: '38px', minHeight: '38px' }}
+                    className="opacity-0 group-hover:opacity-100 scale-90 group-hover:scale-100 bg-[#122219]/90 hover:bg-[#D6AE4D] text-[#D6AE4D] hover:text-[#0C1E14] backdrop-blur-md border border-[#D6AE4D]/50 flex items-center justify-center shadow-2xl transition-all duration-300 p-0 pointer-events-none group-hover:pointer-events-auto"
                   >
-                    <FiEye className="w-4 h-4 text-[#D6AE4D]" />
+                    <FiEye className="w-4.5 h-4.5 stroke-[2.5]" />
                   </span>
                 </div>
-                
-                <div>
-                  <span className="text-[9px] font-extrabold tracking-widest px-2.5 py-0.5 rounded-md bg-[#D6AE4D] text-[#123524] uppercase shadow-sm inline-block mb-1.5">
+
+                <div className="transform group-hover:-translate-y-1 transition-transform duration-300">
+                  <span className="text-[9px] font-extrabold tracking-widest px-2.5 py-0.5 rounded-md bg-[#D6AE4D] text-[#123524] uppercase shadow-sm inline-block mb-1.5 font-sans">
                     {item.category}
                   </span>
-                  <h4 className="font-serif text-lg sm:text-xl font-bold text-white leading-tight">
+                  <h4 className="font-serif text-lg sm:text-xl font-bold text-white leading-tight group-hover:text-[#D6AE4D] transition-colors duration-300">
                     {item.title}
                   </h4>
                   <p className="text-xs text-white/80 font-light mt-1 line-clamp-2">

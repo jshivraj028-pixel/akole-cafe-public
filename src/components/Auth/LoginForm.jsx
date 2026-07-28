@@ -78,7 +78,7 @@ const LoginForm = () => {
       const data = await userLoginAPI(email, password);
       localStorage.setItem('akole_token', data.token);
       localStorage.setItem('akole_user', JSON.stringify(data.user));
-      loginUser(email);
+      loginUser(email, data.user);
 
       if (data.isAdmin || email.toLowerCase() === 'akolecafe@gmail.com') {
         localStorage.setItem('akole_admin_token', data.token);

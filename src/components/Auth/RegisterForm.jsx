@@ -135,7 +135,7 @@ const RegisterForm = () => {
       const data = await userRegisterAPI(payload);
       localStorage.setItem('akole_token', data.token);
       localStorage.setItem('akole_user', JSON.stringify(data.user));
-      loginUser(formData.email);
+      loginUser(formData.email, data.user);
 
       if (data.isAdmin || formData.email.toLowerCase() === 'akolecafe@gmail.com') {
         localStorage.setItem('akole_admin_token', data.token);
