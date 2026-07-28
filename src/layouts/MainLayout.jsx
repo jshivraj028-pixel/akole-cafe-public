@@ -59,6 +59,13 @@ const MainLayout = ({ children }) => {
     }
   }, [isStandalonePage]);
 
+  const hideHeaderFooter = 
+    isStandalonePage || 
+    pathname === '/profile' || 
+    pathname === '/dashboard' || 
+    pathname === '/orders' || 
+    pathname === '/wishlist';
+
   if (isStandalonePage) {
     return (
       <div className="min-h-screen bg-primary text-secondary selection:bg-accent-gold selection:text-primary">
@@ -74,10 +81,10 @@ const MainLayout = ({ children }) => {
       <ToastContainer />
 
       {/* Luxury Sticky Navbar */}
-      <Navbar />
+      {!hideHeaderFooter && <Navbar />}
 
       {/* Main Content Area with Smooth Route Transitions */}
-      <main className="flex-grow pb-16 lg:pb-0">
+      <main className="flex-grow">
         <AnimatePresence mode="wait">
           <motion.div
             key={pathname}
@@ -91,14 +98,14 @@ const MainLayout = ({ children }) => {
         </AnimatePresence>
       </main>
 
-      {/* Floating Glassmorphic Mobile Bottom Nav (Matches User Reference Image) */}
-      <MobileBottomNav />
+      {/* Floating Glassmorphic Mobile Bottom Nav */}
+      {!hideHeaderFooter && <MobileBottomNav />}
 
       {/* Scroll To Top Button */}
-      <ScrollToTop />
+      {!hideHeaderFooter && <ScrollToTop />}
 
       {/* Footer */}
-      <Footer />
+      {!hideHeaderFooter && <Footer />}
     </div>
   );
 };

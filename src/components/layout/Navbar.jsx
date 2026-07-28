@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, MapPin, ShoppingCart, Sun, Moon, Menu, X, User, ChevronDown, Settings, Package, ShoppingBag, Heart, ShieldCheck, LogOut, LogIn, ChevronRight, Sparkles } from 'lucide-react';
+import { Search, MapPin, ShoppingCart, Sun, Moon, Menu, X, User, ChevronDown, Settings, Package, ShoppingBag, Heart, ShieldCheck, LogOut, LogIn, ChevronRight, Sparkles, BookOpen, Store } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import { useTheme } from '../../context/ThemeContext';
 import MobileMenu from './MobileMenu';
@@ -311,12 +311,23 @@ const Navbar = () => {
 
                     <div className="space-y-0.5 text-xs font-semibold">
                       <Link
-                        to="/profile"
+                        to="/dashboard"
                         onClick={() => setIsUserMenuOpen(false)}
-                        className="flex items-center justify-between px-2.5 py-2 rounded-xl hover:bg-black/5 transition-colors"
+                        className="flex items-center justify-between px-2.5 py-1.5 rounded-xl hover:bg-black/5 transition-colors"
                       >
                         <div className="flex items-center gap-2">
                           <User className="w-3.5 h-3.5 text-gray-600" />
+                          <span>Dashboard</span>
+                        </div>
+                      </Link>
+
+                      <Link
+                        to="/profile"
+                        onClick={() => setIsUserMenuOpen(false)}
+                        className="flex items-center justify-between px-2.5 py-1.5 rounded-xl hover:bg-black/5 transition-colors"
+                      >
+                        <div className="flex items-center gap-2">
+                          <ShieldCheck className="w-3.5 h-3.5 text-gray-600" />
                           <span>My Profile</span>
                         </div>
                       </Link>
@@ -324,7 +335,7 @@ const Navbar = () => {
                       <Link
                         to="/orders"
                         onClick={() => setIsUserMenuOpen(false)}
-                        className="flex items-center justify-between px-2.5 py-2 rounded-xl hover:bg-black/5 transition-colors"
+                        className="flex items-center justify-between px-2.5 py-1.5 rounded-xl hover:bg-black/5 transition-colors"
                       >
                         <div className="flex items-center gap-2">
                           <Package className="w-3.5 h-3.5 text-gray-600" />
@@ -333,13 +344,57 @@ const Navbar = () => {
                       </Link>
 
                       <Link
+                        to="/profile"
+                        onClick={() => setIsUserMenuOpen(false)}
+                        className="flex items-center justify-between px-2.5 py-1.5 rounded-xl hover:bg-black/5 transition-colors"
+                      >
+                        <div className="flex items-center gap-2">
+                          <Heart className="w-3.5 h-3.5 text-gray-600" />
+                          <span>Wishlist</span>
+                        </div>
+                      </Link>
+
+                      <Link
                         to="/cart"
                         onClick={() => setIsUserMenuOpen(false)}
-                        className="flex items-center justify-between px-2.5 py-2 rounded-xl hover:bg-black/5 transition-colors"
+                        className="flex items-center justify-between px-2.5 py-1.5 rounded-xl hover:bg-black/5 transition-colors"
                       >
                         <div className="flex items-center gap-2">
                           <ShoppingBag className="w-3.5 h-3.5 text-gray-600" />
                           <span>View Cart</span>
+                        </div>
+                      </Link>
+
+                      <Link
+                        to="/blog"
+                        onClick={() => setIsUserMenuOpen(false)}
+                        className="flex items-center justify-between px-2.5 py-1.5 rounded-xl hover:bg-black/5 transition-colors"
+                      >
+                        <div className="flex items-center gap-2">
+                          <BookOpen className="w-3.5 h-3.5 text-gray-600" />
+                          <span>Blog</span>
+                        </div>
+                      </Link>
+
+                      <Link
+                        to="/franchise"
+                        onClick={() => setIsUserMenuOpen(false)}
+                        className="flex items-center justify-between px-2.5 py-1.5 rounded-xl hover:bg-black/5 transition-colors"
+                      >
+                        <div className="flex items-center gap-2">
+                          <Store className="w-3.5 h-3.5 text-gray-600" />
+                          <span>Franchise</span>
+                        </div>
+                      </Link>
+
+                      <Link
+                        to="/settings"
+                        onClick={() => setIsUserMenuOpen(false)}
+                        className="flex items-center justify-between px-2.5 py-1.5 rounded-xl hover:bg-black/5 transition-colors"
+                      >
+                        <div className="flex items-center gap-2">
+                          <Settings className="w-3.5 h-3.5 text-gray-600" />
+                          <span>Settings</span>
                         </div>
                       </Link>
                     </div>

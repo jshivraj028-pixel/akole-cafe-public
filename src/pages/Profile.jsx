@@ -1,77 +1,86 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Container from '../components/common/Container';
-import PageBanner from '../components/common/PageBanner';
-import Button from '../components/common/Button';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { fetchOrdersAPI } from '../services/api';
+import logoEmblem from '../assets/logo-emblem.png';
 import { 
-  FiUser, 
-  FiMail, 
-  FiPhone, 
-  FiMapPin, 
-  FiEdit3, 
-  FiClock, 
-  FiHeart, 
-  FiAward, 
-  FiCheckCircle, 
-  FiCamera,
-  FiShoppingBag,
-  FiChevronRight,
-  FiLogOut,
-  FiX
-} from 'react-icons/fi';
-import { Sparkles } from 'lucide-react';
+  LayoutGrid, 
+  User, 
+  Package, 
+  Heart, 
+  MapPin, 
+  RefreshCw, 
+  Star, 
+  Tag, 
+  Bell, 
+  BellOff,
+  LogOut, 
+  Camera, 
+  CheckCircle,
+  ShieldCheck,
+  Globe,
+  Lock,
+  Sparkles,
+  Search,
+  Check,
+  Copy,
+  Plus,
+  Coffee,
+  ArrowRight,
+  MapPinOff,
+  ShoppingBag
+} from 'lucide-react';
 
 const Profile = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const { currentUser, setCurrentUser, wishlist, showToast, logout } = useTheme();
 
-  // Redirect or default user info dynamically from logged in account
+  // Saved user sync
   const savedUserStr = typeof window !== 'undefined' ? localStorage.getItem('akole_user') : null;
   const savedUserObj = savedUserStr ? JSON.parse(savedUserStr) : null;
   const activeUser = currentUser || savedUserObj;
-  const initialEmail = activeUser?.email || (typeof window !== 'undefined' ? localStorage.getItem('akole_user_email') : '') || 'guest@akolecafe.com';
-  const initialName = activeUser?.name || activeUser?.username || (initialEmail && initialEmail.includes('@') ? initialEmail.split('@')[0] : 'Akole VIP Member');
+  
+  const initialEmail = activeUser?.email || (typeof window !== 'undefined' ? localStorage.getItem('akole_user_email') : '') || 'mayurgambhire4565@gmail.com';
+  const initialName = activeUser?.name || activeUser?.username || (initialEmail && initialEmail.includes('@') ? initialEmail.split('@')[0] : 'Mayur Gambhire');
 
   const [userName, setUserName] = useState(initialName);
-  const [userPhone, setUserPhone] = useState(activeUser?.phone || '+91 98765 43210');
+  const [userPhone, setUserPhone] = useState(activeUser?.phone || '+91 9876543210');
   const [userEmailAddress, setUserEmailAddress] = useState(initialEmail);
-  const [userAddress, setUserAddress] = useState(activeUser?.address || 'Akole Bypass Road, Near Central Bus Stand, Akole, Maharashtra 422601');
-  const [userLandmark, setUserLandmark] = useState(activeUser?.landmark || 'Near Central Bus Stand');
-  const [userCity, setUserCity] = useState(activeUser?.city || 'Akole, Ahmednagar');
-  const [userPincode, setUserPincode] = useState(activeUser?.pincode || '422601');
-  const [userAvatar, setUserAvatar] = useState(activeUser?.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80');
+  const [selectedLanguage, setSelectedLanguage] = useState('English (English)');
+  const [userAvatar, setUserAvatar] = useState(activeUser?.avatar || '');
 
-  const [activeTab, setActiveTab] = useState('details'); // 'details' | 'orders' | 'wishlist' | 'rewards'
-  const [isEditing, setIsEditing] = useState(false);
+  const searchParams = new URLSearchParams(location.search);
+  const tabParam = searchParams.get('tab');
+  const initialTab = tabParam || (location.pathname === '/dashboard' ? 'dashboard' : (location.pathname === '/orders' ? 'orders' : (location.pathname === '/wishlist' ? 'wishlist' : (location.pathname === '/profile' ? 'profile' : 'dashboard'))));
+
+  const [activeTab, setActiveTab] = useState(initialTab);
+
+  useEffect(() => {
+    if (location.pathname === '/dashboard') setActiveTab('dashboard');
+    else if (location.pathname === '/orders') setActiveTab('orders');
+    else if (location.pathname === '/wishlist') setActiveTab('wishlist');
+    else if (location.pathname === '/profile' && !tabParam) setActiveTab('profile');
+    else if (tabParam) setActiveTab(tabParam);
+  }, [location.pathname, tabParam]);
   const [userOrders, setUserOrders] = useState([]);
-  const [loadingOrders, setLoadingOrders] = useState(true);
+  const [loadingOrders, setLoadingOrders] = useState(false);
 
-  // Address Edit Modal State
-  const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
-  const [tempAddress, setTempAddress] = useState(userAddress);
-  const [tempLandmark, setTempLandmark] = useState(userLandmark);
-  const [tempCity, setTempCity] = useState(userCity);
-  const [tempPincode, setTempPincode] = useState(userPincode);
-
-  // Sync state dynamically when currentUser or login session updates
+  // Sync with currentUser
   useEffect(() => {
     const userToSync = currentUser || (localStorage.getItem('akole_user') ? JSON.parse(localStorage.getItem('akole_user')) : null);
     if (userToSync) {
-      const email = userToSync.email || localStorage.getItem('akole_user_email') || 'guest@akolecafe.com';
-      const name = userToSync.name || userToSync.username || (email && email.includes('@') ? email.split('@')[0] : 'Akole VIP Member');
+      const email = userToSync.email || localStorage.getItem('akole_user_email') || 'mayurgambhire4565@gmail.com';
+      const name = userToSync.name || userToSync.username || 'Mayur Gambhire';
       setUserName(name);
       setUserEmailAddress(email);
       if (userToSync.phone) setUserPhone(userToSync.phone);
-      if (userToSync.address) setUserAddress(userToSync.address);
-      if (userToSync.landmark) setUserLandmark(userToSync.landmark);
-      if (userToSync.city) setUserCity(userToSync.city);
-      if (userToSync.pincode) setUserPincode(userToSync.pincode);
       if (userToSync.avatar) setUserAvatar(userToSync.avatar);
     }
   }, [currentUser]);
 
-  // Load User Orders from API
+  // Load orders
   useEffect(() => {
     let isMounted = true;
     const loadOrders = async () => {
@@ -96,14 +105,16 @@ const Profile = () => {
   }, [currentUser]);
 
   const wishlistItems = wishlist || [];
+  const userInitial = userName ? userName.charAt(0).toUpperCase() : 'M';
 
-  // Handle Logout
+  // Logout handler
   const handleLogout = () => {
     logout();
     showToast('Logged out successfully', 'info');
+    navigate('/');
   };
 
-  // Handle Image Upload / Change Photo
+  // Avatar upload handler
   const handleAvatarChange = (e) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -123,689 +134,830 @@ const Profile = () => {
     }
   };
 
-  // Handle Save Profile Details
-  const handleSaveProfile = (e) => {
+  // Save changes handler
+  const handleSaveChanges = (e) => {
     e.preventDefault();
-    const updated = { 
-      ...(currentUser || {}), 
-      name: userName, 
+    const updated = {
+      ...(currentUser || {}),
+      name: userName,
       phone: userPhone,
       email: userEmailAddress,
-      address: userAddress,
-      city: userCity,
-      landmark: userLandmark,
-      pincode: userPincode,
       avatar: userAvatar
     };
     setCurrentUser(updated);
     localStorage.setItem('akole_user', JSON.stringify(updated));
     localStorage.setItem('akole_user_email', userEmailAddress);
-    setIsEditing(false);
-    showToast('Profile & delivery address updated successfully!', 'success');
+    showToast('Profile settings saved successfully!', 'success');
   };
 
-  // Handle Save Address Modal
-  const handleSaveAddressModal = (e) => {
-    e.preventDefault();
-    setUserAddress(tempAddress);
-    setUserLandmark(tempLandmark);
-    setUserCity(tempCity);
-    setUserPincode(tempPincode);
-    const updated = { 
-      ...(currentUser || {}), 
-      address: tempAddress,
-      landmark: tempLandmark,
-      city: tempCity,
-      pincode: tempPincode
-    };
-    setCurrentUser(updated);
-    localStorage.setItem('akole_user', JSON.stringify(updated));
-    setIsAddressModalOpen(false);
-    showToast('Primary delivery address updated successfully!', 'success');
-  };
+  // Sidebar navigation menu items
+  const sidebarLinks = [
+    { id: 'dashboard', label: 'Dashboard', icon: LayoutGrid },
+    { id: 'profile', label: 'Profile', icon: User },
+    { id: 'orders', label: 'My Orders', icon: Package },
+    { id: 'wishlist', label: 'Wishlist', icon: Heart },
+    { id: 'addresses', label: 'Addresses', icon: MapPin },
+    { id: 'subscriptions', label: 'Subscriptions', icon: RefreshCw },
+    { id: 'rewards', label: 'Rewards', icon: Star },
+    { id: 'coupons', label: 'Coupons', icon: Tag },
+    { id: 'notifications', label: 'Notifications', icon: Bell },
+  ];
 
   return (
-    <>
-      <PageBanner
-        title="My Member Profile"
-        subtitle="Manage Personal Details, Saved Delivery Address & Account Activity"
-        bgImage="/assets/maharashtrian-photo-banner.svg"
-      />
-
-      <section className="py-12 sm:py-16 bg-[#F5EFE3] dark:bg-[#121A15] text-[#1F3A2B] dark:text-[#EAE3D2] transition-colors duration-300 min-h-[75vh]">
-        <Container>
+    <div className="min-h-screen bg-[#FAF8F5] text-[#1E2621] font-sans flex flex-col md:flex-row">
+      
+      {/* LEFT SIDEBAR PANEL */}
+      <aside className="w-full md:w-72 bg-white border-r border-gray-200/70 p-6 flex flex-col justify-between shrink-0 shadow-xs md:min-h-screen">
+        <div>
           
-          {/* USER VIP PROFILE HEADER CARD */}
-          <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-[#123524] via-[#1A4330] to-[#0E291C] text-white p-6 sm:p-10 shadow-2xl border border-[#D6AE4D]/40 mb-10">
-            
-            {/* Background Glow */}
-            <div className="absolute top-0 right-0 w-96 h-96 bg-[#D6AE4D]/10 rounded-full blur-3xl pointer-events-none" />
+          {/* Top Logo Header */}
+          <Link to="/" className="flex items-center gap-3 mb-8">
+            <div className="w-10 h-10 rounded-full bg-[#18201B] border-2 border-white shadow-md shrink-0 flex items-center justify-center p-1 overflow-hidden">
+              <img src={logoEmblem} alt="Akole Cafe Logo" className="w-full h-full object-contain filter drop-shadow-md scale-[1.15]" />
+            </div>
+            <div className="flex items-baseline font-cormorant text-2xl tracking-[-0.5px]">
+              <span className="font-bold text-[#1E2621]">Akole</span>
+              <span className="italic font-medium text-[#48594B] ml-1">Café</span>
+            </div>
+          </Link>
 
-            <div className="flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-8 relative z-10">
+          {/* User Profile Avatar Bar */}
+          <div className="flex items-center gap-3.5 p-3 rounded-2xl bg-gray-50/80 mb-6 border border-gray-100">
+            <div className="w-11 h-11 rounded-full bg-[#8CA48E] text-white flex items-center justify-center font-bold text-base shadow-sm shrink-0 overflow-hidden">
+              {userAvatar ? (
+                <img src={userAvatar} alt={userName} className="w-full h-full object-cover" />
+              ) : (
+                userInitial
+              )}
+            </div>
+            <div className="flex-1 min-w-0">
+              <h3 className="font-bold text-sm text-[#1E2621] truncate">{userName}</h3>
+              <p className="text-[11px] text-gray-500 truncate">{userEmailAddress}</p>
+            </div>
+          </div>
+
+          {/* Sidebar Menu Items */}
+          <nav className="space-y-1">
+            {sidebarLinks.map((link) => {
+              const Icon = link.icon;
+              const isActive = activeTab === link.id;
+              return (
+                <button
+                  key={link.id}
+                  onClick={() => setActiveTab(link.id)}
+                  className={`w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-semibold text-sm transition-all text-left cursor-pointer ${
+                    isActive
+                      ? 'bg-[#EBF3EA] text-[#1E562F] font-bold shadow-xs'
+                      : 'text-[#4A5D50] hover:bg-gray-100/70 hover:text-[#1E2621]'
+                  }`}
+                >
+                  <Icon className={`w-5 h-5 ${isActive ? 'text-[#1E562F]' : 'text-gray-400'}`} />
+                  <span>{link.label}</span>
+                </button>
+              );
+            })}
+          </nav>
+        </div>
+
+        {/* Bottom Logout Button */}
+        <div className="pt-6 mt-6 border-t border-gray-100">
+          <button
+            onClick={handleLogout}
+            className="w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-bold text-sm text-rose-500 hover:bg-rose-50 transition-colors text-left cursor-pointer"
+          >
+            <LogOut className="w-5 h-5 text-rose-500" />
+            <span>Logout</span>
+          </button>
+        </div>
+      </aside>
+
+      {/* RIGHT MAIN CONTENT AREA */}
+      <main className="flex-1 p-6 sm:p-10 lg:p-12 max-w-5xl">
+        
+        {/* TAB 1: PROFILE SETTINGS */}
+        {activeTab === 'profile' && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.2 }}
+            className="space-y-6"
+          >
+            {/* Header Badge & Title */}
+            <div>
+              <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#F6EED8] text-[#8C6D23] text-[11px] font-black uppercase tracking-wider mb-2 border border-[#EADBBD]">
+                ✦ SETTINGS
+              </span>
+              <h1 className="font-serif text-3xl sm:text-4xl font-bold text-[#1E2621]">
+                Profile Settings
+              </h1>
+              <p className="text-sm text-gray-500 mt-1">
+                Manage your personal information and contact details.
+              </p>
+            </div>
+
+            {/* Main Settings Card */}
+            <form onSubmit={handleSaveChanges} className="bg-white rounded-[32px] p-6 sm:p-10 border border-gray-200/60 shadow-sm space-y-8">
               
-              {/* Profile Photo Avatar with Edit Upload */}
-              <div className="flex flex-col sm:flex-row items-center gap-6 text-center sm:text-left">
-                
-                <div className="relative group shrink-0">
-                  <img
-                    src={userAvatar}
-                    alt={userName}
-                    className="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover border-4 border-[#D6AE4D] shadow-2xl ring-4 ring-[#123524]"
-                  />
-                  <label 
-                    htmlFor="avatar-upload"
-                    className="absolute bottom-0 right-0 p-2 rounded-full bg-[#D6AE4D] text-[#123524] hover:bg-white transition-colors cursor-pointer shadow-lg border-2 border-[#123524]"
+              {/* Profile Photo Section */}
+              <div className="flex flex-col sm:flex-row items-center gap-6 pb-8 border-b border-gray-100">
+                <div className="relative shrink-0">
+                  <div className="w-24 h-24 rounded-full border-2 border-[#D6AE4D] bg-gray-50 flex items-center justify-center p-0.5 overflow-hidden shadow-inner">
+                    {userAvatar ? (
+                      <img src={userAvatar} alt={userName} className="w-full h-full object-cover rounded-full" />
+                    ) : (
+                      <User className="w-12 h-12 text-gray-400 stroke-[1.5]" />
+                    )}
+                  </div>
+                  <label
+                    htmlFor="avatar-upload-main"
+                    className="absolute bottom-0 right-0 w-8 h-8 rounded-full bg-[#D6AE4D] text-[#1E2621] flex items-center justify-center shadow-md border-2 border-white hover:scale-105 transition-transform cursor-pointer"
                     title="Change Profile Photo"
                   >
-                    <FiCamera className="w-4 h-4" />
-                    <input 
-                      id="avatar-upload" 
-                      type="file" 
-                      accept="image/*" 
-                      onChange={handleAvatarChange} 
-                      className="hidden" 
+                    <Camera className="w-4 h-4" />
+                    <input
+                      id="avatar-upload-main"
+                      type="file"
+                      accept="image/*"
+                      onChange={handleAvatarChange}
+                      className="hidden"
                     />
                   </label>
                 </div>
 
-                {/* User Header Information */}
-                <div className="space-y-1.5">
-                  <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#D6AE4D]/20 text-[#D6AE4D] text-[11px] uppercase font-bold tracking-widest border border-[#D6AE4D]/40">
-                    <Sparkles className="w-3.5 h-3.5" />
-                    <span>{currentUser?.role === 'admin' ? 'Cafe Administrator' : 'Akole Cafe VIP Gold Member'}</span>
-                  </div>
-
-                  <h2 className="font-serif text-3xl sm:text-4xl font-extrabold text-white">
-                    {userName}
-                  </h2>
-
-                  <div className="space-y-1 text-xs text-white/90 font-light">
-                    <p className="flex items-center justify-center sm:justify-start gap-2">
-                      <FiMail className="text-[#D6AE4D] shrink-0" />
-                      <span>{userEmailAddress}</span>
-                      <span>•</span>
-                      <FiPhone className="text-[#D6AE4D] shrink-0" />
-                      <span>{userPhone}</span>
-                    </p>
-                    <p className="flex items-center justify-center sm:justify-start gap-2 text-white/70">
-                      <FiMapPin className="text-[#D6AE4D] shrink-0" />
-                      <span className="line-clamp-1">{userAddress}</span>
-                    </p>
-                  </div>
+                <div className="text-center sm:text-left space-y-2">
+                  <h3 className="font-serif text-xl font-bold text-[#1E2621]">
+                    Profile Photo
+                  </h3>
+                  <p className="text-xs text-gray-400 max-w-sm">
+                    Upload a clear headshot. Accepted formats: PNG or JPG. Max file size: 5MB.
+                  </p>
+                  <label
+                    htmlFor="avatar-upload-btn"
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-[#D6AE4D] text-[#1E2621] font-bold text-xs hover:bg-[#FDF9F0] transition-colors cursor-pointer"
+                  >
+                    <Camera className="w-3.5 h-3.5 text-[#8C6D23]" />
+                    <span>Upload Photo</span>
+                    <input
+                      id="avatar-upload-btn"
+                      type="file"
+                      accept="image/*"
+                      onChange={handleAvatarChange}
+                      className="hidden"
+                    />
+                  </label>
                 </div>
-
               </div>
 
-              {/* Header Action Buttons */}
-              <div className="flex items-center gap-3 shrink-0">
-                <button
-                  onClick={() => setIsEditing(!isEditing)}
-                  className="px-5 py-2.5 rounded-2xl bg-[#D6AE4D] text-[#123524] font-montserrat font-bold text-xs uppercase tracking-wider hover:bg-white transition-all shadow-lg flex items-center gap-2 cursor-pointer border border-[#FFF5D6]"
-                >
-                  <FiEdit3 className="w-4 h-4" />
-                  <span>{isEditing ? 'Close Form' : 'Edit Profile'}</span>
-                </button>
+              {/* Personal Details Section */}
+              <div className="space-y-4">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-[#9A7B31] border-b border-gray-100 pb-2">
+                  PERSONAL DETAILS
+                </h4>
 
-                <button
-                  onClick={handleLogout}
-                  className="px-5 py-2.5 rounded-2xl bg-white/10 hover:bg-white/20 text-white font-montserrat font-bold text-xs uppercase tracking-wider border border-white/20 transition-all flex items-center gap-2 cursor-pointer"
-                >
-                  <FiLogOut className="w-4 h-4" />
-                  <span>Log Out</span>
-                </button>
-              </div>
-
-            </div>
-
-            {/* EDIT PROFILE DRAWER FORM */}
-            <AnimatePresence>
-              {isEditing && (
-                <motion.form
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: 'auto' }}
-                  exit={{ opacity: 0, height: 0 }}
-                  onSubmit={handleSaveProfile}
-                  className="mt-8 pt-8 border-t border-white/15 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
-                >
-                  <div>
-                    <label className="text-[11px] uppercase tracking-wider font-semibold text-white/70 block mb-1">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  {/* Full Name */}
+                  <div className="space-y-1.5">
+                    <label className="block text-xs font-bold text-gray-700">
                       Full Name
                     </label>
-                    <input
-                      type="text"
-                      value={userName}
-                      onChange={(e) => setUserName(e.target.value)}
-                      className="w-full px-4 py-2.5 rounded-xl bg-[#123524] border border-[#D6AE4D]/40 text-white text-xs focus:outline-none focus:border-[#D6AE4D]"
-                      required
-                    />
+                    <div className="relative">
+                      <input
+                        type="text"
+                        value={userName}
+                        onChange={(e) => setUserName(e.target.value)}
+                        className="w-full px-4 py-3 rounded-2xl bg-white border border-gray-200 text-sm font-semibold text-[#1E2621] focus:outline-none focus:border-[#1E562F] focus:ring-1 focus:ring-[#1E562F] transition-all"
+                        placeholder="Mayur Gambhire"
+                        required
+                      />
+                      <User className="w-4 h-4 text-gray-400 absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none" />
+                    </div>
                   </div>
 
-                  <div>
-                    <label className="text-[11px] uppercase tracking-wider font-semibold text-white/70 block mb-1">
-                      Contact Phone
+                  {/* Phone Number */}
+                  <div className="space-y-1.5">
+                    <label className="block text-xs font-bold text-gray-700">
+                      Phone Number
                     </label>
-                    <input
-                      type="text"
-                      value={userPhone}
-                      onChange={(e) => setUserPhone(e.target.value)}
-                      className="w-full px-4 py-2.5 rounded-xl bg-[#123524] border border-[#D6AE4D]/40 text-white text-xs focus:outline-none focus:border-[#D6AE4D]"
-                      required
-                    />
+                    <div className="relative">
+                      <input
+                        type="text"
+                        value={userPhone}
+                        onChange={(e) => setUserPhone(e.target.value)}
+                        className="w-full px-4 py-3 rounded-2xl bg-white border border-gray-200 text-sm font-semibold text-[#1E2621] focus:outline-none focus:border-[#1E562F] focus:ring-1 focus:ring-[#1E562F] transition-all"
+                        placeholder="e.g. +91 9876543210"
+                        required
+                      />
+                    </div>
                   </div>
+                </div>
+              </div>
 
-                  <div>
-                    <label className="text-[11px] uppercase tracking-wider font-semibold text-white/70 block mb-1">
+              {/* Language & Account Settings Section */}
+              <div className="space-y-4 pt-2">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-[#9A7B31] border-b border-gray-100 pb-2">
+                  LANGUAGE & ACCOUNT SETTINGS
+                </h4>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  {/* Email Address with Verified Badge */}
+                  <div className="space-y-1.5">
+                    <label className="block text-xs font-bold text-gray-700">
                       Email Address
                     </label>
-                    <input
-                      type="email"
-                      value={userEmailAddress}
-                      onChange={(e) => setUserEmailAddress(e.target.value)}
-                      className="w-full px-4 py-2.5 rounded-xl bg-[#123524] border border-[#D6AE4D]/40 text-white text-xs focus:outline-none focus:border-[#D6AE4D]"
-                      required
-                    />
+                    <div className="relative flex items-center">
+                      <input
+                        type="email"
+                        value={userEmailAddress}
+                        onChange={(e) => setUserEmailAddress(e.target.value)}
+                        className="w-full px-4 py-3 pr-24 rounded-2xl bg-white border border-gray-200 text-sm font-semibold text-[#1E2621] focus:outline-none focus:border-[#1E562F] focus:ring-1 focus:ring-[#1E562F] transition-all truncate"
+                        placeholder="mayurgambhire4565@gmail.com"
+                        required
+                      />
+                      <div className="absolute right-3 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#E5F5E4] text-[#1E562F] text-[10px] font-bold border border-[#C5E8C3] shrink-0">
+                        <CheckCircle className="w-3 h-3" />
+                        <span>Verified</span>
+                      </div>
+                    </div>
                   </div>
 
-                  <div className="sm:col-span-2">
-                    <label className="text-[11px] uppercase tracking-wider font-semibold text-white/70 block mb-1">
-                      Full Street Delivery Address
+                  {/* Select Language Dropdown */}
+                  <div className="space-y-1.5">
+                    <label className="block text-xs font-bold text-gray-700 flex items-center gap-1">
+                      <Globe className="w-3.5 h-3.5 text-gray-400" />
+                      <span>Select Language</span>
                     </label>
-                    <input
-                      type="text"
-                      value={userAddress}
-                      onChange={(e) => setUserAddress(e.target.value)}
-                      className="w-full px-4 py-2.5 rounded-xl bg-[#123524] border border-[#D6AE4D]/40 text-white text-xs focus:outline-none focus:border-[#D6AE4D]"
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <label className="text-[11px] uppercase tracking-wider font-semibold text-white/70 block mb-1">
-                      City / Area & Pincode
-                    </label>
-                    <input
-                      type="text"
-                      value={userCity}
-                      onChange={(e) => setUserCity(e.target.value)}
-                      className="w-full px-4 py-2.5 rounded-xl bg-[#123524] border border-[#D6AE4D]/40 text-white text-xs focus:outline-none focus:border-[#D6AE4D]"
-                      required
-                    />
-                  </div>
-
-                  <div className="sm:col-span-3 flex justify-end gap-3 pt-2">
-                    <button
-                      type="button"
-                      onClick={() => setIsEditing(false)}
-                      className="px-5 py-2 rounded-full bg-white/10 text-white text-xs font-semibold cursor-pointer"
+                    <select
+                      value={selectedLanguage}
+                      onChange={(e) => setSelectedLanguage(e.target.value)}
+                      className="w-full px-4 py-3 rounded-2xl bg-white border border-gray-200 text-sm font-semibold text-[#1E2621] focus:outline-none focus:border-[#1E562F] focus:ring-1 focus:ring-[#1E562F] transition-all cursor-pointer"
                     >
-                      Cancel
-                    </button>
-                    <button
-                      type="submit"
-                      className="px-6 py-2 rounded-full bg-[#D6AE4D] text-[#123524] text-xs font-bold uppercase tracking-wider shadow-md hover:bg-[#c59d3c] cursor-pointer"
-                    >
-                      Save Profile & Address
-                    </button>
+                      <option value="English (English)">English (English)</option>
+                      <option value="Marathi (मराठी)">Marathi (मराठी)</option>
+                      <option value="Hindi (हिंदी)">Hindi (हिंदी)</option>
+                    </select>
                   </div>
-                </motion.form>
-              )}
-            </AnimatePresence>
-
-          </div>
-
-          {/* PROFILE NAVIGATION TABS */}
-          <div className="flex items-center justify-start sm:justify-center gap-3 border-b border-[#D6AE4D]/20 pb-4 mb-8 overflow-x-auto">
-            <button
-              onClick={() => setActiveTab('details')}
-              className={`px-5 py-2.5 rounded-2xl text-xs uppercase font-bold tracking-wider transition-all shrink-0 flex items-center gap-2 cursor-pointer ${
-                activeTab === 'details'
-                  ? 'bg-[#D6AE4D] text-[#123524] shadow-md'
-                  : 'bg-white/70 dark:bg-[#1D2C22] text-[#123524] dark:text-[#EAE3D2] hover:text-[#D6AE4D]'
-              }`}
-            >
-              <FiUser /> Personal Details & Address
-            </button>
-
-            <button
-              onClick={() => setActiveTab('orders')}
-              className={`px-5 py-2.5 rounded-2xl text-xs uppercase font-bold tracking-wider transition-all shrink-0 flex items-center gap-2 cursor-pointer ${
-                activeTab === 'orders'
-                  ? 'bg-[#D6AE4D] text-[#123524] shadow-md'
-                  : 'bg-white/70 dark:bg-[#1D2C22] text-[#123524] dark:text-[#EAE3D2] hover:text-[#D6AE4D]'
-              }`}
-            >
-              <FiClock /> Order History ({userOrders.length})
-            </button>
-
-            <button
-              onClick={() => setActiveTab('wishlist')}
-              className={`px-5 py-2.5 rounded-2xl text-xs uppercase font-bold tracking-wider transition-all shrink-0 flex items-center gap-2 cursor-pointer ${
-                activeTab === 'wishlist'
-                  ? 'bg-[#D6AE4D] text-[#123524] shadow-md'
-                  : 'bg-white/70 dark:bg-[#1D2C22] text-[#123524] dark:text-[#EAE3D2] hover:text-[#D6AE4D]'
-              }`}
-            >
-              <FiHeart /> Saved Favorites ({wishlistItems.length})
-            </button>
-
-            <button
-              onClick={() => setActiveTab('rewards')}
-              className={`px-5 py-2.5 rounded-2xl text-xs uppercase font-bold tracking-wider transition-all shrink-0 flex items-center gap-2 cursor-pointer ${
-                activeTab === 'rewards'
-                  ? 'bg-[#D6AE4D] text-[#123524] shadow-md'
-                  : 'bg-white/70 dark:bg-[#1D2C22] text-[#123524] dark:text-[#EAE3D2] hover:text-[#D6AE4D]'
-              }`}
-            >
-              <FiAward /> VIP Offers & Perks
-            </button>
-          </div>
-
-          {/* TAB 1: PERSONAL DETAILS & ADDRESS CARD */}
-          {activeTab === 'details' && (
-            <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="max-w-4xl mx-auto space-y-6"
-            >
-              {/* DETAILS & EDIT FORM CARD */}
-              <div className="p-6 sm:p-10 rounded-3xl bg-gradient-to-br from-[#143322] via-[#0F261A] to-[#0A1A11] border-2 border-[#D6AE4D]/50 shadow-2xl space-y-8 text-white">
-                
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-[#D6AE4D]/30 pb-5 gap-3">
-                  <div>
-                    <h3 className="font-serif text-2xl sm:text-3xl font-extrabold text-white flex items-center gap-3">
-                      <FiUser className="text-[#D6AE4D]" />
-                      <span>Member Profile & Delivery Address</span>
-                    </h3>
-                    <p className="text-xs text-[#D6AE4D]/80 font-light mt-1">
-                      Update your account details below and click "SAVE CHANGES" to update your profile.
-                    </p>
-                  </div>
-
-                  <button
-                    type="button"
-                    onClick={() => setIsEditing(!isEditing)}
-                    className="px-4 py-2 rounded-xl bg-[#D6AE4D]/15 border border-[#D6AE4D]/40 text-[#D6AE4D] text-xs font-bold uppercase tracking-wider hover:bg-[#D6AE4D] hover:text-[#0C1E14] transition-all cursor-pointer flex items-center gap-1.5"
-                  >
-                    <FiEdit3 className="w-3.5 h-3.5" />
-                    <span>{isEditing ? 'View Mode' : 'Edit All Fields'}</span>
-                  </button>
                 </div>
-
-                <form onSubmit={handleSaveProfile} className="space-y-8">
-                  {/* Personal Information Grid */}
-                  <div className="space-y-4">
-                    <h4 className="font-serif text-lg font-bold text-[#D6AE4D] uppercase tracking-wider flex items-center gap-2">
-                      <Sparkles className="w-4 h-4 text-[#D6AE4D]" />
-                      <span>Personal Information</span>
-                    </h4>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 text-xs">
-                      
-                      {/* Full Name */}
-                      <div className="p-4 rounded-2xl bg-[#09170F]/90 border border-[#D6AE4D]/35 space-y-1.5 focus-within:border-[#D6AE4D] transition-colors">
-                        <label className="text-[10px] uppercase font-black tracking-wider text-[#D6AE4D] block">
-                          Full Member Name
-                        </label>
-                        {isEditing ? (
-                          <input
-                            type="text"
-                            value={userName}
-                            onChange={(e) => setUserName(e.target.value)}
-                            className="w-full bg-transparent font-serif text-base font-bold text-white focus:outline-none border-b border-[#D6AE4D]/40 pb-1"
-                            required
-                          />
-                        ) : (
-                          <p className="font-serif text-base font-bold text-white flex items-center gap-2">
-                            <FiUser className="text-[#D6AE4D]" /> {userName}
-                          </p>
-                        )}
-                      </div>
-
-                      {/* Email Address */}
-                      <div className="p-4 rounded-2xl bg-[#09170F]/90 border border-[#D6AE4D]/35 space-y-1.5 focus-within:border-[#D6AE4D] transition-colors">
-                        <label className="text-[10px] uppercase font-black tracking-wider text-[#D6AE4D] block">
-                          Registered Email Address
-                        </label>
-                        {isEditing ? (
-                          <input
-                            type="email"
-                            value={userEmailAddress}
-                            onChange={(e) => setUserEmailAddress(e.target.value)}
-                            className="w-full bg-transparent font-serif text-base font-bold text-white focus:outline-none border-b border-[#D6AE4D]/40 pb-1"
-                            required
-                          />
-                        ) : (
-                          <p className="font-serif text-base font-bold text-white flex items-center gap-2 truncate">
-                            <FiMail className="text-[#D6AE4D] shrink-0" /> {userEmailAddress}
-                          </p>
-                        )}
-                      </div>
-
-                      {/* Phone Number */}
-                      <div className="p-4 rounded-2xl bg-[#09170F]/90 border border-[#D6AE4D]/35 space-y-1.5 focus-within:border-[#D6AE4D] transition-colors">
-                        <label className="text-[10px] uppercase font-black tracking-wider text-[#D6AE4D] block">
-                          Phone Number
-                        </label>
-                        {isEditing ? (
-                          <input
-                            type="text"
-                            value={userPhone}
-                            onChange={(e) => setUserPhone(e.target.value)}
-                            className="w-full bg-transparent font-serif text-base font-bold text-white focus:outline-none border-b border-[#D6AE4D]/40 pb-1"
-                            required
-                          />
-                        ) : (
-                          <p className="font-serif text-base font-bold text-white flex items-center gap-2">
-                            <FiPhone className="text-[#D6AE4D]" /> {userPhone}
-                          </p>
-                        )}
-                      </div>
-
-                      {/* Membership Status */}
-                      <div className="p-4 rounded-2xl bg-[#09170F]/90 border border-[#D6AE4D]/35 space-y-1.5">
-                        <label className="text-[10px] uppercase font-black tracking-wider text-[#D6AE4D] block">
-                          Membership Tier
-                        </label>
-                        <p className="font-serif text-base font-bold text-[#D6AE4D] flex items-center gap-2">
-                          <FiCheckCircle className="text-emerald-400" /> Akole VIP Gold (Active)
-                        </p>
-                      </div>
-
-                    </div>
-                  </div>
-
-                  {/* Delivery Address Section */}
-                  <div className="space-y-4 pt-4 border-t border-[#D6AE4D]/25">
-                    <div className="flex items-center justify-between">
-                      <h4 className="font-serif text-lg font-bold text-[#D6AE4D] uppercase tracking-wider flex items-center gap-2">
-                        <FiMapPin className="text-[#D6AE4D]" />
-                        <span>Saved Primary Delivery Address</span>
-                      </h4>
-                    </div>
-
-                    <div className="p-5 sm:p-6 rounded-2xl bg-[#09170F]/90 border-2 border-[#D6AE4D]/40 space-y-4">
-                      <div className="space-y-3">
-                        <div>
-                          <label className="text-[10px] uppercase font-extrabold text-[#D6AE4D] block mb-1">
-                            Street Address
-                          </label>
-                          {isEditing ? (
-                            <input
-                              type="text"
-                              value={userAddress}
-                              onChange={(e) => setUserAddress(e.target.value)}
-                              className="w-full px-4 py-2.5 rounded-xl bg-[#07140D] border border-[#D6AE4D]/40 text-white text-xs font-semibold focus:outline-none focus:border-[#D6AE4D]"
-                              required
-                            />
-                          ) : (
-                            <p className="text-sm sm:text-base font-bold text-white leading-relaxed">
-                              {userAddress}
-                            </p>
-                          )}
-                        </div>
-
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                          <div>
-                            <label className="text-[10px] uppercase font-bold text-[#D6AE4D]/80 block mb-0.5">Landmark</label>
-                            {isEditing ? (
-                              <input
-                                type="text"
-                                value={userLandmark}
-                                onChange={(e) => setUserLandmark(e.target.value)}
-                                className="w-full px-3 py-2 rounded-lg bg-[#07140D] border border-[#D6AE4D]/30 text-white text-xs"
-                              />
-                            ) : (
-                              <span className="text-xs text-white/80 font-medium">{userLandmark}</span>
-                            )}
-                          </div>
-
-                          <div>
-                            <label className="text-[10px] uppercase font-bold text-[#D6AE4D]/80 block mb-0.5">City / Region</label>
-                            {isEditing ? (
-                              <input
-                                type="text"
-                                value={userCity}
-                                onChange={(e) => setUserCity(e.target.value)}
-                                className="w-full px-3 py-2 rounded-lg bg-[#07140D] border border-[#D6AE4D]/30 text-white text-xs"
-                              />
-                            ) : (
-                              <span className="text-xs text-white/80 font-medium">{userCity}</span>
-                            )}
-                          </div>
-
-                          <div>
-                            <label className="text-[10px] uppercase font-bold text-[#D6AE4D]/80 block mb-0.5">Pincode</label>
-                            {isEditing ? (
-                              <input
-                                type="text"
-                                value={userPincode}
-                                onChange={(e) => setUserPincode(e.target.value)}
-                                className="w-full px-3 py-2 rounded-lg bg-[#07140D] border border-[#D6AE4D]/30 text-white text-xs"
-                              />
-                            ) : (
-                              <span className="text-xs text-white/80 font-medium">{userPincode}</span>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* PROMINENT SAVE CHANGES BUTTON */}
-                  <div className="pt-4 border-t border-[#D6AE4D]/30 flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <p className="text-xs text-[#D6AE4D]/90 font-medium flex items-center gap-1.5">
-                      <FiCheckCircle className="text-emerald-400" />
-                      <span>Changes are saved permanently to your account profile.</span>
-                    </p>
-
-                    <button
-                      type="submit"
-                      className="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-gradient-to-r from-[#C8A96A] via-[#E8CE8E] to-[#B08E48] hover:brightness-110 text-[#123524] font-montserrat font-black text-xs uppercase tracking-[2px] shadow-xl shadow-[#D6AE4D]/25 border border-[#FFF3C4] active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer"
-                    >
-                      <Sparkles className="w-4 h-4 text-[#123524] stroke-[2.5]" />
-                      <span>SAVE CHANGES</span>
-                    </button>
-                  </div>
-
-                </form>
-
               </div>
-            </motion.div>
-          )}
 
-          {/* TAB 2: ORDER HISTORY */}
-          {activeTab === 'orders' && (
-            <div className="space-y-4 max-w-3xl mx-auto">
-              {loadingOrders ? (
-                <div className="text-center py-10 font-serif text-sm text-[#123524] dark:text-white animate-pulse">
-                  Loading order history...
+              {/* Secure Account Alert Note */}
+              <div className="p-4 rounded-2xl bg-[#F7F9F6] border border-[#E1E8DF] flex items-start gap-3 text-xs text-gray-600">
+                <ShieldCheck className="w-4 h-4 text-[#1E562F] shrink-0 mt-0.5" />
+                <div>
+                  <span className="font-bold text-[#1E2621] block mb-0.5">Secure Account</span>
+                  <span>Email changes require contacting customer support to ensure security.</span>
                 </div>
-              ) : userOrders.length === 0 ? (
-                <div className="text-center py-16 p-8 rounded-3xl bg-white/80 dark:bg-[#1D2C22] border border-[#D6AE4D]/20 max-w-lg mx-auto shadow-sm">
-                  <FiShoppingBag className="w-12 h-12 text-[#D6AE4D] mx-auto mb-3 opacity-60" />
-                  <h3 className="font-serif text-2xl font-bold text-[#123524] dark:text-white mb-1">
-                    No Orders Placed Yet
-                  </h3>
-                  <p className="text-xs text-[#6B7C70] dark:text-[#A0B0A5] font-light mb-6">
-                    Your past culinary & brew orders will appear here once placed.
+              </div>
+
+              {/* Save Changes CTA Button */}
+              <div className="flex justify-end pt-2">
+                <button
+                  type="submit"
+                  className="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-[#236336] hover:bg-[#1A4B29] active:scale-95 text-white font-bold text-sm shadow-md transition-all cursor-pointer flex items-center justify-center gap-2"
+                >
+                  <Check className="w-4 h-4 stroke-[2.5]" />
+                  <span>Save Changes</span>
+                </button>
+              </div>
+
+            </form>
+          </motion.div>
+        )}
+
+        {/* TAB 2: DASHBOARD */}
+        {activeTab === 'dashboard' && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.2 }}
+            className="space-y-6"
+          >
+            {/* Top Hero Banner */}
+            <div className="relative rounded-[32px] bg-gradient-to-r from-[#241710] via-[#332217] to-[#1E120B] text-white p-8 sm:p-10 shadow-xl overflow-hidden">
+              
+              {/* Background ambient glow */}
+              <div className="absolute top-0 right-0 w-80 h-80 bg-[#D6AE4D]/10 rounded-full blur-3xl pointer-events-none" />
+
+              <div className="relative z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+                <div>
+                  <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#433120] text-[#D6AE4D] text-[11px] font-bold uppercase tracking-wider mb-3 border border-[#59422C]">
+                    ✦ MEMBER AREA
+                  </span>
+                  <h1 className="font-serif text-3xl sm:text-4xl font-bold text-white">
+                    Welcome back, <span className="text-[#D6AE4D]">{userName}!</span>
+                  </h1>
+                  <p className="text-xs text-[#C5B7A8] max-w-lg mt-2 leading-relaxed">
+                    Manage your orders, update your profile, and browse our gourmet menu all in one place.
                   </p>
-                  <Button to="/menu" variant="gold" size="md">
-                    Order Food Now
-                  </Button>
                 </div>
-              ) : (
-                userOrders.map((ord) => (
-                  <div 
-                    key={ord._id || ord.orderId} 
-                    className="rounded-2xl bg-white dark:bg-[#1D2C22] p-6 border border-[#D6AE4D]/20 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4"
-                  >
-                    <div className="space-y-1">
-                      <div className="flex items-center gap-3">
-                        <span className="font-mono text-sm font-bold text-[#123524] dark:text-[#D6AE4D]">
-                          Order #{ord.orderId || ord.id}
-                        </span>
-                        <span className="px-2.5 py-0.5 rounded-full font-semibold text-[10px] uppercase tracking-wider bg-emerald-100 dark:bg-emerald-900/40 text-emerald-800 dark:text-emerald-300">
-                          {ord.status || 'Confirmed'}
-                        </span>
-                      </div>
-                      <p className="text-xs text-[#6B7C70] dark:text-[#A0B0A5]">
-                        {ord.createdAt ? new Date(ord.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : 'Recent Order'}
-                      </p>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <span className="font-serif text-lg font-bold text-[#123524] dark:text-white">
-                        ₹{ord.totalAmount || ord.total || 250}
-                      </span>
-                    </div>
-                  </div>
-                ))
-              )}
+
+                <Link
+                  to="/menu"
+                  className="px-6 py-3 rounded-2xl bg-[#D6AE4D] hover:bg-[#E8C364] text-[#241710] font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all shadow-md shrink-0 cursor-pointer"
+                >
+                  <ShoppingBag className="w-4 h-4 text-[#241710]" />
+                  <span>Continue Shopping</span>
+                  <span className="text-sm">→</span>
+                </Link>
+              </div>
             </div>
-          )}
 
-          {/* TAB 3: WISHLIST */}
-          {activeTab === 'wishlist' && (
-            <div className="max-w-4xl mx-auto">
-              {wishlistItems.length === 0 ? (
-                <div className="text-center py-16 p-8 rounded-3xl bg-white/80 dark:bg-[#1D2C22] border border-[#D6AE4D]/20 max-w-lg mx-auto shadow-sm">
-                  <FiHeart className="w-12 h-12 text-[#D6AE4D] mx-auto mb-3 opacity-60" />
-                  <h3 className="font-serif text-2xl font-bold text-[#123524] dark:text-[#D6AE4D] mb-1">
-                    Your Favorites List is Empty
-                  </h3>
-                  <p className="text-xs text-[#6B7C70] dark:text-[#A0B0A5] font-light mb-6">
-                    Tap the heart icon on any coffee or dish card to save your favorites.
+            {/* Stat Cards (2 Columns) */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              
+              {/* Card 1: TOTAL ORDERS */}
+              <div className="p-6 rounded-[24px] bg-white border border-gray-100 shadow-sm flex items-center gap-4">
+                <div className="w-12 h-12 rounded-2xl bg-gray-50 flex items-center justify-center text-[#1E562F] shrink-0 border border-gray-100">
+                  <Package className="w-6 h-6 stroke-[1.8]" />
+                </div>
+                <div>
+                  <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-0.5">
+                    TOTAL ORDERS
+                  </span>
+                  <p className="font-serif text-2xl font-bold text-[#1E2621]">
+                    {userOrders.length}
                   </p>
-                  <Button to="/menu" variant="gold" size="md">
-                    Explore Cafe Menu
-                  </Button>
+                </div>
+              </div>
+
+              {/* Card 2: WISHLIST ITEMS */}
+              <div className="p-6 rounded-[24px] bg-white border border-gray-100 shadow-sm flex items-center gap-4">
+                <div className="w-12 h-12 rounded-2xl bg-gray-50 flex items-center justify-center text-rose-500 shrink-0 border border-gray-100">
+                  <Heart className="w-6 h-6 stroke-[1.8]" />
+                </div>
+                <div>
+                  <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-0.5">
+                    WISHLIST ITEMS
+                  </span>
+                  <p className="font-serif text-2xl font-bold text-[#1E2621]">
+                    {wishlistItems.length}
+                  </p>
+                </div>
+              </div>
+
+            </div>
+
+            {/* Recent Orders Section */}
+            <div className="bg-white rounded-[32px] p-6 sm:p-8 border border-gray-100 shadow-sm space-y-6">
+              
+              {/* Section Header */}
+              <div className="flex items-center justify-between">
+                <h3 className="font-serif text-xl font-bold text-[#1E2621] flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#1E562F]" />
+                  <span>Recent Orders</span>
+                </h3>
+                <button
+                  onClick={() => setActiveTab('orders')}
+                  className="text-xs font-bold text-[#1E562F] hover:underline flex items-center gap-1 cursor-pointer"
+                >
+                  <span>View All</span>
+                  <span className="text-sm">→</span>
+                </button>
+              </div>
+
+              {/* Inner Content Area */}
+              {userOrders.length === 0 ? (
+                <div className="border-2 border-dashed border-gray-200/80 rounded-[28px] p-10 sm:p-14 text-center bg-gray-50/50 space-y-4">
+                  <div className="w-16 h-16 rounded-full bg-gray-100 text-gray-400 flex items-center justify-center mx-auto">
+                    <Package className="w-8 h-8 stroke-[1.5]" />
+                  </div>
+                  <div>
+                    <h4 className="font-serif text-2xl font-bold text-[#1E2621] mb-1">
+                      No orders placed yet
+                    </h4>
+                    <p className="text-xs text-gray-500 max-w-md mx-auto leading-relaxed">
+                      Explore our premium house blends, gourmet light bites, and specialty desserts to place your first order.
+                    </p>
+                  </div>
+                  <Link
+                    to="/menu"
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-[#236336] hover:bg-[#1A4B29] text-white font-bold text-xs uppercase tracking-wider shadow-md transition-all cursor-pointer"
+                  >
+                    <ShoppingBag className="w-4 h-4 text-white" />
+                    <span>Start Shopping</span>
+                  </Link>
                 </div>
               ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {wishlistItems.map((item) => (
-                    <div key={item.id} className="p-4 rounded-2xl bg-white dark:bg-[#1D2C22] border border-[#D6AE4D]/30 shadow-md flex items-center gap-4">
-                      <img src={item.image} alt={item.name} className="w-16 h-16 rounded-xl object-cover" />
-                      <div className="flex-1 min-w-0">
-                        <h4 className="font-serif font-bold text-[#123524] dark:text-white truncate">{item.name}</h4>
-                        <p className="text-xs text-[#D6AE4D] font-bold">₹{item.price}</p>
+                <div className="space-y-3">
+                  {userOrders.slice(0, 3).map((ord) => (
+                    <div key={ord._id || ord.orderId} className="p-4 rounded-2xl bg-gray-50 border border-gray-100 flex items-center justify-between text-xs">
+                      <div>
+                        <span className="font-mono font-bold text-[#1E2621]">Order #{ord.orderId || ord.id}</span>
+                        <p className="text-gray-500 text-[11px] mt-0.5">{ord.status || 'Confirmed'}</p>
                       </div>
+                      <span className="font-bold text-sm text-[#1E562F]">₹{ord.totalAmount || ord.total || 250}</span>
                     </div>
                   ))}
                 </div>
               )}
-            </div>
-          )}
 
-          {/* TAB 4: REWARDS */}
-          {activeTab === 'rewards' && (
-            <div className="max-w-3xl mx-auto p-8 rounded-3xl bg-white/90 dark:bg-[#1D2C22] border border-[#D6AE4D]/30 shadow-xl space-y-6 text-center">
-              <Sparkles className="w-12 h-12 text-[#D6AE4D] mx-auto" />
-              <h3 className="font-serif text-3xl font-bold text-[#123524] dark:text-white">
-                Akole Cafe VIP Gold Member Benefits
-              </h3>
-              <p className="text-xs text-[#6B7C70] dark:text-[#A0B0A5] max-w-md mx-auto">
-                As a Gold Member, enjoy 10% instant discount on every order, priority table reservations, and exclusive birthday gifts!
+            </div>
+
+          </motion.div>
+        )}
+
+        {/* TAB: MY ORDERS */}
+        {activeTab === 'orders' && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.2 }}
+            className="space-y-6"
+          >
+            <div>
+              <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#F6EED8] text-[#8C6D23] text-[11px] font-black uppercase tracking-wider mb-2 border border-[#EADBBD]">
+                ✦ TRANSACTIONS
+              </span>
+              <h1 className="font-serif text-3xl sm:text-4xl font-bold text-[#1E2621]">
+                My Orders
+              </h1>
+              <p className="text-sm text-gray-500 mt-1">
+                Track and review your past purchases.
               </p>
             </div>
-          )}
 
-        </Container>
-      </section>
-
-      {/* EDIT PRIMARY DELIVERY ADDRESS MODAL */}
-      <AnimatePresence>
-        {isAddressModalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsAddressModalOpen(false)}
-              className="fixed inset-0 bg-black/80 backdrop-blur-md"
-            />
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 10 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 10 }}
-              className="relative z-10 max-w-lg w-full bg-[#122219] border-2 border-[#D6AE4D] rounded-3xl p-6 sm:p-8 shadow-2xl text-white space-y-6"
-            >
-              <div className="flex items-center justify-between border-b border-[#D6AE4D]/30 pb-4">
-                <h3 className="font-serif text-2xl font-bold text-[#D6AE4D] flex items-center gap-2">
-                  <FiMapPin className="w-5 h-5 text-[#D6AE4D]" />
-                  <span>Update Delivery Address</span>
-                </h3>
-                <button
-                  onClick={() => setIsAddressModalOpen(false)}
-                  className="text-white/70 hover:text-[#D6AE4D] p-1 cursor-pointer"
+            {loadingOrders ? (
+              <p className="text-sm text-gray-500">Loading order history...</p>
+            ) : userOrders.length === 0 ? (
+              <div className="bg-white border-2 border-dashed border-gray-200/80 rounded-[32px] p-12 sm:p-16 text-center max-w-3xl space-y-4">
+                <div className="relative w-16 h-16 rounded-full bg-amber-50/80 text-[#8C6D23] flex items-center justify-center mx-auto mb-2 border border-[#EADBBD]/50">
+                  <Package className="w-8 h-8 stroke-[1.5]" />
+                  <span className="absolute top-2 right-2 w-2.5 h-2.5 rounded-full bg-[#D6AE4D]" />
+                </div>
+                <div>
+                  <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#1E2621] mb-1">
+                    No orders found
+                  </h3>
+                  <p className="text-xs sm:text-sm text-gray-400 max-w-md mx-auto leading-relaxed">
+                    You haven't ordered any premium coffee yet. Start exploring our rich selection of hand-roasted beans and specialty items!
+                  </p>
+                </div>
+                <Link
+                  to="/menu"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-[#236336] hover:bg-[#1A4B29] text-white font-bold text-xs uppercase tracking-wider shadow-md transition-all cursor-pointer"
                 >
-                  <FiX className="w-5 h-5" />
+                  <Coffee className="w-4 h-4 text-white" />
+                  <span>Browse Menu</span>
+                  <ArrowRight className="w-4 h-4 text-white" />
+                </Link>
+              </div>
+            ) : (
+              <div className="space-y-4 max-w-4xl">
+                {userOrders.map((ord) => (
+                  <div key={ord._id || ord.orderId} className="p-6 rounded-[24px] bg-white border border-gray-200/70 shadow-sm flex items-center justify-between">
+                    <div>
+                      <span className="font-mono text-sm font-bold text-[#1E2621]">Order #{ord.orderId || ord.id}</span>
+                      <p className="text-xs text-gray-500 mt-0.5">{ord.status || 'Confirmed'}</p>
+                    </div>
+                    <span className="font-serif font-bold text-lg text-[#1E562F]">₹{ord.totalAmount || ord.total || 250}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </motion.div>
+        )}
+
+        {/* TAB: WISHLIST */}
+        {activeTab === 'wishlist' && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.2 }}
+            className="space-y-6"
+          >
+            <div>
+              <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#F6EED8] text-[#8C6D23] text-[11px] font-black uppercase tracking-wider mb-2 border border-[#EADBBD]">
+                ✦ FAVOURITES
+              </span>
+              <h1 className="font-serif text-3xl sm:text-4xl font-bold text-[#1E2621]">
+                My Wishlist
+              </h1>
+              <p className="text-sm text-gray-500 mt-1">
+                Your curated collection of artisanal brews and premium treats.
+              </p>
+            </div>
+
+            {wishlistItems.length === 0 ? (
+              <div className="bg-white border-2 border-dashed border-gray-200/80 rounded-[32px] p-12 sm:p-16 text-center max-w-3xl space-y-4">
+                <div className="relative w-16 h-16 rounded-full bg-rose-50 text-rose-500 flex items-center justify-center mx-auto mb-2 border border-rose-100">
+                  <Heart className="w-8 h-8 stroke-[1.5]" />
+                  <span className="absolute top-2 right-2 w-2.5 h-2.5 rounded-full bg-[#D6AE4D]" />
+                </div>
+                <div>
+                  <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#1E2621] mb-1">
+                    Your wishlist is empty
+                  </h3>
+                  <p className="text-xs sm:text-sm text-gray-400 max-w-md mx-auto leading-relaxed">
+                    Curate your dream menu! Save your favorite house blends, gourmet sandwich melts, and desserts to order them later.
+                  </p>
+                </div>
+                <Link
+                  to="/menu"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-[#236336] hover:bg-[#1A4B29] text-white font-bold text-xs uppercase tracking-wider shadow-md transition-all cursor-pointer"
+                >
+                  <Coffee className="w-4 h-4 text-white" />
+                  <span>Explore Our Menu</span>
+                  <ArrowRight className="w-4 h-4 text-white" />
+                </Link>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-4xl">
+                {wishlistItems.map((item) => (
+                  <div key={item.id} className="p-4 rounded-2xl bg-white border border-gray-200/70 shadow-sm flex items-center gap-4">
+                    <img src={item.image} alt={item.name} className="w-16 h-16 rounded-xl object-cover" />
+                    <div>
+                      <h4 className="font-bold text-sm text-[#1E2621]">{item.name}</h4>
+                      <p className="text-xs text-[#D6AE4D] font-bold">₹{item.price}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </motion.div>
+        )}
+
+        {/* TAB: ADDRESSES */}
+        {activeTab === 'addresses' && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.2 }}
+            className="space-y-6"
+          >
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#F6EED8] text-[#8C6D23] text-[11px] font-black uppercase tracking-wider mb-2 border border-[#EADBBD]">
+                  ✦ LOCATIONS
+                </span>
+                <h1 className="font-serif text-3xl sm:text-4xl font-bold text-[#1E2621]">
+                  My Addresses
+                </h1>
+                <p className="text-sm text-gray-500 mt-1">
+                  Manage your delivery and billing locations.
+                </p>
+              </div>
+
+              <button
+                onClick={() => showToast('Enter delivery address details', 'info')}
+                className="px-5 py-2.5 rounded-2xl bg-[#236336] hover:bg-[#1A4B29] text-white font-bold text-xs shadow-md flex items-center gap-2 shrink-0 cursor-pointer"
+              >
+                <Plus className="w-4 h-4" />
+                <span>Add Address</span>
+              </button>
+            </div>
+
+            <div className="bg-white border-2 border-dashed border-gray-200/80 rounded-[32px] p-12 sm:p-16 text-center max-w-3xl space-y-4">
+              <div className="relative w-16 h-16 rounded-full bg-amber-50/80 text-[#8C6D23] flex items-center justify-center mx-auto mb-2 border border-[#EADBBD]/50">
+                <MapPinOff className="w-8 h-8 stroke-[1.5]" />
+                <span className="absolute top-2 right-2 w-2.5 h-2.5 rounded-full bg-[#D6AE4D]" />
+              </div>
+              <div>
+                <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#1E2621] mb-1">
+                  No addresses saved
+                </h3>
+                <p className="text-xs sm:text-sm text-gray-400 max-w-md mx-auto leading-relaxed">
+                  Add a delivery address to ensure faster checkout for your future premium coffee cravings.
+                </p>
+              </div>
+              <button
+                onClick={() => showToast('Enter delivery address details', 'info')}
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-[#236336] hover:bg-[#1A4B29] text-white font-bold text-xs uppercase tracking-wider shadow-md transition-all cursor-pointer"
+              >
+                <Plus className="w-4 h-4 text-white" />
+                <span>Add New Address</span>
+              </button>
+            </div>
+          </motion.div>
+        )}
+
+        {/* TAB: SUBSCRIPTIONS */}
+        {activeTab === 'subscriptions' && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.2 }}
+            className="space-y-6"
+          >
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <h1 className="font-serif text-3xl sm:text-4xl font-bold text-[#1E2621]">
+                  Coffee Subscriptions
+                </h1>
+                <p className="text-sm text-gray-500 mt-1">
+                  Freshly roasted beans delivered to your doorstep automatically.
+                </p>
+              </div>
+
+              <button
+                onClick={() => showToast('Choose a coffee bean subscription plan', 'info')}
+                className="px-5 py-2.5 rounded-2xl bg-[#236336] hover:bg-[#1A4B29] text-white font-bold text-xs shadow-md flex items-center gap-2 shrink-0 cursor-pointer"
+              >
+                <Package className="w-4 h-4" />
+                <span>Subscribe Now</span>
+              </button>
+            </div>
+
+            <div className="bg-white rounded-[32px] p-12 sm:p-16 border border-gray-200/60 shadow-sm text-center max-w-3xl space-y-4">
+              <div className="w-16 h-16 rounded-full bg-[#EBF3EA] text-[#1E562F] flex items-center justify-center mx-auto mb-2 border border-[#C5E8C3]">
+                <RefreshCw className="w-8 h-8 stroke-[1.8]" />
+              </div>
+              <div>
+                <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#1E2621] mb-1">
+                  No active subscriptions
+                </h3>
+                <p className="text-xs sm:text-sm text-gray-400 max-w-md mx-auto leading-relaxed">
+                  Get your favorite beans on a regular schedule and save up to 10% on every order.
+                </p>
+              </div>
+              <button
+                onClick={() => showToast('Choose a coffee bean subscription plan', 'info')}
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-[#236336] hover:bg-[#1A4B29] text-white font-bold text-xs uppercase tracking-wider shadow-md transition-all cursor-pointer"
+              >
+                <span>Configure A Plan</span>
+              </button>
+            </div>
+          </motion.div>
+        )}
+
+        {/* TAB: REWARDS */}
+        {activeTab === 'rewards' && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.2 }}
+            className="space-y-6"
+          >
+            <div>
+              <h1 className="font-serif text-3xl sm:text-4xl font-bold text-[#1E2621]">
+                Loyalty Club
+              </h1>
+              <p className="text-sm text-gray-500 mt-1">
+                Earn stars on every sip and redeem them for premium rewards.
+              </p>
+            </div>
+
+            {/* Top 2 Cards Row */}
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-6 max-w-4xl">
+              
+              {/* Green Card: Current Balance */}
+              <div className="md:col-span-7 bg-[#28793D] text-white rounded-[28px] p-6 shadow-md relative overflow-hidden flex flex-col justify-between min-h-[160px]">
+                <div className="relative z-10">
+                  <span className="text-[10px] font-black uppercase tracking-wider text-white/80 block">
+                    YOUR CURRENT BALANCE
+                  </span>
+                  <p className="font-serif text-4xl font-bold text-white flex items-baseline gap-2 mt-2">
+                    0 <span className="text-sm font-normal text-white/90">Stars</span>
+                  </p>
+                </div>
+
+                <div className="relative z-10 border-t border-white/20 pt-3 flex items-center justify-between text-xs text-white/90">
+                  <span>Estimated Value: <strong>₹0.00</strong></span>
+                  <span>10 Stars = ₹1.00</span>
+                </div>
+              </div>
+
+              {/* White Card: Refer a Friend */}
+              <div className="md:col-span-5 bg-white rounded-[28px] p-6 border border-gray-200/70 shadow-sm min-h-[160px] flex flex-col justify-between space-y-3">
+                <div>
+                  <span className="text-[10px] font-black uppercase tracking-wider text-gray-400 block mb-1">
+                    REFER A FRIEND
+                  </span>
+                  <h3 className="font-serif text-base font-bold text-[#1E2621]">
+                    Share the love, get rewarded!
+                  </h3>
+                  <p className="text-xs text-gray-400 mt-0.5">
+                    Give ₹50 off to your friend. Get 50 stars when they order.
+                  </p>
+                </div>
+
+                <div className="bg-gray-50 border border-gray-200 rounded-xl px-4 py-2 flex items-center justify-between font-mono font-bold text-xs text-[#1E2621]">
+                  <span>BREW50</span>
+                  <button
+                    onClick={() => { navigator.clipboard.writeText('BREW50'); showToast('Referral code BREW50 copied!', 'success'); }}
+                    className="p-1 hover:text-[#1E562F] transition-colors cursor-pointer"
+                    title="Copy Code"
+                  >
+                    <Copy className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+
+            </div>
+
+            {/* Bottom Stars Ledger */}
+            <div className="bg-white rounded-[32px] border border-gray-200/70 shadow-sm overflow-hidden max-w-4xl">
+              <div className="p-6 border-b border-gray-100 flex items-center gap-2.5">
+                <Star className="w-5 h-5 text-[#1E2621]" />
+                <h3 className="font-serif text-xl font-bold text-[#1E2621]">Stars Ledger</h3>
+              </div>
+
+              <div className="p-12 text-center space-y-2">
+                <Star className="w-12 h-12 text-gray-300 stroke-[1.2] mx-auto mb-2" />
+                <h4 className="font-serif text-lg font-bold text-[#1E2621]">
+                  No ledger entries yet
+                </h4>
+                <p className="text-xs text-gray-400">
+                  Start purchasing to collect loyalty rewards.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        )}
+
+        {/* TAB: COUPONS */}
+        {activeTab === 'coupons' && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.2 }}
+            className="space-y-6"
+          >
+            <div>
+              <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#F6EED8] text-[#8C6D23] text-[11px] font-black uppercase tracking-wider mb-2 border border-[#EADBBD]">
+                ✦ PROMOS
+              </span>
+              <h1 className="font-serif text-3xl sm:text-4xl font-bold text-[#1E2621]">
+                My Coupons
+              </h1>
+              <p className="text-sm text-gray-500 mt-1">
+                Active promo codes and exclusive member discounts.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl">
+              <div className="bg-white rounded-[28px] p-6 border border-gray-200/70 shadow-sm relative overflow-hidden space-y-4">
+                <div className="flex items-center justify-between">
+                  <span className="px-3 py-1 rounded-full bg-[#EBF3EA] text-[#1E562F] text-[10px] font-bold uppercase tracking-wider border border-[#C5E8C3]">
+                    20% OFF
+                  </span>
+                  <span className="font-mono text-xs font-bold text-gray-400">AKOLE20</span>
+                </div>
+                <div>
+                  <h3 className="font-serif text-xl font-bold text-[#1E2621]">20% OFF Everything</h3>
+                  <p className="text-xs text-gray-500 mt-1">Valid on all coffee beverages, pizzas, and artisanal snacks.</p>
+                </div>
+                <button
+                  onClick={() => { navigator.clipboard.writeText('AKOLE20'); showToast('Coupon code AKOLE20 copied!', 'success'); }}
+                  className="w-full py-2.5 rounded-xl bg-[#FAF8F5] border border-gray-200 text-[#1E2621] font-bold text-xs hover:bg-[#1E2621] hover:text-white transition-all cursor-pointer"
+                >
+                  Copy Promo Code
                 </button>
               </div>
 
-              <form onSubmit={handleSaveAddressModal} className="space-y-4">
+              <div className="bg-white rounded-[28px] p-6 border border-gray-200/70 shadow-sm relative overflow-hidden space-y-4">
+                <div className="flex items-center justify-between">
+                  <span className="px-3 py-1 rounded-full bg-[#F6EED8] text-[#8C6D23] text-[10px] font-bold uppercase tracking-wider border border-[#EADBBD]">
+                    VIP SPECIAL
+                  </span>
+                  <span className="font-mono text-xs font-bold text-gray-400">AKOLEVIP</span>
+                </div>
                 <div>
-                  <label className="text-[11px] uppercase tracking-wider font-extrabold text-[#D6AE4D] block mb-1">
-                    Full Street / Building / House Address
-                  </label>
-                  <textarea
-                    rows={3}
-                    value={tempAddress}
-                    onChange={(e) => setTempAddress(e.target.value)}
-                    placeholder="Enter complete street address..."
-                    className="w-full px-4 py-3 rounded-2xl bg-[#0E1A13] border border-[#D6AE4D]/40 text-white text-xs font-semibold focus:outline-none focus:border-[#D6AE4D] resize-none"
-                    required
-                  />
+                  <h3 className="font-serif text-xl font-bold text-[#1E2621]">VIP Gold 15% OFF</h3>
+                  <p className="text-xs text-gray-500 mt-1">Exclusive instant discount for registered Akole Café members.</p>
                 </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="text-[11px] uppercase tracking-wider font-extrabold text-[#D6AE4D] block mb-1">
-                      Landmark / Area
-                    </label>
-                    <input
-                      type="text"
-                      value={tempLandmark}
-                      onChange={(e) => setTempLandmark(e.target.value)}
-                      placeholder="e.g. Near Bus Stand"
-                      className="w-full px-4 py-2.5 rounded-xl bg-[#0E1A13] border border-[#D6AE4D]/40 text-white text-xs font-semibold focus:outline-none focus:border-[#D6AE4D]"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="text-[11px] uppercase tracking-wider font-extrabold text-[#D6AE4D] block mb-1">
-                      City / Pincode
-                    </label>
-                    <input
-                      type="text"
-                      value={tempCity}
-                      onChange={(e) => setTempCity(e.target.value)}
-                      placeholder="e.g. Akole, Ahmednagar 422601"
-                      className="w-full px-4 py-2.5 rounded-xl bg-[#0E1A13] border border-[#D6AE4D]/40 text-white text-xs font-semibold focus:outline-none focus:border-[#D6AE4D]"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-end gap-3 pt-4 border-t border-[#D6AE4D]/20">
-                  <button
-                    type="button"
-                    onClick={() => setIsAddressModalOpen(false)}
-                    className="px-5 py-2.5 rounded-xl bg-white/10 text-white text-xs font-extrabold uppercase tracking-wider hover:bg-white/20 cursor-pointer"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    className="px-6 py-2.5 rounded-xl bg-[#D6AE4D] text-[#123524] text-xs font-black uppercase tracking-wider shadow-lg hover:bg-[#F3E5AB] cursor-pointer"
-                  >
-                    Save New Address
-                  </button>
-                </div>
-              </form>
-            </motion.div>
-          </div>
+                <button
+                  onClick={() => { navigator.clipboard.writeText('AKOLEVIP'); showToast('Coupon code AKOLEVIP copied!', 'success'); }}
+                  className="w-full py-2.5 rounded-xl bg-[#FAF8F5] border border-gray-200 text-[#1E2621] font-bold text-xs hover:bg-[#1E2621] hover:text-white transition-all cursor-pointer"
+                >
+                  Copy Promo Code
+                </button>
+              </div>
+            </div>
+          </motion.div>
         )}
-      </AnimatePresence>
-    </>
+
+        {/* TAB: NOTIFICATIONS */}
+        {activeTab === 'notifications' && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.2 }}
+            className="space-y-6"
+          >
+            <div>
+              <h1 className="font-serif text-3xl sm:text-4xl font-bold text-[#1E2621]">
+                Notifications
+              </h1>
+              <p className="text-sm text-gray-500 mt-1">
+                Stay updated on your premium orders and exclusive rewards.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-[32px] p-12 sm:p-20 border border-gray-200/60 shadow-sm text-center max-w-4xl space-y-3">
+              <div className="w-16 h-16 rounded-full bg-[#EBF3EA] text-[#1E562F] flex items-center justify-center mx-auto mb-4 border border-[#C5E8C3]">
+                <BellOff className="w-8 h-8 stroke-[1.8]" />
+              </div>
+              <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#1E2621]">
+                Clean slate
+              </h3>
+              <p className="text-xs sm:text-sm text-gray-400">
+                You don't have any notifications at the moment.
+              </p>
+            </div>
+          </motion.div>
+        )}
+
+      </main>
+    </div>
   );
 };
 
