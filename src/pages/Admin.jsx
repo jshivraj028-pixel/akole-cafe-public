@@ -12,6 +12,7 @@ import {
   deleteProductAPI, 
   fetchUsersAPI, 
   deleteUserAPI,
+  reactivateUserAPI,
   toggleBanUserAPI,
   fetchOrdersAPI,
   updateOrderStatusAPI,
@@ -105,8 +106,40 @@ const Admin = () => {
   const [activityLogs, setActivityLogs] = useState(() => {
     try {
       const saved = localStorage.getItem('akole_admin_activity_logs');
-      if (saved) return JSON.parse(saved);
-    } catch (e) {}
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) {
+          return parsed.filter(Boolean).map((log, idx) => {
+            if (!log || typeof log !== 'object') {
+              return {
+                id: 'LOG-ERR-' + idx,
+                timestamp: new Date().toISOString(),
+                formattedDate: new Date().toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' }),
+                actionType: 'SYSTEM',
+                actionLabel: 'Activity Log',
+                targetItem: String(log || 'Item'),
+                details: 'Restored activity log entry',
+                badgeColor: 'bg-[#D6AE4D]/20 text-[#D6AE4D] border-[#D6AE4D]/40',
+                adminEmail: 'akolecafe@gmail.com'
+              };
+            }
+            return {
+              id: log.id || 'LOG-' + idx + '-' + Date.now(),
+              timestamp: log.timestamp || new Date().toISOString(),
+              formattedDate: String(log.formattedDate || log.timestamp || new Date().toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' })),
+              actionType: String(log.actionType || 'SYSTEM'),
+              actionLabel: typeof log.actionLabel === 'object' ? JSON.stringify(log.actionLabel) : String(log.actionLabel || log.actionType || 'SYSTEM'),
+              targetItem: typeof log.targetItem === 'object' ? (log.targetItem?.name || log.targetItem?.email || JSON.stringify(log.targetItem)) : String(log.targetItem || 'Item'),
+              details: typeof log.details === 'object' ? JSON.stringify(log.details) : String(log.details || ''),
+              badgeColor: typeof log.badgeColor === 'string' ? log.badgeColor : 'bg-[#D6AE4D]/20 text-[#D6AE4D] border-[#D6AE4D]/40',
+              adminEmail: String(log.adminEmail || 'akolecafe@gmail.com')
+            };
+          });
+        }
+      }
+    } catch (e) {
+      console.error('Failed to parse activity logs:', e);
+    }
     return [
       {
         id: 'LOG-INIT-1',
@@ -127,16 +160,17 @@ const Admin = () => {
       id: 'LOG-' + Date.now() + '-' + Math.floor(Math.random() * 1000),
       timestamp: new Date().toISOString(),
       formattedDate: new Date().toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' }),
-      actionType,
-      actionLabel,
-      targetItem,
-      details,
-      badgeColor,
+      actionType: typeof actionType === 'object' ? JSON.stringify(actionType) : String(actionType || ''),
+      actionLabel: typeof actionLabel === 'object' ? JSON.stringify(actionLabel) : String(actionLabel || ''),
+      targetItem: typeof targetItem === 'object' ? (targetItem?.name || targetItem?.email || JSON.stringify(targetItem)) : String(targetItem || ''),
+      details: typeof details === 'object' ? JSON.stringify(details) : String(details || ''),
+      badgeColor: typeof badgeColor === 'string' ? badgeColor : 'bg-[#D6AE4D]/20 text-[#D6AE4D] border-[#D6AE4D]/40',
       adminEmail: localStorage.getItem('akole_admin_email') || 'akolecafe@gmail.com'
     };
 
     setActivityLogs(prev => {
-      const updated = [newEntry, ...prev].slice(0, 150);
+      const safePrev = Array.isArray(prev) ? prev : [];
+      const updated = [newEntry, ...safePrev].slice(0, 150);
       try {
         localStorage.setItem('akole_admin_activity_logs', JSON.stringify(updated));
       } catch (e) {}
@@ -153,13 +187,19 @@ const Admin = () => {
     showToast('Activity logs cleared successfully');
   };
 
-  const filteredActivityLogs = activityLogs.filter(log => {
-    const query = historySearchQuery.toLowerCase();
+  const filteredActivityLogs = (Array.isArray(activityLogs) ? activityLogs : []).filter(log => {
+    if (!log) return false;
+    const query = (historySearchQuery || '').toLowerCase();
+    const target = typeof log.targetItem === 'string' ? log.targetItem : String(log.targetItem || '');
+    const details = typeof log.details === 'string' ? log.details : String(log.details || '');
+    const label = typeof log.actionLabel === 'string' ? log.actionLabel : String(log.actionLabel || '');
+    const admin = typeof log.adminEmail === 'string' ? log.adminEmail : String(log.adminEmail || '');
+
     const matchesSearch = 
-      (log.targetItem || '').toLowerCase().includes(query) ||
-      (log.details || '').toLowerCase().includes(query) ||
-      (log.actionLabel || '').toLowerCase().includes(query) ||
-      (log.adminEmail || '').toLowerCase().includes(query);
+      target.toLowerCase().includes(query) ||
+      details.toLowerCase().includes(query) ||
+      label.toLowerCase().includes(query) ||
+      admin.toLowerCase().includes(query);
     
     if (historyFilterType === 'ALL') return matchesSearch;
     return matchesSearch && log.actionType === historyFilterType;
@@ -464,6 +504,19 @@ const Admin = () => {
       loadData(true);
     } catch (err) {
       showToast('Delete user failed: ' + err.message, 'error');
+    }
+  };
+
+  const handleReactivateUser = async (user) => {
+    try {
+      const targetId = user._id || user.id || user.email;
+      await reactivateUserAPI(targetId);
+      setUsers(prev => prev.map(u => (u._id === user._id || u.email === user.email) ? { ...u, isDeleted: false, isBanned: false } : u));
+      showToast(`User account "${user.name}" reactivated successfully! ✅`);
+      logActivity('USER_ACTION', 'User Account Reactivated', user.name, `Reactivated customer account (${user.email})`, 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40');
+      loadData(true);
+    } catch (err) {
+      showToast('Reactivate user failed: ' + err.message, 'error');
     }
   };
 
@@ -1198,66 +1251,80 @@ const Admin = () => {
                         </td>
                         <td className="p-4">
                           <span className={`px-2.5 py-1 rounded-full text-[10px] uppercase font-bold tracking-wider border flex items-center gap-1 w-max ${
-                            u.isBanned
+                            u.isDeleted
+                              ? 'bg-rose-950/40 text-rose-400 border-rose-800/50'
+                              : u.isBanned
                               ? 'bg-red-500/20 text-red-300 border-red-500/40'
                               : 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
                           }`}>
-                            {u.isBanned ? <FiLock className="w-3 h-3 text-red-400" /> : <FiCheckCircle className="w-3 h-3 text-emerald-400" />}
-                            {u.isBanned ? 'Banned' : 'Active'}
+                            {u.isDeleted ? <FiTrash2 className="w-3 h-3 text-rose-400" /> : u.isBanned ? <FiLock className="w-3 h-3 text-red-400" /> : <FiCheckCircle className="w-3 h-3 text-emerald-400" />}
+                            {u.isDeleted ? 'Deleted' : u.isBanned ? 'Banned' : 'Active'}
                           </span>
                         </td>
                         <td className="p-4 text-right">
                           <div className="flex items-center justify-end gap-2">
-                            {/* Send Direct Custom Notification Button */}
-                            <button
-                              onClick={() => openNotifModal(u)}
-                              className="px-2.5 py-1 rounded-xl bg-blue-500/20 text-blue-300 border border-blue-500/40 hover:bg-blue-500 hover:text-white transition-all text-[11px] font-bold flex items-center gap-1"
-                              title="Send direct message notification to this user"
-                            >
-                              <FiCheck className="w-3 h-3" /> Notify
-                            </button>
-
-                            {/* Send Discount Coupon Button */}
-                            <button
-                              onClick={() => openDiscountModal(u)}
-                              className="px-2.5 py-1 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-amber-500 hover:text-primary transition-all text-[11px] font-bold flex items-center gap-1.5 shadow-sm"
-                              title="Send direct discount coupon to this user"
-                            >
-                              <FiGift className="w-3.5 h-3.5" /> Discount
-                            </button>
-
-                            {/* Ban / Unban Toggle Button */}
-                            {u.email !== 'akolecafe@gmail.com' && (
+                            {u.isDeleted ? (
                               <button
-                                onClick={() => handleToggleUserBan(u)}
-                                className={`px-2.5 py-1 rounded-xl text-[11px] font-bold border transition-all flex items-center gap-1.5 ${
-                                  u.isBanned
-                                    ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40 hover:bg-emerald-500 hover:text-white'
-                                    : 'bg-red-500/20 text-red-300 border-red-500/40 hover:bg-red-500 hover:text-white'
-                                }`}
-                                title={u.isBanned ? 'Unban user' : 'Ban user from logging in'}
+                                onClick={() => handleReactivateUser(u)}
+                                className="px-3 py-1.5 rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500 hover:text-white transition-all text-[11px] font-bold flex items-center gap-1.5 shadow-sm"
+                                title="Reactivate soft-deleted user account"
                               >
-                                {u.isBanned ? (
-                                  <>
-                                    <FiCheckCircle className="w-3.5 h-3.5" /> Unban
-                                  </>
-                                ) : (
-                                  <>
-                                    <FiSlash className="w-3.5 h-3.5" /> Ban
-                                  </>
+                                <FiRotateCcw className="w-3.5 h-3.5" /> Reactivate Account
+                              </button>
+                            ) : (
+                              <>
+                                {/* Send Direct Custom Notification Button */}
+                                <button
+                                  onClick={() => openNotifModal(u)}
+                                  className="px-2.5 py-1 rounded-xl bg-blue-500/20 text-blue-300 border border-blue-500/40 hover:bg-blue-500 hover:text-white transition-all text-[11px] font-bold flex items-center gap-1"
+                                  title="Send direct message notification to this user"
+                                >
+                                  <FiCheck className="w-3 h-3" /> Notify
+                                </button>
+
+                                {/* Send Discount Coupon Button */}
+                                <button
+                                  onClick={() => openDiscountModal(u)}
+                                  className="px-2.5 py-1 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-amber-500 hover:text-primary transition-all text-[11px] font-bold flex items-center gap-1.5 shadow-sm"
+                                  title="Send direct discount coupon to this user"
+                                >
+                                  <FiGift className="w-3.5 h-3.5" /> Discount
+                                </button>
+
+                                {/* Ban / Unban Toggle Button */}
+                                {u.email !== 'akolecafe@gmail.com' && (
+                                  <button
+                                    onClick={() => handleToggleUserBan(u)}
+                                    className={`px-2.5 py-1 rounded-xl text-[11px] font-bold border transition-all flex items-center gap-1.5 ${
+                                      u.isBanned
+                                        ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40 hover:bg-emerald-500 hover:text-white'
+                                        : 'bg-red-500/20 text-red-300 border-red-500/40 hover:bg-red-500 hover:text-white'
+                                    }`}
+                                    title={u.isBanned ? 'Unban user' : 'Ban user from logging in'}
+                                  >
+                                    {u.isBanned ? (
+                                      <>
+                                        <FiCheckCircle className="w-3.5 h-3.5" /> Unban
+                                      </>
+                                    ) : (
+                                      <>
+                                        <FiSlash className="w-3.5 h-3.5" /> Ban
+                                      </>
+                                    )}
+                                  </button>
                                 )}
-                              </button>
-                            )}
 
-                            {/* Delete User Button */}
-                            {u.email !== 'akolecafe@gmail.com' && (
-                              <button
-                                onClick={() => handleDeleteUser(u._id || u.id, u.name, u.email)}
-                                className="p-1.5 rounded-lg text-red-400 hover:text-red-300 hover:bg-red-500/20 transition-colors"
-                                title="Permanently delete user account"
-                              >
-                                <FiTrash2 className="w-4 h-4" />
-                              </button>
+                                {/* Delete User Button */}
+                                {u.email !== 'akolecafe@gmail.com' && (
+                                  <button
+                                    onClick={() => handleDeleteUser(u._id || u.id, u.name, u.email)}
+                                    className="p-1.5 rounded-lg text-red-400 hover:text-red-300 hover:bg-red-500/20 transition-colors"
+                                    title="Permanently delete user account"
+                                  >
+                                    <FiTrash2 className="w-4 h-4" />
+                                  </button>
+                                )}
+                              </>
                             )}
                           </div>
                         </td>
@@ -1330,25 +1397,50 @@ const Admin = () => {
                         </td>
                       </tr>
                     ) : (
-                      filteredActivityLogs.map((log) => (
-                        <tr key={log.id} className="hover:bg-[#1C2C22] transition-colors">
-                          <td className="p-4 font-mono">
-                            <div className="font-bold text-[#EAE3D2]">{log.formattedDate}</div>
-                            <div className="text-[10px] text-[#A0B0A5]">{log.adminEmail || 'akolecafe@gmail.com'}</div>
-                          </td>
-                          <td className="p-4 whitespace-nowrap">
-                            <span className={`px-2.5 py-1 rounded-full border text-[10px] font-bold uppercase tracking-wider ${log.badgeColor || 'bg-[#D6AE4D]/20 text-[#D6AE4D] border-[#D6AE4D]/40'}`}>
-                              {log.actionLabel || log.actionType}
-                            </span>
-                          </td>
-                          <td className="p-4 font-bold text-white">
-                            {log.targetItem}
-                          </td>
-                          <td className="p-4 text-xs text-[#A0B0A5] font-medium max-w-xs sm:max-w-md">
-                            {log.details}
-                          </td>
-                        </tr>
-                      ))
+                      filteredActivityLogs.map((log) => {
+                        const dateStr = typeof log?.formattedDate === 'string' ? log.formattedDate : String(log?.formattedDate || log?.timestamp || 'Just now');
+                        const adminStr = typeof log?.adminEmail === 'string' ? log.adminEmail : String(log?.adminEmail || 'akolecafe@gmail.com');
+                        const badgeStr = typeof log?.badgeColor === 'string' ? log.badgeColor : 'bg-[#D6AE4D]/20 text-[#D6AE4D] border-[#D6AE4D]/40';
+                        const actionStr = typeof log?.actionLabel === 'string' ? log.actionLabel : String(log?.actionLabel || log?.actionType || 'ACTION');
+                        const targetStr = typeof log?.targetItem === 'string' ? log.targetItem : (log?.targetItem?.name || log?.targetItem?.email || String(log?.targetItem || 'N/A'));
+                        const detailsStr = typeof log?.details === 'string' ? log.details : String(log?.details || '');
+                        const isDeleted = (actionStr === 'User Account Deleted' || log?.actionType === 'USER_ACTION') && detailsStr.toLowerCase().includes('deleted');
+
+                        return (
+                          <tr key={log?.id || Math.random()} className="hover:bg-[#1C2C22] transition-colors">
+                            <td className="p-4 font-mono">
+                              <div className="font-bold text-[#EAE3D2]">{dateStr}</div>
+                              <div className="text-[10px] text-[#A0B0A5]">{adminStr}</div>
+                            </td>
+                            <td className="p-4 whitespace-nowrap">
+                              <span className={`px-2.5 py-1 rounded-full border text-[10px] font-bold uppercase tracking-wider ${badgeStr}`}>
+                                {actionStr}
+                              </span>
+                            </td>
+                            <td className="p-4 font-bold text-white">
+                              {targetStr}
+                            </td>
+                            <td className="p-4 text-xs text-[#A0B0A5] font-medium">
+                              <div className="flex items-center justify-between gap-3">
+                                <span>{detailsStr}</span>
+                                {isDeleted && (
+                                  <button
+                                    onClick={() => {
+                                      const match = detailsStr.match(/\(([^)]+)\)/);
+                                      const email = match ? match[1] : targetStr;
+                                      handleReactivateUser({ name: targetStr, email: email, _id: email });
+                                    }}
+                                    className="shrink-0 px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500 hover:text-white transition-all text-[10px] font-bold flex items-center gap-1"
+                                    title="Reactivate deleted user account"
+                                  >
+                                    <FiRotateCcw className="w-3 h-3" /> Reactivate
+                                  </button>
+                                )}
+                              </div>
+                            </td>
+                          </tr>
+                        );
+                      })
                     )}
                   </tbody>
                 </table>

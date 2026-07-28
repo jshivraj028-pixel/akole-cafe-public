@@ -21,7 +21,9 @@ router.get('/', async (req, res) => {
       });
     }
 
-    const users = await User.find({ isDeleted: { $ne: true } }).select('-password').sort({ createdAt: -1 });
+    const includeDeleted = req.query.includeDeleted === 'true';
+    const filter = includeDeleted ? {} : { isDeleted: { $ne: true } };
+    const users = await User.find(filter).select('-password').sort({ createdAt: -1 });
     res.json(users);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching users', error: error.message });
@@ -150,6 +152,41 @@ router.delete('/:id', async (req, res) => {
     res.json({ message: `User account ${user.name} deleted successfully`, id: user._id, isDeleted: true });
   } catch (error) {
     res.status(500).json({ message: 'Error deleting user', error: error.message });
+  }
+});
+
+// PUT restore / reactivate deleted user account (Admin)
+router.put('/:id/reactivate', async (req, res) => {
+  try {
+    const target = req.params.id;
+    let user = null;
+
+    if (target && target.match(/^[0-9a-fA-F]{24}$/)) {
+      user = await User.findById(target);
+    }
+    if (!user && target) {
+      const cleanInput = target.toLowerCase().trim();
+      user = await User.findOne({
+        $or: [{ email: cleanInput }, { name: cleanInput }]
+      });
+    }
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found in database' });
+    }
+
+    user.isDeleted = false;
+    user.deletedAt = null;
+    user.isBanned = false;
+    user.bannedAt = null;
+    await user.save();
+
+    res.json({
+      message: `User account ${user.name} reactivated successfully ✅`,
+      user: { id: user._id, name: user.name, email: user.email, isBanned: false, isDeleted: false }
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Error reactivating user account', error: error.message });
   }
 });
 

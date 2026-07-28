@@ -119,9 +119,9 @@ export const uploadImageAPI = async (file) => {
 // ==========================================
 
 // Fetch registered users (Admin view) - Single Source of Truth from MongoDB Atlas
-export const fetchUsersAPI = async () => {
+export const fetchUsersAPI = async (includeDeleted = true) => {
   try {
-    const res = await fetch(`${API_BASE_URL}/users`);
+    const res = await fetch(`${API_BASE_URL}/users?includeDeleted=${Boolean(includeDeleted)}`);
     if (!res.ok) throw new Error('Failed to fetch users');
     return await res.json();
   } catch (err) {
@@ -138,6 +138,18 @@ export const deleteUserAPI = async (id) => {
   const data = await res.json();
   if (!res.ok) {
     throw new Error(data.message || 'Failed to delete user');
+  }
+  return data;
+};
+
+// Reactivate Deleted User Account (Admin)
+export const reactivateUserAPI = async (id) => {
+  const res = await fetch(`${API_BASE_URL}/users/${id}/reactivate`, {
+    method: 'PUT'
+  });
+  const data = await res.json();
+  if (!res.ok) {
+    throw new Error(data.message || 'Failed to reactivate user');
   }
   return data;
 };
