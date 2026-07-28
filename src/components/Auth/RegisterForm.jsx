@@ -144,7 +144,11 @@ const RegisterForm = () => {
         navigate('/');
       }
     } catch (err) {
-      showToast(err.message || 'Registration failed. Try a different email.', 'error');
+      if (err.message.includes('already exists') || err.message.includes('Email')) {
+        setErrors((prev) => ({ ...prev, email: 'Email already exists.' }));
+        setTouched((prev) => ({ ...prev, email: true }));
+      }
+      showToast(err.message || 'Registration failed.', 'error');
     } finally {
       setIsLoading(false);
     }

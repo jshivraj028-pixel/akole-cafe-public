@@ -85,11 +85,12 @@ const LoyaltyClub = () => {
           <div className="pt-4 relative z-10">
             <Button
               to="/profile"
-              variant="primary"
+              variant="gold"
               size="lg"
-              className="rounded-xl px-8 bg-gradient-to-r from-[#D6AE4D] via-[#F3E5AB] to-[#B89035] text-[#0C1A12] hover:brightness-110 shadow-xl shadow-[#D6AE4D]/20 text-xs tracking-widest uppercase font-black transition-all border border-[#FFF5D6]"
+              className="rounded-2xl px-9 py-4 !bg-gradient-to-r !from-[#F8E29C] !via-[#FFF5D0] !to-[#E6C35C] !text-black hover:brightness-105 shadow-xl shadow-[#D6AE4D]/25 text-xs tracking-widest uppercase font-black transition-all border border-[#FFF8DC]"
             >
-              <Sparkles className="w-4.5 h-4.5 mr-1.5 inline-block text-[#0C1A12] stroke-[2.5]" /> JOIN THE CLUB NOW
+              <Sparkles className="w-5 h-5 mr-2 inline-block !text-black stroke-[2.5]" />
+              <span className="!text-black font-black tracking-widest">JOIN THE CLUB NOW</span>
             </Button>
           </div>
         </motion.div>

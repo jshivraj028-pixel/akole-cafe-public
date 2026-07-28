@@ -156,19 +156,18 @@ export const toggleBanUserAPI = async (id, isBanned) => {
   return data;
 };
 
-// Check User Status (Ban / Active)
+// Check User Status (Ban / Active / Soft Delete)
 export const checkUserStatusAPI = async (idOrEmail) => {
-  if (!idOrEmail) return { isBanned: false };
+  if (!idOrEmail) return { exists: false, isBanned: false, isDeleted: false };
   try {
     const res = await fetch(`${API_BASE_URL}/users/status/${encodeURIComponent(idOrEmail)}`);
-    if (!res.ok) return { isBanned: false };
+    if (!res.ok) return { exists: true, isBanned: false, isDeleted: false };
     return await res.json();
   } catch (err) {
-    return { isBanned: false };
+    return { exists: true, isBanned: false, isDeleted: false };
   }
 };
 
-// User / Admin Login - Single Source of Truth via MongoDB Atlas
 // User / Admin Login - Single Source of Truth via MongoDB Atlas
 export const userLoginAPI = async (email, password) => {
   const cleanInput = (email || '').toLowerCase().trim();
@@ -179,13 +178,27 @@ export const userLoginAPI = async (email, password) => {
       body: JSON.stringify({ email: cleanInput, password })
     });
 
-    if (res.ok) {
-      return await res.json();
-    }
     const data = await res.json().catch(() => ({}));
-    throw new Error(data.message || 'Login failed');
+
+    if (res.status === 403) {
+      throw new Error(data.message || 'Your account has been banned.');
+    }
+    if (res.status === 401) {
+      throw new Error(data.message || 'Account not found or has been deleted.');
+    }
+    if (!res.ok) {
+      throw new Error(data.message || 'Login failed');
+    }
+
+    return data;
   } catch (err) {
-    if (err.message === 'Login failed' || err.message.includes('password') || err.message.includes('user') || err.message.includes('not found') || err.message.includes('banned')) {
+    if (
+      err.message.includes('banned') ||
+      err.message.includes('deleted') ||
+      err.message.includes('not found') ||
+      err.message.includes('password') ||
+      err.message === 'Login failed'
+    ) {
       throw err;
     }
     console.warn("[API Warning] Backend server offline. Falling back to local mock authentication.", err.message);
@@ -229,13 +242,23 @@ export const userRegisterAPI = async (userData) => {
       body: JSON.stringify(userData)
     });
 
-    if (res.ok) {
-      return await res.json();
-    }
     const data = await res.json().catch(() => ({}));
-    throw new Error(data.message || 'Registration failed');
+
+    if (res.status === 409) {
+      throw new Error(data.message || 'Email already exists.');
+    }
+    if (!res.ok) {
+      throw new Error(data.message || 'Registration failed');
+    }
+
+    return data;
   } catch (err) {
-    if (err.message === 'Registration failed' || err.message.includes('email') || err.message.includes('password') || err.message.includes('exists')) {
+    if (
+      err.message.includes('Email already exists') ||
+      err.message.includes('already exists') ||
+      err.message.includes('password') ||
+      err.message === 'Registration failed'
+    ) {
       throw err;
     }
     console.warn("[API Warning] Backend server offline. Falling back to local mock registration.", err.message);

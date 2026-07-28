@@ -24,9 +24,15 @@ router.post('/register', async (req, res) => {
 
     const cleanEmail = email.toLowerCase().trim();
 
-    const existingUser = await User.findOne({ $or: [{ email: cleanEmail }, { name: name.trim() }] });
+    const existingUser = await User.findOne({ 
+      $or: [
+        { email: cleanEmail }, 
+        { name: name.trim() }
+      ] 
+    });
+
     if (existingUser) {
-      return res.status(400).json({ message: 'User with this email/username already exists.' });
+      return res.status(409).json({ message: 'Email already exists.' });
     }
 
     const salt = await bcrypt.genSalt(10);
@@ -114,12 +120,12 @@ router.post('/login', async (req, res) => {
       ] 
     });
 
-    if (!user) {
-      return res.status(400).json({ message: 'User not found. Please check your credentials or register.' });
+    if (!user || user.isDeleted) {
+      return res.status(401).json({ message: 'Account not found or has been deleted.' });
     }
 
     if (user.isBanned) {
-      return res.status(403).json({ message: 'Your account has been suspended/banned by Administrator. Please contact support.' });
+      return res.status(403).json({ message: 'Your account has been banned.' });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
