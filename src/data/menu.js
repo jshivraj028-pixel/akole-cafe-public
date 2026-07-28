@@ -67,6 +67,27 @@ export const menuCategories = [
 
 export const menuItems = [
   {
+    "id": "drk-slice-mango-drink-250ml",
+    "name": "Slice Thick Mango Drink (250ml)",
+    "category": "cold-drinks",
+    "description": "Indulgent thick mango drink filled with rich Ratnagiri Alphonso mango taste in a chilled 250ml bottle.",
+    "price": 25,
+    "rating": 4.9,
+    "isVeg": true,
+    "isBestseller": true,
+    "isChefSpecial": false,
+    "spicyLevel": 0,
+    "prepTime": "1 min",
+    "image": "/assets/slice-mango-drink-250ml.png",
+    "tags": [
+      "Slice",
+      "Mango Drink",
+      "250ml",
+      "Cold Drink",
+      "Alphonso Mango"
+    ]
+  },
+  {
     "id": "vada-crispy-kanda-bhaji",
     "name": "Crispy Kanda Bhaji (Onion Bhaji)",
     "category": "vada-pav",
@@ -892,91 +913,6 @@ export const menuItems = [
     ]
   },
   {
-    "id": "drk-maaza",
-    "name": "Maaza Mango Fruit Drink (250ml)",
-    "category": "cold-drinks",
-    "description": "Rich Alphonso mango juice pulp experience.",
-    "price": 40,
-    "rating": 4.9,
-    "isVeg": true,
-    "isBestseller": true,
-    "prepTime": "1 min",
-    "image": "/assets/fanta-orange-can.png",
-    "tags": [
-      "Maaza",
-      "Mango Juice",
-      "Fruit Drink"
-    ]
-  },
-  {
-    "id": "drk-slice",
-    "name": "Slice Thick Mango Drink (250ml)",
-    "category": "cold-drinks",
-    "description": "Thick, sweet, indulgent mango nectar drink.",
-    "price": 40,
-    "rating": 4.8,
-    "isVeg": true,
-    "isBestseller": false,
-    "prepTime": "1 min",
-    "image": "/assets/fanta-orange-can.png",
-    "tags": [
-      "Slice",
-      "Mango",
-      "Fruit Drink"
-    ]
-  },
-  {
-    "id": "drk-frooti",
-    "name": "Frooti Fresh Mango Juice (200ml)",
-    "category": "cold-drinks",
-    "description": "Classic mango juice box drink served ice-chilled.",
-    "price": 35,
-    "rating": 4.8,
-    "isVeg": true,
-    "isBestseller": true,
-    "prepTime": "1 min",
-    "image": "/assets/fanta-orange-can.png",
-    "tags": [
-      "Frooti",
-      "Mango",
-      "Fruit Drink"
-    ]
-  },
-  {
-    "id": "drk-real-mixed",
-    "name": "Real Mixed Fruit Juice (200ml)",
-    "category": "cold-drinks",
-    "description": "Nourishing blend of 9 natural orchard fruits.",
-    "price": 60,
-    "rating": 4.8,
-    "isVeg": true,
-    "isBestseller": true,
-    "prepTime": "1 min",
-    "image": "/assets/fanta-orange-can.png",
-    "tags": [
-      "Real Juice",
-      "Mixed Fruit",
-      "Fruit Drink"
-    ]
-  },
-  {
-    "id": "drk-real-orange",
-    "name": "Real Orange Juice Nectar (200ml)",
-    "category": "cold-drinks",
-    "description": "Pure vitamin C rich Valencia orange juice.",
-    "price": 60,
-    "rating": 4.8,
-    "isVeg": true,
-    "isBestseller": false,
-    "prepTime": "1 min",
-    "image": "/assets/fanta-orange-can.png",
-    "tags": [
-      "Real Orange",
-      "Juice",
-      "Fruit Drink"
-    ]
-  },
-  {
     "id": "drk-real-apple",
     "name": "Real Apple Juice Nectar (200ml)",
     "category": "cold-drinks",
@@ -1265,41 +1201,6 @@ export const menuItems = [
       "Gatorade",
       "Sports Drink",
       "Hydration"
-    ]
-  },
-  {
-    "id": "drk-electral",
-    "name": "Electral ORS Apple Drink (200ml)",
-    "category": "cold-drinks",
-    "description": "WHO recommended instant oral rehydration solution drink.",
-    "price": 40,
-    "rating": 4.9,
-    "isVeg": true,
-    "isBestseller": true,
-    "prepTime": "1 min",
-    "image": "https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=800&q=80",
-    "tags": [
-      "Electral ORS",
-      "Hydration",
-      "Healthy"
-    ]
-  },
-  {
-    "id": "drk-fresh-lime-soda",
-    "name": "Fresh Lime Soda (Sweet & Salted)",
-    "category": "cold-drinks",
-    "description": "Freshly squeezed green lemons with sparkling soda, mint leaves & rock salt.",
-    "price": 60,
-    "rating": 4.9,
-    "isVeg": true,
-    "isBestseller": true,
-    "spicyLevel": 0,
-    "prepTime": "3 mins",
-    "image": "/assets/fresh-lime-soda.png",
-    "tags": [
-      "Fresh Lime Soda",
-      "Cold Drink",
-      "Refreshing"
     ]
   },
   {
@@ -1872,26 +1773,6 @@ export const menuItems = [
     ]
   },
   {
-    "id": "vp-kanda-bhaji",
-    "name": "Crispy Kanda Bhaji (Onion Bhaji)",
-    "category": "vada-pav",
-    "description": "Authentic Maharashtrian khekda style crispy onion pakoda made with thinly sliced onions, spiced besan batter, fried green chilies & garlic chutney.",
-    "price": 60,
-    "rating": 5,
-    "isVeg": true,
-    "isBestseller": true,
-    "isChefSpecial": true,
-    "spicyLevel": 2,
-    "prepTime": "8 mins",
-    "image": "/assets/kanda-bhaji.png",
-    "tags": [
-      "Kanda Bhaji",
-      "Khekda Bhaji",
-      "Onion Pakoda",
-      "Maharashtrian Snack"
-    ]
-  },
-  {
     "id": "vp-batata-bhaji",
     "name": "Crispy Batata Bhaji (Potato Bhaji)",
     "category": "vada-pav",
@@ -1907,24 +1788,6 @@ export const menuItems = [
       "Batata Bhaji",
       "Potato Pakoda",
       "Crispy Snack"
-    ]
-  },
-  {
-    "id": "vp-mirchi-bhaji",
-    "name": "Spicy Mirchi Bhaji (Chili Bhaji)",
-    "category": "vada-pav",
-    "description": "Whole large mild green chilies stuffed with tangy spices, wrapped in crispy spiced besan batter.",
-    "price": 50,
-    "rating": 4.8,
-    "isVeg": true,
-    "isBestseller": true,
-    "spicyLevel": 3,
-    "prepTime": "6 mins",
-    "image": "/assets/mirchi-bhaji.png",
-    "tags": [
-      "Mirchi Bhaji",
-      "Chili Pakoda",
-      "Spicy Snack"
     ]
   },
   {
@@ -1961,91 +1824,6 @@ export const menuItems = [
       "Palak Bhaji",
       "Spinach Pakoda",
       "Crispy Snack"
-    ]
-  },
-  {
-    "id": "vp-methi-bhaji",
-    "name": "Special Methi Bhaji (Fenugreek Bhaji)",
-    "category": "vada-pav",
-    "description": "Fragrant fresh fenugreek leaves folded into spiced besan batter, fried into aromatic golden fritters.",
-    "price": 60,
-    "rating": 4.8,
-    "isVeg": true,
-    "spicyLevel": 1,
-    "prepTime": "7 mins",
-    "image": "/assets/mix-veg-bhaji.png",
-    "tags": [
-      "Methi Bhaji",
-      "Fenugreek Pakoda",
-      "Traditional Snack"
-    ]
-  },
-  {
-    "id": "vp-cabbage-bhaji",
-    "name": "Crispy Cabbage Bhaji (Kobi Bhaji)",
-    "category": "vada-pav",
-    "description": "Fine shredded cabbage tossed with carom seeds, ginger & besan, fried into golden crunchy bhaji fritters.",
-    "price": 50,
-    "rating": 4.7,
-    "isVeg": true,
-    "spicyLevel": 1,
-    "prepTime": "7 mins",
-    "image": "/assets/mix-veg-bhaji.png",
-    "tags": [
-      "Cabbage Bhaji",
-      "Kobi Pakoda",
-      "Crunchy Snack"
-    ]
-  },
-  {
-    "id": "vp-cauliflower-bhaji",
-    "name": "Gobi Cauliflower Bhaji",
-    "category": "vada-pav",
-    "description": "Tender cauliflower florets marinated in spiced batter, fried golden crisp and served with green chutney.",
-    "price": 60,
-    "rating": 4.8,
-    "isVeg": true,
-    "spicyLevel": 1,
-    "prepTime": "8 mins",
-    "image": "/assets/mix-veg-bhaji.png",
-    "tags": [
-      "Cauliflower Bhaji",
-      "Gobi Pakoda",
-      "Crispy Snack"
-    ]
-  },
-  {
-    "id": "vp-brinjal-bhaji",
-    "name": "Vangi Brinjal Bhaji (Eggplant Bhaji)",
-    "category": "vada-pav",
-    "description": "Sliced brinjal discs layered with spicy masala coating, dipped in besan batter and fried till golden.",
-    "price": 50,
-    "rating": 4.7,
-    "isVeg": true,
-    "spicyLevel": 1,
-    "prepTime": "7 mins",
-    "image": "/assets/mix-veg-bhaji.png",
-    "tags": [
-      "Brinjal Bhaji",
-      "Vangi Pakoda",
-      "Eggplant Fritters"
-    ]
-  },
-  {
-    "id": "vp-raw-banana-bhaji",
-    "name": "Kachha Kela Raw Banana Bhaji",
-    "category": "vada-pav",
-    "description": "Crispy sliced raw banana fritters seasoned with roasted cumin, black salt & spiced besan batter.",
-    "price": 60,
-    "rating": 4.8,
-    "isVeg": true,
-    "spicyLevel": 1,
-    "prepTime": "7 mins",
-    "image": "https://images.unsplash.com/photo-1601050690117-94f5f6fa8bd7?auto=format&fit=crop&w=800&q=80",
-    "tags": [
-      "Raw Banana Bhaji",
-      "Kela Pakoda",
-      "Special Snack"
     ]
   },
   {
