@@ -17,18 +17,15 @@ const MobileBottomNav = ({ onOpenCart }) => {
 
   return (
     <div className="fixed bottom-4 left-4 right-4 sm:left-1/2 sm:-translate-x-1/2 sm:max-w-sm z-50 lg:hidden pointer-events-none">
-      {/* Luxury Frosted Glassmorphic Pod Container */}
-      <div className="pointer-events-auto relative overflow-hidden rounded-[30px] bg-white/70 dark:bg-[#122017]/80 backdrop-blur-xl backdrop-saturate-150 border border-white/80 dark:border-[#D6AE4D]/35 shadow-[0_12px_40px_rgba(0,0,0,0.15)] p-2 px-6 flex items-center justify-between transition-all duration-300">
+      {/* Crisp Solid Background Capsule Container */}
+      <div className="pointer-events-auto relative overflow-hidden rounded-[32px] bg-white dark:bg-[#122017] border border-gray-100 dark:border-[#D6AE4D]/35 shadow-[0_12px_40px_rgba(0,0,0,0.15)] p-2.5 px-6 flex items-center justify-between transition-all duration-300">
         
-        {/* Subtle Specular Top Highlight for Premium Glass Depth */}
-        <div className="absolute inset-0 rounded-[30px] border-t border-white/90 dark:border-white/20 pointer-events-none" />
-
         {navItems.map((item) => {
           const isActive = pathname === item.path || (item.isCart && pathname === '/cart');
           const IconComponent = item.icon;
 
           return (
-            <div key={item.id} className="relative flex flex-col items-center justify-center py-1 z-10">
+            <div key={item.id} className="relative flex flex-col items-center justify-center py-0.5 z-10">
               <Link
                 to={item.path}
                 onClick={(e) => {
