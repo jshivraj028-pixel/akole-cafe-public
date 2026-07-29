@@ -148,10 +148,11 @@ const MenuFilter = ({
         <button
           type="button"
           onClick={() => handleScroll('left')}
-          className="hidden sm:flex w-9.5 h-9.5 rounded-full bg-white border-2 border-white shadow-md text-[#1E2621] hover:scale-105 active:scale-95 transition-all items-center justify-center shrink-0 cursor-pointer z-10 mr-2"
+          style={{ width: '36px', height: '36px', minWidth: '36px', minHeight: '36px', borderRadius: '50%' }}
+          className="hidden sm:flex bg-white border border-gray-200 shadow-md text-[#1E2621] hover:scale-105 active:scale-95 transition-all items-center justify-center shrink-0 cursor-pointer z-10 mr-2 overflow-hidden"
           aria-label="Scroll category left"
         >
-          <FiChevronLeft className="w-4.5 h-4.5 stroke-[2.5]" />
+          <FiChevronLeft className="w-4 h-4 stroke-[2.5]" />
         </button>
 
         {/* Category Container */}
@@ -161,7 +162,7 @@ const MenuFilter = ({
           onMouseLeave={handleMouseLeaveOrUp}
           onMouseUp={handleMouseLeaveOrUp}
           onMouseMove={handleMouseMove}
-          className="flex items-center gap-3 overflow-x-auto py-2 px-1 scroll-smooth w-full no-scrollbar select-none cursor-grab active:cursor-grabbing"
+          className="flex items-center gap-2 overflow-x-auto py-2 px-1 scroll-smooth w-full no-scrollbar select-none cursor-grab active:cursor-grabbing"
         >
           {menuCategories.map((cat) => {
             const isActive = activeCategory === cat.id;
@@ -170,17 +171,17 @@ const MenuFilter = ({
             return (
               <motion.button
                 key={cat.id}
-                whileTap={{ scale: 0.95 }}
+                whileTap={{ scale: 0.96 }}
                 onClick={() => setActiveCategory(cat.id)}
-                className={`relative px-5 py-3 rounded-full text-xs font-black tracking-wider uppercase transition-all duration-300 shrink-0 whitespace-nowrap backdrop-blur-2xl cursor-pointer border-2 ${
+                className={`relative px-3.5 py-2 sm:px-4 sm:py-2 rounded-full text-[11px] font-bold tracking-wide uppercase transition-all duration-200 shrink-0 whitespace-nowrap backdrop-blur-xl cursor-pointer border ${
                   isActive
-                    ? 'bg-gradient-to-r from-[#18261E] via-[#2A3B30] to-[#18261E] text-white border-white/90 shadow-[0_8px_25px_rgba(0,0,0,0.22)] scale-[1.06]'
-                    : `bg-gradient-to-r ${gradient} text-[#1E2621] border-white/90 shadow-sm hover:scale-105 hover:shadow-md`
+                    ? 'bg-[#1E2621] text-white border-[#1E2621] shadow-sm'
+                    : `bg-white/90 text-[#2C3530] border-gray-200/90 shadow-2xs hover:bg-white hover:border-gray-300`
                 }`}
               >
-                <div className="flex items-center gap-2 relative z-10">
+                <div className="flex items-center gap-1.5 relative z-10">
                   {isActive && (
-                    <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse shadow-xs" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shadow-xs" />
                   )}
                   <span>{cat.name}</span>
                 </div>
@@ -202,10 +203,11 @@ const MenuFilter = ({
         <button
           type="button"
           onClick={() => handleScroll('right')}
-          className="hidden sm:flex w-9.5 h-9.5 rounded-full bg-white border-2 border-white shadow-md text-[#1E2621] hover:scale-105 active:scale-95 transition-all items-center justify-center shrink-0 cursor-pointer z-10 ml-2"
+          style={{ width: '36px', height: '36px', minWidth: '36px', minHeight: '36px', borderRadius: '50%' }}
+          className="hidden sm:flex bg-white border border-gray-200 shadow-md text-[#1E2621] hover:scale-105 active:scale-95 transition-all items-center justify-center shrink-0 cursor-pointer z-10 ml-2 overflow-hidden"
           aria-label="Scroll category right"
         >
-          <FiChevronRight className="w-4.5 h-4.5 stroke-[2.5]" />
+          <FiChevronRight className="w-4 h-4 stroke-[2.5]" />
         </button>
       </div>
     </div>

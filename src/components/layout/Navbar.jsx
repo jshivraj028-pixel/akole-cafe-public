@@ -100,7 +100,7 @@ const Navbar = () => {
               />
             </div>
 
-            <div className="flex items-baseline font-cormorant text-xl sm:text-2xl xl:text-3xl tracking-[-0.5px]">
+            <div className="flex items-baseline font-cormorant text-xl sm:text-2xl xl:text-[27px] tracking-[-0.5px]">
               <span className="font-bold text-[#1E2621] dark:text-white transition-colors">
                 Akole
               </span>
@@ -118,17 +118,17 @@ const Navbar = () => {
                 <Link
                   key={link.name}
                   to={link.path}
-                  className="relative font-montserrat text-[11px] xl:text-xs tracking-wide uppercase px-2 xl:px-2.5 py-1.5 rounded-full flex flex-col items-center justify-center transition-colors group cursor-pointer"
+                  className="relative font-montserrat text-[10px] xl:text-[11px] tracking-wide uppercase px-2 xl:px-2 py-1 rounded-full flex flex-col items-center justify-center transition-colors group cursor-pointer"
                 >
                   {/* Animated Glossy White Glass Pill Background ONLY for Active Link */}
                   {isActive && (
                     <motion.div
                       layoutId="activeNavPill"
-                      className="absolute inset-0 rounded-full bg-gradient-to-r from-emerald-500/20 via-white/95 to-white backdrop-blur-2xl border-2 border-white shadow-md overflow-hidden"
+                      className="absolute inset-0 rounded-full bg-gradient-to-r from-emerald-500/20 via-white/95 to-white backdrop-blur-2xl border border-white shadow-sm overflow-hidden"
                       transition={{ type: 'spring', stiffness: 450, damping: 30 }}
                     >
                       {/* Green Ambient Glow Accent on Left of Active Pill */}
-                      <div className="absolute top-0 left-0 w-8 h-full bg-gradient-to-r from-emerald-400/35 to-transparent pointer-events-none" />
+                      <div className="absolute top-0 left-0 w-6 h-full bg-gradient-to-r from-emerald-400/35 to-transparent pointer-events-none" />
                     </motion.div>
                   )}
 
@@ -137,17 +137,17 @@ const Navbar = () => {
                     className={`relative z-10 transition-colors ${
                       isActive
                         ? 'font-bold text-[#1E2621]'
-                        : 'font-semibold text-[#48594B] dark:text-[#D6E0DA] hover:text-[#1E2621]'
+                        : 'font-bold text-[#48594B] dark:text-[#D6E0DA] hover:text-[#1E2621]'
                     }`}
                   >
                     {link.name}
                   </span>
 
-                  {/* Coral/Orange Active Indicator Dot ONLY for Active Link */}
+                  {/* Coral/Orange Active Indicator Bar ONLY for Active Link */}
                   {isActive && (
                     <motion.div
                       layoutId="topNavActiveDot"
-                      className="w-3 h-1 rounded-full bg-[#FF5722] shadow-xs absolute bottom-0.5 z-20"
+                      className="w-3.5 h-[3px] rounded-full bg-[#FF5722] shadow-xs absolute bottom-1 z-20"
                       transition={{ type: 'spring', stiffness: 500, damping: 30 }}
                     />
                   )}
@@ -157,12 +157,12 @@ const Navbar = () => {
           </nav>
 
           {/* Right Action Icons & ORDER NOW Button */}
-          <div className="flex items-center gap-1.5 sm:gap-2 xl:gap-2.5 shrink-0 justify-end">
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0 justify-end">
             
             {/* 1. ORDER NOW White Translucent Glossy Pill Button */}
             <Link
               to="/menu"
-              className="hidden lg:inline-flex items-center justify-center h-9 px-4 rounded-full bg-white/90 hover:bg-white border-2 border-white shadow-md hover:shadow-lg backdrop-blur-md text-[#1E2621] font-montserrat font-bold text-[11px] xl:text-xs uppercase tracking-[1px] transition-all duration-300 transform hover:scale-105 active:scale-95 group cursor-pointer"
+              className="hidden lg:inline-flex items-center justify-center h-8.5 px-3.5 rounded-full bg-white hover:bg-white border border-white shadow-sm hover:shadow-md backdrop-blur-md text-[#1E2621] font-montserrat font-bold text-[11px] uppercase tracking-wider transition-all duration-300 transform hover:scale-105 active:scale-95 group cursor-pointer"
             >
               <Sparkles className="w-3.5 h-3.5 mr-1 stroke-[2.2] text-amber-500 group-hover:scale-110 transition-transform" />
               <span>ORDER NOW</span>
@@ -172,11 +172,12 @@ const Navbar = () => {
             <div className="relative hidden lg:block">
               <button
                 onClick={() => setIsSearchOpen(!isSearchOpen)}
-                className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/90 hover:bg-white border-2 border-white shadow-md hover:shadow-lg backdrop-blur-md text-[#1E2621] hover:scale-105 active:scale-95 transition-all flex items-center justify-center cursor-pointer"
+                style={{ width: '38px', height: '38px', minWidth: '38px', minHeight: '38px', borderRadius: '50%' }}
+                className="bg-white/90 hover:bg-white border border-white shadow-sm hover:shadow-md backdrop-blur-md text-[#1E2621] hover:scale-105 active:scale-95 transition-all flex items-center justify-center shrink-0 cursor-pointer overflow-hidden"
                 title="Search Menu Items"
                 aria-label="Search"
               >
-                <Search className="w-4.5 h-4.5 stroke-[2.2]" />
+                <Search className="w-4 h-4 stroke-[2.2]" />
               </button>
 
               {/* Search Input Popover */}
@@ -186,15 +187,15 @@ const Navbar = () => {
                     initial={{ opacity: 0, y: -10, scale: 0.96 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: -10, scale: 0.96 }}
-                    className="absolute top-12 right-0 w-80 z-50"
+                    className="absolute top-12 right-0 w-72 z-50"
                   >
                     <form onSubmit={handleSearchSubmit}>
-                      <div className="w-full bg-white/95 border-2 border-white rounded-2xl py-2.5 px-4 flex items-center gap-3 shadow-2xl backdrop-blur-2xl">
-                        <Search className="w-4 h-4 text-[#1E2621] shrink-0 stroke-[2.5]" />
+                      <div className="w-full bg-white/95 border border-white rounded-2xl py-2 px-3.5 flex items-center gap-2.5 shadow-2xl backdrop-blur-2xl">
+                        <Search className="w-3.5 h-3.5 text-[#1E2621] shrink-0 stroke-[2.5]" />
                         <input
                           type="text"
                           autoFocus
-                          placeholder="Search delicacies, coffee, misal..."
+                          placeholder="Search delicacies, coffee..."
                           value={searchTerm}
                           onChange={(e) => setSearchTerm(e.target.value)}
                           className="w-full bg-transparent text-xs font-semibold text-[#1E2621] placeholder:text-gray-400 focus:outline-none border-none outline-none ring-0 truncate pr-1"
@@ -205,13 +206,13 @@ const Navbar = () => {
                             onClick={() => setSearchTerm('')}
                             className="text-gray-400 hover:text-black p-1 cursor-pointer"
                           >
-                            <X className="w-4 h-4" />
+                            <X className="w-3.5 h-3.5" />
                           </button>
                         ) : (
                           <button
                             type="button"
                             onClick={() => setIsSearchOpen(false)}
-                            className="text-xs font-bold text-gray-500 hover:text-black uppercase tracking-wider cursor-pointer whitespace-nowrap"
+                            className="text-[10px] font-bold text-gray-500 hover:text-black uppercase tracking-wider cursor-pointer whitespace-nowrap"
                           >
                             Close
                           </button>
@@ -226,23 +227,25 @@ const Navbar = () => {
             {/* 3. Location Map Pin Circle Icon */}
             <button
               onClick={() => setIsLocationModalOpen(true)}
-              className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/90 hover:bg-white border-2 border-white shadow-md hover:shadow-lg backdrop-blur-md text-[#1E2621] hover:scale-105 active:scale-95 transition-all hidden lg:flex items-center justify-center cursor-pointer"
+              style={{ width: '38px', height: '38px', minWidth: '38px', minHeight: '38px', borderRadius: '50%' }}
+              className="bg-white/90 hover:bg-white border border-white shadow-sm hover:shadow-md backdrop-blur-md text-[#1E2621] hover:scale-105 active:scale-95 transition-all hidden lg:flex items-center justify-center shrink-0 cursor-pointer overflow-hidden"
               title="Our Location & Map"
               aria-label="Location Map"
             >
-              <MapPin className="w-4.5 h-4.5 stroke-[2.2]" />
+              <MapPin className="w-4 h-4 stroke-[2.2]" />
             </button>
 
             {/* 4. Shopping Cart Drawer Circle Trigger with Dark Badge */}
             <button
               onClick={() => setIsCartDrawerOpen(true)}
-              className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/90 hover:bg-white border-2 border-white shadow-md hover:shadow-lg backdrop-blur-md text-[#1E2621] hover:scale-105 active:scale-95 transition-all flex items-center justify-center relative cursor-pointer"
+              style={{ width: '38px', height: '38px', minWidth: '38px', minHeight: '38px', borderRadius: '50%' }}
+              className="bg-white/90 hover:bg-white border border-white shadow-sm hover:shadow-md backdrop-blur-md text-[#1E2621] hover:scale-105 active:scale-95 transition-all flex items-center justify-center shrink-0 relative cursor-pointer overflow-visible"
               title="Shopping Cart & Quick Order"
               aria-label="Shopping Cart"
             >
-              <ShoppingCart className="w-4.5 h-4.5 stroke-[2.2]" />
+              <ShoppingCart className="w-4 h-4 stroke-[2.2]" />
               {totalItemsCount > 0 && (
-                <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 bg-[#18201B] text-white font-black text-[9px] rounded-full flex items-center justify-center shadow-md border-2 border-white leading-none">
+                <span className="absolute -top-1 -right-1 min-w-[17px] h-[17px] px-1 bg-[#18201B] text-white font-black text-[9px] rounded-full flex items-center justify-center shadow-md border border-white leading-none z-10">
                   {totalItemsCount}
                 </span>
               )}
@@ -251,14 +254,15 @@ const Navbar = () => {
             {/* 5. Theme Mode Toggle (Sun/Moon) Circle Icon */}
             <button
               onClick={toggleDarkMode}
-              className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/90 hover:bg-white border-2 border-white shadow-md hover:shadow-lg backdrop-blur-md text-[#1E2621] hover:scale-105 active:scale-95 transition-all hidden lg:flex items-center justify-center cursor-pointer"
+              style={{ width: '38px', height: '38px', minWidth: '38px', minHeight: '38px', borderRadius: '50%' }}
+              className="bg-white/90 hover:bg-white border border-white shadow-sm hover:shadow-md backdrop-blur-md text-[#1E2621] hover:scale-105 active:scale-95 transition-all hidden lg:flex items-center justify-center shrink-0 cursor-pointer overflow-hidden"
               title={isDarkMode ? 'Switch to Light Mode ☀️' : 'Switch to Dark Mode 🌙'}
               aria-label="Toggle Theme"
             >
               {isDarkMode ? (
-                <Sun className="w-4.5 h-4.5 stroke-[2.2] text-[#E6C364]" />
+                <Sun className="w-4 h-4 stroke-[2.2] text-[#E6C364]" />
               ) : (
-                <Moon className="w-4.5 h-4.5 stroke-[2.2]" />
+                <Moon className="w-4 h-4 stroke-[2.2]" />
               )}
             </button>
 
@@ -274,7 +278,10 @@ const Navbar = () => {
                 className="flex items-center gap-1 group p-0.5 focus:outline-none"
                 aria-label="User Profile"
               >
-                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border-2 border-white bg-[#18201B] flex items-center justify-center font-bold text-xs text-white shadow-md overflow-hidden shrink-0 group-hover:scale-105 transition-all">
+                <div
+                  style={{ width: '38px', height: '38px', minWidth: '38px', minHeight: '38px', borderRadius: '50%' }}
+                  className="border border-white bg-[#18201B] flex items-center justify-center font-bold text-[11px] text-white shadow-sm overflow-hidden shrink-0 group-hover:scale-105 transition-all"
+                >
                   {loggedUser?.avatar ? (
                     <img src={loggedUser.avatar} alt={loggedUser?.name || 'User'} className="w-full h-full object-cover" />
                   ) : (
