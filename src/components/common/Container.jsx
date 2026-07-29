@@ -5,8 +5,8 @@ const Container = ({ children, className = '', fluid = false }) => {
     <div
       className={`${
         fluid 
-          ? 'w-full px-3 sm:px-6 lg:px-8' 
-          : 'w-full max-w-[1400px] mx-auto px-3 sm:px-6 lg:px-8'
+          ? 'w-full px-4 sm:px-6 lg:px-8' 
+          : 'container-responsive'
       } ${className}`}
     >
       {children}

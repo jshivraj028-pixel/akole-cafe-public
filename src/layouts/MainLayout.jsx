@@ -59,12 +59,7 @@ const MainLayout = ({ children }) => {
     }
   }, [isStandalonePage]);
 
-  const hideHeaderFooter = 
-    isStandalonePage || 
-    pathname === '/profile' || 
-    pathname === '/dashboard' || 
-    pathname === '/orders' || 
-    pathname === '/wishlist';
+  const hideHeaderFooter = isStandalonePage;
 
   if (isStandalonePage) {
     return (
