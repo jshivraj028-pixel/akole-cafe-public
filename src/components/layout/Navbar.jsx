@@ -86,7 +86,7 @@ const Navbar = () => {
     <>
       {/* FULL-WIDTH STICKY NAVBAR HEADER */}
       <header
-        className="fixed top-0 left-0 right-0 z-50 h-[74px] sm:h-[82px] px-3 sm:px-8 transition-all duration-300 flex items-center bg-white/70 dark:bg-[#121F17]/80 backdrop-blur-xl border-b border-white/60 dark:border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.04)]"
+        className="fixed top-0 left-0 right-0 z-50 h-[74px] sm:h-[82px] px-3 sm:px-8 transition-all duration-300 flex items-center navbar-glass"
       >
         <div className="w-full max-w-[1400px] mx-auto flex items-center justify-between gap-2 xl:gap-4">
           
@@ -378,27 +378,6 @@ const Navbar = () => {
                         </div>
                       </Link>
 
-                      <Link
-                        to="/franchise"
-                        onClick={() => setIsUserMenuOpen(false)}
-                        className="flex items-center justify-between px-2.5 py-1.5 rounded-xl hover:bg-black/5 transition-colors"
-                      >
-                        <div className="flex items-center gap-2">
-                          <Store className="w-3.5 h-3.5 text-gray-600" />
-                          <span>Franchise</span>
-                        </div>
-                      </Link>
-
-                      <Link
-                        to="/settings"
-                        onClick={() => setIsUserMenuOpen(false)}
-                        className="flex items-center justify-between px-2.5 py-1.5 rounded-xl hover:bg-black/5 transition-colors"
-                      >
-                        <div className="flex items-center gap-2">
-                          <Settings className="w-3.5 h-3.5 text-gray-600" />
-                          <span>Settings</span>
-                        </div>
-                      </Link>
                     </div>
 
                     <div className="h-[1px] bg-gray-200 my-1" />

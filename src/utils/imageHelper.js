@@ -25,6 +25,11 @@ import coldCoffeeVanillaImg from '../assets/cold-coffee-vanilla.png';
 import thickChocolateFudgeShakeImg from '../assets/thick-chocolate-fudge-shake.png';
 import shahiGulabJamunImg from '../assets/shahi-gulab-jamun.png';
 import specialChickenDumBiryaniImg from '../assets/special-chicken-dum-biryani.png';
+import desiChickenCurryThaliImg from '../assets/desi-chicken-curry-thali.png';
+import malvaniFishCurryThaliImg from '../assets/malvani-fish-curry-thali.png';
+import specialMuttonRassaThaliImg from '../assets/special-mutton-rassa-thali.png';
+import kolhapuriChickenSukkaImg from '../assets/kolhapuri-chicken-sukka.png';
+import butterChickenGravyImg from '../assets/butter-chicken-gravy.png';
 import spicyRedSauceArrabbiataPastaImg from '../assets/spicy-red-sauce-arrabbiata-pasta.png';
 import vegHakkaNoodlesImg from '../assets/veg-hakka-noodles.png';
 import schezwanFriedRiceImg from '../assets/schezwan-fried-rice.png';
@@ -71,6 +76,7 @@ import kandaBhajiImg from '../assets/kanda-bhaji.png';
 import batataBhajiImg from '../assets/batata-bhaji.png';
 import mirchiBhajiImg from '../assets/mirchi-bhaji.png';
 import mixVegBhajiImg from '../assets/mix-veg-bhaji.png';
+import crispyPalakBhajiImg from '../assets/crispy-palak-bhaji.png';
 
 export const getProductImage = (item) => {
   if (!item) return '';
@@ -82,7 +88,7 @@ export const getProductImage = (item) => {
   // 1. Keyword matching for high-res cafe assets (ALWAYS PREVAILS FOR KNOWN ITEMS)
   // Bhaji / Pakoda Varieties
   if (name.includes('kanda bhaji') || name.includes('khekda bhaji')) return kandaBhajiImg;
-  if (name.includes('palak bhaji') || name.includes('spinach bhaji') || name.includes('palak')) return 'https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80';
+  if (name.includes('palak bhaji') || name.includes('spinach bhaji') || name.includes('palak')) return crispyPalakBhajiImg;
   if (name.includes('raw banana') || name.includes('kachha kela') || name.includes('kela bhaji')) return 'https://images.unsplash.com/photo-1601050690117-94f5f6fa8bd7?auto=format&fit=crop&w=800&q=80';
   if (name.includes('batata bhaji')) return batataBhajiImg;
   if (name.includes('mirchi bhaji') || name.includes('chili bhaji')) return mirchiBhajiImg;
@@ -120,7 +126,19 @@ export const getProductImage = (item) => {
   // Pav Bhaji & Patra
   if (name.includes('pav bhaji')) return butterLoadedPavBhajiImg;
   if (name.includes('alu vadi') || name.includes('patra') || name.includes('hurda')) return crispyAluVadiPatraImg;
-  if (name.includes('bhutta') || name.includes('corn')) return villageWhiteButterImg;
+  // Thalis
+  if (name.includes('mutton') && name.includes('thali')) return specialMuttonRassaThaliImg;
+  if (name.includes('chicken') && name.includes('thali')) return desiChickenCurryThaliImg;
+  if (name.includes('fish') && name.includes('thali')) return malvaniFishCurryThaliImg;
+  if (name.includes('veg thali') || name.includes('royal veg')) return 'https://images.unsplash.com/photo-1610192244261-3f33de3f55e4?auto=format&fit=crop&w=800&q=80';
+  if (name.includes('chicken sukka') || (name.includes('chicken') && name.includes('sukka'))) return kolhapuriChickenSukkaImg;
+  if (name.includes('butter chicken')) return butterChickenGravyImg;
+
+  // Punjabi Specials
+  if (name.includes('paneer tikka') || name.includes('paneer butter')) return 'https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=800&q=80';
+  if (name.includes('dal makhani')) return 'https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?auto=format&fit=crop&w=800&q=80';
+  if (name.includes('naan')) return 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80';
+  if (name.includes('kadhai paneer')) return 'https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?auto=format&fit=crop&w=800&q=80';
 
   // Rice / Biryani / Chinese
   if (name.includes('manchurian')) return vegManchurianDryImg;

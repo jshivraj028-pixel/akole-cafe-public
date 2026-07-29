@@ -14,7 +14,7 @@ const Button = ({
   disabled = false,
   ...props
 }) => {
-  const baseStyles = "relative inline-flex items-center justify-center font-medium tracking-wider transition-all duration-300 rounded-xl overflow-hidden focus:outline-none cursor-pointer";
+  const baseStyles = "relative inline-flex items-center justify-center font-medium tracking-wider transition-all duration-300 rounded-xl overflow-hidden focus:outline-none cursor-pointer glossy-button";
   
   const variants = {
     gold: "bg-gradient-to-r from-[#C8A96A] via-[#E8CE8E] to-[#B08E48] text-[#123524] font-bold tracking-wider shadow-[0_4px_18px_rgba(200,169,106,0.3)] hover:shadow-[0_6px_25px_rgba(200,169,106,0.45)] hover:brightness-105 active:scale-[0.98] border border-[#F0D89E]/60",

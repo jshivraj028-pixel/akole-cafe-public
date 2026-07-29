@@ -132,27 +132,6 @@ export const menuItems = [
     ]
   },
   {
-    "id": "drk-slice-mango-drink-250ml",
-    "name": "Slice Thick Mango Drink (250ml)",
-    "category": "cold-drinks",
-    "description": "Indulgent thick mango drink filled with rich Ratnagiri Alphonso mango taste in a chilled 250ml bottle.",
-    "price": 25,
-    "rating": 4.9,
-    "isVeg": true,
-    "isBestseller": true,
-    "isChefSpecial": false,
-    "spicyLevel": 0,
-    "prepTime": "1 min",
-    "image": "/assets/slice-mango-drink-250ml.png",
-    "tags": [
-      "Slice",
-      "Mango Drink",
-      "250ml",
-      "Cold Drink",
-      "Alphonso Mango"
-    ]
-  },
-  {
     "id": "drk-maaza-mango-drink-250ml",
     "name": "Maaza Mango Fruit Drink (250ml)",
     "category": "cold-drinks",
@@ -1610,7 +1589,7 @@ export const menuItems = [
     "isChefSpecial": true,
     "spicyLevel": 3,
     "prepTime": "10 mins",
-    "image": "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=800&q=80",
+    "image": "/assets/kolhapuri-misal-pav.png",
     "tags": [
       "Kolhapuri Spice",
       "Bestseller"
@@ -1627,7 +1606,7 @@ export const menuItems = [
     "isBestseller": true,
     "spicyLevel": 1,
     "prepTime": "8 mins",
-    "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=800&q=80",
+    "image": "/assets/puneri-misal-pav.png",
     "tags": [
       "Puneri Style",
       "Mild Spice"
@@ -1644,7 +1623,7 @@ export const menuItems = [
     "isChefSpecial": true,
     "spicyLevel": 3,
     "prepTime": "10 mins",
-    "image": "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=800&q=80",
+    "image": "/assets/nashik-kala-rassa-misal.png",
     "tags": [
       "Kala Rassa",
       "Nashik Special"
@@ -1662,7 +1641,7 @@ export const menuItems = [
     "isChefSpecial": true,
     "spicyLevel": 2,
     "prepTime": "12 mins",
-    "image": "https://images.unsplash.com/photo-1574484284002-952d92456975?auto=format&fit=crop&w=800&q=80",
+    "image": "/assets/cheese-butter-misal.png",
     "tags": [
       "Cheese Butter",
       "Bestseller"
@@ -1679,7 +1658,7 @@ export const menuItems = [
     "isChefSpecial": true,
     "spicyLevel": 3,
     "prepTime": "14 mins",
-    "image": "https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=800&q=80",
+    "image": "/assets/tandoori-smoked-misal.png",
     "tags": [
       "Charcoal Smoked"
     ]
@@ -1694,7 +1673,7 @@ export const menuItems = [
     "isVeg": true,
     "spicyLevel": 1,
     "prepTime": "9 mins",
-    "image": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80",
+    "image": "/assets/dahi-misal-pav.png",
     "tags": [
       "Curd Special"
     ]
@@ -1710,7 +1689,7 @@ export const menuItems = [
     "isBestseller": true,
     "spicyLevel": 2,
     "prepTime": "5 mins",
-    "image": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80",
+    "image": "/assets/classic-mumbai-vada-pav.png",
     "tags": [
       "Classic",
       "Bestseller"
@@ -1726,7 +1705,7 @@ export const menuItems = [
     "isVeg": true,
     "spicyLevel": 1,
     "prepTime": "5 mins",
-    "image": "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?auto=format&fit=crop&w=800&q=80",
+    "image": "/assets/butter-tossed-vada-pav.png",
     "tags": [
       "Amul Butter"
     ]
@@ -1742,7 +1721,7 @@ export const menuItems = [
     "isBestseller": true,
     "spicyLevel": 1,
     "prepTime": "7 mins",
-    "image": "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80",
+    "image": "/assets/cheese-lava-vada-pav.png",
     "tags": [
       "Cheese Lover"
     ]
@@ -1757,7 +1736,7 @@ export const menuItems = [
     "isVeg": true,
     "spicyLevel": 3,
     "prepTime": "6 mins",
-    "image": "https://images.unsplash.com/photo-1561758033-d89a9ad46330?auto=format&fit=crop&w=800&q=80",
+    "image": "/assets/schezwan-crispy-vada-pav.png",
     "tags": [
       "Spicy Schezwan"
     ]
@@ -1772,7 +1751,7 @@ export const menuItems = [
     "isVeg": true,
     "spicyLevel": 2,
     "prepTime": "5 mins",
-    "image": "https://images.unsplash.com/photo-1601050690117-94f5f6fa8bd7?auto=format&fit=crop&w=800&q=80",
+    "image": "/assets/crispy-punjabi-samosa-pav.png",
     "tags": [
       "Samosa Pav"
     ]
@@ -1788,28 +1767,10 @@ export const menuItems = [
     "isBestseller": true,
     "spicyLevel": 2,
     "prepTime": "12 mins",
-    "image": "https://images.unsplash.com/photo-1626132647523-66f5bf380027?auto=format&fit=crop&w=800&q=80",
+    "image": "/assets/butter-loaded-pav-bhaji.png",
     "tags": [
       "Pav Bhaji",
       "Bestseller"
-    ]
-  },
-  {
-    "id": "vp-batata-bhaji",
-    "name": "Crispy Batata Bhaji (Potato Bhaji)",
-    "category": "vada-pav",
-    "description": "Thinly sliced potato discs coated in seasoned chickpea flour batter with carom seeds & coriander, deep-fried till golden crunchy.",
-    "price": 50,
-    "rating": 4.9,
-    "isVeg": true,
-    "isBestseller": true,
-    "spicyLevel": 1,
-    "prepTime": "6 mins",
-    "image": "/assets/batata-bhaji.png",
-    "tags": [
-      "Batata Bhaji",
-      "Potato Pakoda",
-      "Crispy Snack"
     ]
   },
   {
@@ -1841,7 +1802,7 @@ export const menuItems = [
     "isVeg": true,
     "spicyLevel": 1,
     "prepTime": "7 mins",
-    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80",
+    "image": "/assets/crispy-palak-bhaji.png",
     "tags": [
       "Palak Bhaji",
       "Spinach Pakoda",
@@ -1881,6 +1842,43 @@ export const menuItems = [
     ]
   },
   {
+    "id": "trad-4",
+    "name": "Surmai Fish Rava Fry",
+    "category": "traditional",
+    "description": "Crispy semolina (rava) crusted Kingfish (Surmai) steak shallow fried with Malvani spices, lemon & onion.",
+    "price": 280,
+    "rating": 4.9,
+    "isVeg": false,
+    "isChefSpecial": true,
+    "spicyLevel": 2,
+    "prepTime": "15 mins",
+    "image": "/assets/surmai-fish-rava-fry.png",
+    "tags": [
+      "Fish Fry",
+      "Surmai Rava Fry",
+      "Malvani Special"
+    ]
+  },
+  {
+    "id": "trad-5",
+    "name": "Kolhapuri Chicken Sukka",
+    "category": "traditional",
+    "description": "Tender chicken cooked in rich roasted coconut & authentic Kolhapuri Kala masala, served dry with onion & lemon.",
+    "price": 240,
+    "rating": 4.9,
+    "isVeg": false,
+    "isBestseller": true,
+    "isChefSpecial": true,
+    "spicyLevel": 3,
+    "prepTime": "18 mins",
+    "image": "/assets/kolhapuri-chicken-sukka.png",
+    "tags": [
+      "Chicken Sukka",
+      "Kolhapuri Special",
+      "Spicy Non Veg"
+    ]
+  },
+  {
     "id": "thali-1",
     "name": "Maharashtrian Royal Veg Thali",
     "category": "thali",
@@ -1908,7 +1906,7 @@ export const menuItems = [
     "isBestseller": true,
     "spicyLevel": 3,
     "prepTime": "20 mins",
-    "image": "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?auto=format&fit=crop&w=800&q=80",
+    "image": "/assets/desi-chicken-curry-thali.png",
     "tags": [
       "Chicken Thali"
     ]
@@ -1924,7 +1922,7 @@ export const menuItems = [
     "isChefSpecial": true,
     "spicyLevel": 3,
     "prepTime": "22 mins",
-    "image": "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80",
+    "image": "/assets/special-mutton-rassa-thali.png",
     "tags": [
       "Mutton Thali"
     ]
@@ -1955,7 +1953,7 @@ export const menuItems = [
     "isChefSpecial": true,
     "spicyLevel": 2,
     "prepTime": "20 mins",
-    "image": "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=800&q=80",
+    "image": "/assets/malvani-fish-curry-thali.png",
     "tags": [
       "Fish Thali"
     ]
@@ -2033,25 +2031,9 @@ export const menuItems = [
     "isBestseller": true,
     "spicyLevel": 2,
     "prepTime": "18 mins",
-    "image": "https://images.unsplash.com/photo-1626074353765-517a681e40be?auto=format&fit=crop&w=800&q=80",
+    "image": "/assets/butter-chicken-gravy.png",
     "tags": [
       "Butter Chicken"
-    ]
-  },
-  {
-    "id": "kolh-1",
-    "name": "Kolhapuri Chicken Sukka",
-    "category": "kolhapuri",
-    "description": "Fiery dry chicken fry infused with roasted dry coconut & lavangi chili spices.",
-    "price": 260,
-    "rating": 4.9,
-    "isVeg": false,
-    "isBestseller": true,
-    "spicyLevel": 3,
-    "prepTime": "18 mins",
-    "image": "https://images.unsplash.com/photo-1505253716362-afaea1d3d1af?auto=format&fit=crop&w=800&q=80",
-    "tags": [
-      "Kolhapuri Spice"
     ]
   },
   {
@@ -2083,22 +2065,6 @@ export const menuItems = [
     "image": "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=800&q=80",
     "tags": [
       "Veg Kolhapuri"
-    ]
-  },
-  {
-    "id": "kolh-4",
-    "name": "Surmai Fish Rava Fry",
-    "category": "kolhapuri",
-    "description": "Fresh king fish marinated in spicy coastal masala & crispy semolina coating.",
-    "price": 320,
-    "rating": 5,
-    "isVeg": false,
-    "isChefSpecial": true,
-    "spicyLevel": 2,
-    "prepTime": "15 mins",
-    "image": "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=800&q=80",
-    "tags": [
-      "Surmai Fry"
     ]
   },
   {
@@ -2443,7 +2409,7 @@ export const menuItems = [
     "isChefSpecial": true,
     "spicyLevel": 2,
     "prepTime": "20 mins",
-    "image": "https://images.unsplash.com/photo-1633945274405-b6c8069047b0?auto=format&fit=crop&w=800&q=80",
+    "image": "/assets/special-chicken-dum-biryani.png",
     "tags": [
       "Chicken Biryani"
     ]

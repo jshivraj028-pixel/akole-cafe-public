@@ -14,6 +14,23 @@ router.get('/', async (req, res) => {
   }
 });
 
+// GET single order by ID or orderId for Live Tracking
+router.get('/:id', async (req, res) => {
+  try {
+    const query = (req.params.id.startsWith('ORD-') || req.params.id.startsWith('AKL-'))
+      ? { orderId: req.params.id }
+      : { _id: req.params.id };
+
+    const order = await Order.findOne(query);
+    if (!order) {
+      return res.status(404).json({ message: 'Order not found' });
+    }
+    res.json(order);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching order details', error: error.message });
+  }
+});
+
 // POST new order
 router.post('/', async (req, res) => {
   try {

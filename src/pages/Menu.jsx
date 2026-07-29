@@ -55,9 +55,19 @@ const Menu = () => {
   }, []);
 
   const filteredAndSortedItems = useMemo(() => {
-    let result = [...items];
+    // 0. Deduplicate items strictly by name so no duplicate cards ever appear
+    const seenNames = new Set();
+    const uniqueItems = items.filter(item => {
+      if (!item || !item.name) return false;
+      const key = item.name.toLowerCase().trim();
+      if (seenNames.has(key)) return false;
+      seenNames.add(key);
+      return true;
+    });
 
-    // 1. Instant Search Filter
+    let result = [...uniqueItems];
+
+    // 1. Instant Search Filter across all fields
     if (searchQuery && searchQuery.trim() !== '') {
       const q = searchQuery.toLowerCase().trim();
       const terms = q.split(/\s+/).filter(Boolean);
@@ -65,21 +75,40 @@ const Menu = () => {
       result = result.filter(item => {
         const name = (item.name || '').toLowerCase();
         const desc = (item.description || '').toLowerCase();
+        const cat = (item.category || '').toLowerCase();
         const tags = Array.isArray(item.tags) 
           ? item.tags.join(' ').toLowerCase() 
           : String(item.tags || '').toLowerCase();
 
-        const fullText = `${name} ${desc} ${tags}`;
+        const fullText = `${name} ${desc} ${cat} ${tags}`;
         return terms.every(term => fullText.includes(term));
       });
     } else {
       // 2. Category Filter
       if (activeCategory && activeCategory !== 'all') {
         result = result.filter(item => {
-          if (activeCategory === 'cold-drinks' || activeCategory === 'drinks') {
-            return item.category === 'cold-drinks' || item.category === 'drinks' || item.category === 'cold_drinks';
+          const itemCat = (item.category || '').toLowerCase();
+          const targetCat = activeCategory.toLowerCase();
+          
+          if (targetCat === 'beverages' || targetCat === 'cold-drinks' || targetCat === 'drinks') {
+            return itemCat.includes('beverage') || itemCat.includes('drink') || itemCat.includes('juice') || itemCat.includes('cold') || itemCat.includes('shake');
           }
-          return item.category === activeCategory;
+          if (targetCat === 'misal' || targetCat === 'misal-special' || targetCat === 'signature-misal') {
+            return itemCat.includes('misal');
+          }
+          if (targetCat === 'vada-pav' || targetCat === 'snacks') {
+            return itemCat.includes('vada') || itemCat.includes('pav') || itemCat.includes('snack') || itemCat.includes('bhaji');
+          }
+          if (targetCat === 'bakery-desserts' || targetCat === 'desserts' || targetCat === 'sweets') {
+            return itemCat.includes('dessert') || itemCat.includes('sweet') || itemCat.includes('cake') || itemCat.includes('bakery') || itemCat.includes('pastry');
+          }
+          if (targetCat === 'breakfast') {
+            return itemCat.includes('breakfast') || itemCat.includes('dosa') || itemCat.includes('idli') || itemCat.includes('pohe');
+          }
+          if (targetCat === 'thali') {
+            return itemCat.includes('thali');
+          }
+          return itemCat === targetCat || itemCat.includes(targetCat) || targetCat.includes(itemCat);
         });
       }
     }

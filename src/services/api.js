@@ -36,21 +36,24 @@ export const fetchMenuItems = async (category = 'all', search = '') => {
 
     const res = await fetch(url);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    return await res.json();
-  } catch (err) {
-    console.warn('[API Warning] Using local menu dataset fallback:', err.message);
-    let items = [...fallbackMenuItems];
-    if (category !== 'all') {
-      items = items.filter(item => item.category === category);
-    }
-    if (search && search.trim()) {
-      const terms = search.trim().toLowerCase().split(/\s+/).filter(Boolean);
-      items = items.filter(item => {
-        const text = `${item.name || ''} ${item.description || ''} ${item.category || ''} ${Array.isArray(item.tags) ? item.tags.join(' ') : (item.tags || '')}`.toLowerCase();
-        return terms.every(t => text.includes(t));
+    const data = await res.json();
+    
+    // Always merge backend products with fallback dataset so all items stay available
+    const mergedMap = new Map();
+    fallbackMenuItems.forEach(item => mergedMap.set(item.name.toLowerCase().trim(), item));
+    
+    if (Array.isArray(data)) {
+      data.forEach(dbItem => {
+        if (dbItem && dbItem.name) {
+          mergedMap.set(dbItem.name.toLowerCase().trim(), dbItem);
+        }
       });
     }
-    return items;
+
+    return Array.from(mergedMap.values());
+  } catch (err) {
+    console.warn('[API Warning] Using local menu dataset fallback:', err.message);
+    return fallbackMenuItems;
   }
 };
 
@@ -353,6 +356,24 @@ export const createOrderAPI = async (orderData) => {
   }
 
   return data;
+};
+
+// Track Order Live API
+export const trackOrderAPI = async (orderId) => {
+  try {
+    const res = await fetch(`${API_BASE_URL}/orders/${orderId}`);
+    const data = await res.json();
+    if (!res.ok) {
+      throw new Error(data.message || 'Order not found');
+    }
+    return data;
+  } catch (err) {
+    // Local storage fallback for offline / mock testing
+    const localOrders = JSON.parse(localStorage.getItem('akole_user_orders') || '[]');
+    const match = localOrders.find(o => o.orderId === orderId || o.id === orderId);
+    if (match) return match;
+    throw err;
+  }
 };
 
 // Update Order Status (Admin) & Notify Customer in MongoDB Atlas
