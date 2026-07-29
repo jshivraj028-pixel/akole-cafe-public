@@ -132,16 +132,22 @@ const MenuCard = ({ item, index = 0, onQuickView }) => {
             </span>
           </div>
 
-          {/* Luxury Add Button */}
+          {/* Luxury Glossy Gold Glass Add Button */}
           <motion.button
-            whileHover={{ scale: 1.04, y: -1 }}
+            whileHover={{ scale: 1.05, y: -1 }}
             whileTap={{ scale: 0.95 }}
             onClick={handleAddToCart}
-            className="px-4 py-2 rounded-xl bg-gradient-to-r from-[#D6AE4D] to-[#C29B38] hover:from-[#E0B85C] hover:to-[#D6AE4D] text-[#123524] font-bold text-xs uppercase tracking-wider shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-1.5 cursor-pointer"
+            className="relative overflow-hidden px-4 py-2 rounded-xl bg-gradient-to-b from-[#FCEBB6] via-[#D6AE4D] to-[#B58A28] text-[#0C1A12] font-black text-xs uppercase tracking-wider shadow-[0_4px_14px_rgba(214,174,77,0.38)] border border-white/60 hover:shadow-[0_6px_20px_rgba(214,174,77,0.55)] transition-all duration-300 flex items-center gap-1.5 cursor-pointer group/btn"
             title="Add to Cart"
           >
-            <ShoppingCart className="w-3.5 h-3.5 stroke-[2.5]" />
-            <span>ADD</span>
+            {/* Glossy Top Glass Reflective Sheen Layer */}
+            <div className="absolute inset-x-0 top-0 h-[48%] bg-gradient-to-b from-white/70 via-white/20 to-transparent pointer-events-none rounded-t-xl" />
+            
+            {/* Subtle Hover Gloss Highlight */}
+            <div className="absolute inset-0 bg-white/10 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300 pointer-events-none" />
+
+            <ShoppingCart className="w-3.5 h-3.5 text-[#0C1A12] stroke-[2.5] relative z-10" />
+            <span className="relative z-10">ADD</span>
           </motion.button>
         </div>
       </div>
