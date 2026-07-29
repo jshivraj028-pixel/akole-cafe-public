@@ -36,9 +36,34 @@ import schezwanFriedRiceImg from '../assets/schezwan-fried-rice.png';
 import vegManchurianDryImg from '../assets/veg-manchurian-dry.png';
 import dalTadkaJeeraRiceImg from '../assets/dal-tadka-jeera-rice.png';
 import crispyAluVadiPatraImg from '../assets/crispy-alu-vadi-patra.png';
+import maharashtrianRoyalVegThaliImg from '../assets/maharashtrian-royal-veg-thali.png';
+import paneerButterMasalaThaliImg from '../assets/paneer-butter-masala-thali.png';
+import paneerTikkaButterMasalaImg from '../assets/paneer-tikka-butter-masala.png';
+import shahiDalMakhaniImg from '../assets/shahi-dal-makhani.png';
+import butterGarlicNaanImg from '../assets/butter-garlic-naan.png';
+import kadhaiPaneerImg from '../assets/kadhai-paneer.png';
+import vegKolhapuriHandiImg from '../assets/veg-kolhapuri-handi.png';
+import kandaBatataPohaImg from '../assets/kanda-batata-poha.png';
+import butterMasalaDosaImg from '../assets/butter-masala-dosa.png';
+import cheeseMysoreMasalaDosaImg from '../assets/cheese-mysore-masala-dosa.png';
+import steamedIdliSambarImg from '../assets/steamed-idli-sambar.png';
+import crispyMeduVadaImg from '../assets/crispy-medu-vada.png';
+import upmaCoconutChutneyImg from '../assets/upma-coconut-chutney.png';
+import supremeVegCheeseBurgerImg from '../assets/supreme-veg-cheese-burger.png';
+import paneerTikkaClubBurgerImg from '../assets/paneer-tikka-club-burger.png';
+import bombayMasalaToastSandwichImg from '../assets/bombay-masala-toast-sandwich.png';
+import cheeseCornGrillSandwichImg from '../assets/cheese-corn-grill-sandwich.png';
+import periPeriSaltedFrenchFriesImg from '../assets/peri-peri-salted-french-fries.png';
+import loadedCheesePeriPeriFriesImg from '../assets/loaded-cheese-peri-peri-fries.png';
+import classicMargheritaCheesePizzaImg from '../assets/classic-margherita-cheese-pizza.png';
+import paneerTikkaSupremePizzaImg from '../assets/paneer-tikka-supreme-pizza.png';
+import farmhouseVeggieOverloadPizzaImg from '../assets/farmhouse-veggie-overload-pizza.png';
+import creamyAlfredoWhiteSaucePastaImg from '../assets/creamy-alfredo-white-sauce-pasta.png';
 
-import rajurKandiPedhaImg from '../assets/rajur-kandi-pedha.png';
+import coalRoastedButterBhuttaImg from '../assets/coal-roasted-butter-bhutta.png';
+import konkaniSolKadhiSteamedRiceImg from '../assets/konkani-sol-kadhi-steamed-rice.png';
 import bhandardaraWildHoneyImg from '../assets/bhandardara-wild-honey.png';
+import bhandardaraSeasonalHurdaPlatterImg from '../assets/bhandardara-seasonal-hurda-platter.png';
 import kolhapuriMisalPavImg from '../assets/kolhapuri-misal-pav.png';
 import classicMumbaiVadaPavImg from '../assets/classic-mumbai-vada-pav.png';
 import butterLoadedPavBhajiImg from '../assets/butter-loaded-pav-bhaji.png';
@@ -119,26 +144,47 @@ export const getProductImage = (item) => {
   if (name.includes('shuddha') || name.includes('shuddha milk pedha')) return shuddhaMilkPedhaImg;
   if (name.includes('pedha') || name.includes('rajur') || name.includes('kandi')) return rajurKandiPedhaImg;
 
-  // Honey & Butter
+  // Sol Kadhi & Drinks
+  if (name.includes('sol kadhi') || name.includes('solkadhi')) return konkaniSolKadhiSteamedRiceImg;
+  if (name.includes('bhutta') || name.includes('corn')) return coalRoastedButterBhuttaImg;
   if (name.includes('honey') || name.includes('wild forest')) return bhandardaraWildHoneyImg;
   if (name.includes('white butter') || name.includes('loni')) return villageWhiteButterImg;
 
-  // Pav Bhaji & Patra
+  // Pav Bhaji, Hurda & Patra
+  if (name.includes('hurda')) return bhandardaraSeasonalHurdaPlatterImg;
   if (name.includes('pav bhaji')) return butterLoadedPavBhajiImg;
-  if (name.includes('alu vadi') || name.includes('patra') || name.includes('hurda')) return crispyAluVadiPatraImg;
+  if (name.includes('alu vadi') || name.includes('patra')) return crispyAluVadiPatraImg;
   // Thalis
   if (name.includes('mutton') && name.includes('thali')) return specialMuttonRassaThaliImg;
   if (name.includes('chicken') && name.includes('thali')) return desiChickenCurryThaliImg;
   if (name.includes('fish') && name.includes('thali')) return malvaniFishCurryThaliImg;
-  if (name.includes('veg thali') || name.includes('royal veg')) return 'https://images.unsplash.com/photo-1610192244261-3f33de3f55e4?auto=format&fit=crop&w=800&q=80';
+  if (name.includes('paneer') && name.includes('thali')) return paneerButterMasalaThaliImg;
+  if (name.includes('veg thali') || name.includes('royal veg')) return maharashtrianRoyalVegThaliImg;
   if (name.includes('chicken sukka') || (name.includes('chicken') && name.includes('sukka'))) return kolhapuriChickenSukkaImg;
   if (name.includes('butter chicken')) return butterChickenGravyImg;
 
-  // Punjabi Specials
-  if (name.includes('paneer tikka') || name.includes('paneer butter')) return 'https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=800&q=80';
-  if (name.includes('dal makhani')) return 'https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?auto=format&fit=crop&w=800&q=80';
-  if (name.includes('naan')) return 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80';
-  if (name.includes('kadhai paneer')) return 'https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?auto=format&fit=crop&w=800&q=80';
+  // Fast Food - Burgers, Sandwiches & Fries
+  if (name.includes('loaded cheese') || (name.includes('cheese') && name.includes('fries'))) return loadedCheesePeriPeriFriesImg;
+  if (name.includes('fries') || name.includes('french fries') || name.includes('peri peri')) return periPeriSaltedFrenchFriesImg;
+  if (name.includes('paneer tikka club') || (name.includes('paneer') && name.includes('burger'))) return paneerTikkaClubBurgerImg;
+  if (name.includes('burger') || name.includes('veg cheese burger')) return supremeVegCheeseBurgerImg;
+  if (name.includes('bombay masala') || name.includes('toast sandwich')) return bombayMasalaToastSandwichImg;
+  if (name.includes('cheese corn') || name.includes('grill sandwich') || name.includes('sandwich')) return cheeseCornGrillSandwichImg;
+
+  // South Indian & Breakfast Specials
+  if (name.includes('poha')) return kandaBatataPohaImg;
+  if (name.includes('mysore') || name.includes('cheese dosa')) return cheeseMysoreMasalaDosaImg;
+  if (name.includes('dosa') || name.includes('masala dosa')) return butterMasalaDosaImg;
+  if (name.includes('idli') || name.includes('sambar idli')) return steamedIdliSambarImg;
+  if (name.includes('medu vada') || name.includes('vada sambar')) return crispyMeduVadaImg;
+  if (name.includes('upma')) return upmaCoconutChutneyImg;
+
+  // Punjabi & Veg Specials
+  if (name.includes('veg kolhapuri') || name.includes('kolhapuri handi')) return vegKolhapuriHandiImg;
+  if (name.includes('paneer tikka') || name.includes('paneer butter')) return paneerTikkaButterMasalaImg;
+  if (name.includes('dal makhani')) return shahiDalMakhaniImg;
+  if (name.includes('naan')) return butterGarlicNaanImg;
+  if (name.includes('kadhai paneer')) return kadhaiPaneerImg;
 
   // Rice / Biryani / Chinese
   if (name.includes('manchurian')) return vegManchurianDryImg;
@@ -147,7 +193,11 @@ export const getProductImage = (item) => {
   if (name.includes('rice') || name.includes('bhaat') || name.includes('fried rice') || (name.includes('schezwan') && !name.includes('vada'))) return schezwanFriedRiceImg;
   if (name.includes('biryani')) return specialChickenDumBiryaniImg;
 
-  // Fast food & Desserts
+  // Fast food - Pizzas, Pastas & Desserts
+  if (name.includes('paneer tikka supreme') || (name.includes('paneer') && name.includes('pizza'))) return paneerTikkaSupremePizzaImg;
+  if (name.includes('farmhouse') || name.includes('veggie overload')) return farmhouseVeggieOverloadPizzaImg;
+  if (name.includes('margherita') || name.includes('pizza')) return classicMargheritaCheesePizzaImg;
+  if (name.includes('alfredo') || name.includes('white sauce') || (name.includes('pasta') && name.includes('white'))) return creamyAlfredoWhiteSaucePastaImg;
   if (name.includes('pasta') || name.includes('arrabbiata')) return spicyRedSauceArrabbiataPastaImg;
   if (name.includes('gulab jamun')) return shahiGulabJamunImg;
   if (name.includes('chocolate fudge') || name.includes('fudge shake')) return thickChocolateFudgeShakeImg;

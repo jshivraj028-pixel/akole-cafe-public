@@ -67,6 +67,648 @@ export const menuCategories = [
 
 export const menuItems = [
   {
+    "id": "akole-classic-margherita-cheese-pizza-8in",
+    "name": "Classic Margherita Cheese Pizza (8\")",
+    "category": "vada-pav",
+    "description": "8-inch crisp wood-fired pizza topped with Italian tomato sauce, melted gooey mozzarella cheese & fresh basil (क्लासिक मार्गरीटा चीझ पिझ्झा).",
+    "price": 160,
+    "rating": 4.9,
+    "isVeg": true,
+    "isBestseller": true,
+    "isChefSpecial": true,
+    "spicyLevel": 0,
+    "prepTime": "12 mins",
+    "image": "/assets/classic-margherita-cheese-pizza.png",
+    "tags": [
+      "Margherita Pizza",
+      "Cheese Pizza",
+      "Italian Special",
+      "Akole Special"
+    ]
+  },
+  {
+    "id": "akole-paneer-tikka-supreme-pizza-8in",
+    "name": "Paneer Tikka Supreme Pizza (8\")",
+    "category": "vada-pav",
+    "description": "8-inch gourmet pizza topped with tandoori paneer tikka, capsicum, onions, red paprika & extra mozzarella cheese (पनीर टिक्का सुप्रीम पिझ्झा).",
+    "price": 220,
+    "rating": 5,
+    "isVeg": true,
+    "isBestseller": true,
+    "isChefSpecial": true,
+    "spicyLevel": 2,
+    "prepTime": "12 mins",
+    "image": "/assets/paneer-tikka-supreme-pizza.png",
+    "tags": [
+      "Paneer Pizza",
+      "Supreme Pizza",
+      "Tandoori Pizza",
+      "Akole Special"
+    ]
+  },
+  {
+    "id": "akole-farmhouse-veggie-overload-pizza-8in",
+    "name": "Farmhouse Veggie Overload Pizza (8\")",
+    "category": "vada-pav",
+    "description": "8-inch pizza loaded with sweet corn, mushrooms, olives, jalapeños, tomatoes, capsicum & liquid cheese (फार्महाऊस व्हेज पिझ्झा).",
+    "price": 200,
+    "rating": 4.9,
+    "isVeg": true,
+    "isBestseller": true,
+    "isChefSpecial": false,
+    "spicyLevel": 1,
+    "prepTime": "12 mins",
+    "image": "/assets/farmhouse-veggie-overload-pizza.png",
+    "tags": [
+      "Farmhouse Pizza",
+      "Veggie Pizza",
+      "Overload Pizza"
+    ]
+  },
+  {
+    "id": "akole-creamy-alfredo-white-sauce-pasta",
+    "name": "Creamy Alfredo White Sauce Pasta",
+    "category": "vada-pav",
+    "description": "Italian Penne pasta tossed in rich garlic parmesan cream sauce with sweet corn, broccoli & herbs (क्रीमी व्हाईट सॉस पास्ता).",
+    "price": 170,
+    "rating": 4.9,
+    "isVeg": true,
+    "isBestseller": true,
+    "isChefSpecial": true,
+    "spicyLevel": 0,
+    "prepTime": "12 mins",
+    "image": "/assets/creamy-alfredo-white-sauce-pasta.png",
+    "tags": [
+      "Alfredo Pasta",
+      "White Sauce Pasta",
+      "Creamy Pasta",
+      "Italian Special"
+    ]
+  },
+  {
+    "id": "akole-spicy-red-sauce-arrabbiata-pasta",
+    "name": "Spicy Red Sauce Arrabbiata Pasta",
+    "category": "vada-pav",
+    "description": "Italian Penne pasta tossed in zesty spicy tomato garlic chilli sauce with olives & fresh basil (झणझणीत रेड सॉस पास्ता).",
+    "price": 160,
+    "rating": 4.8,
+    "isVeg": true,
+    "isBestseller": true,
+    "isChefSpecial": false,
+    "spicyLevel": 2,
+    "prepTime": "12 mins",
+    "image": "/assets/spicy-red-sauce-arrabbiata-pasta.png",
+    "tags": [
+      "Arrabbiata Pasta",
+      "Red Sauce Pasta",
+      "Spicy Pasta"
+    ]
+  },
+  {
+    "id": "akole-supreme-veg-cheese-burger",
+    "name": "Supreme Veg Cheese Burger",
+    "category": "vada-pav",
+    "description": "Thick crispy vegetable patty with melted cheddar cheese slice, fresh lettuce, tomato, onions & creamy mayo inside toasted sesame buns (सुप्रीम व्हेज चीझ बर्गर).",
+    "price": 120,
+    "rating": 4.9,
+    "isVeg": true,
+    "isBestseller": true,
+    "isChefSpecial": true,
+    "spicyLevel": 1,
+    "prepTime": "10 mins",
+    "image": "/assets/supreme-veg-cheese-burger.png",
+    "tags": [
+      "Veg Burger",
+      "Cheese Burger",
+      "Akole Special",
+      "Fast Food"
+    ]
+  },
+  {
+    "id": "akole-paneer-tikka-club-burger",
+    "name": "Paneer Tikka Club Burger",
+    "category": "vada-pav",
+    "description": "Gourmet grilled charred tandoori paneer tikka patty layered with mint chutney, melted cheese & bell peppers in artisan brioche buns (पनीर टिक्का क्लब बर्गर).",
+    "price": 150,
+    "rating": 5,
+    "isVeg": true,
+    "isBestseller": true,
+    "isChefSpecial": true,
+    "spicyLevel": 2,
+    "prepTime": "12 mins",
+    "image": "/assets/paneer-tikka-club-burger.png",
+    "tags": [
+      "Paneer Burger",
+      "Club Burger",
+      "Tandoori Burger",
+      "Akole Special"
+    ]
+  },
+  {
+    "id": "akole-bombay-masala-toast-sandwich",
+    "name": "Bombay Masala Toast Sandwich",
+    "category": "vada-pav",
+    "description": "Authentic Mumbai street style toasted sandwich stuffed with potato masala, cucumber, tomatoes, mint chutney & topped with nylon sev (बॉम्बे मसाला टोस्ट सँडविच).",
+    "price": 90,
+    "rating": 4.9,
+    "isVeg": true,
+    "isBestseller": true,
+    "isChefSpecial": false,
+    "spicyLevel": 1,
+    "prepTime": "8 mins",
+    "image": "/assets/bombay-masala-toast-sandwich.png",
+    "tags": [
+      "Masala Toast",
+      "Bombay Sandwich",
+      "Toast Sandwich",
+      "Street Food"
+    ]
+  },
+  {
+    "id": "akole-cheese-corn-grill-sandwich",
+    "name": "Cheese Corn Grill Sandwich",
+    "category": "vada-pav",
+    "description": "Crispy golden grilled sandwich stuffed with sweet corn kernels & melted stringy mozzarella cheese (चीझ कॉर्न ग्रिल सँडविच).",
+    "price": 110,
+    "rating": 4.9,
+    "isVeg": true,
+    "isBestseller": true,
+    "isChefSpecial": true,
+    "spicyLevel": 1,
+    "prepTime": "8 mins",
+    "image": "/assets/cheese-corn-grill-sandwich.png",
+    "tags": [
+      "Cheese Corn Sandwich",
+      "Grill Sandwich",
+      "Mozzarella Sandwich"
+    ]
+  },
+  {
+    "id": "akole-peri-peri-salted-french-fries",
+    "name": "Peri Peri Salted French Fries",
+    "category": "vada-pav",
+    "description": "Golden crispy skin-on french fries tossed with zesty red peri peri spice seasoning & sea salt (पेरी पेरी फ्रेंच फ्राईज).",
+    "price": 95,
+    "rating": 4.8,
+    "isVeg": true,
+    "isBestseller": true,
+    "isChefSpecial": false,
+    "spicyLevel": 2,
+    "prepTime": "7 mins",
+    "image": "/assets/peri-peri-salted-french-fries.png",
+    "tags": [
+      "French Fries",
+      "Peri Peri Fries",
+      "Crispy Fries",
+      "Fast Food"
+    ]
+  },
+  {
+    "id": "akole-loaded-cheese-peri-peri-fries",
+    "name": "Loaded Cheese Peri Peri Fries",
+    "category": "vada-pav",
+    "description": "Crispy peri peri fries generously smothered with warm liquid cheddar cheese sauce, jalapeños & spring onions (लोडेड चीझ पेरी पेरी फ्राईज).",
+    "price": 140,
+    "rating": 5,
+    "isVeg": true,
+    "isBestseller": true,
+    "isChefSpecial": true,
+    "spicyLevel": 2,
+    "prepTime": "8 mins",
+    "image": "/assets/loaded-cheese-peri-peri-fries.png",
+    "tags": [
+      "Loaded Fries",
+      "Cheese Fries",
+      "Cheesy Peri Peri",
+      "Akole Special"
+    ]
+  },
+  {
+    "id": "akole-kanda-batata-poha",
+    "name": "Kanda Batata Poha",
+    "category": "vada-pav",
+    "description": "Authentic Maharashtrian hot Poha (गरमागरम कांदा बटाटा पोहे) cooked with onions, potato cubes, mustard & turmeric, garnished with fresh coconut, pomegranate seeds, cilantro & crisp sev.",
+    "price": 35,
+    "rating": 4.9,
+    "isVeg": true,
+    "isBestseller": true,
+    "isChefSpecial": true,
+    "spicyLevel": 1,
+    "prepTime": "6 mins",
+    "image": "/assets/kanda-batata-poha.png",
+    "tags": [
+      "Kanda Poha",
+      "Batata Poha",
+      "Maharashtrian Breakfast",
+      "Akole Special"
+    ]
+  },
+  {
+    "id": "akole-butter-masala-dosa",
+    "name": "Butter Masala Dosa",
+    "category": "vada-pav",
+    "description": "Crispy golden South Indian rice crepe brushed with rich butter & filled with spiced potato masala (बटर मसाला डोसा), served with coconut chutney & hot sambar.",
+    "price": 110,
+    "rating": 4.9,
+    "isVeg": true,
+    "isBestseller": true,
+    "isChefSpecial": true,
+    "spicyLevel": 1,
+    "prepTime": "10 mins",
+    "image": "/assets/butter-masala-dosa.png",
+    "tags": [
+      "Butter Dosa",
+      "Masala Dosa",
+      "South Indian Special",
+      "Crispy Dosa"
+    ]
+  },
+  {
+    "id": "akole-cheese-mysore-masala-dosa",
+    "name": "Cheese Mysore Masala Dosa",
+    "category": "vada-pav",
+    "description": "Crispy dosa coated with fiery Mysore garlic chutney, potato masala & melted mozzarella cheese (चीझ म्हैसूर मसाला डोसा).",
+    "price": 140,
+    "rating": 5,
+    "isVeg": true,
+    "isBestseller": true,
+    "isChefSpecial": true,
+    "spicyLevel": 2,
+    "prepTime": "10 mins",
+    "image": "/assets/cheese-mysore-masala-dosa.png",
+    "tags": [
+      "Cheese Dosa",
+      "Mysore Dosa",
+      "Spicy Dosa",
+      "South Indian Special"
+    ]
+  },
+  {
+    "id": "akole-steamed-idli-sambar-3pcs",
+    "name": "Steamed Idli Sambar (3 pcs)",
+    "category": "vada-pav",
+    "description": "Piping hot melt-in-mouth soft steamed rice cakes (मऊ लुसलुशीत इडली सांबर) served with spicy lentil vegetable sambar & fresh coconut chutney.",
+    "price": 60,
+    "rating": 4.9,
+    "isVeg": true,
+    "isBestseller": true,
+    "isChefSpecial": false,
+    "spicyLevel": 1,
+    "prepTime": "5 mins",
+    "image": "/assets/steamed-idli-sambar.png",
+    "tags": [
+      "Steamed Idli",
+      "Idli Sambar",
+      "South Indian Breakfast"
+    ]
+  },
+  {
+    "id": "akole-crispy-medu-vada-2pcs",
+    "name": "Crispy Medu Vada (2 pcs)",
+    "category": "vada-pav",
+    "description": "Golden deep-fried crisp lentil donut fritters (कुरकुरीत मेदू वडा) with fluffy interior, served with coconut chutney & hot sambar.",
+    "price": 70,
+    "rating": 4.8,
+    "isVeg": true,
+    "isBestseller": true,
+    "isChefSpecial": false,
+    "spicyLevel": 1,
+    "prepTime": "8 mins",
+    "image": "/assets/crispy-medu-vada.png",
+    "tags": [
+      "Medu Vada",
+      "Vada Sambar",
+      "Crispy Snacks",
+      "South Indian Special"
+    ]
+  },
+  {
+    "id": "akole-upma-coconut-chutney",
+    "name": "Upma with Coconut Chutney",
+    "category": "vada-pav",
+    "description": "Traditional roasted semolina Rava Upma (गरमागरम उपमा) tempered with mustard seeds, roasted cashews, curry leaves & green peas, served with coconut chutney.",
+    "price": 40,
+    "rating": 4.8,
+    "isVeg": true,
+    "isBestseller": false,
+    "isChefSpecial": false,
+    "spicyLevel": 1,
+    "prepTime": "6 mins",
+    "image": "/assets/upma-coconut-chutney.png",
+    "tags": [
+      "Rava Upma",
+      "Upma",
+      "Healthy Breakfast",
+      "South Indian Special"
+    ]
+  },
+  {
+    "id": "akole-veg-kolhapuri-handi",
+    "name": "Veg Kolhapuri Handi",
+    "category": "thalis",
+    "description": "Authentic Maharashtrian Veg Kolhapuri Handi (अस्सल कोल्हापुरी व्हेज हंडी) featuring mixed vegetables in spicy red chili gravy, fried chillies & coriander.",
+    "price": 170,
+    "rating": 4.9,
+    "isVeg": true,
+    "isBestseller": true,
+    "isChefSpecial": true,
+    "spicyLevel": 3,
+    "prepTime": "12 mins",
+    "image": "/assets/veg-kolhapuri-handi.png",
+    "tags": [
+      "Veg Kolhapuri",
+      "Kolhapuri Handi",
+      "Spicy Veg",
+      "Maharashtrian Special"
+    ]
+  },
+  {
+    "id": "akole-paneer-tikka-butter-masala",
+    "name": "Paneer Tikka Butter Masala",
+    "category": "thalis",
+    "description": "Smokey tandoori grilled paneer cubes simmered in a rich, buttery tomato & cashew gravy (शाही पनीर टिक्का बटर मसाला), finished with fresh cream.",
+    "price": 190,
+    "rating": 4.9,
+    "isVeg": true,
+    "isBestseller": true,
+    "isChefSpecial": true,
+    "spicyLevel": 1,
+    "prepTime": "12 mins",
+    "image": "/assets/paneer-tikka-butter-masala.png",
+    "tags": [
+      "Paneer Tikka",
+      "Butter Masala",
+      "Punjabi Special",
+      "Rich Gravy"
+    ]
+  },
+  {
+    "id": "akole-shahi-dal-makhani",
+    "name": "Shahi Dal Makhani",
+    "category": "thalis",
+    "description": "Slow-cooked black lentils and kidney beans simmered overnight with butter, cream & aromatic tandoori spices (शाही दाल मखनी).",
+    "price": 160,
+    "rating": 4.9,
+    "isVeg": true,
+    "isBestseller": true,
+    "isChefSpecial": true,
+    "spicyLevel": 1,
+    "prepTime": "12 mins",
+    "image": "/assets/shahi-dal-makhani.png",
+    "tags": [
+      "Dal Makhani",
+      "Shahi Dal",
+      "Punjabi Special",
+      "Creamy Dal"
+    ]
+  },
+  {
+    "id": "akole-butter-garlic-naan-2pcs",
+    "name": "Butter Garlic Naan (2 pcs)",
+    "category": "thalis",
+    "description": "Tandoor baked soft leavened flatbreads brushed with melted butter, minced garlic & fresh coriander (बटर गार्लिक नान).",
+    "price": 70,
+    "rating": 4.8,
+    "isVeg": true,
+    "isBestseller": true,
+    "isChefSpecial": false,
+    "spicyLevel": 0,
+    "prepTime": "8 mins",
+    "image": "/assets/butter-garlic-naan.png",
+    "tags": [
+      "Butter Naan",
+      "Garlic Naan",
+      "Tandoori Naan",
+      "Roti Naan"
+    ]
+  },
+  {
+    "id": "akole-kadhai-paneer",
+    "name": "Kadhai Paneer",
+    "category": "thalis",
+    "description": "Cottage cheese cubes cooked with crunchy bell peppers, onions & freshly ground kadhai spices in a spicy tomato gravy (कढाई पनीर).",
+    "price": 180,
+    "rating": 4.9,
+    "isVeg": true,
+    "isBestseller": true,
+    "isChefSpecial": true,
+    "spicyLevel": 2,
+    "prepTime": "12 mins",
+    "image": "/assets/kadhai-paneer.png",
+    "tags": [
+      "Kadhai Paneer",
+      "Paneer Special",
+      "Punjabi Gravy",
+      "Spicy Paneer"
+    ]
+  },
+  {
+    "id": "akole-crispy-alu-vadi-patra-6pcs",
+    "name": "Crispy Alu Vadi / Patra (6 pcs)",
+    "category": "vada-pav",
+    "description": "Authentic Maharashtrian fried colocasia leaf rolls (गरमागरम कुरकुरीत अळूवडी) stuffed with spiced gram flour paste, sesame & coconut.",
+    "price": 70,
+    "rating": 4.9,
+    "isVeg": true,
+    "isBestseller": true,
+    "isChefSpecial": true,
+    "spicyLevel": 1,
+    "prepTime": "10 mins",
+    "image": "/assets/crispy-alu-vadi-patra.png",
+    "tags": [
+      "Alu Vadi",
+      "Patra",
+      "Crispy Snacks",
+      "Akole Special",
+      "Traditional Snacks"
+    ]
+  },
+  {
+    "id": "akole-maharashtrian-royal-veg-thali",
+    "name": "Maharashtrian Royal Veg Thali",
+    "category": "thalis",
+    "description": "Grand Maharashtrian vegetarian thali (शाही शाकाहारी थाळी) featuring Pithla, Bharli Vangi, Katachi Amti, Puran Poli, Jowar Bhakri, Indrayani Rice, Sol Kadhi, Kosimbir & Papad.",
+    "price": 220,
+    "rating": 5,
+    "isVeg": true,
+    "isBestseller": true,
+    "isChefSpecial": true,
+    "spicyLevel": 1,
+    "prepTime": "15 mins",
+    "image": "/assets/maharashtrian-royal-veg-thali.png",
+    "tags": [
+      "Royal Veg Thali",
+      "Maharashtrian Thali",
+      "Puran Poli",
+      "Akole Special",
+      "Grand Thali"
+    ]
+  },
+  {
+    "id": "akole-paneer-butter-masala-thali",
+    "name": "Paneer Butter Masala Thali",
+    "category": "thalis",
+    "description": "Sumptuous North Indian thali (पनीर बटर मसाला थाळी) with rich Paneer Butter Masala, Butter Garlic Naan, Dal Makhani, Jeera Rice, Salad & Gulab Jamun.",
+    "price": 240,
+    "rating": 4.9,
+    "isVeg": true,
+    "isBestseller": true,
+    "isChefSpecial": true,
+    "spicyLevel": 1,
+    "prepTime": "15 mins",
+    "image": "/assets/paneer-butter-masala-thali.png",
+    "tags": [
+      "Paneer Thali",
+      "Paneer Butter Masala",
+      "North Indian Thali",
+      "Royal Thali"
+    ]
+  },
+  {
+    "id": "akole-konkani-sol-kadhi-steamed-rice",
+    "name": "Konkani Sol Kadhi with Steamed Rice",
+    "category": "akole-special",
+    "description": "Authentic Konkani kokum & coconut milk curry (गुलाबी सोलकढी व वाफाळलेला भात) infused with garlic, chilli & cilantro, served alongside hot fragrant Steamed Basmati Rice.",
+    "price": 130,
+    "rating": 4.9,
+    "isVeg": true,
+    "isBestseller": true,
+    "isChefSpecial": true,
+    "spicyLevel": 1,
+    "prepTime": "10 mins",
+    "image": "/assets/konkani-sol-kadhi-steamed-rice.png",
+    "tags": [
+      "Sol Kadhi",
+      "Steamed Rice",
+      "Konkani Special",
+      "Akole Special",
+      "Traditional Meal"
+    ]
+  },
+  {
+    "id": "akole-kesar-dry-fruit-pedha-250g",
+    "name": "Kesar Dry Fruit Pedha (250g)",
+    "category": "akole-special",
+    "description": "Rich golden saffron infused sweet milk pedas topped with crushed almonds, cashews and green pistachios (अस्सल केशर ड्रायफ्रूट पेढा).",
+    "price": 160,
+    "rating": 4.9,
+    "isVeg": true,
+    "isBestseller": true,
+    "isChefSpecial": true,
+    "spicyLevel": 0,
+    "prepTime": "Ready to Serve",
+    "image": "/assets/kesar-dry-fruit-pedha.png",
+    "tags": [
+      "Kesar Pedha",
+      "Dry Fruit Pedha",
+      "Akole Special",
+      "Traditional Sweet"
+    ]
+  },
+  {
+    "id": "akole-bhandardara-wild-honey-300g",
+    "name": "Bhandardara Pure Wild Forest Honey (300g)",
+    "category": "akole-special",
+    "description": "100% Raw & Organic wild forest honey hand-extracted from the lush forests of Bhandardara & Kalsubai sanctuary (भंडारदरा अस्सल रानमध).",
+    "price": 320,
+    "rating": 5,
+    "isVeg": true,
+    "isBestseller": true,
+    "isChefSpecial": true,
+    "spicyLevel": 0,
+    "prepTime": "Ready to Serve",
+    "image": "/assets/bhandardara-wild-honey.png",
+    "tags": [
+      "Bhandardara Honey",
+      "Wild Forest Honey",
+      "Organic Honey",
+      "Akole Special"
+    ]
+  },
+  {
+    "id": "akole-bhandardara-hurda-platter",
+    "name": "Bhandardara Seasonal Hurda Platter",
+    "category": "akole-special",
+    "description": "Authentic Maharashtrian tender green sorghum grain Hurda (गरमागरम रसरशीत हुडडा) roasted on cow dung embers, served with dry garlic chutney, peanut chutney & organic jaggery.",
+    "price": 180,
+    "rating": 5,
+    "isVeg": true,
+    "isBestseller": true,
+    "isChefSpecial": true,
+    "spicyLevel": 1,
+    "prepTime": "12 mins",
+    "image": "/assets/bhandardara-seasonal-hurda-platter.png",
+    "tags": [
+      "Hurda Platter",
+      "Bhandardara Special",
+      "Traditional Snacks",
+      "Organic Farm Special"
+    ]
+  },
+  {
+    "id": "akole-coal-roasted-butter-bhutta",
+    "name": "Coal Roasted Butter Bhutta (Corn)",
+    "category": "vada-pav",
+    "description": "Fresh sweet corn cob roasted on glowing charcoal embers (गरमागरम कोळशावर भाजलेले कणीस), rubbed with lemon juice, red chilli masala & melted butter.",
+    "price": 60,
+    "rating": 4.8,
+    "isVeg": true,
+    "isBestseller": true,
+    "isChefSpecial": false,
+    "spicyLevel": 2,
+    "prepTime": "8 mins",
+    "image": "https://images.unsplash.com/photo-1551754655-cd27e38d2076?auto=format&fit=crop&w=800&q=80",
+    "tags": [
+      "Butter Bhutta",
+      "Roasted Corn",
+      "Charcoal Corn",
+      "Monsoon Special"
+    ]
+  },
+  {
+    "id": "akole-village-white-butter-100g",
+    "name": "Fresh Village White Butter (Loni 100g)",
+    "category": "akole-special",
+    "description": "Pure churned fresh village white butter (अस्सल गावरान ताजे लोणी) made from fresh Akole cow milk cream, served fresh.",
+    "price": 80,
+    "rating": 4.9,
+    "isVeg": true,
+    "isBestseller": false,
+    "isChefSpecial": true,
+    "spicyLevel": 0,
+    "prepTime": "Ready to Serve",
+    "image": "/assets/village-white-butter.png",
+    "tags": [
+      "White Butter",
+      "Gavran Loni",
+      "Akole Loni",
+      "Dairy Special"
+    ]
+  },
+  {
+    "id": "akole-rajur-kandi-pedha-250g",
+    "name": "Authentic Rajur Kandi Pedha (250g)",
+    "category": "akole-special",
+    "description": "World famous traditional Rajur Kandi Pedha (राजूरचा अस्सल कांदी पेढा) crafted from slow-caramelized pure khoya, cardamom & garnished with crushed pistachios & saffron. A royal heritage sweet of Akole & Rajur.",
+    "price": 140,
+    "rating": 5,
+    "isVeg": true,
+    "isBestseller": true,
+    "isChefSpecial": true,
+    "spicyLevel": 0,
+    "prepTime": "Ready to Serve",
+    "image": "/assets/rajur-kandi-pedha.png",
+    "tags": [
+      "Rajur Pedha",
+      "Kandi Pedha",
+      "Akole Special",
+      "Rajur Special",
+      "Khoya Sweets",
+      "Traditional Sweets",
+      "Heritage Sweet"
+    ]
+  },
+  {
     "id": "vada-crispy-batata-bhaji",
     "name": "Crispy Batata Bhaji (Potato Bhaji)",
     "category": "vada-pav",
@@ -1293,23 +1935,6 @@ export const menuItems = [
     ]
   },
   {
-    "id": "mah-add-6",
-    "name": "Crispy Alu Vadi / Patra (6 pcs)",
-    "category": "traditional",
-    "description": "Colocasia leaves layered with spiced tangy gram flour paste, steamed, sliced & shallow fried with sesame seeds.",
-    "price": 130,
-    "rating": 4.9,
-    "isVeg": true,
-    "isChefSpecial": true,
-    "spicyLevel": 1,
-    "prepTime": "10 mins",
-    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80",
-    "tags": [
-      "Alu Vadi",
-      "Konkani Special"
-    ]
-  },
-  {
     "id": "mah-add-7",
     "name": "Crispy Sabudana Vada (2 pcs)",
     "category": "traditional",
@@ -1410,23 +2035,6 @@ export const menuItems = [
     ]
   },
   {
-    "id": "mah-add-13",
-    "name": "Konkani Sol Kadhi with Steamed Rice",
-    "category": "traditional",
-    "description": "Refreshing Wild Kokum extract blended with fresh coconut milk, garlic & cumin, served with piping hot Indrayani Rice.",
-    "price": 140,
-    "rating": 5,
-    "isVeg": true,
-    "isBestseller": true,
-    "spicyLevel": 0,
-    "prepTime": "8 mins",
-    "image": "https://images.unsplash.com/photo-1623065422902-30a2d299bcc4?auto=format&fit=crop&w=800&q=80",
-    "tags": [
-      "Sol Kadhi",
-      "Konkani Classic"
-    ]
-  },
-  {
     "id": "mah-add-14",
     "name": "Maharashtrian Shahi Masale Bhaat",
     "category": "traditional",
@@ -1462,25 +2070,6 @@ export const menuItems = [
     ]
   },
   {
-    "id": "ak-1",
-    "name": "Authentic Rajur Kandi Pedha (250g)",
-    "category": "akole-special",
-    "description": "Famous caramelised milk sweet from Rajur market brewed slowly in iron Kadai with pure cow milk & cardamom.",
-    "price": 180,
-    "rating": 5,
-    "isVeg": true,
-    "isBestseller": true,
-    "isChefSpecial": true,
-    "spicyLevel": 0,
-    "prepTime": "5 mins",
-    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80",
-    "tags": [
-      "Rajur Heritage",
-      "Bestseller",
-      "Pure Milk"
-    ]
-  },
-  {
     "id": "ak-2",
     "name": "Shuddha Milk Pedha Box (250g)",
     "category": "akole-special",
@@ -1493,88 +2082,6 @@ export const menuItems = [
     "image": "/src/assets/shuddha-milk-pedha.png",
     "tags": [
       "Fresh Mawa"
-    ]
-  },
-  {
-    "id": "ak-3",
-    "name": "Kesar Dry Fruit Pedha (250g)",
-    "category": "akole-special",
-    "description": "Rich saffron infused Mawa pedha studded with almonds, cashews & silver vark.",
-    "price": 220,
-    "rating": 4.9,
-    "isVeg": true,
-    "isChefSpecial": true,
-    "spicyLevel": 0,
-    "prepTime": "5 mins",
-    "image": "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=800&q=80",
-    "tags": [
-      "Kesar Saffron",
-      "Dry Fruits"
-    ]
-  },
-  {
-    "id": "ak-4",
-    "name": "Bhandardara Pure Wild Forest Honey (300g)",
-    "category": "akole-special",
-    "description": "100% natural raw honey harvested organically from the dense forests of Bhandardara & Kalsubai.",
-    "price": 340,
-    "rating": 5,
-    "isVeg": true,
-    "isBestseller": true,
-    "isChefSpecial": true,
-    "spicyLevel": 0,
-    "prepTime": "2 mins",
-    "image": "https://images.unsplash.com/photo-1587049352847-4a222e784d38?auto=format&fit=crop&w=800&q=80",
-    "tags": [
-      "Organic Honey",
-      "Bhandardara Wild"
-    ]
-  },
-  {
-    "id": "ak-5",
-    "name": "Bhandardara Seasonal Hurda Platter",
-    "category": "akole-special",
-    "description": "Fresh tender roasted green Jowar (Hurda) served with garlic chutney, dry sesame chutney & jaggery.",
-    "price": 240,
-    "rating": 5,
-    "isVeg": true,
-    "isBestseller": true,
-    "spicyLevel": 1,
-    "prepTime": "10 mins",
-    "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=800&q=80",
-    "tags": [
-      "Seasonal Special",
-      "Hurda Party"
-    ]
-  },
-  {
-    "id": "ak-6",
-    "name": "Coal Roasted Butter Bhutta (Corn)",
-    "category": "akole-special",
-    "description": "Fresh sweet corn cob roasted over open coals, rubbed with lemon juice, black salt & Amul butter.",
-    "price": 70,
-    "rating": 4.8,
-    "isVeg": true,
-    "spicyLevel": 1,
-    "prepTime": "8 mins",
-    "image": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=800&q=80",
-    "tags": [
-      "Coal Roasted"
-    ]
-  },
-  {
-    "id": "ak-7",
-    "name": "Fresh Village White Butter (Loni 100g)",
-    "category": "akole-special",
-    "description": "Churned fresh daily from A2 cow milk cream, served chilled.",
-    "price": 60,
-    "rating": 5,
-    "isVeg": true,
-    "spicyLevel": 0,
-    "prepTime": "2 mins",
-    "image": "/src/assets/village-white-butter.png",
-    "tags": [
-      "Fresh Loni"
     ]
   },
   {
@@ -1879,23 +2386,6 @@ export const menuItems = [
     ]
   },
   {
-    "id": "thali-1",
-    "name": "Maharashtrian Royal Veg Thali",
-    "category": "thali",
-    "description": "Complete feast: Paneer Masala, Pithla, 2 Bhakri, Varann Bhaat, Sol Kadhi, Kosimbir, Papad & Gulab Jamun.",
-    "price": 280,
-    "rating": 5,
-    "isVeg": true,
-    "isBestseller": true,
-    "isChefSpecial": true,
-    "spicyLevel": 2,
-    "prepTime": "20 mins",
-    "image": "https://images.unsplash.com/photo-1610192244261-3f33de3f55e4?auto=format&fit=crop&w=800&q=80",
-    "tags": [
-      "Royal Veg Thali"
-    ]
-  },
-  {
     "id": "thali-2",
     "name": "Desi Chicken Curry Thali",
     "category": "thali",
@@ -1928,21 +2418,6 @@ export const menuItems = [
     ]
   },
   {
-    "id": "thali-4",
-    "name": "Paneer Butter Masala Thali",
-    "category": "thali",
-    "description": "Rich Paneer Butter Masala curry served with 3 Butter Chapatis, Jeera Rice, Dal Fry & Sweet.",
-    "price": 260,
-    "rating": 4.8,
-    "isVeg": true,
-    "spicyLevel": 1,
-    "prepTime": "18 mins",
-    "image": "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=800&q=80",
-    "tags": [
-      "Paneer Thali"
-    ]
-  },
-  {
     "id": "thali-5",
     "name": "Malvani Fish Curry Thali",
     "category": "thali",
@@ -1956,68 +2431,6 @@ export const menuItems = [
     "image": "/assets/malvani-fish-curry-thali.png",
     "tags": [
       "Fish Thali"
-    ]
-  },
-  {
-    "id": "punj-1",
-    "name": "Paneer Tikka Butter Masala",
-    "category": "punjabi",
-    "description": "Char-grilled cottage cheese cubes simmered in a creamy tomato & cashew butter gravy.",
-    "price": 240,
-    "rating": 4.9,
-    "isVeg": true,
-    "isBestseller": true,
-    "spicyLevel": 2,
-    "prepTime": "15 mins",
-    "image": "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=800&q=80",
-    "tags": [
-      "Paneer Special"
-    ]
-  },
-  {
-    "id": "punj-2",
-    "name": "Shahi Dal Makhani",
-    "category": "punjabi",
-    "description": "Black lentils slow-cooked overnight with cream, butter & mild aromatic spices.",
-    "price": 190,
-    "rating": 4.9,
-    "isVeg": true,
-    "isBestseller": true,
-    "spicyLevel": 1,
-    "prepTime": "15 mins",
-    "image": "https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?auto=format&fit=crop&w=800&q=80",
-    "tags": [
-      "Dal Makhani"
-    ]
-  },
-  {
-    "id": "punj-3",
-    "name": "Butter Garlic Naan (2 pcs)",
-    "category": "punjabi",
-    "description": "Soft tandoori flatbread brushed with garlic butter & fresh cilantro.",
-    "price": 90,
-    "rating": 4.8,
-    "isVeg": true,
-    "spicyLevel": 0,
-    "prepTime": "8 mins",
-    "image": "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80",
-    "tags": [
-      "Tandoori Naan"
-    ]
-  },
-  {
-    "id": "punj-4",
-    "name": "Kadhai Paneer",
-    "category": "punjabi",
-    "description": "Cottage cheese cooked with bell peppers, onions & freshly ground kadhai spices.",
-    "price": 230,
-    "rating": 4.8,
-    "isVeg": true,
-    "spicyLevel": 2,
-    "prepTime": "15 mins",
-    "image": "https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?auto=format&fit=crop&w=800&q=80",
-    "tags": [
-      "Kadhai Paneer"
     ]
   },
   {
@@ -2050,288 +2463,6 @@ export const menuItems = [
     "image": "/assets/tambda-pandhra-rassa.png",
     "tags": [
       "Kolhapuri Rassa"
-    ]
-  },
-  {
-    "id": "kolh-3",
-    "name": "Veg Kolhapuri Handi",
-    "category": "kolhapuri",
-    "description": "Mixed garden vegetables cooked in spicy red Kolhapuri chili gravy.",
-    "price": 210,
-    "rating": 4.7,
-    "isVeg": true,
-    "spicyLevel": 3,
-    "prepTime": "15 mins",
-    "image": "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=800&q=80",
-    "tags": [
-      "Veg Kolhapuri"
-    ]
-  },
-  {
-    "id": "bf-1",
-    "name": "Kanda Batata Poha",
-    "category": "breakfast",
-    "description": "Flattened rice cooked with onions, potatoes, mustard seeds, curry leaves & sev topping.",
-    "price": 45,
-    "rating": 4.8,
-    "isVeg": true,
-    "isBestseller": true,
-    "spicyLevel": 1,
-    "prepTime": "6 mins",
-    "image": "https://images.unsplash.com/photo-1553530666-ba11a7da3888?auto=format&fit=crop&w=800&q=80",
-    "tags": [
-      "Kanda Poha"
-    ]
-  },
-  {
-    "id": "bf-2",
-    "name": "Butter Masala Dosa",
-    "category": "breakfast",
-    "description": "Crispy golden rice crepe filled with spiced potato bhaji, served with coconut chutney & sambar.",
-    "price": 110,
-    "rating": 4.9,
-    "isVeg": true,
-    "isBestseller": true,
-    "spicyLevel": 1,
-    "prepTime": "10 mins",
-    "image": "https://images.unsplash.com/photo-1541544741938-0af808871cc0?auto=format&fit=crop&w=800&q=80",
-    "tags": [
-      "Masala Dosa"
-    ]
-  },
-  {
-    "id": "bf-3",
-    "name": "Cheese Mysore Masala Dosa",
-    "category": "breakfast",
-    "description": "Spiced red chili paste coated crispy dosa stuffed with potato bhaji & melted cheese.",
-    "price": 150,
-    "rating": 5,
-    "isVeg": true,
-    "isChefSpecial": true,
-    "spicyLevel": 2,
-    "prepTime": "12 mins",
-    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80&sig=0.4380877854379537",
-    "tags": [
-      "Mysore Dosa"
-    ]
-  },
-  {
-    "id": "bf-4",
-    "name": "Steamed Idli Sambar (3 pcs)",
-    "category": "breakfast",
-    "description": "Soft fluffy steamed rice cakes served with hot spicy lentil sambar & coconut chutney.",
-    "price": 70,
-    "rating": 4.8,
-    "isVeg": true,
-    "spicyLevel": 1,
-    "prepTime": "6 mins",
-    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80&sig=0.6837515078736406",
-    "tags": [
-      "Idli Sambar"
-    ]
-  },
-  {
-    "id": "bf-5",
-    "name": "Crispy Medu Vada (2 pcs)",
-    "category": "breakfast",
-    "description": "Golden fried lentil donuts crispy on outside, soft inside, with chutney & sambar.",
-    "price": 80,
-    "rating": 4.8,
-    "isVeg": true,
-    "spicyLevel": 1,
-    "prepTime": "8 mins",
-    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80&sig=0.802707799861297",
-    "tags": [
-      "Medu Vada"
-    ]
-  },
-  {
-    "id": "bf-6",
-    "name": "Upma with Coconut Chutney",
-    "category": "breakfast",
-    "description": "Roasted semolina cooked with ghee, veggies, cashews & mustard seeds.",
-    "price": 50,
-    "rating": 4.6,
-    "isVeg": true,
-    "spicyLevel": 1,
-    "prepTime": "6 mins",
-    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80&sig=0.6975831766047391",
-    "tags": [
-      "Upma"
-    ]
-  },
-  {
-    "id": "fast-1",
-    "name": "Supreme Veg Cheese Burger",
-    "category": "fast-food",
-    "description": "Crispy potato veg patty with cheese slice, onion, tomato & mayo in sesame bun.",
-    "price": 110,
-    "rating": 4.8,
-    "isVeg": true,
-    "isBestseller": true,
-    "spicyLevel": 1,
-    "prepTime": "10 mins",
-    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80&sig=0.006498872424988811",
-    "tags": [
-      "Veg Burger"
-    ]
-  },
-  {
-    "id": "fast-2",
-    "name": "Paneer Tikka Club Burger",
-    "category": "fast-food",
-    "description": "Grilled spiced paneer patty with spicy mint sauce & melted cheddar cheese.",
-    "price": 140,
-    "rating": 4.9,
-    "isVeg": true,
-    "isChefSpecial": true,
-    "spicyLevel": 2,
-    "prepTime": "12 mins",
-    "image": "https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?auto=format&fit=crop&w=800&q=80",
-    "tags": [
-      "Paneer Burger"
-    ]
-  },
-  {
-    "id": "fast-3",
-    "name": "Bombay Masala Toast Sandwich",
-    "category": "fast-food",
-    "description": "Butter toasted bread stuffed with potato masala, cucumber, tomato & green chutney.",
-    "price": 90,
-    "rating": 4.8,
-    "isVeg": true,
-    "isBestseller": true,
-    "spicyLevel": 1,
-    "prepTime": "8 mins",
-    "image": "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=800&q=80",
-    "tags": [
-      "Toast Sandwich"
-    ]
-  },
-  {
-    "id": "fast-4",
-    "name": "Cheese Corn Grill Sandwich",
-    "category": "fast-food",
-    "description": "Grilled sandwich loaded with sweet corn, capsicum & rich melted cheese.",
-    "price": 130,
-    "rating": 4.9,
-    "isVeg": true,
-    "spicyLevel": 1,
-    "prepTime": "10 mins",
-    "image": "https://images.unsplash.com/photo-1539252554453-80ab65ce3586?auto=format&fit=crop&w=800&q=80",
-    "tags": [
-      "Cheese Sandwich"
-    ]
-  },
-  {
-    "id": "fast-5",
-    "name": "Peri Peri Salted French Fries",
-    "category": "fast-food",
-    "description": "Crispy fried potato fries tossed in fiery African Peri Peri seasoning.",
-    "price": 110,
-    "rating": 4.8,
-    "isVeg": true,
-    "isBestseller": true,
-    "spicyLevel": 2,
-    "prepTime": "8 mins",
-    "image": "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=800&q=80",
-    "tags": [
-      "French Fries"
-    ]
-  },
-  {
-    "id": "fast-6",
-    "name": "Loaded Cheese Peri Peri Fries",
-    "category": "fast-food",
-    "description": "Hot french fries topped with warm liquid cheese sauce & spicy seasonings.",
-    "price": 150,
-    "rating": 5,
-    "isVeg": true,
-    "isChefSpecial": true,
-    "spicyLevel": 2,
-    "prepTime": "10 mins",
-    "image": "https://images.unsplash.com/photo-1585109649139-366815a0d713?auto=format&fit=crop&w=800&q=80",
-    "tags": [
-      "Cheese Fries"
-    ]
-  },
-  {
-    "id": "pizza-1",
-    "name": "Classic Margherita Cheese Pizza (8\")",
-    "category": "pizzas",
-    "description": "Fresh basil tomato sauce topped with generous Mozzarella cheese on hand-tossed crust.",
-    "price": 190,
-    "rating": 4.8,
-    "isVeg": true,
-    "isBestseller": true,
-    "spicyLevel": 0,
-    "prepTime": "15 mins",
-    "image": "https://images.unsplash.com/photo-1604382355076-af4b0eb60143?auto=format&fit=crop&w=800&q=80",
-    "tags": [
-      "Margherita"
-    ]
-  },
-  {
-    "id": "pizza-2",
-    "name": "Paneer Tikka Supreme Pizza (8\")",
-    "category": "pizzas",
-    "description": "Spiced paneer tikka cubes, red paprika, capsicum, onion & double Mozzarella.",
-    "price": 260,
-    "rating": 5,
-    "isVeg": true,
-    "isBestseller": true,
-    "isChefSpecial": true,
-    "spicyLevel": 2,
-    "prepTime": "18 mins",
-    "image": "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80",
-    "tags": [
-      "Paneer Pizza"
-    ]
-  },
-  {
-    "id": "pizza-3",
-    "name": "Farmhouse Veggie Overload Pizza (8\")",
-    "category": "pizzas",
-    "description": "Loaded with sweet corn, olives, jalapeños, mushrooms, capsicum & cheese.",
-    "price": 240,
-    "rating": 4.9,
-    "isVeg": true,
-    "spicyLevel": 1,
-    "prepTime": "16 mins",
-    "image": "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=800&q=80",
-    "tags": [
-      "Farmhouse Pizza"
-    ]
-  },
-  {
-    "id": "pasta-1",
-    "name": "Creamy Alfredo White Sauce Pasta",
-    "category": "pizzas",
-    "description": "Penne pasta tossed in garlic parmesan cream sauce with sweet corn & broccoli.",
-    "price": 210,
-    "rating": 4.9,
-    "isVeg": true,
-    "isBestseller": true,
-    "spicyLevel": 0,
-    "prepTime": "15 mins",
-    "image": "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=800&q=80",
-    "tags": [
-      "White Sauce Pasta"
-    ]
-  },
-  {
-    "id": "pasta-2",
-    "name": "Spicy Red Sauce Arrabbiata Pasta",
-    "category": "pizzas",
-    "description": "Penne pasta simmered in spicy tomato garlic herbs sauce with black olives.",
-    "price": 195,
-    "rating": 4.8,
-    "isVeg": true,
-    "spicyLevel": 2,
-    "prepTime": "14 mins",
-    "image": "https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=800&q=80",
-    "tags": [
-      "Red Pasta"
     ]
   },
   {
