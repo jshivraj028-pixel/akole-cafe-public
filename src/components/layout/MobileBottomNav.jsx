@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Home, Percent, ShoppingBag, User } from 'lucide-react';
+import { Home, UtensilsCrossed, ShoppingBag, User } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 
 const MobileBottomNav = ({ onOpenCart }) => {
@@ -10,18 +10,15 @@ const MobileBottomNav = ({ onOpenCart }) => {
 
   const navItems = [
     { id: 'home', name: 'Home', path: '/', icon: Home },
-    { id: 'menu', name: 'Menu', path: '/menu', icon: Percent },
+    { id: 'menu', name: 'Menu', path: '/menu', icon: UtensilsCrossed },
     { id: 'cart', name: 'Cart', path: '/cart', icon: ShoppingBag, isCart: true },
     { id: 'profile', name: 'Profile', path: '/profile', icon: User },
   ];
 
   return (
-    <div className="fixed bottom-4 left-4 right-4 sm:left-1/2 sm:-translate-x-1/2 sm:max-w-sm z-40 lg:hidden pointer-events-none">
-      <div className="pointer-events-auto relative overflow-hidden rounded-[32px] bg-gradient-to-r from-emerald-500/20 via-white/90 to-white/95 backdrop-blur-2xl border-2 border-white shadow-[0_12px_40px_rgba(0,0,0,0.12)] p-2.5 px-7 flex items-center justify-between">
+    <div className="fixed bottom-4 left-4 right-4 sm:left-1/2 sm:-translate-x-1/2 sm:max-w-sm z-50 lg:hidden pointer-events-none">
+      <div className="pointer-events-auto relative overflow-hidden rounded-[30px] bg-white/95 dark:bg-[#122017]/95 backdrop-blur-2xl border border-gray-200/90 dark:border-[#D6AE4D]/35 shadow-[0_12px_40px_rgba(0,0,0,0.16)] p-2 px-6 flex items-center justify-between">
         
-        {/* Ambient Subtle Green Glow on Left Corner */}
-        <div className="absolute top-0 left-0 w-24 h-full bg-gradient-to-r from-emerald-400/25 to-transparent pointer-events-none" />
-
         {navItems.map((item) => {
           const isActive = pathname === item.path || (item.isCart && pathname === '/cart');
           const IconComponent = item.icon;
@@ -39,28 +36,40 @@ const MobileBottomNav = ({ onOpenCart }) => {
               >
                 <motion.div
                   whileTap={{ scale: 0.85 }}
-                  className="relative flex items-center justify-center"
+                  className="relative flex flex-col items-center justify-center"
                 >
-                  <IconComponent 
-                    className={`w-6 h-6 stroke-[2.2] transition-colors ${
-                      isActive ? 'text-[#1E2621]' : 'text-[#48594B]/75 hover:text-[#1E2621]'
-                    }`} 
-                  />
+                  <div className="relative flex items-center justify-center">
+                    <IconComponent 
+                      className={`w-5 h-5 transition-colors duration-200 ${
+                        isActive 
+                          ? 'text-[#123524] dark:text-[#D6AE4D] stroke-[2.4]' 
+                          : 'text-[#48594B]/70 dark:text-gray-400 group-hover:text-[#123524] dark:group-hover:text-[#D6AE4D] stroke-[1.8]'
+                      }`} 
+                    />
 
-                  {/* Cart Item Counter Badge */}
-                  {item.isCart && totalItemsCount > 0 && (
-                    <span className="absolute -top-1.5 -right-2 min-w-[17px] h-[17px] px-1 bg-[#1E2621] text-white font-black text-[9px] rounded-full flex items-center justify-center border-2 border-white shadow-sm leading-none">
-                      {totalItemsCount}
-                    </span>
-                  )}
+                    {/* Cart Item Counter Badge */}
+                    {item.isCart && totalItemsCount > 0 && (
+                      <span className="absolute -top-2 -right-2.5 min-w-[18px] h-[18px] px-1 bg-[#FF5722] text-white font-bold text-[10px] rounded-full flex items-center justify-center border border-white dark:border-[#122017] shadow-sm leading-none">
+                        {totalItemsCount}
+                      </span>
+                    )}
+                  </div>
+
+                  <span className={`text-[10px] font-semibold mt-0.5 transition-colors duration-200 ${
+                    isActive 
+                      ? 'text-[#123524] dark:text-[#D6AE4D]' 
+                      : 'text-[#48594B]/70 dark:text-gray-400 group-hover:text-[#123524] dark:group-hover:text-[#D6AE4D]'
+                  }`}>
+                    {item.name}
+                  </span>
                 </motion.div>
               </Link>
 
-              {/* Exact Coral/Orange Active Indicator Dot from User Image */}
+              {/* Exact Active Indicator Pill */}
               {isActive && (
                 <motion.div
                   layoutId="bottomNavDot"
-                  className="w-3.5 h-1.5 rounded-full bg-[#FF5722] shadow-xs mt-1"
+                  className="w-3.5 h-1 rounded-full bg-[#FF5722] shadow-xs mt-0.5"
                   transition={{ type: 'spring', stiffness: 500, damping: 30 }}
                 />
               )}
