@@ -1,3 +1,7 @@
+
+
+
+
 import React from 'react';
 import { motion } from 'framer-motion';
 import { FiStar, FiHeart } from 'react-icons/fi';

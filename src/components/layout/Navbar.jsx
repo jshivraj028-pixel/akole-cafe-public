@@ -136,8 +136,8 @@ const Navbar = () => {
                   <span
                     className={`relative z-10 transition-colors ${
                       isActive
-                        ? 'font-black text-[#1E2621]'
-                        : 'font-bold text-[#48594B] dark:text-[#D6E0DA] hover:text-[#1E2621]'
+                        ? 'font-bold text-[#1E2621]'
+                        : 'font-semibold text-[#48594B] dark:text-[#D6E0DA] hover:text-[#1E2621]'
                     }`}
                   >
                     {link.name}
@@ -162,7 +162,7 @@ const Navbar = () => {
             {/* 1. ORDER NOW White Translucent Glossy Pill Button */}
             <Link
               to="/menu"
-              className="hidden lg:inline-flex items-center justify-center h-9 px-4 rounded-full bg-white/90 hover:bg-white border-2 border-white shadow-md hover:shadow-lg backdrop-blur-md text-[#1E2621] font-montserrat font-black text-[11px] xl:text-xs uppercase tracking-[1.2px] transition-all duration-300 transform hover:scale-105 active:scale-95 group cursor-pointer"
+              className="hidden lg:inline-flex items-center justify-center h-9 px-4 rounded-full bg-white/90 hover:bg-white border-2 border-white shadow-md hover:shadow-lg backdrop-blur-md text-[#1E2621] font-montserrat font-bold text-[11px] xl:text-xs uppercase tracking-[1px] transition-all duration-300 transform hover:scale-105 active:scale-95 group cursor-pointer"
             >
               <Sparkles className="w-3.5 h-3.5 mr-1 stroke-[2.2] text-amber-500 group-hover:scale-110 transition-transform" />
               <span>ORDER NOW</span>
