@@ -6,28 +6,11 @@ import { useCart } from '../../context/CartContext';
 import { useTheme } from '../../context/ThemeContext';
 import { getProductImage } from '../../utils/imageHelper';
 
-// Array of soft luxury pastel glassmorphic gradients matching user reference image
-const pastelGlassGradients = [
-  'from-[#E2F0D9]/85 via-[#F3F9EF]/90 to-white/95', // Soft Mint Pistachio
-  'from-[#E0F2FE]/85 via-[#F0F9FF]/90 to-white/95', // Soft Ice Blue
-  'from-[#EDE9FE]/85 via-[#F5F3FF]/90 to-white/95', // Soft Lavender Purple
-  'from-[#FEF3C7]/85 via-[#FFFBEB]/90 to-white/95', // Soft Warm Gold Peach
-  'from-[#FFE4E6]/85 via-[#FFF1F2]/90 to-white/95', // Soft Rose Pink
-  'from-[#E0E7FF]/85 via-[#EEF2FF]/90 to-white/95', // Soft Indigo Periwinkle
-];
-
 const MenuCard = ({ item, index = 0, onQuickView }) => {
   const { addToCart } = useCart();
   const { showToast, openQuickView, toggleWishlist, isInWishlist } = useTheme();
 
   const isLiked = isInWishlist ? isInWishlist(item) : false;
-
-  // Pick gradient deterministically based on item ID or index
-  const gradientIndex = typeof item._id === 'string'
-    ? item._id.charCodeAt(0) % pastelGlassGradients.length
-    : (index || 0) % pastelGlassGradients.length;
-  
-  const glassGradient = pastelGlassGradients[gradientIndex];
 
   const handleCardClick = () => {
     if (onQuickView) {
@@ -54,112 +37,106 @@ const MenuCard = ({ item, index = 0, onQuickView }) => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 15 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-40px" }}
+      viewport={{ once: true, margin: "-30px" }}
       whileHover={{ 
-        y: -8,
-        scale: 1.02,
-        boxShadow: "0 22px 45px -10px rgba(0, 0, 0, 0.09)"
+        y: -6,
+        scale: 1.015,
+        boxShadow: "0 20px 40px -10px rgba(0, 0, 0, 0.12)"
       }}
       transition={{ type: "spring", stiffness: 350, damping: 22 }}
       onClick={handleCardClick}
-      className={`group relative rounded-[32px] bg-gradient-to-br ${glassGradient} backdrop-blur-2xl border-2 border-white/90 shadow-[0_10px_30px_rgba(0,0,0,0.05)] hover:border-white transition-all duration-300 overflow-hidden flex flex-col justify-between cursor-pointer w-full max-w-sm mx-auto h-full min-h-[395px] p-3 sm:p-3.5`}
-      style={{ color: '#1E2621' }}
+      className="group relative rounded-[24px] bg-white/85 dark:bg-[#16231B]/90 backdrop-blur-xl border border-white/90 dark:border-[#D6AE4D]/30 shadow-[0_8px_30px_rgba(0,0,0,0.07)] hover:border-white dark:hover:border-[#D6AE4D]/50 transition-all duration-300 overflow-hidden flex flex-col justify-between cursor-pointer w-full max-w-sm mx-auto p-3 sm:p-3.5"
     >
-      {/* Product Image Container with Curved Glass Inset */}
-      <div className="relative h-52 w-full overflow-hidden rounded-[24px] bg-white/60 shadow-inner">
+      {/* Product Image Container */}
+      <div className="relative h-44 sm:h-48 w-full overflow-hidden rounded-[18px] bg-gray-100 dark:bg-gray-800/50">
         <img
           src={imgSrc}
           alt={item.name}
-          className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 ease-out"
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
           onError={(e) => {
             e.currentTarget.onerror = null;
             e.currentTarget.src = getProductImage({ name: 'water' });
           }}
         />
 
-        {/* Top Left: Badges in Glossy White Pods */}
-        <div className="absolute top-3 left-3 flex flex-col gap-1 items-start z-10">
+        {/* Top Left: Badges */}
+        <div className="absolute top-2.5 left-2.5 flex flex-col gap-1 items-start z-10">
           {(item.isBestseller || item.tag === 'BESTSELLER') && (
-            <span className="text-[9px] font-black tracking-wider px-3 py-1 rounded-full bg-white/95 text-[#1E2621] border border-white uppercase shadow-sm backdrop-blur-md font-sans">
-              ★ BESTSELLER
+            <span className="text-[10px] font-black tracking-wider px-2.5 py-0.5 rounded-md bg-[#D6AE4D] text-[#123524] uppercase shadow-sm font-sans">
+              BESTSELLER
             </span>
           )}
 
           {item.isChefSpecial && (
-            <span className="text-[9px] font-black tracking-wider px-3 py-1 rounded-full bg-[#18201B] text-white uppercase shadow-sm font-sans">
+            <span className="text-[10px] font-black tracking-wider px-2.5 py-0.5 rounded-md bg-[#123524] text-white uppercase shadow-sm font-sans">
               CHEF SPECIAL
             </span>
           )}
         </div>
 
-        {/* Top Right: Pure White Circular Glass Heart Button */}
+        {/* Top Right: Wishlist Heart Button */}
         <motion.button
           type="button"
           whileTap={{ scale: 0.85 }}
           whileHover={{ scale: 1.1 }}
           onClick={handleToggleLike}
-          className="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-white/90 border border-white shadow-sm backdrop-blur-md flex items-center justify-center transition-all cursor-pointer"
+          className="absolute top-2.5 right-2.5 z-10 w-8 h-8 rounded-full bg-white/90 dark:bg-gray-900/80 backdrop-blur-md border border-white/60 dark:border-gray-700 shadow-sm flex items-center justify-center transition-all cursor-pointer"
           title={isLiked ? "Remove from Favorites" : "Add to Favorites"}
         >
           <FiHeart
             className={`w-4 h-4 transition-all duration-300 ${
               isLiked 
                 ? "text-rose-500 fill-rose-500 scale-110" 
-                : "text-[#1E2621] stroke-[2.2]"
+                : "text-gray-700 dark:text-gray-300 stroke-[2]"
             }`}
           />
         </motion.button>
       </div>
 
       {/* Content Container */}
-      <div className="p-3 sm:p-4 flex-1 flex flex-col justify-between space-y-3 text-left">
+      <div className="pt-3 px-1 flex-1 flex flex-col justify-between space-y-3 text-left">
         <div className="space-y-1.5">
           {/* Header Title & Rating */}
           <div className="flex items-start justify-between gap-2">
-            <h3 
-              className="font-black text-lg tracking-tight leading-snug group-hover:opacity-80 transition-opacity line-clamp-1"
-              style={{ color: '#1E2621' }}
-            >
+            <h3 className="font-bold text-base sm:text-lg text-gray-900 dark:text-white tracking-tight leading-snug group-hover:text-[#123524] dark:group-hover:text-[#D6AE4D] transition-colors line-clamp-1">
               {item.name}
             </h3>
             {item.rating && (
-              <div className="flex items-center gap-1 bg-white/90 backdrop-blur-md px-2.5 py-0.5 rounded-full border border-white shrink-0 shadow-xs">
-                <FiStar className="w-3 h-3 text-amber-500 fill-amber-500" />
-                <span className="text-[11px] font-bold text-[#1E2621]">{item.rating}</span>
+              <div className="flex items-center gap-1 bg-amber-50 dark:bg-amber-950/50 px-2 py-0.5 rounded-lg border border-amber-200/80 dark:border-amber-800/40 shrink-0">
+                <FiStar className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
+                <span className="text-xs font-bold text-amber-900 dark:text-amber-300">{item.rating}</span>
               </div>
             )}
           </div>
 
           {/* Description */}
-          <p className="text-xs line-clamp-2 font-normal leading-relaxed text-[#556B5D]">
+          <p className="text-xs sm:text-xs font-normal leading-relaxed text-gray-600 dark:text-gray-300 line-clamp-2">
             {item.description}
           </p>
         </div>
 
         {/* Footer: Price & Add Button */}
-        <div className="flex items-center justify-between pt-3.5 border-t border-black/5 mt-auto">
+        <div className="flex items-center justify-between pt-3 border-t border-gray-100 dark:border-gray-800/80 mt-2">
           <div>
-            <span className="text-[9px] uppercase tracking-widest font-extrabold text-[#6A7B6E] block mb-0.5">
+            <span className="text-[9px] uppercase tracking-widest font-bold text-gray-400 dark:text-gray-400 block -mb-0.5">
               PRICE
             </span>
-            <div className="flex items-baseline gap-1">
-              <span className="font-serif text-2xl font-black text-[#18201B]">
-                ₹{item.price}
-              </span>
-            </div>
+            <span className="font-serif text-xl sm:text-2xl font-black text-[#123524] dark:text-[#D6AE4D]">
+              ₹{item.price}
+            </span>
           </div>
 
-          {/* Glassmorphic Luxury Action Button */}
+          {/* Luxury Add Button */}
           <motion.button
-            whileHover={{ scale: 1.06, y: -1 }}
-            whileTap={{ scale: 0.92 }}
+            whileHover={{ scale: 1.04, y: -1 }}
+            whileTap={{ scale: 0.95 }}
             onClick={handleAddToCart}
-            className="px-5 py-2.5 rounded-full bg-white/75 hover:bg-white backdrop-blur-xl border-2 border-white shadow-[0_8px_20px_rgba(0,0,0,0.07)] hover:shadow-[0_12px_25px_rgba(30,86,47,0.15)] text-[#18201B] font-montserrat font-black text-xs uppercase tracking-wider transition-all duration-300 flex items-center gap-1.5 cursor-pointer"
+            className="px-4 py-2 rounded-xl bg-gradient-to-r from-[#D6AE4D] to-[#C29B38] hover:from-[#E0B85C] hover:to-[#D6AE4D] text-[#123524] font-bold text-xs uppercase tracking-wider shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-1.5 cursor-pointer"
             title="Add to Cart"
           >
-            <ShoppingCart className="w-3.5 h-3.5 text-[#1E562F] stroke-[2.5]" />
+            <ShoppingCart className="w-3.5 h-3.5 stroke-[2.5]" />
             <span>ADD</span>
           </motion.button>
         </div>
