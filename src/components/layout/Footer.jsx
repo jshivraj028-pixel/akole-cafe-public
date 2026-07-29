@@ -66,7 +66,8 @@ const Footer = () => {
                   target="_blank"
                   rel="noreferrer"
                   aria-label={s.label}
-                  className="w-9 h-9 rounded-full bg-white/5 text-[#D6AE4D] border border-[#D6AE4D]/25 flex items-center justify-center hover:bg-[#D6AE4D] hover:text-[#123524] transition-all duration-300 transform hover:scale-110 shadow-md"
+                  style={{ width: '38px', height: '38px', minWidth: '38px', minHeight: '38px', borderRadius: '50%' }}
+                  className="bg-white/5 text-[#D6AE4D] border border-[#D6AE4D]/30 flex items-center justify-center shrink-0 hover:bg-[#D6AE4D] hover:text-[#123524] transition-all duration-300 transform hover:scale-110 shadow-md overflow-hidden"
                 >
                   <s.icon className="w-4 h-4" />
                 </a>

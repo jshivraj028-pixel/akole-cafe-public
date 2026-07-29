@@ -166,13 +166,31 @@ const Contact = () => {
               </div>
 
               <div className="mt-8 flex items-center justify-center gap-3">
-                <a href="https://instagram.com/akolecafe" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-[#123524] text-[#D6AE4D] flex items-center justify-center hover:bg-[#D6AE4D] hover:text-[#123524] transition-all shadow-sm">
+                <a
+                  href="https://instagram.com/akolecafe"
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{ width: '38px', height: '38px', minWidth: '38px', minHeight: '38px', borderRadius: '50%' }}
+                  className="bg-[#123524] text-[#D6AE4D] flex items-center justify-center shrink-0 hover:bg-[#D6AE4D] hover:text-[#123524] transition-all shadow-sm overflow-hidden"
+                >
                   <FiInstagram className="w-4 h-4" />
                 </a>
-                <a href="https://facebook.com/akolecafe" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-[#123524] text-[#D6AE4D] flex items-center justify-center hover:bg-[#D6AE4D] hover:text-[#123524] transition-all shadow-sm">
+                <a
+                  href="https://facebook.com/akolecafe"
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{ width: '38px', height: '38px', minWidth: '38px', minHeight: '38px', borderRadius: '50%' }}
+                  className="bg-[#123524] text-[#D6AE4D] flex items-center justify-center shrink-0 hover:bg-[#D6AE4D] hover:text-[#123524] transition-all shadow-sm overflow-hidden"
+                >
                   <FiFacebook className="w-4 h-4" />
                 </a>
-                <a href="https://twitter.com/akolecafe" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-[#123524] text-[#D6AE4D] flex items-center justify-center hover:bg-[#D6AE4D] hover:text-[#123524] transition-all shadow-sm">
+                <a
+                  href="https://twitter.com/akolecafe"
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{ width: '38px', height: '38px', minWidth: '38px', minHeight: '38px', borderRadius: '50%' }}
+                  className="bg-[#123524] text-[#D6AE4D] flex items-center justify-center shrink-0 hover:bg-[#D6AE4D] hover:text-[#123524] transition-all shadow-sm overflow-hidden"
+                >
                   <FiTwitter className="w-4 h-4" />
                 </a>
               </div>
