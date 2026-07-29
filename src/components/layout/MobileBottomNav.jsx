@@ -17,9 +17,12 @@ const MobileBottomNav = ({ onOpenCart }) => {
 
   return (
     <div className="fixed bottom-4 left-4 right-4 sm:left-1/2 sm:-translate-x-1/2 sm:max-w-sm z-50 lg:hidden pointer-events-none">
-      {/* Crisp Solid Background Capsule Container */}
-      <div className="pointer-events-auto relative overflow-hidden rounded-[32px] bg-white dark:bg-[#122017] border border-gray-100 dark:border-[#D6AE4D]/35 shadow-[0_12px_40px_rgba(0,0,0,0.15)] p-2.5 px-6 flex items-center justify-between transition-all duration-300">
+      {/* Luxury Frosted Glassmorphic Capsule Container */}
+      <div className="pointer-events-auto relative overflow-hidden rounded-[32px] bg-white/80 dark:bg-[#122017]/85 backdrop-blur-xl backdrop-saturate-150 border border-white/90 dark:border-[#D6AE4D]/40 shadow-[0_14px_40px_rgba(0,0,0,0.14)] p-2.5 px-6 flex items-center justify-between transition-all duration-300">
         
+        {/* Subtle Specular Top Highlight for Premium Glass Depth */}
+        <div className="absolute inset-0 rounded-[32px] border-t border-white/90 dark:border-white/20 pointer-events-none" />
+
         {navItems.map((item) => {
           const isActive = pathname === item.path || (item.isCart && pathname === '/cart');
           const IconComponent = item.icon;
