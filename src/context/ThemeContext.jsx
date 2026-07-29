@@ -328,6 +328,7 @@ export const ThemeProvider = ({ children }) => {
         updateUserAvatar,
         loginUser,
         logoutUser,
+        logout: logoutUser,
         wishlistItems,
         toggleWishlist,
         isInWishlist,

@@ -32,7 +32,7 @@ import {
 const Profile = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { currentUser, setCurrentUser, updateUserAvatar, wishlist, removeFromWishlist, showToast, logout } = useTheme();
+  const { currentUser, setCurrentUser, updateUserAvatar, wishlist, removeFromWishlist, showToast, logout, logoutUser } = useTheme();
   const { addToCart, applyCoupon } = useCart();
 
   // Saved user sync
@@ -186,9 +186,22 @@ const Profile = () => {
 
   // Logout handler
   const handleLogout = () => {
-    logout();
-    showToast('Logged out successfully', 'info');
-    navigate('/');
+    try {
+      if (typeof logoutUser === 'function') {
+        logoutUser();
+      } else if (typeof logout === 'function') {
+        logout();
+      }
+      localStorage.removeItem('akole_is_authenticated');
+      localStorage.removeItem('akole_user_email');
+      localStorage.removeItem('akole_user');
+      localStorage.removeItem('akole_token');
+      localStorage.removeItem('akole_admin_token');
+    } catch (e) {
+      console.warn('Logout warning:', e);
+    }
+    if (showToast) showToast('Logged out successfully!', 'info');
+    navigate('/login');
   };
 
   // Avatar upload handler
