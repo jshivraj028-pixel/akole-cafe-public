@@ -87,28 +87,18 @@ const Menu = () => {
       // 2. Category Filter
       if (activeCategory && activeCategory !== 'all') {
         result = result.filter(item => {
-          const itemCat = (item.category || '').toLowerCase();
-          const targetCat = activeCategory.toLowerCase();
-          
-          if (targetCat === 'beverages' || targetCat === 'cold-drinks' || targetCat === 'drinks') {
-            return itemCat.includes('beverage') || itemCat.includes('drink') || itemCat.includes('juice') || itemCat.includes('cold') || itemCat.includes('shake');
-          }
-          if (targetCat === 'misal' || targetCat === 'misal-special' || targetCat === 'signature-misal') {
-            return itemCat.includes('misal');
-          }
-          if (targetCat === 'vada-pav' || targetCat === 'snacks') {
-            return itemCat.includes('vada') || itemCat.includes('pav') || itemCat.includes('snack') || itemCat.includes('bhaji');
-          }
-          if (targetCat === 'bakery-desserts' || targetCat === 'desserts' || targetCat === 'sweets') {
-            return itemCat.includes('dessert') || itemCat.includes('sweet') || itemCat.includes('cake') || itemCat.includes('bakery') || itemCat.includes('pastry');
-          }
-          if (targetCat === 'breakfast') {
-            return itemCat.includes('breakfast') || itemCat.includes('dosa') || itemCat.includes('idli') || itemCat.includes('pohe');
-          }
-          if (targetCat === 'thali') {
-            return itemCat.includes('thali');
-          }
-          return itemCat === targetCat || itemCat.includes(targetCat) || targetCat.includes(itemCat);
+          const itemCat = (item.category || '').toLowerCase().trim();
+          const targetCat = activeCategory.toLowerCase().trim();
+
+          if (itemCat === targetCat) return true;
+
+          // Alias fallbacks for category IDs
+          if (targetCat === 'thali' && (itemCat === 'thali' || itemCat === 'thalis')) return true;
+          if (targetCat === 'pizzas' && (itemCat === 'pizza' || itemCat === 'pizzas')) return true;
+          if (targetCat === 'chinese' && (itemCat === 'chinese' || itemCat === 'indo-chinese')) return true;
+          if (targetCat === 'fast-food' && (itemCat === 'fast-food' || itemCat === 'burgers')) return true;
+
+          return false;
         });
       }
     }

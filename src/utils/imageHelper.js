@@ -34,6 +34,8 @@ import spicyRedSauceArrabbiataPastaImg from '../assets/spicy-red-sauce-arrabbiat
 import vegHakkaNoodlesImg from '../assets/veg-hakka-noodles.png';
 import schezwanFriedRiceImg from '../assets/schezwan-fried-rice.png';
 import vegManchurianDryImg from '../assets/veg-manchurian-dry.png';
+import crispyPaneerChilliFryImg from '../assets/crispy-paneer-chilli-fry.png';
+import hyderabadiVegDumBiryaniImg from '../assets/hyderabadi-veg-dum-biryani.png';
 import dalTadkaJeeraRiceImg from '../assets/dal-tadka-jeera-rice.png';
 import crispyAluVadiPatraImg from '../assets/crispy-alu-vadi-patra.png';
 import maharashtrianRoyalVegThaliImg from '../assets/maharashtrian-royal-veg-thali.png';
@@ -187,11 +189,13 @@ export const getProductImage = (item) => {
   if (name.includes('kadhai paneer')) return kadhaiPaneerImg;
 
   // Rice / Biryani / Chinese
+  if (name.includes('paneer chilli')) return crispyPaneerChilliFryImg;
   if (name.includes('manchurian')) return vegManchurianDryImg;
   if (name.includes('hakka') || name.includes('noodles')) return vegHakkaNoodlesImg;
   if (name.includes('dal tadka') || name.includes('jeera rice')) return dalTadkaJeeraRiceImg;
-  if (name.includes('rice') || name.includes('bhaat') || name.includes('fried rice') || (name.includes('schezwan') && !name.includes('vada'))) return schezwanFriedRiceImg;
+  if (name.includes('veg dum biryani') || name.includes('hyderabadi')) return hyderabadiVegDumBiryaniImg;
   if (name.includes('biryani')) return specialChickenDumBiryaniImg;
+  if (name.includes('rice') || name.includes('bhaat') || name.includes('fried rice') || (name.includes('schezwan') && !name.includes('vada'))) return schezwanFriedRiceImg;
 
   // Fast food - Pizzas, Pastas & Desserts
   if (name.includes('paneer tikka supreme') || (name.includes('paneer') && name.includes('pizza'))) return paneerTikkaSupremePizzaImg;

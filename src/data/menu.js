@@ -69,7 +69,7 @@ export const menuItems = [
   {
     "id": "akole-classic-margherita-cheese-pizza-8in",
     "name": "Classic Margherita Cheese Pizza (8\")",
-    "category": "vada-pav",
+    "category": "pizzas",
     "description": "8-inch crisp wood-fired pizza topped with Italian tomato sauce, melted gooey mozzarella cheese & fresh basil (क्लासिक मार्गरीटा चीझ पिझ्झा).",
     "price": 160,
     "rating": 4.9,
@@ -89,7 +89,7 @@ export const menuItems = [
   {
     "id": "akole-paneer-tikka-supreme-pizza-8in",
     "name": "Paneer Tikka Supreme Pizza (8\")",
-    "category": "vada-pav",
+    "category": "pizzas",
     "description": "8-inch gourmet pizza topped with tandoori paneer tikka, capsicum, onions, red paprika & extra mozzarella cheese (पनीर टिक्का सुप्रीम पिझ्झा).",
     "price": 220,
     "rating": 5,
@@ -109,7 +109,7 @@ export const menuItems = [
   {
     "id": "akole-farmhouse-veggie-overload-pizza-8in",
     "name": "Farmhouse Veggie Overload Pizza (8\")",
-    "category": "vada-pav",
+    "category": "pizzas",
     "description": "8-inch pizza loaded with sweet corn, mushrooms, olives, jalapeños, tomatoes, capsicum & liquid cheese (फार्महाऊस व्हेज पिझ्झा).",
     "price": 200,
     "rating": 4.9,
@@ -128,7 +128,7 @@ export const menuItems = [
   {
     "id": "akole-creamy-alfredo-white-sauce-pasta",
     "name": "Creamy Alfredo White Sauce Pasta",
-    "category": "vada-pav",
+    "category": "pizzas",
     "description": "Italian Penne pasta tossed in rich garlic parmesan cream sauce with sweet corn, broccoli & herbs (क्रीमी व्हाईट सॉस पास्ता).",
     "price": 170,
     "rating": 4.9,
@@ -148,7 +148,7 @@ export const menuItems = [
   {
     "id": "akole-spicy-red-sauce-arrabbiata-pasta",
     "name": "Spicy Red Sauce Arrabbiata Pasta",
-    "category": "vada-pav",
+    "category": "pizzas",
     "description": "Italian Penne pasta tossed in zesty spicy tomato garlic chilli sauce with olives & fresh basil (झणझणीत रेड सॉस पास्ता).",
     "price": 160,
     "rating": 4.8,
@@ -167,7 +167,7 @@ export const menuItems = [
   {
     "id": "akole-supreme-veg-cheese-burger",
     "name": "Supreme Veg Cheese Burger",
-    "category": "vada-pav",
+    "category": "fast-food",
     "description": "Thick crispy vegetable patty with melted cheddar cheese slice, fresh lettuce, tomato, onions & creamy mayo inside toasted sesame buns (सुप्रीम व्हेज चीझ बर्गर).",
     "price": 120,
     "rating": 4.9,
@@ -187,7 +187,7 @@ export const menuItems = [
   {
     "id": "akole-paneer-tikka-club-burger",
     "name": "Paneer Tikka Club Burger",
-    "category": "vada-pav",
+    "category": "fast-food",
     "description": "Gourmet grilled charred tandoori paneer tikka patty layered with mint chutney, melted cheese & bell peppers in artisan brioche buns (पनीर टिक्का क्लब बर्गर).",
     "price": 150,
     "rating": 5,
@@ -207,7 +207,7 @@ export const menuItems = [
   {
     "id": "akole-bombay-masala-toast-sandwich",
     "name": "Bombay Masala Toast Sandwich",
-    "category": "vada-pav",
+    "category": "fast-food",
     "description": "Authentic Mumbai street style toasted sandwich stuffed with potato masala, cucumber, tomatoes, mint chutney & topped with nylon sev (बॉम्बे मसाला टोस्ट सँडविच).",
     "price": 90,
     "rating": 4.9,
@@ -227,7 +227,7 @@ export const menuItems = [
   {
     "id": "akole-cheese-corn-grill-sandwich",
     "name": "Cheese Corn Grill Sandwich",
-    "category": "vada-pav",
+    "category": "fast-food",
     "description": "Crispy golden grilled sandwich stuffed with sweet corn kernels & melted stringy mozzarella cheese (चीझ कॉर्न ग्रिल सँडविच).",
     "price": 110,
     "rating": 4.9,
@@ -246,7 +246,7 @@ export const menuItems = [
   {
     "id": "akole-peri-peri-salted-french-fries",
     "name": "Peri Peri Salted French Fries",
-    "category": "vada-pav",
+    "category": "fast-food",
     "description": "Golden crispy skin-on french fries tossed with zesty red peri peri spice seasoning & sea salt (पेरी पेरी फ्रेंच फ्राईज).",
     "price": 95,
     "rating": 4.8,
@@ -266,7 +266,7 @@ export const menuItems = [
   {
     "id": "akole-loaded-cheese-peri-peri-fries",
     "name": "Loaded Cheese Peri Peri Fries",
-    "category": "vada-pav",
+    "category": "fast-food",
     "description": "Crispy peri peri fries generously smothered with warm liquid cheddar cheese sauce, jalapeños & spring onions (लोडेड चीझ पेरी पेरी फ्राईज).",
     "price": 140,
     "rating": 5,
@@ -286,7 +286,7 @@ export const menuItems = [
   {
     "id": "akole-kanda-batata-poha",
     "name": "Kanda Batata Poha",
-    "category": "vada-pav",
+    "category": "breakfast",
     "description": "Authentic Maharashtrian hot Poha (गरमागरम कांदा बटाटा पोहे) cooked with onions, potato cubes, mustard & turmeric, garnished with fresh coconut, pomegranate seeds, cilantro & crisp sev.",
     "price": 35,
     "rating": 4.9,
@@ -306,7 +306,7 @@ export const menuItems = [
   {
     "id": "akole-butter-masala-dosa",
     "name": "Butter Masala Dosa",
-    "category": "vada-pav",
+    "category": "breakfast",
     "description": "Crispy golden South Indian rice crepe brushed with rich butter & filled with spiced potato masala (बटर मसाला डोसा), served with coconut chutney & hot sambar.",
     "price": 110,
     "rating": 4.9,
@@ -326,7 +326,7 @@ export const menuItems = [
   {
     "id": "akole-cheese-mysore-masala-dosa",
     "name": "Cheese Mysore Masala Dosa",
-    "category": "vada-pav",
+    "category": "breakfast",
     "description": "Crispy dosa coated with fiery Mysore garlic chutney, potato masala & melted mozzarella cheese (चीझ म्हैसूर मसाला डोसा).",
     "price": 140,
     "rating": 5,
@@ -346,7 +346,7 @@ export const menuItems = [
   {
     "id": "akole-steamed-idli-sambar-3pcs",
     "name": "Steamed Idli Sambar (3 pcs)",
-    "category": "vada-pav",
+    "category": "breakfast",
     "description": "Piping hot melt-in-mouth soft steamed rice cakes (मऊ लुसलुशीत इडली सांबर) served with spicy lentil vegetable sambar & fresh coconut chutney.",
     "price": 60,
     "rating": 4.9,
@@ -365,7 +365,7 @@ export const menuItems = [
   {
     "id": "akole-crispy-medu-vada-2pcs",
     "name": "Crispy Medu Vada (2 pcs)",
-    "category": "vada-pav",
+    "category": "breakfast",
     "description": "Golden deep-fried crisp lentil donut fritters (कुरकुरीत मेदू वडा) with fluffy interior, served with coconut chutney & hot sambar.",
     "price": 70,
     "rating": 4.8,
@@ -385,7 +385,7 @@ export const menuItems = [
   {
     "id": "akole-upma-coconut-chutney",
     "name": "Upma with Coconut Chutney",
-    "category": "vada-pav",
+    "category": "breakfast",
     "description": "Traditional roasted semolina Rava Upma (गरमागरम उपमा) tempered with mustard seeds, roasted cashews, curry leaves & green peas, served with coconut chutney.",
     "price": 40,
     "rating": 4.8,
@@ -405,7 +405,7 @@ export const menuItems = [
   {
     "id": "akole-veg-kolhapuri-handi",
     "name": "Veg Kolhapuri Handi",
-    "category": "thalis",
+    "category": "punjabi",
     "description": "Authentic Maharashtrian Veg Kolhapuri Handi (अस्सल कोल्हापुरी व्हेज हंडी) featuring mixed vegetables in spicy red chili gravy, fried chillies & coriander.",
     "price": 170,
     "rating": 4.9,
@@ -425,7 +425,7 @@ export const menuItems = [
   {
     "id": "akole-paneer-tikka-butter-masala",
     "name": "Paneer Tikka Butter Masala",
-    "category": "thalis",
+    "category": "punjabi",
     "description": "Smokey tandoori grilled paneer cubes simmered in a rich, buttery tomato & cashew gravy (शाही पनीर टिक्का बटर मसाला), finished with fresh cream.",
     "price": 190,
     "rating": 4.9,
@@ -445,7 +445,7 @@ export const menuItems = [
   {
     "id": "akole-shahi-dal-makhani",
     "name": "Shahi Dal Makhani",
-    "category": "thalis",
+    "category": "punjabi",
     "description": "Slow-cooked black lentils and kidney beans simmered overnight with butter, cream & aromatic tandoori spices (शाही दाल मखनी).",
     "price": 160,
     "rating": 4.9,
@@ -465,7 +465,7 @@ export const menuItems = [
   {
     "id": "akole-butter-garlic-naan-2pcs",
     "name": "Butter Garlic Naan (2 pcs)",
-    "category": "thalis",
+    "category": "punjabi",
     "description": "Tandoor baked soft leavened flatbreads brushed with melted butter, minced garlic & fresh coriander (बटर गार्लिक नान).",
     "price": 70,
     "rating": 4.8,
@@ -485,7 +485,7 @@ export const menuItems = [
   {
     "id": "akole-kadhai-paneer",
     "name": "Kadhai Paneer",
-    "category": "thalis",
+    "category": "punjabi",
     "description": "Cottage cheese cubes cooked with crunchy bell peppers, onions & freshly ground kadhai spices in a spicy tomato gravy (कढाई पनीर).",
     "price": 180,
     "rating": 4.9,
@@ -526,7 +526,7 @@ export const menuItems = [
   {
     "id": "akole-maharashtrian-royal-veg-thali",
     "name": "Maharashtrian Royal Veg Thali",
-    "category": "thalis",
+    "category": "thali",
     "description": "Grand Maharashtrian vegetarian thali (शाही शाकाहारी थाळी) featuring Pithla, Bharli Vangi, Katachi Amti, Puran Poli, Jowar Bhakri, Indrayani Rice, Sol Kadhi, Kosimbir & Papad.",
     "price": 220,
     "rating": 5,
@@ -547,7 +547,7 @@ export const menuItems = [
   {
     "id": "akole-paneer-butter-masala-thali",
     "name": "Paneer Butter Masala Thali",
-    "category": "thalis",
+    "category": "thali",
     "description": "Sumptuous North Indian thali (पनीर बटर मसाला थाळी) with rich Paneer Butter Masala, Butter Garlic Naan, Dal Makhani, Jeera Rice, Salad & Gulab Jamun.",
     "price": 240,
     "rating": 4.9,
@@ -567,7 +567,7 @@ export const menuItems = [
   {
     "id": "akole-konkani-sol-kadhi-steamed-rice",
     "name": "Konkani Sol Kadhi with Steamed Rice",
-    "category": "akole-special",
+    "category": "drinks",
     "description": "Authentic Konkani kokum & coconut milk curry (गुलाबी सोलकढी व वाफाळलेला भात) infused with garlic, chilli & cilantro, served alongside hot fragrant Steamed Basmati Rice.",
     "price": 130,
     "rating": 4.9,
@@ -840,7 +840,7 @@ export const menuItems = [
   {
     "id": "trad-vangi-brinjal-bhaji",
     "name": "Vangi Brinjal Bhaji (Eggplant Bhaji)",
-    "category": "traditional",
+    "category": "vada-pav",
     "description": "Authentic Maharashtrian style stuffed brinjal sabzi (झणझणीत वांग्याची भाजी / भरली वांगी) simmered in roasted peanut, sesame seed, coconut & Goda masala gravy.",
     "price": 130,
     "rating": 4.9,
@@ -884,7 +884,7 @@ export const menuItems = [
   {
     "id": "trad-cabbage-kobi-bhaji",
     "name": "Crispy Cabbage Bhaji (Kobi Bhaji)",
-    "category": "traditional",
+    "category": "vada-pav",
     "description": "Flavorful Maharashtrian style stir-fried cabbage vegetable curry (कोबीची परतलेली सुकी भाजी) tempered with green chillies, mustard seeds, curry leaves, turmeric & crushed peanuts.",
     "price": 100,
     "rating": 4.8,
@@ -906,7 +906,7 @@ export const menuItems = [
   {
     "id": "trad-methi-bhaji",
     "name": "Special Methi Bhaji (Fenugreek Bhaji)",
-    "category": "traditional",
+    "category": "vada-pav",
     "description": "Traditional Maharashtrian dry fenugreek green vegetable curry (मेथीची लसूणी सुकी भाजी) sautéed with aromatic garlic, green chillies, mustard & roasted crushed peanuts.",
     "price": 120,
     "rating": 4.9,
@@ -928,7 +928,7 @@ export const menuItems = [
   {
     "id": "trad-gobi-cauliflower-bhaji",
     "name": "Gobi Cauliflower Bhaji",
-    "category": "traditional",
+    "category": "vada-pav",
     "description": "Authentic Maharashtrian style dry cauliflower sabzi (फ्लॉवर/गोभीची सुकी भाजी) tossed with golden turmeric, mustard seeds, green chillies & fresh cilantro.",
     "price": 110,
     "rating": 4.8,
@@ -949,7 +949,7 @@ export const menuItems = [
   {
     "id": "drk-fresh-lime-soda",
     "name": "Fresh Lime Soda (Sweet & Salted)",
-    "category": "drinks",
+    "category": "cold-drinks",
     "description": "Zesty refreshing sparkling soda infused with freshly squeezed juice of green limes, mint sprig, rocksalt & pure cane sugar syrup over crushed ice.",
     "price": 50,
     "rating": 4.9,
@@ -993,7 +993,7 @@ export const menuItems = [
   {
     "id": "akole-kachha-kela-bhaji",
     "name": "Kachha Kela Raw Banana Bhaji",
-    "category": "akole-special",
+    "category": "vada-pav",
     "description": "Authentic Maharashtrian style raw banana dry vegetable curry (कच्च्या केळीची सुकी भाजी) cooked with roasted peanuts, cumin, green chillies, curry leaves & fresh coconut garnishing.",
     "price": 120,
     "rating": 4.9,
@@ -1023,7 +1023,7 @@ export const menuItems = [
     "isBestseller": true,
     "isChefSpecial": true,
     "prepTime": "1 min",
-    "image": "https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=800&q=80",
+    "image": "/assets/real-mixed-fruit-juice.png",
     "tags": [
       "Real Juice",
       "Mixed Fruit",
@@ -1079,7 +1079,7 @@ export const menuItems = [
     "isVeg": true,
     "isBestseller": true,
     "prepTime": "1 min",
-    "image": "/assets/akole-premium-water.png",
+    "image": "/assets/kinley-packaged-water.png",
     "tags": [
       "Kinley",
       "Packaged Water",
@@ -1096,7 +1096,7 @@ export const menuItems = [
     "isVeg": true,
     "isBestseller": true,
     "prepTime": "1 min",
-    "image": "/assets/akole-premium-water.png",
+    "image": "/assets/aquafina-purified-water.png",
     "tags": [
       "Aquafina",
       "Purified Water",
@@ -1113,7 +1113,7 @@ export const menuItems = [
     "isVeg": true,
     "isBestseller": false,
     "prepTime": "1 min",
-    "image": "/assets/akole-premium-water.png",
+    "image": "/assets/bailey-mineral-water.png",
     "tags": [
       "Bailey",
       "Mineral Water",
@@ -1131,7 +1131,7 @@ export const menuItems = [
     "isBestseller": true,
     "isChefSpecial": true,
     "prepTime": "1 min",
-    "image": "/assets/akole-premium-water.png",
+    "image": "/assets/himalayan-natural-mineral-water.png",
     "tags": [
       "Himalayan",
       "Natural Mineral",
@@ -1148,7 +1148,7 @@ export const menuItems = [
     "isVeg": true,
     "isBestseller": true,
     "prepTime": "1 min",
-    "image": "/assets/akole-premium-water.png",
+    "image": "/assets/ice-chilled-mineral-water.png",
     "tags": [
       "Chilled Water",
       "Ice Cold",
@@ -1165,7 +1165,7 @@ export const menuItems = [
     "isVeg": true,
     "isBestseller": true,
     "prepTime": "2 mins",
-    "image": "/assets/fresh-lime-soda.png",
+    "image": "/assets/lemon-infused-detox-water.png",
     "tags": [
       "Lemon Infused",
       "Detox Water",
@@ -1182,7 +1182,7 @@ export const menuItems = [
     "isVeg": true,
     "isBestseller": false,
     "prepTime": "2 mins",
-    "image": "/assets/fresh-lime-soda.png",
+    "image": "/assets/mint-infused-refreshing-water.png",
     "tags": [
       "Mint Infused",
       "Detox Water",
@@ -1954,7 +1954,7 @@ export const menuItems = [
   {
     "id": "mah-add-8",
     "name": "Puneri Poori Bhaji Platter",
-    "category": "traditional",
+    "category": "breakfast",
     "description": "4 golden puffed Pooris served with spicy turmeric potato bhaji, fried green chilies & sweet mango pickle.",
     "price": 140,
     "rating": 4.8,
@@ -2003,7 +2003,7 @@ export const menuItems = [
   {
     "id": "mah-add-11",
     "name": "Nagpuri Tarri Poha",
-    "category": "traditional",
+    "category": "breakfast",
     "description": "Authentic Nagpur style Kanda Poha topped with piping hot spicy black chickpea Tarri gravy, onion & Ratlami Sev.",
     "price": 65,
     "rating": 4.9,
@@ -2020,7 +2020,7 @@ export const menuItems = [
   {
     "id": "mah-add-12",
     "name": "Kolhapuri Tambda-Pandhra Rassa Bowl",
-    "category": "traditional",
+    "category": "kolhapuri",
     "description": "Dual bowl of authentic fiery red spicy broth (Tambda Rassa) & creamy soothing coconut broth (Pandhra Rassa).",
     "price": 135,
     "rating": 5,
@@ -2037,7 +2037,7 @@ export const menuItems = [
   {
     "id": "mah-add-14",
     "name": "Maharashtrian Shahi Masale Bhaat",
-    "category": "traditional",
+    "category": "rice-biryani",
     "description": "Aromatic Indrayani rice cooked with Goda masala, ivy gourd (tindora), roasted cashews & pure ghee, served with papad.",
     "price": 165,
     "rating": 4.9,
@@ -2054,7 +2054,7 @@ export const menuItems = [
   {
     "id": "mah-add-15",
     "name": "Kesari Elaichi Shrikhand with Poori",
-    "category": "traditional",
+    "category": "desserts",
     "description": "Chilled rich strained yogurt dessert infused with saffron, cardamom & pistachio, served with 4 warm puffed Pooris.",
     "price": 180,
     "rating": 5,
@@ -2351,7 +2351,7 @@ export const menuItems = [
   {
     "id": "trad-4",
     "name": "Surmai Fish Rava Fry",
-    "category": "traditional",
+    "category": "kolhapuri",
     "description": "Crispy semolina (rava) crusted Kingfish (Surmai) steak shallow fried with Malvani spices, lemon & onion.",
     "price": 280,
     "rating": 4.9,
@@ -2369,7 +2369,7 @@ export const menuItems = [
   {
     "id": "trad-5",
     "name": "Kolhapuri Chicken Sukka",
-    "category": "traditional",
+    "category": "kolhapuri",
     "description": "Tender chicken cooked in rich roasted coconut & authentic Kolhapuri Kala masala, served dry with onion & lemon.",
     "price": 240,
     "rating": 4.9,
@@ -2476,7 +2476,7 @@ export const menuItems = [
     "isBestseller": true,
     "spicyLevel": 1,
     "prepTime": "12 mins",
-    "image": "https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=800&q=80",
+    "image": "/assets/veg-hakka-noodles.png",
     "tags": [
       "Hakka Noodles"
     ]
@@ -2492,7 +2492,7 @@ export const menuItems = [
     "isBestseller": true,
     "spicyLevel": 3,
     "prepTime": "12 mins",
-    "image": "https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&w=800&q=80",
+    "image": "/assets/schezwan-fried-rice.png",
     "tags": [
       "Schezwan Rice"
     ]
@@ -2507,7 +2507,7 @@ export const menuItems = [
     "isVeg": true,
     "spicyLevel": 2,
     "prepTime": "14 mins",
-    "image": "https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=800&q=80",
+    "image": "/assets/veg-manchurian-dry.png",
     "tags": [
       "Manchurian"
     ]
@@ -2523,7 +2523,7 @@ export const menuItems = [
     "isChefSpecial": true,
     "spicyLevel": 2,
     "prepTime": "15 mins",
-    "image": "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?auto=format&fit=crop&w=800&q=80",
+    "image": "/assets/crispy-paneer-chilli-fry.png",
     "tags": [
       "Paneer Chilli"
     ]
@@ -2556,7 +2556,7 @@ export const menuItems = [
     "isBestseller": true,
     "spicyLevel": 2,
     "prepTime": "18 mins",
-    "image": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=800&q=80",
+    "image": "/assets/hyderabadi-veg-dum-biryani.png",
     "tags": [
       "Veg Biryani"
     ]
@@ -2571,7 +2571,7 @@ export const menuItems = [
     "isVeg": true,
     "spicyLevel": 1,
     "prepTime": "14 mins",
-    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80&sig=0.4027788434795909",
+    "image": "/assets/dal-tadka-jeera-rice.png",
     "tags": [
       "Dal Tadka"
     ]
@@ -2641,7 +2641,7 @@ export const menuItems = [
   {
     "id": "dr-4",
     "name": "Cold Coffee with Vanilla Ice Cream",
-    "category": "drinks",
+    "category": "desserts",
     "description": "Thick blended coffee shake topped with scoop of vanilla gelato & chocolate drizzle.",
     "price": 110,
     "rating": 5,
