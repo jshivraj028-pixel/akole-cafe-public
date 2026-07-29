@@ -100,11 +100,11 @@ const Navbar = () => {
               />
             </div>
 
-            <div className="flex items-baseline font-cormorant text-xl sm:text-2xl xl:text-[27px] tracking-[-0.5px]">
-              <span className="font-bold text-[#1E2621] dark:text-white transition-colors">
+            <div className="flex items-baseline font-cormorant text-2xl sm:text-3xl xl:text-[36px] tracking-[-0.5px]">
+              <span className="font-extrabold text-[#1E2621] dark:text-white transition-colors">
                 Akole
               </span>
-              <span className="italic font-medium text-[#48594B] dark:text-[#D6AE4D] ml-1">
+              <span className="italic font-semibold text-[#48594B] dark:text-[#D6AE4D] ml-1.5">
                 Café
               </span>
             </div>
